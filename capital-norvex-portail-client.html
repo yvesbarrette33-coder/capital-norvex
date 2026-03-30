@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Capital Norvex — Espace Client</title>
+<meta name="description" content="Suivez vos dossiers de financement en temps réel — Capital Norvex">
+<meta name="theme-color" content="#1A1A2E">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="CN Client">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="manifest" id="pwa-manifest">
+<script>
+const manifest = {
+  name: "Capital Norvex — Espace Client",
+  short_name: "CN Client",
+  description: "Suivez vos dossiers de financement en temps réel",
+  start_url: "./capital-norvex-portail-client.html",
+  display: "standalone",
+  background_color: "#1A1A2E",
+  theme_color: "#1A1A2E",
+  orientation: "portrait-primary",
+  icons: [
+    { src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' fill='%231A1A2E'/%3E%3Ctext x='96' y='130' font-family='Georgia,serif' font-size='80' font-weight='bold' fill='%23B8860B' text-anchor='middle'%3ECN%3C/text%3E%3C/svg%3E", sizes: "192x192", type: "image/svg+xml" },
+    { src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' fill='%231A1A2E'/%3E%3Ctext x='256' y='350' font-family='Georgia,serif' font-size='220' font-weight='bold' fill='%23B8860B' text-anchor='middle'%3ECN%3C/text%3E%3C/svg%3E", sizes: "512x512", type: "image/svg+xml" }
+  ]
+};
+const blob = new Blob([JSON.stringify(manifest)], {type:'application/json'});
+document.getElementById('pwa-manifest').href = URL.createObjectURL(blob);
+if ('serviceWorker' in navigator) {
+  const swCode = `const CACHE='cn-client-v2';self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll([self.location.pathname])))});self.addEventListener('fetch',e=>{e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request).catch(()=>caches.match(e.request))))})`;
+  const swBlob = new Blob([swCode], {type:'application/javascript'});
+  navigator.serviceWorker.register(URL.createObjectURL(swBlob)).catch(()=>{});
+}
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+<style>
+:root{--cream:#FAF8F4;--cream-d:#F0EDE6;--gold:#B8860B;--gold-l:#D4A843;--gold-p:#F5ECD7;--ink:#1A1A2E;--ink-l:#2D2D44;--ink-m:#6B6B80;--white:#FFF;--green:#2d6a4f;--green-bg:#ecfdf5;--amber:#92400e;--amber-bg:#fffbeb;--gray:#9ca3af;--gray-bg:#f3f4f6;--red:#991b1b;--red-bg:#fef2f2;--blue:#1e40af;--blue-bg:#eff6ff;--r:12px;--rs:8px;--ss:0 1px 3px rgba(26,26,46,.06);--sm:0 4px 20px rgba(26,26,46,.08);--tr:all .3s cubic-bezier(.4,0,.2,1)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);-webkit-font-smoothing:antialiased}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+@keyframes spin{to{transform:rotate(360deg)}}
+.pulse{animation:pulse 2s ease infinite}
+.hidden{display:none!important}
+/* LOADING */
+.loading-overlay{position:fixed;inset:0;background:var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;gap:16px}
+.loading-logo{font-family:'Playfair Display',serif;font-size:26px;font-weight:600;color:var(--white)}
+.loading-logo span{color:var(--gold)}
+.spinner{width:28px;height:28px;border:2px solid rgba(184,134,11,.2);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite}
+.loading-txt{font-size:12px;color:rgba(255,255,255,.4);letter-spacing:1px;text-transform:uppercase}
+/* LOGIN */
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,var(--ink),var(--ink-l),#2a2a45);position:relative;overflow:hidden}
+.login-wrap::before{content:'';position:absolute;top:-30%;right:-20%;width:600px;height:600px;background:radial-gradient(circle,rgba(184,134,11,.08),transparent 70%);border-radius:50%}
+.login-card{width:420px;max-width:90vw;background:var(--white);border-radius:16px;padding:48px 40px;box-shadow:0 20px 60px rgba(0,0,0,.3);position:relative;z-index:1;animation:fadeUp .6s ease}
+.login-logo{font-family:'Playfair Display',serif;font-size:22px;font-weight:600;color:var(--ink);text-align:center;margin-bottom:4px}
+.login-logo span{color:var(--gold)}
+.login-sub{text-align:center;font-size:13px;color:var(--ink-m);margin-bottom:32px;letter-spacing:2px;text-transform:uppercase;font-weight:500}
+.login-div{width:40px;height:1px;background:var(--gold);margin:0 auto 32px}
+.fg{margin-bottom:18px}
+.fl{display:block;font-size:11px;font-weight:600;color:var(--ink-m);text-transform:uppercase;letter-spacing:1px;margin-bottom:7px}
+.fi{width:100%;padding:13px 15px;border:1px solid #e5e5e5;border-radius:var(--rs);font-family:'DM Sans',sans-serif;font-size:15px;color:var(--ink);background:var(--cream);transition:var(--tr);outline:none}
+.fi:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-p)}
+.fi::placeholder{color:#b0b0b0}
+.pw-wrap{position:relative}
+.pw-tog{position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--ink-m);cursor:pointer;padding:4px}
+.login-btn{width:100%;padding:15px;background:var(--ink);color:var(--white);border:none;border-radius:var(--rs);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:var(--tr);margin-top:8px}
+.login-btn:hover:not(:disabled){background:var(--ink-l);transform:translateY(-1px);box-shadow:var(--sm)}
+.login-btn:disabled{opacity:.6;cursor:not-allowed}
+.login-sec{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:18px;font-size:12px;color:var(--ink-m)}
+.login-err{background:var(--red-bg);color:var(--red);padding:10px;border-radius:var(--rs);font-size:13px;margin-bottom:14px;text-align:center}
+/* HEADER */
+.hdr{background:var(--ink);padding:0 28px;display:flex;align-items:center;justify-content:space-between;height:62px;position:sticky;top:0;z-index:100}
+.hdr-logo{font-family:'Playfair Display',serif;font-size:18px;font-weight:600;color:var(--white)}
+.hdr-logo span{color:var(--gold)}
+.hdr-tag{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-left:10px;border:1px solid rgba(184,134,11,.3);padding:3px 10px;border-radius:20px}
+.hdr-r{display:flex;align-items:center;gap:16px}
+.hdr-u{font-size:13px;color:rgba(255,255,255,.7)}
+.hdr-u strong{color:var(--white);font-weight:500}
+.btn-out{display:flex;align-items:center;gap:5px;background:none;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.7);padding:6px 12px;border-radius:6px;font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:var(--tr)}
+.btn-out:hover{border-color:rgba(255,255,255,.3);color:var(--white)}
+/* CONTENT */
+.cnt{max-width:1100px;margin:0 auto;padding:28px 20px 60px}
+.welc{margin-bottom:28px;animation:fadeUp .5s ease}
+.welc h1{font-family:'Playfair Display',serif;font-size:26px;font-weight:600;margin-bottom:4px}
+.welc p{font-size:14px;color:var(--ink-m)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px;animation:fadeUp .6s ease}
+@media(max-width:900px){.kpis{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:500px){.kpis{grid-template-columns:1fr}}
+.kpi{background:var(--white);border-radius:var(--r);padding:20px 22px;box-shadow:var(--ss);border:1px solid rgba(0,0,0,.04);transition:var(--tr)}
+.kpi:hover{box-shadow:var(--sm);transform:translateY(-2px)}
+.kpi-l{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1.2px;color:var(--ink-m);margin-bottom:8px}
+.kpi-v{font-family:'Playfair Display',serif;font-size:24px;font-weight:600}
+.kpi-v.gld{color:var(--gold)}
+.kpi-s{font-size:11px;color:var(--ink-m);margin-top:3px}
+.stit{font-family:'Playfair Display',serif;font-size:19px;font-weight:600;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+/* CARDS */
+.lcards{display:flex;flex-direction:column;gap:14px;animation:fadeUp .7s ease}
+.lcard{background:var(--white);border-radius:var(--r);box-shadow:var(--ss);border:1px solid rgba(0,0,0,.04);overflow:hidden;transition:var(--tr);cursor:pointer}
+.lcard:hover{box-shadow:var(--sm);transform:translateY(-1px)}
+.lcard-h{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;gap:14px;flex-wrap:wrap}
+.lc-id{font-size:12px;font-weight:600;color:var(--gold);letter-spacing:.5px}
+.lc-proj{font-size:17px;font-weight:600;margin-top:2px}
+.lc-addr{font-size:13px;color:var(--ink-m);margin-top:3px}
+.lc-type{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:600;text-transform:uppercase;background:var(--amber-bg);color:var(--amber);margin-top:6px}
+.lc-r{text-align:right;flex-shrink:0}
+.lc-amt{font-family:'Playfair Display',serif;font-size:22px;font-weight:600}
+.lc-disb{font-size:12px;color:var(--ink-m);margin-top:2px}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:600;text-transform:uppercase;margin-top:6px}
+.badge-g{background:var(--green-bg);color:var(--green)}
+.prov-tag{display:inline-flex;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;background:var(--gold-p);color:var(--gold);margin-left:6px}
+.prog-bar{height:4px;background:var(--cream-d)}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-l));transition:width 1s ease;border-radius:0 2px 2px 0}
+.lcard-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--cream-d);border-top:1px solid var(--cream-d)}
+@media(max-width:600px){.lcard-stats{grid-template-columns:repeat(2,1fr)}}
+.ls{background:var(--white);padding:12px 18px;text-align:center}
+.ls-l{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--ink-m);margin-bottom:3px}
+.ls-v{font-size:14px;font-weight:600}
+/* DETAIL */
+.btn-back{display:inline-flex;align-items:center;gap:5px;font-size:13px;color:var(--ink-m);cursor:pointer;margin-bottom:22px;padding:5px 0;border:none;background:none;font-family:'DM Sans',sans-serif;transition:var(--tr)}
+.btn-back:hover{color:var(--ink)}
+.det-hero{background:var(--ink);border-radius:var(--r);padding:26px 30px;margin-bottom:22px;animation:fadeUp .5s ease}
+.det-hero-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:14px}
+.det-id{font-size:11px;color:var(--gold);letter-spacing:1px;font-weight:600}
+.det-proj{font-family:'Playfair Display',serif;font-size:22px;color:var(--white);font-weight:600;margin-top:3px}
+.det-addr{font-size:13px;color:rgba(255,255,255,.6);margin-top:5px}
+.det-desc{font-size:13px;color:rgba(255,255,255,.4);margin-top:4px;font-style:italic}
+.det-amtb{text-align:right}
+.det-amt{font-family:'Playfair Display',serif;font-size:30px;color:var(--white);font-weight:600}
+.det-amtl{font-size:11px;color:rgba(255,255,255,.5);margin-top:2px}
+/* DISBURSEMENT */
+.disb-card{background:var(--white);border-radius:var(--r);box-shadow:var(--ss);border:1px solid rgba(0,0,0,.04);overflow:hidden;margin-bottom:22px;animation:fadeUp .6s ease}
+.disb-head{padding:18px 22px;border-bottom:1px solid var(--cream-d);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.disb-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:600}
+.disb-sum{font-size:13px;color:var(--ink-m)}
+.disb-sum strong{color:var(--green);font-weight:600}
+.disb-prog{padding:14px 22px;background:var(--cream);border-bottom:1px solid var(--cream-d);display:flex;align-items:center;gap:14px}
+.disb-prog-bar{flex:1;height:10px;background:var(--cream-d);border-radius:5px;overflow:hidden}
+.disb-prog-fill{height:100%;border-radius:5px;background:linear-gradient(90deg,var(--green),#40916c);transition:width 1.2s ease}
+.disb-prog-txt{font-size:14px;font-weight:700;color:var(--green);min-width:45px}
+.tl{padding:18px 22px}
+.tl-item{display:flex;gap:14px;position:relative;padding-bottom:18px}
+.tl-item:last-child{padding-bottom:0}
+.tl-line{position:absolute;left:15px;top:34px;bottom:0;width:2px;background:var(--cream-d)}
+.tl-item:last-child .tl-line{display:none}
+.tl-dot{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;position:relative;z-index:1;font-size:12px;font-weight:700}
+.tl-dot-done{background:var(--green-bg);border:2px solid var(--green);color:var(--green)}
+.tl-dot-curr{background:var(--amber-bg);border:2px solid var(--gold);color:var(--amber);animation:pulse 2s ease infinite}
+.tl-dot-future{background:var(--gray-bg);border:2px solid #d1d5db;color:#d1d5db}
+.tl-body{flex:1;padding-top:4px}
+.tl-phase{font-size:14px;font-weight:600;margin-bottom:2px}
+.tl-meta{font-size:12px;color:var(--ink-m)}
+.tl-amt{font-size:15px;font-weight:700;margin-top:4px}
+.tl-amt.done{color:var(--green)}
+.tl-amt.curr{color:var(--gold)}
+.tl-amt.future{color:var(--gray)}
+.tl-inspect{display:inline-flex;align-items:center;gap:4px;font-size:11px;margin-top:4px;padding:2px 8px;border-radius:12px;background:var(--green-bg);color:var(--green);font-weight:500}
+.tl-inspect-p{background:var(--amber-bg);color:var(--amber)}
+/* GRID */
+.det-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:22px;animation:fadeUp .65s ease}
+@media(max-width:700px){.det-grid{grid-template-columns:1fr}}
+.det-sec{background:var(--white);border-radius:var(--r);padding:22px;box-shadow:var(--ss);border:1px solid rgba(0,0,0,.04)}
+.det-sec-t{font-family:'Playfair Display',serif;font-size:15px;font-weight:600;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--cream-d);display:flex;align-items:center;gap:7px}
+.det-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid rgba(0,0,0,.03)}
+.det-row:last-child{border-bottom:none}
+.det-rl{font-size:13px;color:var(--ink-m)}
+.det-rv{font-size:13px;font-weight:600}
+.docs{display:flex;flex-direction:column;gap:7px}
+.doc{display:flex;align-items:center;gap:9px;padding:9px 13px;background:var(--cream);border-radius:var(--rs);font-size:13px;cursor:pointer;transition:var(--tr)}
+.doc:hover{background:var(--gold-p)}
+.doc span{font-weight:500}
+/* TABLE */
+.pay-wrap{background:var(--white);border-radius:var(--r);box-shadow:var(--ss);border:1px solid rgba(0,0,0,.04);overflow:hidden;animation:fadeUp .75s ease}
+.pay-head{padding:18px 22px;border-bottom:1px solid var(--cream-d);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.pay-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:600}
+.pay-sum{font-size:13px;color:var(--ink-m)}
+.pay-sum strong{color:var(--green);font-weight:600}
+.pay-note{padding:12px 22px;background:var(--blue-bg);font-size:12px;color:var(--blue);border-bottom:1px solid var(--cream-d)}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;padding:11px 18px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--ink-m);background:var(--cream);border-bottom:1px solid var(--cream-d)}
+th:last-child,td:last-child{text-align:center}
+td{padding:12px 18px;font-size:13px;border-bottom:1px solid rgba(0,0,0,.03)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(184,134,11,.02)}
+.row-cap td{font-weight:600;background:var(--gold-p)!important}
+.pill{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600}
+.pill-g{background:var(--green-bg);color:var(--green)}
+.pill-a{background:var(--amber-bg);color:var(--amber)}
+.pill-f{background:var(--gray-bg);color:var(--gray)}
+/* CONTACT */
+.contact-bar{background:var(--white);border-radius:var(--r);box-shadow:var(--ss);border:1px solid rgba(0,0,0,.04);padding:18px 24px;margin-top:22px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;animation:fadeUp .8s ease}
+.contact-txt{font-size:14px;color:var(--ink-m)}
+.contact-txt strong{color:var(--ink)}
+.contact-btn{padding:10px 20px;background:var(--ink);color:var(--white);border:none;border-radius:var(--rs);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:var(--tr)}
+.contact-btn:hover{background:var(--ink-l);transform:translateY(-1px)}
+/* EMPTY STATE */
+.empty-state{background:var(--white);border-radius:var(--r);padding:48px;text-align:center;border:1px solid rgba(0,0,0,.04)}
+.empty-state h3{font-family:'Playfair Display',serif;font-size:20px;margin-bottom:8px;color:var(--ink)}
+.empty-state p{font-size:14px;color:var(--ink-m)}
+</style>
+</head>
+<body>
+
+<!-- Loading overlay -->
+<div id="loading-overlay" class="loading-overlay">
+  <div class="loading-logo">Capital <span>Norvex</span></div>
+  <div class="spinner"></div>
+  <div class="loading-txt">Connexion sécurisée...</div>
+</div>
+
+<!-- PWA banners -->
+<div id="pwa-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:#1A1A2E;border-top:2px solid #B8860B;padding:14px 20px;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 -4px 20px rgba(0,0,0,.3)">
+  <div style="display:flex;align-items:center;gap:12px">
+    <div style="width:42px;height:42px;background:#B8860B;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:Georgia,serif;font-size:16px;font-weight:bold;color:#1A1A2E;flex-shrink:0">CN</div>
+    <div><div style="font-size:14px;font-weight:600;color:#fff">Installer l'application</div><div style="font-size:12px;color:rgba(255,255,255,.6)">Accès rapide depuis votre écran d'accueil</div></div>
+  </div>
+  <div style="display:flex;gap:8px;flex-shrink:0">
+    <button onclick="document.getElementById('pwa-banner').style.display='none'" style="padding:8px 14px;background:transparent;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.6);border-radius:8px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif">Plus tard</button>
+    <button id="pwa-install-btn" style="padding:8px 16px;background:#B8860B;border:none;color:#1A1A2E;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif">Installer ↓</button>
+  </div>
+</div>
+<div id="ios-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:#1A1A2E;border-top:2px solid #B8860B;padding:16px 20px;box-shadow:0 -4px 20px rgba(0,0,0,.3)">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px"><div style="font-size:14px;font-weight:600;color:#fff">📱 Installer sur iPhone</div><button onclick="document.getElementById('ios-banner').style.display='none'" style="background:none;border:none;color:rgba(255,255,255,.5);font-size:20px;cursor:pointer;line-height:1">×</button></div>
+  <div style="font-size:13px;color:rgba(255,255,255,.7);line-height:1.8">1. Appuyez sur <strong style="color:#B8860B">Partager</strong> (icône ↑ en bas de Safari)<br>2. Faites défiler et tapez <strong style="color:#B8860B">« Sur l'écran d'accueil »</strong><br>3. Tapez <strong style="color:#B8860B">Ajouter</strong> en haut à droite</div>
+</div>
+<script>
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', e=>{e.preventDefault();deferredPrompt=e;document.getElementById('pwa-banner').style.display='flex'});
+document.getElementById('pwa-install-btn').addEventListener('click',async()=>{if(deferredPrompt){deferredPrompt.prompt();deferredPrompt=null;document.getElementById('pwa-banner').style.display='none'}});
+const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent),isStandalone=window.matchMedia('(display-mode: standalone)').matches;
+if(isIOS&&!isStandalone)setTimeout(()=>{document.getElementById('ios-banner').style.display='block'},3000);
+</script>
+
+<!-- ═══ LOGIN ═══ -->
+<div id="login-screen" class="login-wrap hidden">
+  <div class="login-card">
+    <div class="login-logo">Capital <span>Norvex</span></div>
+    <div class="login-sub">Espace Client</div>
+    <div class="login-div"></div>
+    <div id="login-err" class="login-err hidden"></div>
+    <form id="login-form">
+      <div class="fg"><label class="fl">Adresse courriel</label><input type="email" class="fi" id="login-email" placeholder="votre@courriel.ca"></div>
+      <div class="fg"><label class="fl">Mot de passe</label><div class="pw-wrap"><input type="password" class="fi" id="login-pass" placeholder="••••••••"><button type="button" class="pw-tog" onclick="togglePass()">👁</button></div></div>
+      <button type="submit" class="login-btn" id="login-btn">Accéder à mon espace</button>
+    </form>
+    <div class="login-sec">🔒 Connexion sécurisée — Données chiffrées 256 bits</div>
+  </div>
+</div>
+
+<!-- ═══ DASHBOARD ═══ -->
+<div id="dash-screen" class="hidden">
+  <header class="hdr">
+    <div style="display:flex;align-items:center"><div class="hdr-logo">Capital <span>Norvex</span></div><span class="hdr-tag">Client</span></div>
+    <div class="hdr-r"><div class="hdr-u" id="hdr-user"></div><button class="btn-out" onclick="logout()">⎋ Déconnexion</button></div>
+  </header>
+  <div class="cnt">
+    <div class="welc"><h1 id="welc-title">Bonjour</h1><p id="welc-sub"></p></div>
+    <div id="kpi-grid" class="kpis"></div>
+    <div class="stit">🏗 Mes projets</div>
+    <div id="loan-list" class="lcards"></div>
+  </div>
+</div>
+
+<!-- ═══ DETAIL ═══ -->
+<div id="detail-screen" class="hidden">
+  <header class="hdr">
+    <div style="display:flex;align-items:center"><div class="hdr-logo">Capital <span>Norvex</span></div><span class="hdr-tag">Client</span></div>
+    <div class="hdr-r"><div class="hdr-u" id="hdr-user2"></div><button class="btn-out" onclick="logout()">⎋ Déconnexion</button></div>
+  </header>
+  <div class="cnt">
+    <button class="btn-back" onclick="showDash()">← Retour à mes projets</button>
+    <div id="detail-content"></div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════
+// FIREBASE CONFIG — Capital Norvex
+// ═══════════════════════════════════════════
+const firebaseConfig = {
+  apiKey: "AIzaSyB511dw1g1hARoIlo5Q3wc2OMM8P8yJRp8",
+  authDomain: "capital-norvex.firebaseapp.com",
+  projectId: "capital-norvex",
+  storageBucket: "capital-norvex.firebasestorage.app",
+  messagingSenderId: "547910657658",
+  appId: "1:547910657658:web:9ae5ebf5fac9c0461ffdc3"
+};
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
+
+// ─── DONNÉES DÉMO (fallback) ───
+const DEMO_LOANS = [
+  {
+    id:"PRÊ-2025-0041",project:"Complexe Horizon — Phase 2",address:"2250 Boul. Laurier, Québec",province:"QC",description:"Construction de 12 unités de condos commerciaux",total:2400000,rate:10.5,term:"18 mois",start:"2025-03-01",end:"2026-09-01",ltv:65,appraisal:3692307,legal:"Me Sophie Lavoie",legalType:"Notaire",contractor:"Construction Beaumont & Fils Inc.",architect:"Groupe Archika — Julie Tremblay, OAQ",permit:"PER-2025-00891 — Ville de Québec",
+    disbursements:[
+      {phase:"Acquisition du terrain",amount:480000,date:"2025-03-15",status:"déboursé",inspector:"Me Sophie Lavoie",inspDate:"2025-03-12"},
+      {phase:"Excavation & fondations",amount:360000,date:"2025-05-01",status:"déboursé",inspector:"Exp. Inc. — J. Côté, ing.",inspDate:"2025-04-28"},
+      {phase:"Structure & charpente",amount:432000,date:"2025-07-15",status:"déboursé",inspector:"Exp. Inc. — J. Côté, ing.",inspDate:"2025-07-12"},
+      {phase:"Toiture & fenestration",amount:312000,date:"2025-09-15",status:"déboursé",inspector:"Exp. Inc. — J. Côté, ing.",inspDate:"2025-09-12"},
+      {phase:"Mécanique (plomberie, CVAC, électricité)",amount:288000,date:"2025-11-15",status:"déboursé",inspector:"Exp. Inc. — J. Côté, ing.",inspDate:"2025-11-10"},
+      {phase:"Finitions intérieures",amount:264000,date:"2026-01-15",status:"approuvé",inspector:null,inspDate:null},
+      {phase:"Aménagement extérieur & stationnement",amount:144000,date:"2026-03-15",status:"à venir",inspector:null,inspDate:null},
+      {phase:"Retenue finale (5%)",amount:120000,date:"2026-06-01",status:"à venir",inspector:null,inspDate:null}
+    ],
+    payments:[
+      {date:"2025-04-01",interest:4200,on:480000,status:"payé"},{date:"2025-05-01",interest:4200,on:480000,status:"payé"},{date:"2025-06-01",interest:7350,on:840000,status:"payé"},{date:"2025-07-01",interest:7350,on:840000,status:"payé"},{date:"2025-08-01",interest:11130,on:1272000,status:"payé"},{date:"2025-09-01",interest:11130,on:1272000,status:"payé"},{date:"2025-10-01",interest:13860,on:1584000,status:"payé"},{date:"2025-11-01",interest:13860,on:1584000,status:"payé"},{date:"2025-12-01",interest:16380,on:1872000,status:"payé"},{date:"2026-01-01",interest:16380,on:1872000,status:"en attente"},{date:"2026-02-01",interest:18690,on:2136000,status:"à venir"},{date:"2026-03-01",interest:18690,on:2136000,status:"à venir"},{date:"2026-04-01",interest:19950,on:2280000,status:"à venir"},{date:"2026-05-01",interest:19950,on:2280000,status:"à venir"},{date:"2026-06-01",interest:21000,on:2400000,status:"à venir"},{date:"2026-07-01",interest:21000,on:2400000,status:"à venir"},{date:"2026-08-01",interest:21000,on:2400000,status:"à venir"},{date:"2026-09-01",interest:21000,on:2400000,status:"à venir",capital:2400000}
+    ]
+  },
+  {
+    id:"PRÊ-2025-0103",project:"Rénovation Édifice Wellington",address:"455 Wellington St W, Toronto",province:"ON",description:"Conversion commerciale — 8 suites de bureaux",total:1800000,rate:11.0,term:"12 mois",start:"2025-08-01",end:"2026-08-01",ltv:60,appraisal:3000000,legal:"Me David Chen, Osler LLP",legalType:"Avocat",contractor:"GreenBuild Ontario Ltd.",architect:"Studio M — Michael Torres, OAA",permit:"BP-2025-044712 — City of Toronto",
+    disbursements:[
+      {phase:"Acquisition & frais légaux",amount:360000,date:"2025-08-15",status:"déboursé",inspector:"Me David Chen",inspDate:"2025-08-12"},
+      {phase:"Démolition & préparation",amount:216000,date:"2025-09-15",status:"déboursé",inspector:"WSP Canada — R. Patel, P.Eng.",inspDate:"2025-09-12"},
+      {phase:"Structure & renforcement",amount:324000,date:"2025-11-01",status:"déboursé",inspector:"WSP Canada — R. Patel, P.Eng.",inspDate:"2025-10-28"},
+      {phase:"Systèmes mécaniques & électriques",amount:306000,date:"2026-01-15",status:"approuvé",inspector:null,inspDate:null},
+      {phase:"Finitions & cloisonnement",amount:270000,date:"2026-03-15",status:"à venir",inspector:null,inspDate:null},
+      {phase:"Aménagement commun & lobby",amount:234000,date:"2026-05-15",status:"à venir",inspector:null,inspDate:null},
+      {phase:"Retenue finale (5%)",amount:90000,date:"2026-07-15",status:"à venir",inspector:null,inspDate:null}
+    ],
+    payments:[
+      {date:"2025-09-01",interest:3300,on:360000,status:"payé"},{date:"2025-10-01",interest:5280,on:576000,status:"payé"},{date:"2025-11-01",interest:5280,on:576000,status:"payé"},{date:"2025-12-01",interest:8250,on:900000,status:"payé"},{date:"2026-01-01",interest:8250,on:900000,status:"en attente"},{date:"2026-02-01",interest:11055,on:1206000,status:"à venir"},{date:"2026-03-01",interest:11055,on:1206000,status:"à venir"},{date:"2026-04-01",interest:13530,on:1476000,status:"à venir"},{date:"2026-05-01",interest:13530,on:1476000,status:"à venir"},{date:"2026-06-01",interest:15675,on:1710000,status:"à venir"},{date:"2026-07-01",interest:15675,on:1710000,status:"à venir"},{date:"2026-08-01",interest:16500,on:1800000,status:"à venir",capital:1800000}
+    ]
+  }
+];
+
+let LOANS = [];
+
+// ─── UTILS ───
+const fmt=n=>new Intl.NumberFormat('fr-CA',{style:'currency',currency:'CAD',minimumFractionDigits:0,maximumFractionDigits:0}).format(n);
+const fmtD=n=>new Intl.NumberFormat('fr-CA',{style:'currency',currency:'CAD',minimumFractionDigits:2}).format(n);
+const fmtDate=d=>{const m=["janv.","févr.","mars","avr.","mai","juin","juill.","août","sept.","oct.","nov.","déc."];const dt=new Date(d+"T00:00:00");return`${dt.getDate()} ${m[dt.getMonth()]} ${dt.getFullYear()}`};
+const pct=(a,b)=>Math.round(a/b*100);
+const pill=s=>s==="payé"?`<span class="pill pill-g">✓ Payé</span>`:s==="en attente"?`<span class="pill pill-a pulse">⏳ En attente</span>`:`<span class="pill pill-f">📅 À venir</span>`;
+
+function togglePass(){const p=document.getElementById('login-pass');p.type=p.type==='password'?'text':'password'}
+
+// ─── AUTH STATE ───
+auth.onAuthStateChanged(async user => {
+  if (user) {
+    await chargerPortail(user);
+  } else {
+    document.getElementById('loading-overlay').classList.add('hidden');
+    document.getElementById('login-screen').classList.remove('hidden');
+  }
+});
+
+// ─── CHARGEMENT PORTAIL ───
+async function chargerPortail(user) {
+  try {
+    let nom = user.displayName || user.email.split('@')[0];
+    let clientId = '';
+    let entreprise = '';
+
+    try {
+      const userDoc = await db.collection('utilisateurs').doc(user.uid).get();
+      if (userDoc.exists) {
+        const d = userDoc.data();
+        nom = d.nom || nom;
+        clientId = d.clientId || '';
+        entreprise = d.entreprise || '';
+      }
+    } catch(e) {}
+
+    // Mise à jour UI
+    const prenom = nom.split(' ')[0];
+    document.getElementById('hdr-user').innerHTML = `<strong>${nom}</strong>`;
+    document.getElementById('hdr-user2').innerHTML = `<strong>${nom}</strong>`;
+    document.getElementById('welc-title').textContent = 'Bonjour, ' + prenom;
+    const today = new Date();
+    const months = ["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"];
+    const dateStr = `${today.getDate()} ${months[today.getMonth()]} ${today.getFullYear()}`;
+    let subTxt = dateStr;
+    if (entreprise) subTxt += ` — ${entreprise}`;
+    if (clientId) subTxt += ` — ID : ${clientId}`;
+    document.getElementById('welc-sub').textContent = subTxt;
+
+    // Charger dossiers depuis Firebase
+    try {
+      const snap = await db.collection('dossiers_clients')
+        .where('clientEmail', '==', user.email.toLowerCase())
+        .get();
+
+      LOANS = snap.empty ? DEMO_LOANS : snap.docs.map(d => ({...d.data(), _firebaseId: d.id}));
+    } catch(e) {
+      LOANS = DEMO_LOANS;
+    }
+
+    // Afficher dashboard
+    document.getElementById('loading-overlay').classList.add('hidden');
+    document.getElementById('login-screen').classList.add('hidden');
+    document.getElementById('dash-screen').classList.remove('hidden');
+    renderDash();
+
+  } catch(err) {
+    console.error(err);
+    LOANS = DEMO_LOANS;
+    document.getElementById('loading-overlay').classList.add('hidden');
+    document.getElementById('login-screen').classList.add('hidden');
+    document.getElementById('dash-screen').classList.remove('hidden');
+    renderDash();
+  }
+}
+
+// ─── LOGIN ───
+document.getElementById('login-form').onsubmit = async function(e) {
+  e.preventDefault();
+  const em = document.getElementById('login-email').value.trim();
+  const pw = document.getElementById('login-pass').value;
+  const errEl = document.getElementById('login-err');
+  const btn = document.getElementById('login-btn');
+
+  if(!em || !pw) {
+    errEl.textContent = 'Veuillez remplir tous les champs.';
+    errEl.classList.remove('hidden');
+    return;
+  }
+
+  btn.textContent = 'Connexion en cours...';
+  btn.disabled = true;
+  errEl.classList.add('hidden');
+
+  try {
+    await auth.signInWithEmailAndPassword(em, pw);
+  } catch(err) {
+    let msg = 'Courriel ou mot de passe incorrect.';
+    if (err.code === 'auth/too-many-requests') msg = 'Trop de tentatives. Réessayez dans quelques minutes.';
+    if (err.code === 'auth/network-request-failed') msg = 'Erreur réseau. Vérifiez votre connexion.';
+    errEl.textContent = msg;
+    errEl.classList.remove('hidden');
+    btn.textContent = 'Accéder à mon espace';
+    btn.disabled = false;
+  }
+};
+
+function logout() { auth.signOut(); }
+function showDash(){document.getElementById('detail-screen').classList.add('hidden');document.getElementById('dash-screen').classList.remove('hidden')}
+
+// ─── DASHBOARD ───
+function renderDash(){
+  const totApp=LOANS.reduce((s,l)=>s+l.total,0);
+  const totDisb=LOANS.reduce((s,l)=>s+l.disbursements.filter(d=>d.status==='déboursé').reduce((a,d)=>a+d.amount,0),0);
+  const totPaid=LOANS.reduce((s,l)=>s+l.payments.filter(p=>p.status==='payé').reduce((a,p)=>a+p.interest,0),0);
+  const nextAmt=LOANS.flatMap(l=>l.payments).filter(p=>p.status==='en attente').reduce((s,p)=>s+p.interest,0);
+
+  document.getElementById('kpi-grid').innerHTML=`
+    <div class="kpi"><div class="kpi-l">Financement autorisé</div><div class="kpi-v">${fmt(totApp)}</div><div class="kpi-s">${LOANS.length} prêts actifs</div></div>
+    <div class="kpi"><div class="kpi-l">Déboursé à ce jour</div><div class="kpi-v gld">${fmt(totDisb)}</div><div class="kpi-s">${pct(totDisb,totApp)}% du financement</div></div>
+    <div class="kpi"><div class="kpi-l">Intérêts versés</div><div class="kpi-v">${fmt(totPaid)}</div><div class="kpi-s">Depuis le début</div></div>
+    <div class="kpi"><div class="kpi-l">Prochain paiement</div><div class="kpi-v" style="color:var(--amber)">${fmtD(nextAmt)}</div><div class="kpi-s pulse" style="color:var(--amber)">En attente</div></div>
+  `;
+
+  if(LOANS.length === 0){
+    document.getElementById('loan-list').innerHTML = `<div class="empty-state"><h3>Aucun projet actif</h3><p>Vos dossiers de financement apparaîtront ici dès leur activation.</p></div>`;
+    return;
+  }
+
+  document.getElementById('loan-list').innerHTML=LOANS.map((l,i)=>{
+    const disb=l.disbursements.filter(d=>d.status==='déboursé').reduce((s,d)=>s+d.amount,0);
+    const dp=pct(disb,l.total);
+    const paid=l.payments.filter(p=>p.status==='payé').length;
+    return`<div class="lcard" onclick="showDetail(${i})">
+      <div class="lcard-h"><div>
+        <div class="lc-id">${l.id}</div><div class="lc-proj">${l.project}</div>
+        <div class="lc-addr">🏢 ${l.address}<span class="prov-tag">${l.province}</span></div>
+        <div class="lc-type">🏗 Prêt de construction</div>
+      </div><div class="lc-r">
+        <div class="lc-amt">${fmt(l.total)}</div><div class="lc-disb">Déboursé : ${fmt(disb)} (${dp}%)</div>
+        <div class="badge badge-g">✓ Actif</div>
+      </div></div>
+      <div class="prog-bar"><div class="prog-fill" style="width:${dp}%"></div></div>
+      <div class="lcard-stats">
+        <div class="ls"><div class="ls-l">Taux</div><div class="ls-v">${l.rate}%</div></div>
+        <div class="ls"><div class="ls-l">Ratio P/V</div><div class="ls-v">${l.ltv}%</div></div>
+        <div class="ls"><div class="ls-l">Paiements</div><div class="ls-v">${paid} / ${l.payments.length}</div></div>
+        <div class="ls"><div class="ls-l">Échéance</div><div class="ls-v">${fmtDate(l.end)}</div></div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ─── DETAIL ───
+function showDetail(idx){
+  const l=LOANS[idx];
+  const disb=l.disbursements.filter(d=>d.status==='déboursé').reduce((s,d)=>s+d.amount,0);
+  const dp=pct(disb,l.total);
+  const rem=l.total-disb;
+  const totPaid=l.payments.filter(p=>p.status==='payé').reduce((s,p)=>s+p.interest,0);
+  const totExp=l.payments.reduce((s,p)=>s+p.interest,0);
+
+  const timeline=l.disbursements.map((d,i)=>{
+    const done=d.status==='déboursé',curr=d.status==='approuvé';
+    return`<div class="tl-item">
+      <div class="tl-line"></div>
+      <div class="tl-dot ${done?'tl-dot-done':curr?'tl-dot-curr':'tl-dot-future'}">${done?'✓':curr?'⏳':i+1}</div>
+      <div class="tl-body">
+        <div class="tl-phase">${d.phase}</div>
+        <div class="tl-meta">${done?'Déboursé le '+fmtDate(d.date):curr?'Approuvé — Déboursement prévu : '+fmtDate(d.date):'Prévu : '+fmtDate(d.date)}</div>
+        <div class="tl-amt ${done?'done':curr?'curr':'future'}">${fmt(d.amount)}</div>
+        ${done&&d.inspector?`<div class="tl-inspect">✓ Inspecté — ${d.inspector} (${fmtDate(d.inspDate)})</div>`:''}
+        ${curr?`<div class="tl-inspect tl-inspect-p">⏳ Inspection à planifier</div>`:''}
+      </div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('detail-content').innerHTML=`
+    <div class="det-hero"><div class="det-hero-top"><div>
+      <div class="det-id">${l.id}</div><div class="det-proj">${l.project}</div>
+      <div class="det-addr">🏢 ${l.address}<span class="prov-tag">${l.province}</span></div>
+      <div class="det-desc">${l.description}</div>
+    </div><div class="det-amtb"><div class="det-amt">${fmt(l.total)}</div><div class="det-amtl">Financement autorisé</div></div></div></div>
+
+    <div class="disb-card">
+      <div class="disb-head"><div class="disb-title">💰 Déboursés de construction</div><div class="disb-sum">Déboursé : <strong>${fmt(disb)}</strong> — Reste : ${fmt(rem)}</div></div>
+      <div class="disb-prog"><div class="disb-prog-bar"><div class="disb-prog-fill" style="width:${dp}%"></div></div><div class="disb-prog-txt">${dp}%</div></div>
+      <div class="tl">${timeline}</div>
+    </div>
+
+    <div class="det-grid">
+      <div class="det-sec">
+        <div class="det-sec-t">🏢 Détails du projet</div>
+        <div class="det-row"><span class="det-rl">Type</span><span class="det-rv">${l.description}</span></div>
+        <div class="det-row"><span class="det-rl">Entrepreneur général</span><span class="det-rv">${l.contractor}</span></div>
+        <div class="det-row"><span class="det-rl">Architecte</span><span class="det-rv">${l.architect}</span></div>
+        <div class="det-row"><span class="det-rl">Permis</span><span class="det-rv">${l.permit}</span></div>
+        <div class="det-row"><span class="det-rl">Taux</span><span class="det-rv">${l.rate}%</span></div>
+        <div class="det-row"><span class="det-rl">Terme</span><span class="det-rv">${l.term}</span></div>
+        <div class="det-row"><span class="det-rl">Début</span><span class="det-rv">${fmtDate(l.start)}</span></div>
+        <div class="det-row"><span class="det-rl">Échéance</span><span class="det-rv">${fmtDate(l.end)}</span></div>
+      </div>
+      <div class="det-sec">
+        <div class="det-sec-t">🛡 Garantie & hypothèque</div>
+        <div class="det-row"><span class="det-rl">Valeur estimée (complété)</span><span class="det-rv">${fmt(l.appraisal)}</span></div>
+        <div class="det-row"><span class="det-rl">Ratio prêt-valeur</span><span class="det-rv">${l.ltv}%</span></div>
+        <div class="det-row"><span class="det-rl">Hypothèque immobilière</span><span class="det-rv" style="color:var(--green)">1er rang ✓</span></div>
+        <div class="det-row"><span class="det-rl">${l.legalType}</span><span class="det-rv">${l.legal}</span></div>
+        <div style="margin-top:16px">
+          <div class="det-sec-t" style="font-size:14px">📄 Documents</div>
+          <div class="docs">
+            <div class="doc">📄 <span>Contrat de prêt</span></div>
+            <div class="doc">📄 <span>Acte hypothécaire</span></div>
+            <div class="doc">📄 <span>Rapport d'évaluation</span></div>
+            <div class="doc">📄 <span>Calendrier de déboursés</span></div>
+            <div class="doc">📄 <span>Rapports d'inspection</span></div>
+            <div class="doc">📄 <span>Permis de construction</span></div>
+            ${l.province==='ON'?'<div class="doc">📄 <span>Title insurance — Ontario</span></div>':''}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pay-wrap">
+      <div class="pay-head"><div class="pay-title">Échéancier des paiements d'intérêts</div><div class="pay-sum">Payé : <strong>${fmtD(totPaid)}</strong> / ${fmtD(totExp)}</div></div>
+      <div class="pay-note">ℹ️ Les intérêts sont calculés uniquement sur le montant déboursé à date — ils augmentent à chaque nouveau déboursé.</div>
+      <div style="overflow-x:auto"><table>
+        <thead><tr><th>Date</th><th>Intérêts</th><th>Calculé sur</th><th>Capital</th><th>Statut</th></tr></thead>
+        <tbody>${l.payments.map(p=>`<tr class="${p.capital?'row-cap':''}">
+          <td>${fmtDate(p.date)}</td><td>${fmtD(p.interest)}</td>
+          <td style="color:var(--ink-m);font-size:12px">${fmt(p.on)}</td>
+          <td>${p.capital?fmt(p.capital):'—'}</td><td>${pill(p.status)}</td>
+        </tr>`).join('')}</tbody>
+      </table></div>
+    </div>
+
+    <div class="contact-bar">
+      <div class="contact-txt">Une question sur votre financement? <strong>Notre équipe est disponible pour vous.</strong></div>
+      <button class="contact-btn">📞 Contacter Capital Norvex</button>
+    </div>
+  `;
+
+  document.getElementById('dash-screen').classList.add('hidden');
+  document.getElementById('detail-screen').classList.remove('hidden');
+  window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>
