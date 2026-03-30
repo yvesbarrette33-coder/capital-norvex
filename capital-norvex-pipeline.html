@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Capital Norvex — Gestion des Dossiers</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ink:#0a0d13;--ink2:#131720;--ink3:#1b2231;
+  --gold:#b8975a;--gold2:#d4b07a;--gold-pale:#f0e6d0;
+  --cream:#faf8f4;--stone:#e8e3da;--muted:#7a8294;--muted2:#a0a8b8;
+  --green:#2d6a4f;--green2:#52b788;--green-bg:rgba(82,183,136,.12);
+  --red:#c0392b;--red2:#e74c3c;--red-bg:rgba(192,57,43,.1);
+  --amber:#b7791f;--amber2:#d4a017;--amber-bg:rgba(183,121,31,.12);
+  --blue:#1a5276;--blue2:#2e86c1;--blue-bg:rgba(46,134,193,.1);
+  --purple:#6c3483;--purple2:#9b59b6;--purple-bg:rgba(155,89,182,.1);
+  --border:rgba(184,151,90,.15);
+  --sidebar:220px;
+}
+html{scroll-behavior:smooth}
+body{background:#eeebe5;color:var(--ink);font-family:'DM Sans',sans-serif;font-weight:300;min-height:100vh;overflow-x:hidden}
+
+/* ── TOPBAR ── */
+.topbar{background:var(--ink);display:flex;align-items:center;justify-content:space-between;padding:.85rem 2rem;position:sticky;top:0;z-index:300;border-bottom:1px solid var(--border)}
+.tb-left{display:flex;align-items:center;gap:1.2rem}
+.tb-logo{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--gold);letter-spacing:.04em}
+.tb-sep{width:1px;height:20px;background:rgba(255,255,255,.1)}
+.tb-title{font-size:.58rem;letter-spacing:.24em;text-transform:uppercase;color:var(--muted2)}
+.tb-right{display:flex;align-items:center;gap:1.2rem}
+.tb-badge{display:flex;align-items:center;gap:.4rem;font-size:.54rem;letter-spacing:.15em;text-transform:uppercase;background:var(--green-bg);color:var(--green2);border:1px solid rgba(82,183,136,.3);padding:.28rem .75rem}
+.live{width:6px;height:6px;background:var(--green2);border-radius:50%;animation:blink 1.5s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.tb-user{display:flex;align-items:center;gap:.6rem;font-size:.68rem;color:var(--muted2);cursor:pointer}
+.tb-avatar{width:28px;height:28px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:500;color:var(--ink)}
+.tb-back{font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted2);text-decoration:none;border:1px solid rgba(255,255,255,.12);padding:.38rem .9rem;transition:all .2s}
+.tb-back:hover{border-color:var(--gold);color:var(--gold)}
+
+/* ── LAYOUT ── */
+.app{display:grid;grid-template-columns:var(--sidebar) 1fr;min-height:calc(100vh - 48px)}
+
+/* ── SIDEBAR ── */
+.sidebar{background:var(--ink2);border-right:1px solid var(--border);padding:1.5rem 0;position:sticky;top:48px;height:calc(100vh - 48px);overflow-y:auto;display:flex;flex-direction:column}
+.sb-label{font-size:.5rem;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);padding:.8rem 1.4rem .3rem;display:block}
+.sb-item{display:flex;align-items:center;justify-content:space-between;padding:.6rem 1.4rem;cursor:pointer;font-size:.72rem;color:var(--muted2);transition:all .2s;border-left:2px solid transparent;user-select:none}
+.sb-item:hover{color:var(--cream);background:rgba(255,255,255,.03);border-left-color:rgba(184,151,90,.3)}
+.sb-item.active{color:var(--cream);background:rgba(255,255,255,.05);border-left-color:var(--gold)}
+.sb-item-ico{width:14px;text-align:center;opacity:.7;margin-right:.5rem}
+.sb-count{font-size:.52rem;background:rgba(184,151,90,.15);color:var(--gold);padding:.12rem .45rem;border-radius:2px;font-family:'DM Mono',monospace}
+.sb-count.red{background:var(--red-bg);color:var(--red2)}
+.sb-count.green{background:var(--green-bg);color:var(--green2)}
+.sb-divider{height:1px;background:var(--border);margin:.8rem 1.4rem}
+.sb-bottom{margin-top:auto;padding:1rem 1.4rem;border-top:1px solid var(--border)}
+.sb-version{font-size:.52rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);opacity:.5}
+
+/* ── MAIN ── */
+.main{padding:2rem;overflow-y:auto}
+
+/* ── HEADER ── */
+.page-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2rem}
+.page-tag{font-size:.58rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:.7rem;margin-bottom:.5rem}
+.page-tag::before{content:"";display:block;width:1.5rem;height:1px;background:var(--gold)}
+.page-title{font-family:'Playfair Display',serif;font-size:2rem;font-weight:400;color:var(--ink)}
+.page-title em{font-style:italic;color:var(--gold)}
+.btn-new{background:var(--gold);color:var(--ink);padding:.7rem 1.8rem;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s;display:flex;align-items:center;gap:.6rem}
+.btn-new:hover{background:var(--gold2)}
+
+/* ── KPI STRIP ── */
+.kpi-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--stone);margin-bottom:2rem}
+.kpi{background:var(--cream);padding:1.2rem 1.4rem}
+.kpi-val{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:400;color:var(--ink);line-height:1}
+.kpi-val.gold{color:var(--gold)}
+.kpi-val.green{color:var(--green2)}
+.kpi-val.red{color:var(--red2)}
+.kpi-label{font-size:.56rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:.35rem}
+.kpi-sub{font-size:.62rem;color:var(--green2);margin-top:.2rem}
+
+/* ── FILTERS ── */
+.filters{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap}
+.search-wrap{position:relative;flex:1;max-width:320px}
+.search-input{width:100%;background:var(--cream);border:1px solid var(--stone);padding:.6rem 1rem .6rem 2.4rem;font-size:.75rem;font-family:'DM Sans',sans-serif;color:var(--ink);outline:none;transition:border-color .2s}
+.search-input:focus{border-color:var(--gold)}
+.search-ico{position:absolute;left:.8rem;top:50%;transform:translateY(-50%);color:var(--muted);font-size:.8rem}
+.filter-btn{font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;border:1px solid var(--stone);background:var(--cream);color:var(--muted);padding:.5rem 1rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+.filter-btn:hover,.filter-btn.active{border-color:var(--gold);color:var(--gold);background:#fdf9f4}
+.filter-sep{width:1px;height:24px;background:var(--stone)}
+.view-toggle{display:flex;border:1px solid var(--stone);overflow:hidden}
+.view-btn{background:var(--cream);border:none;padding:.5rem .8rem;cursor:pointer;color:var(--muted);font-size:.8rem;transition:all .2s}
+.view-btn.active{background:var(--ink);color:var(--cream)}
+
+/* ── PIPELINE VIEW ── */
+.pipeline{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem}
+.pipeline-col{background:var(--cream);border-top:3px solid var(--stone)}
+.pipeline-col.col-new{border-top-color:var(--blue2)}
+.pipeline-col.col-analyse{border-top-color:var(--amber2)}
+.pipeline-col.col-loi{border-top-color:var(--purple2)}
+.pipeline-col.col-docs{border-top-color:var(--gold)}
+.pipeline-col.col-final{border-top-color:var(--green2)}
+.pipeline-col.col-notaire{border-top-color:#27ae60}
+.col-header{padding:.9rem 1rem;border-bottom:1px solid var(--stone);display:flex;align-items:center;justify-content:space-between}
+.col-name{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink);font-weight:500}
+.col-badge{font-size:.52rem;font-family:'DM Mono',monospace;background:var(--stone);color:var(--muted);padding:.12rem .45rem}
+.col-cards{padding:.75rem;display:flex;flex-direction:column;gap:.6rem;min-height:200px}
+
+/* ── DOSSIER CARD ── */
+.dcard{background:#fff;border:1px solid var(--stone);padding:.9rem;cursor:pointer;transition:all .2s;position:relative}
+.dcard:hover{border-color:var(--gold);box-shadow:0 2px 12px rgba(184,151,90,.12);transform:translateY(-1px)}
+.dcard-id{font-family:'DM Mono',monospace;font-size:.54rem;color:var(--muted2);margin-bottom:.5rem}
+.dcard-name{font-size:.8rem;font-weight:500;color:var(--ink);margin-bottom:.2rem}
+.dcard-type{font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.dcard-amount{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold);margin:.5rem 0 .4rem}
+.dcard-footer{display:flex;align-items:center;justify-content:space-between;margin-top:.6rem;padding-top:.6rem;border-top:1px solid var(--stone)}
+.dcard-days{font-size:.58rem;color:var(--muted)}
+.dcard-priority{font-size:.5rem;letter-spacing:.14em;text-transform:uppercase;padding:.18rem .5rem;border:1px solid}
+.priority-high{border-color:rgba(192,57,43,.4);color:var(--red2);background:var(--red-bg)}
+.priority-med{border-color:rgba(183,121,31,.4);color:var(--amber2);background:var(--amber-bg)}
+.priority-low{border-color:rgba(82,183,136,.4);color:var(--green2);background:var(--green-bg)}
+.dcard-alert{position:absolute;top:.6rem;right:.6rem;width:7px;height:7px;background:var(--red2);border-radius:50%}
+
+/* ── LIST VIEW ── */
+.list-view{display:none}
+.list-table{width:100%;border-collapse:collapse;background:var(--cream)}
+.list-table th{background:var(--ink);color:var(--cream);font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;padding:.75rem 1rem;text-align:left;font-weight:400}
+.list-table td{padding:.85rem 1rem;border-bottom:1px solid var(--stone);font-size:.78rem;vertical-align:middle}
+.list-table tr:hover td{background:#fdf9f4;cursor:pointer}
+.stage-pill{font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;padding:.22rem .65rem;border:1px solid;white-space:nowrap}
+.stage-nouvelle{border-color:rgba(46,134,193,.4);color:var(--blue2);background:var(--blue-bg)}
+.stage-analyse{border-color:rgba(212,160,23,.4);color:var(--amber2);background:var(--amber-bg)}
+.stage-loi{border-color:rgba(155,89,182,.4);color:var(--purple2);background:var(--purple-bg)}
+.stage-docs{border-color:rgba(184,151,90,.4);color:var(--gold);background:rgba(184,151,90,.08)}
+.stage-final{border-color:rgba(82,183,136,.4);color:var(--green2);background:var(--green-bg)}
+.stage-notaire{border-color:rgba(39,174,96,.4);color:#27ae60;background:rgba(39,174,96,.08)}
+.stage-decaisse{border-color:rgba(46,134,193,.5);color:#1a7ab5;background:rgba(46,134,193,.08)}
+.td-name{font-weight:500;color:var(--ink)}
+.td-id{font-family:'DM Mono',monospace;font-size:.62rem;color:var(--muted2)}
+.td-amount{font-family:'Playfair Display',serif;font-size:1rem;color:var(--gold)}
+.td-days{font-size:.65rem;color:var(--muted)}
+
+/* ── DOSSIER DETAIL PANEL ── */
+.detail-overlay{display:none;position:fixed;inset:0;background:rgba(10,13,19,.6);z-index:400;backdrop-filter:blur(4px)}
+.detail-panel{position:fixed;right:0;top:0;bottom:0;width:640px;background:var(--cream);z-index:500;overflow-y:auto;transform:translateX(100%);transition:transform .35s cubic-bezier(.22,.61,.36,1)}
+.detail-panel.open{transform:translateX(0)}
+.dp-header{background:var(--ink);padding:1.5rem 2rem;position:sticky;top:0;z-index:10}
+.dp-close{display:flex;align-items:center;gap:.5rem;font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted2);cursor:pointer;border:1px solid rgba(255,255,255,.12);background:transparent;padding:.4rem 1rem;font-family:'DM Sans',sans-serif;transition:all .2s;margin-bottom:1rem}
+.dp-close:hover{border-color:var(--gold);color:var(--gold)}
+.dp-id{font-family:'DM Mono',monospace;font-size:.58rem;color:var(--muted2);margin-bottom:.3rem}
+.dp-name{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--cream);margin-bottom:.4rem}
+.dp-amount{font-family:'Playfair Display',serif;font-size:2rem;color:var(--gold);line-height:1}
+.dp-body{padding:2rem}
+
+/* ── PIPELINE PROGRESS ── */
+.dp-pipeline{display:flex;margin-bottom:2rem;overflow:hidden;background:var(--stone)}
+.dp-stage{flex:1;padding:.5rem .3rem;text-align:center;font-size:.48rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);border-right:1px solid var(--stone);transition:all .2s;position:relative}
+.dp-stage.done{background:var(--ink);color:var(--gold)}
+.dp-stage.active{background:var(--gold);color:var(--ink);font-weight:500}
+.dp-stage:last-child{border-right:none}
+
+/* ── DETAIL SECTIONS ── */
+.dp-section{margin-bottom:2rem}
+.dp-section-title{font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid var(--stone);padding-bottom:.6rem;margin-bottom:1rem;display:flex;align-items:center;gap:.6rem}
+.dp-section-title::before{content:"";display:block;width:1rem;height:1px;background:var(--gold)}
+.dp-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.dp-field label{font-size:.54rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.3rem}
+.dp-field span{font-size:.82rem;color:var(--ink);font-weight:400}
+.dp-field span.mono{font-family:'DM Mono',monospace;font-size:.75rem}
+
+/* ── DOCUMENTS ── */
+.doc-list{display:flex;flex-direction:column;gap:.5rem}
+.doc-item{display:flex;align-items:center;justify-content:space-between;padding:.7rem .9rem;border:1px solid var(--stone);background:#fff}
+.doc-name{font-size:.75rem;color:var(--ink)}
+.doc-status{font-size:.5rem;letter-spacing:.14em;text-transform:uppercase;padding:.18rem .5rem;border:1px solid}
+.doc-recu{border-color:rgba(82,183,136,.4);color:var(--green2);background:var(--green-bg)}
+.doc-manquant{border-color:rgba(192,57,43,.4);color:var(--red2);background:var(--red-bg)}
+.doc-attente{border-color:rgba(183,121,31,.4);color:var(--amber2);background:var(--amber-bg)}
+.doc-btn{font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;border:1px solid var(--stone);background:transparent;color:var(--muted);padding:.25rem .6rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+.doc-btn:hover{border-color:var(--gold);color:var(--gold)}
+
+/* ── NOTES / ACTIVITÉ ── */
+.activity{display:flex;flex-direction:column;gap:.75rem}
+.act-item{display:flex;gap:.9rem;align-items:flex-start}
+.act-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:.3rem}
+.act-dot.green{background:var(--green2)}
+.act-dot.red{background:var(--red2)}
+.act-dot.muted{background:var(--stone)}
+.act-content{flex:1}
+.act-text{font-size:.75rem;color:var(--ink);line-height:1.6}
+.act-time{font-size:.58rem;color:var(--muted);font-family:'DM Mono',monospace;margin-top:.1rem}
+.act-line{width:1px;background:var(--stone);position:absolute;left:3px;top:12px;bottom:-12px}
+
+/* ── NOTES INPUT ── */
+.note-input-wrap{display:flex;gap:.6rem;margin-top:1rem}
+.note-input{flex:1;background:#fff;border:1px solid var(--stone);padding:.6rem .9rem;font-size:.75rem;font-family:'DM Sans',sans-serif;color:var(--ink);outline:none;resize:none;height:60px;transition:border-color .2s}
+.note-input:focus{border-color:var(--gold)}
+.note-submit{background:var(--gold);border:none;color:var(--ink);padding:.6rem 1.2rem;font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s;align-self:flex-end}
+.note-submit:hover{background:var(--gold2)}
+
+/* ── ACTIONS ── */
+.dp-actions{display:flex;gap:.7rem;flex-wrap:wrap;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--stone)}
+.action-btn{font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;padding:.65rem 1.4rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;border:1px solid;font-weight:500}
+.action-primary{background:var(--gold);border-color:var(--gold);color:var(--ink)}
+.action-primary:hover{background:var(--gold2);border-color:var(--gold2)}
+.action-secondary{background:transparent;border-color:var(--ink);color:var(--ink)}
+.action-secondary:hover{background:var(--ink);color:var(--cream)}
+.action-danger{background:transparent;border-color:rgba(192,57,43,.4);color:var(--red2)}
+.action-danger:hover{background:var(--red-bg)}
+
+/* ── MODAL NOUVEAU DOSSIER ── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(10,13,19,.7);z-index:600;backdrop-filter:blur(6px);overflow-y:auto}
+.modal{background:var(--cream);max-width:600px;margin:3rem auto;padding:2.5rem}
+.modal-title{font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--ink);margin-bottom:.3rem}
+.modal-sub{font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:2rem}
+.modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-bottom:1.2rem}
+.form-field label{display:block;font-size:.54rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem}
+.form-field input,.form-field select,.form-field textarea{width:100%;background:#fff;border:1px solid var(--stone);padding:.65rem .9rem;font-size:.78rem;font-family:'DM Sans',sans-serif;color:var(--ink);outline:none;transition:border-color .2s}
+.form-field input:focus,.form-field select:focus,.form-field textarea:focus{border-color:var(--gold)}
+.form-field.full{grid-column:1/-1}
+.modal-footer{display:flex;justify-content:flex-end;gap:.8rem;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--stone)}
+.btn-cancel{background:transparent;border:1px solid var(--stone);color:var(--muted);padding:.7rem 1.5rem;font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+.btn-cancel:hover{border-color:var(--ink);color:var(--ink)}
+.btn-create{background:var(--gold);border:none;color:var(--ink);padding:.7rem 2rem;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s}
+.btn-create:hover{background:var(--gold2)}
+
+/* ── SCORE DISPLAY ── */
+.score-ring{width:56px;height:56px;border-radius:50%;background:conic-gradient(var(--green2) 0%,var(--stone) 0%);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:.9rem;font-weight:500;flex-shrink:0;position:relative}
+.score-ring::before{content:"";position:absolute;inset:5px;background:var(--cream);border-radius:50%}
+.score-ring span{position:relative;z-index:1}
+
+/* ── EMPTY STATE ── */
+.empty-col{text-align:center;padding:2rem 1rem;color:var(--muted);font-size:.7rem}
+
+/* ── ALERTES ── */
+.alerts-bar{background:var(--red-bg);border:1px solid rgba(192,57,43,.2);padding:.7rem 1.2rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:.8rem;font-size:.72rem;color:var(--red2)}
+.alerts-bar strong{font-weight:500}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1100px){
+  .pipeline{grid-template-columns:repeat(2,1fr)}
+  .kpi-strip{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:768px){
+  :root{--sidebar:0px}
+  .sidebar{display:none}
+  .pipeline{grid-template-columns:1fr}
+  .detail-panel{width:100%}
+  .kpi-strip{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="tb-left">
+    <div class="tb-logo">Capital Norvex</div>
+    <div class="tb-sep"></div>
+    <div class="tb-title">Gestion des dossiers</div>
+  </div>
+  <div class="tb-right">
+    <div class="tb-badge"><span class="live"></span> Système actif</div>
+    <a href="capital-norvex-ops.html" class="tb-back">Tableau de bord →</a>
+    <a href="capital-norvex-final.html" class="tb-back">← Site public</a>
+    <div class="tb-user">
+      <div class="tb-avatar">MN</div>
+      <span>Maxime</span>
+    </div>
+  </div>
+</div>
+
+<div class="app">
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <span class="sb-label">Navigation</span>
+  <div class="sb-item active" onclick="setView('pipeline')">
+    <span><span class="sb-item-ico">⬡</span> Pipeline</span>
+    <span class="sb-count" id="sb-total">0</span>
+  </div>
+  <div class="sb-item" onclick="setView('list')">
+    <span><span class="sb-item-ico">≡</span> Tous les dossiers</span>
+  </div>
+  <div class="sb-divider"></div>
+  <span class="sb-label">Étapes</span>
+  <div class="sb-item" onclick="filterStage('nouvelle')">
+    <span>📥 Nouvelles demandes</span>
+    <span class="sb-count" id="sb-nouvelle">0</span>
+  </div>
+  <div class="sb-item" onclick="filterStage('analyse')">
+    <span>🔍 En analyse</span>
+    <span class="sb-count" id="sb-analyse">0</span>
+  </div>
+  <div class="sb-item" onclick="filterStage('loi')">
+    <span>📋 LOI émise</span>
+    <span class="sb-count" id="sb-loi">0</span>
+  </div>
+  <div class="sb-item" onclick="filterStage('docs')">
+    <span>📂 Documents requis</span>
+    <span class="sb-count red" id="sb-docs">0</span>
+  </div>
+  <div class="sb-item" onclick="filterStage('final')">
+    <span>✓ Analyse finale</span>
+    <span class="sb-count" id="sb-final">0</span>
+  </div>
+  <div class="sb-item" onclick="filterStage('notaire')">
+    <span>⚖ Chez le notaire</span>
+    <span class="sb-count green" id="sb-notaire">0</span>
+  </div>
+  <div class="sb-item" onclick="filterStage('decaisse')">
+    <span>💰 Décaissés</span>
+    <span class="sb-count green" id="sb-decaisse">0</span>
+  </div>
+  <div class="sb-divider"></div>
+  <div class="sb-item" onclick="filterPriority('high')">
+    <span>🔴 Priorité haute</span>
+    <span class="sb-count red" id="sb-urgent">0</span>
+  </div>
+  <div class="sb-bottom">
+    <div class="sb-version">Capital Norvex CRM v1.0</div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- ALERTS -->
+  <div class="alerts-bar" id="alertBar" style="display:none">
+    ⚠ <strong id="alertCount">0</strong>&nbsp;dossier(s) nécessitent votre attention — documents manquants ou délai dépassé.
+  </div>
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div>
+      <div class="page-tag">Tableau de bord opérationnel</div>
+      <div class="page-title">Suivi des <em>dossiers</em></div>
+    </div>
+    <button class="btn-new" onclick="openModal()">＋ Nouveau dossier</button>
+  </div>
+
+  <!-- KPI STRIP -->
+  <div class="kpi-strip">
+    <div class="kpi">
+      <div class="kpi-val" id="kpi-actifs">0</div>
+      <div class="kpi-label">Dossiers actifs</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-val gold" id="kpi-volume">0</div>
+      <div class="kpi-label">Volume en traitement</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-val green" id="kpi-semaine">0</div>
+      <div class="kpi-label">Financés cette semaine</div>
+      <div class="kpi-sub" id="kpi-semaine-vol"></div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-val red" id="kpi-attente">0</div>
+      <div class="kpi-label">En attente de docs</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-val" id="kpi-score">–</div>
+      <div class="kpi-label">Score Norvex™ moy.</div>
+    </div>
+  </div>
+
+  <!-- FILTERS -->
+  <div class="filters">
+    <div class="search-wrap">
+      <span class="search-ico">🔍</span>
+      <input type="text" class="search-input" placeholder="Rechercher un dossier, client..." id="searchInput" oninput="filterSearch()">
+    </div>
+    <button class="filter-btn active" id="fb-all" onclick="filterAll()">Tous</button>
+    <button class="filter-btn" id="fb-urgent" onclick="filterUrgent()">Urgents</button>
+    <div class="filter-sep"></div>
+    <div class="view-toggle">
+      <button class="view-btn active" id="vb-pipeline" onclick="setView('pipeline')" title="Pipeline">⬛⬛</button>
+      <button class="view-btn" id="vb-list" onclick="setView('list')" title="Liste">☰</button>
+    </div>
+  </div>
+
+  <!-- PIPELINE VIEW -->
+  <div id="pipelineView">
+    <div class="pipeline" id="pipelineBoard"></div>
+  </div>
+
+  <!-- LIST VIEW -->
+  <div id="listView" class="list-view">
+    <table class="list-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Client</th>
+          <th>Type</th>
+          <th>Montant</th>
+          <th>Étape</th>
+          <th>Score</th>
+          <th>Jours</th>
+          <th>Priorité</th>
+        </tr>
+      </thead>
+      <tbody id="listBody"></tbody>
+    </table>
+  </div>
+
+</div>
+</div>
+
+<!-- DETAIL PANEL -->
+<div class="detail-overlay" id="detailOverlay" onclick="closeDetail()"></div>
+<div class="detail-panel" id="detailPanel">
+  <div class="dp-header">
+    <button class="dp-close" onclick="closeDetail()">✕ Fermer</button>
+    <div class="dp-id" id="dp-id"></div>
+    <div class="dp-name" id="dp-name"></div>
+    <div class="dp-amount" id="dp-amount"></div>
+  </div>
+  <div class="dp-body">
+    <!-- Pipeline progress -->
+    <div class="dp-pipeline" id="dp-pipeline"></div>
+
+    <!-- Infos dossier -->
+    <div class="dp-section">
+      <div class="dp-section-title">Informations du dossier</div>
+      <div class="dp-grid" id="dp-info"></div>
+    </div>
+
+    <!-- Score Norvex -->
+    <div class="dp-section" id="dp-score-section">
+      <div class="dp-section-title">Score Norvex™</div>
+      <div style="display:flex;align-items:center;gap:1.5rem" id="dp-score-content"></div>
+    </div>
+
+    <!-- Documents -->
+    <div class="dp-section">
+      <div class="dp-section-title">Documents requis</div>
+      <div class="doc-list" id="dp-docs"></div>
+    </div>
+
+    <!-- Activité -->
+    <div class="dp-section">
+      <div class="dp-section-title">Activité & notes</div>
+      <div class="activity" id="dp-activity"></div>
+      <div class="note-input-wrap">
+        <textarea class="note-input" id="noteInput" placeholder="Ajouter une note..."></textarea>
+        <button class="note-submit" onclick="addNote()">Ajouter</button>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="dp-actions" id="dp-actions"></div>
+  </div>
+</div>
+
+<!-- MODAL NOUVEAU DOSSIER -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-title">Nouveau dossier</div>
+    <div class="modal-sub">Créer un dossier manuellement</div>
+    <div class="modal-grid">
+      <div class="form-field">
+        <label>Prénom</label>
+        <input type="text" id="f-prenom" placeholder="Jean">
+      </div>
+      <div class="form-field">
+        <label>Nom</label>
+        <input type="text" id="f-nom" placeholder="Tremblay">
+      </div>
+      <div class="form-field">
+        <label>Courriel</label>
+        <input type="email" id="f-email" placeholder="jean@exemple.ca">
+      </div>
+      <div class="form-field">
+        <label>Téléphone</label>
+        <input type="tel" id="f-tel" placeholder="514-000-0000">
+      </div>
+      <div class="form-field">
+        <label>Type de prêt</label>
+        <select id="f-type">
+          <option value="Pont">Prêt pont</option>
+          <option value="Construction">Construction</option>
+          <option value="Commercial">Commercial</option>
+          <option value="Résidentiel">Résidentiel</option>
+          <option value="Terrain">Terrain</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label>Montant demandé ($)</label>
+        <input type="number" id="f-montant" placeholder="500000">
+      </div>
+      <div class="form-field">
+        <label>Adresse de la propriété</label>
+        <input type="text" id="f-adresse" placeholder="123 rue Example, Montréal">
+      </div>
+      <div class="form-field">
+        <label>Priorité</label>
+        <select id="f-priorite">
+          <option value="med">Normale</option>
+          <option value="high">Haute</option>
+          <option value="low">Basse</option>
+        </select>
+      </div>
+      <div class="form-field full">
+        <label>Notes initiales</label>
+        <textarea id="f-notes" style="height:70px" placeholder="Contexte, particularités du dossier..."></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeModal()">Annuler</button>
+      <button class="btn-create" onclick="createDossier()">Créer le dossier</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════
+
+const STAGES = [
+  {id:'nouvelle', label:'Nouvelle demande', col:'col-new'},
+  {id:'analyse',  label:'Analyse IA',       col:'col-analyse'},
+  {id:'loi',      label:'LOI émise',        col:'col-loi'},
+  {id:'docs',     label:'Docs requis',      col:'col-docs'},
+  {id:'final',    label:'Analyse finale',   col:'col-final'},
+  {id:'notaire',  label:'Chez le notaire',  col:'col-notaire'},
+  {id:'decaisse', label:'Décaissé',         col:'col-decaisse'},
+];
+
+const DOC_TEMPLATES = {
+  'Pont':        ['Évaluation municipale','Photo de la propriété','Relevé hypothécaire','Rapport de titre préliminaire','Déclaration de revenus (2 ans)','Relevé bancaire (3 mois)'],
+  'Construction':['Plans architecturaux','Permis de construction','Soumissions entrepreneurs','Évaluation du terrain','Budget de construction détaillé','Relevé bancaire (3 mois)'],
+  'Commercial':  ['États financiers (3 ans)','Baux commerciaux','Rapport environnemental','Évaluation commerciale','Liste des actifs','Déclaration de revenus (2 ans)'],
+  'Résidentiel': ['Évaluation municipale','Photo de la propriété','Relevé hypothécaire','Déclaration de revenus (2 ans)','Relevé bancaire (3 mois)'],
+  'Terrain':     ['Certificat de localisation','Étude de sol','Permis de zonage','Plan du terrain','Preuve de propriété'],
+};
+
+let dossiers = [
+  {id:'CNV-2024-001',prenom:'Robert',nom:'Gagnon',email:'r.gagnon@email.ca',tel:'514-555-0101',type:'Pont',montant:850000,adresse:'456 av. du Mont-Royal, Montréal',stage:'loi',score:82,priorite:'high',jours:12,
+   docs:[{nom:'Évaluation municipale',status:'recu'},{nom:'Photo de la propriété',status:'recu'},{nom:'Relevé hypothécaire',status:'attente'},{nom:'Rapport de titre préliminaire',status:'manquant'},{nom:'Déclaration de revenus (2 ans)',status:'recu'},{nom:'Relevé bancaire (3 mois)',status:'manquant'}],
+   activite:[{texte:'LOI envoyée au client',time:'Aujourd\'hui 09:15',type:'gold'},{texte:'Score Norvex™ généré : 82/100 — Risque modéré',time:'Hier 16:30',type:'green'},{texte:'Analyse automatique complétée — LTV 68%, DSC 1.35',time:'Hier 15:45',type:'green'},{texte:'Nouvelle demande reçue via site web',time:'Il y a 2 jours',type:'muted'}]},
+
+  {id:'CNV-2024-002',prenom:'Isabelle',nom:'Côté',email:'i.cote@gmail.com',tel:'418-555-0202',type:'Construction',montant:1250000,adresse:'78 ch. des Érables, Québec',stage:'docs',score:74,priorite:'high',jours:8,
+   docs:[{nom:'Plans architecturaux',status:'recu'},{nom:'Permis de construction',status:'recu'},{nom:'Soumissions entrepreneurs',status:'manquant'},{nom:'Évaluation du terrain',status:'attente'},{nom:'Budget de construction détaillé',status:'manquant'},{nom:'Relevé bancaire (3 mois)',status:'recu'}],
+   activite:[{texte:'⚠ Rappel envoyé — soumissions manquantes depuis 5 jours',time:'Aujourd\'hui 08:00',type:'red'},{texte:'Documents partiellement reçus (3/6)',time:'Il y a 3 jours',type:'gold'},{texte:'LOI signée par le client',time:'Il y a 5 jours',type:'green'},{texte:'LOI envoyée',time:'Il y a 6 jours',type:'muted'}]},
+
+  {id:'CNV-2024-003',prenom:'Michel',nom:'Lavoie',email:'m.lavoie@corp.ca',tel:'514-555-0303',type:'Commercial',montant:2100000,adresse:'1200 boul. Industriel, Laval',stage:'final',score:89,priorite:'med',jours:15,
+   docs:[{nom:'États financiers (3 ans)',status:'recu'},{nom:'Baux commerciaux',status:'recu'},{nom:'Rapport environnemental',status:'recu'},{nom:'Évaluation commerciale',status:'recu'},{nom:'Liste des actifs',status:'recu'},{nom:'Déclaration de revenus (2 ans)',status:'recu'}],
+   activite:[{texte:'Dossier complet — analyse finale en cours',time:'Aujourd\'hui 11:00',type:'green'},{texte:'Dernier document reçu : Évaluation commerciale',time:'Hier 14:20',type:'green'},{texte:'Tous les documents approuvés',time:'Il y a 2 jours',type:'green'}]},
+
+  {id:'CNV-2024-004',prenom:'Sophie',nom:'Beaulieu',email:'sophie.b@email.com',tel:'450-555-0404',type:'Résidentiel',montant:480000,adresse:'22 rue des Pins, Brossard',stage:'nouvelle',score:null,priorite:'low',jours:1,
+   docs:[{nom:'Évaluation municipale',status:'manquant'},{nom:'Photo de la propriété',status:'manquant'},{nom:'Relevé hypothécaire',status:'manquant'},{nom:'Déclaration de revenus (2 ans)',status:'manquant'},{nom:'Relevé bancaire (3 mois)',status:'manquant'}],
+   activite:[{texte:'Nouvelle demande reçue via site web',time:'Aujourd\'hui 13:42',type:'muted'}]},
+
+  {id:'CNV-2024-005',prenom:'François',nom:'Pelletier',email:'f.pelletier@biz.ca',tel:'514-555-0505',type:'Terrain',montant:620000,adresse:'Lot 44, Route 117, Mont-Tremblant',stage:'notaire',score:78,priorite:'med',jours:22,
+   docs:[{nom:'Certificat de localisation',status:'recu'},{nom:'Étude de sol',status:'recu'},{nom:'Permis de zonage',status:'recu'},{nom:'Plan du terrain',status:'recu'},{nom:'Preuve de propriété',status:'recu'}],
+   activite:[{texte:'Dossier transmis au notaire — Me Thibodeau',time:'Hier 16:00',type:'green'},{texte:'Offre formelle acceptée',time:'Il y a 3 jours',type:'green'},{texte:'Analyse finale approuvée',time:'Il y a 5 jours',type:'green'}]},
+
+  {id:'CNV-2024-006',prenom:'Nathalie',nom:'Simard',email:'n.simard@email.ca',tel:'819-555-0606',type:'Pont',montant:375000,adresse:'89 rue Principale, Sherbrooke',stage:'analyse',score:null,priorite:'med',jours:2,
+   docs:[{nom:'Évaluation municipale',status:'manquant'},{nom:'Photo de la propriété',status:'manquant'},{nom:'Relevé hypothécaire',status:'attente'},{nom:'Rapport de titre préliminaire',status:'manquant'},{nom:'Déclaration de revenus (2 ans)',status:'manquant'},{nom:'Relevé bancaire (3 mois)',status:'attente'}],
+   activite:[{texte:'Analyse IA en cours...',time:'Aujourd\'hui 10:15',type:'gold'},{texte:'Demande reçue et validée',time:'Hier 14:00',type:'muted'}]},
+
+  {id:'CNV-2024-007',prenom:'Jean-Marc',nom:'Bouchard',email:'jm.bouchard@gmail.com',tel:'514-555-0707',type:'Construction',montant:1800000,adresse:'Projet Les Érables, Longueuil',stage:'decaisse',score:91,priorite:'low',jours:35,
+   docs:[{nom:'Plans architecturaux',status:'recu'},{nom:'Permis de construction',status:'recu'},{nom:'Soumissions entrepreneurs',status:'recu'},{nom:'Évaluation du terrain',status:'recu'},{nom:'Budget de construction détaillé',status:'recu'},{nom:'Relevé bancaire (3 mois)',status:'recu'}],
+   activite:[{texte:'💰 Fonds décaissés — 1 800 000 $',time:'Il y a 2 jours',type:'green'},{texte:'Acte notarié signé',time:'Il y a 4 jours',type:'green'},{texte:'Fonds prêts à décaisser',time:'Il y a 5 jours',type:'gold'}]},
+];
+
+let currentFilter = 'all';
+let currentView = 'pipeline';
+let activeDossier = null;
+
+// ═══════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════
+
+function render() {
+  updateKPIs();
+  updateSidebar();
+  updateAlerts();
+  if (currentView === 'pipeline') renderPipeline();
+  else renderList();
+}
+
+function getFiltered() {
+  let search = document.getElementById('searchInput').value.toLowerCase();
+  return dossiers.filter(d => {
+    if (currentFilter === 'urgent') return d.priorite === 'high';
+    if (['nouvelle','analyse','loi','docs','final','notaire','decaisse'].includes(currentFilter)) return d.stage === currentFilter;
+    return true;
+  }).filter(d => {
+    if (!search) return true;
+    return (d.prenom+' '+d.nom+' '+d.id+' '+d.type+' '+d.adresse).toLowerCase().includes(search);
+  });
+}
+
+function updateKPIs() {
+  const actifs = dossiers.filter(d => d.stage !== 'decaisse').length;
+  const volume = dossiers.filter(d => d.stage !== 'decaisse').reduce((s,d) => s+d.montant, 0);
+  const semaine = dossiers.filter(d => d.stage === 'decaisse').length;
+  const semaineVol = dossiers.filter(d => d.stage === 'decaisse').reduce((s,d) => s+d.montant, 0);
+  const attente = dossiers.filter(d => d.stage === 'docs').length;
+  const scored = dossiers.filter(d => d.score !== null);
+  const avgScore = scored.length ? Math.round(scored.reduce((s,d) => s+d.score, 0)/scored.length) : null;
+
+  document.getElementById('kpi-actifs').textContent = actifs;
+  document.getElementById('kpi-volume').textContent = formatM(volume);
+  document.getElementById('kpi-semaine').textContent = semaine;
+  document.getElementById('kpi-semaine-vol').textContent = semaine > 0 ? formatM(semaineVol) : '';
+  document.getElementById('kpi-attente').textContent = attente;
+  document.getElementById('kpi-score').textContent = avgScore !== null ? avgScore+'/100' : '–';
+}
+
+function updateSidebar() {
+  document.getElementById('sb-total').textContent = dossiers.length;
+  STAGES.forEach(s => {
+    const el = document.getElementById('sb-'+s.id);
+    if (el) el.textContent = dossiers.filter(d => d.stage === s.id).length;
+  });
+  document.getElementById('sb-urgent').textContent = dossiers.filter(d => d.priorite === 'high').length;
+}
+
+function updateAlerts() {
+  const urgent = dossiers.filter(d => d.priorite === 'high' || d.stage === 'docs').length;
+  const bar = document.getElementById('alertBar');
+  if (urgent > 0) {
+    bar.style.display = 'flex';
+    document.getElementById('alertCount').textContent = urgent;
+  } else bar.style.display = 'none';
+}
+
+function renderPipeline() {
+  const filtered = getFiltered();
+  const board = document.getElementById('pipelineBoard');
+  const visibleStages = STAGES.filter(s => s.id !== 'decaisse');
+  board.innerHTML = visibleStages.map(s => {
+    const cards = filtered.filter(d => d.stage === s.id);
+    return `<div class="pipeline-col ${s.col}">
+      <div class="col-header">
+        <span class="col-name">${s.label}</span>
+        <span class="col-badge">${cards.length}</span>
+      </div>
+      <div class="col-cards">
+        ${cards.length === 0 ? '<div class="empty-col">Aucun dossier</div>' : cards.map(d => renderCard(d)).join('')}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderCard(d) {
+  const hasAlert = d.stage === 'docs' && d.docs.some(doc => doc.status === 'manquant');
+  return `<div class="dcard" onclick="openDetail('${d.id}')">
+    ${hasAlert ? '<div class="dcard-alert"></div>' : ''}
+    <div class="dcard-id">${d.id}</div>
+    <div class="dcard-name">${d.prenom} ${d.nom}</div>
+    <div class="dcard-type">${d.type}</div>
+    <div class="dcard-amount">${formatM(d.montant)}</div>
+    <div class="dcard-footer">
+      <span class="dcard-days">J+${d.jours}</span>
+      <span class="dcard-priority priority-${d.priorite}">${d.priorite === 'high' ? 'Urgent' : d.priorite === 'med' ? 'Normal' : 'Bas'}</span>
+    </div>
+  </div>`;
+}
+
+function renderList() {
+  const filtered = getFiltered();
+  const stageLabel = {nouvelle:'Nouvelle demande',analyse:'Analyse IA',loi:'LOI émise',docs:'Docs requis',final:'Analyse finale',notaire:'Chez le notaire',decaisse:'Décaissé'};
+  document.getElementById('listBody').innerHTML = filtered.map(d => `
+    <tr onclick="openDetail('${d.id}')">
+      <td class="td-id">${d.id}</td>
+      <td class="td-name">${d.prenom} ${d.nom}</td>
+      <td>${d.type}</td>
+      <td class="td-amount">${formatM(d.montant)}</td>
+      <td><span class="stage-pill stage-${d.stage}">${stageLabel[d.stage]}</span></td>
+      <td>${d.score !== null ? d.score+'/100' : '–'}</td>
+      <td class="td-days">J+${d.jours}</td>
+      <td><span class="dcard-priority priority-${d.priorite}">${d.priorite === 'high' ? 'Urgent' : d.priorite === 'med' ? 'Normal' : 'Bas'}</span></td>
+    </tr>
+  `).join('');
+}
+
+// ═══════════════════════════════════════
+// DETAIL PANEL
+// ═══════════════════════════════════════
+
+function openDetail(id) {
+  activeDossier = dossiers.find(d => d.id === id);
+  if (!activeDossier) return;
+  const d = activeDossier;
+
+  document.getElementById('dp-id').textContent = d.id;
+  document.getElementById('dp-name').textContent = d.prenom + ' ' + d.nom;
+  document.getElementById('dp-amount').textContent = formatM(d.montant);
+
+  // Pipeline progress
+  const pipelineEl = document.getElementById('dp-pipeline');
+  const stageIds = STAGES.map(s => s.id);
+  const currentIdx = stageIds.indexOf(d.stage);
+  pipelineEl.innerHTML = STAGES.map((s,i) => {
+    let cls = '';
+    if (i < currentIdx) cls = 'done';
+    else if (i === currentIdx) cls = 'active';
+    return `<div class="dp-stage ${cls}">${s.label}</div>`;
+  }).join('');
+
+  // Info
+  document.getElementById('dp-info').innerHTML = `
+    <div class="dp-field"><label>Courriel</label><span>${d.email}</span></div>
+    <div class="dp-field"><label>Téléphone</label><span>${d.tel}</span></div>
+    <div class="dp-field full" style="grid-column:1/-1"><label>Adresse</label><span>${d.adresse}</span></div>
+    <div class="dp-field"><label>Type de prêt</label><span>${d.type}</span></div>
+    <div class="dp-field"><label>Priorité</label><span class="dcard-priority priority-${d.priorite}">${d.priorite === 'high' ? 'Urgent' : d.priorite === 'med' ? 'Normal' : 'Bas'}</span></div>
+    <div class="dp-field"><label>Jours au dossier</label><span class="mono">J+${d.jours}</span></div>
+    <div class="dp-field"><label>Taux proposé</label><span>10 – 12%</span></div>
+  `;
+
+  // Score
+  if (d.score !== null) {
+    const pct = d.score;
+    const color = pct >= 80 ? 'var(--green2)' : pct >= 65 ? 'var(--amber2)' : 'var(--red2)';
+    const label = pct >= 80 ? 'Risque faible' : pct >= 65 ? 'Risque modéré' : 'Risque élevé';
+    document.getElementById('dp-score-content').innerHTML = `
+      <div style="width:64px;height:64px;border-radius:50%;background:conic-gradient(${color} ${pct}%,var(--stone) 0%);display:flex;align-items:center;justify-content:center;position:relative;flex-shrink:0">
+        <div style="position:absolute;inset:6px;background:var(--cream);border-radius:50%"></div>
+        <span style="position:relative;font-family:'Playfair Display',serif;font-size:.95rem;font-weight:500;color:var(--ink)">${pct}</span>
+      </div>
+      <div>
+        <div style="font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--ink)">${pct}<span style="font-size:.8rem;color:var(--muted)">/100</span></div>
+        <div style="font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;margin-top:.2rem;color:${color}">${label}</div>
+        <div style="font-size:.7rem;color:var(--muted);margin-top:.4rem">LTV estimé · DSC analysé · Marché évalué</div>
+      </div>
+    `;
+  } else {
+    document.getElementById('dp-score-content').innerHTML = `<div style="font-size:.78rem;color:var(--muted)">Score en attente d'analyse</div>`;
+  }
+
+  // Documents
+  document.getElementById('dp-docs').innerHTML = d.docs.map(doc => `
+    <div class="doc-item">
+      <span class="doc-name">${doc.nom}</span>
+      <div style="display:flex;align-items:center;gap:.6rem">
+        <span class="doc-status doc-${doc.status}">${doc.status === 'recu' ? 'Reçu ✓' : doc.status === 'manquant' ? 'Manquant' : 'En attente'}</span>
+        <button class="doc-btn" onclick="toggleDoc('${id}','${doc.nom}',event)">${doc.status === 'recu' ? 'Retirer' : 'Marquer reçu'}</button>
+      </div>
+    </div>
+  `).join('');
+
+  // Activité
+  document.getElementById('dp-activity').innerHTML = d.activite.map(a => `
+    <div class="act-item">
+      <div class="act-dot ${a.type}"></div>
+      <div class="act-content">
+        <div class="act-text">${a.texte}</div>
+        <div class="act-time">${a.time}</div>
+      </div>
+    </div>
+  `).join('');
+
+  // Actions
+  const nextStageIdx = STAGES.findIndex(s => s.id === d.stage) + 1;
+  const nextStage = STAGES[nextStageIdx];
+  document.getElementById('dp-actions').innerHTML = `
+    ${nextStage ? `<button class="action-btn action-primary" onclick="advanceStage('${id}')">→ Passer à : ${nextStage.label}</button>` : '<button class="action-btn action-primary" disabled>✓ Dossier complété</button>'}
+    <button class="action-btn action-secondary" onclick="sendReminder('${id}')">📧 Envoyer relance</button>
+    <button class="action-btn action-danger" onclick="archiveDossier('${id}')">Archiver</button>
+  `;
+
+  document.getElementById('detailOverlay').style.display = 'block';
+  setTimeout(() => document.getElementById('detailPanel').classList.add('open'), 10);
+}
+
+function closeDetail() {
+  document.getElementById('detailPanel').classList.remove('open');
+  setTimeout(() => {
+    document.getElementById('detailOverlay').style.display = 'none';
+    activeDossier = null;
+  }, 350);
+}
+
+function toggleDoc(id, docNom, e) {
+  e.stopPropagation();
+  const d = dossiers.find(x => x.id === id);
+  const doc = d.docs.find(x => x.nom === docNom);
+  doc.status = doc.status === 'recu' ? 'manquant' : 'recu';
+  openDetail(id);
+  render();
+}
+
+function advanceStage(id) {
+  const d = dossiers.find(x => x.id === id);
+  const idx = STAGES.findIndex(s => s.id === d.stage);
+  if (idx < STAGES.length - 1) {
+    const nextStage = STAGES[idx + 1];
+    d.stage = nextStage.id;
+    d.activite.unshift({texte:`Dossier avancé → ${nextStage.label}`,time:'À l\'instant',type:'gold'});
+    if (d.stage === 'analyse' && d.score === null) {
+      d.score = Math.floor(Math.random() * 30) + 65;
+      d.activite.unshift({texte:`Score Norvex™ généré : ${d.score}/100`,time:'À l\'instant',type:'green'});
+    }
+    openDetail(id);
+    render();
+  }
+}
+
+function sendReminder(id) {
+  const d = dossiers.find(x => x.id === id);
+  d.activite.unshift({texte:`📧 Relance envoyée à ${d.email}`,time:'À l\'instant',type:'gold'});
+  openDetail(id);
+  alert(`Relance envoyée à ${d.prenom} ${d.nom}`);
+}
+
+function archiveDossier(id) {
+  if (confirm('Archiver ce dossier ?')) {
+    dossiers = dossiers.filter(d => d.id !== id);
+    closeDetail();
+    render();
+  }
+}
+
+function addNote() {
+  if (!activeDossier) return;
+  const input = document.getElementById('noteInput');
+  const note = input.value.trim();
+  if (!note) return;
+  activeDossier.activite.unshift({texte: note, time: 'À l\'instant', type:'muted'});
+  input.value = '';
+  openDetail(activeDossier.id);
+}
+
+// ═══════════════════════════════════════
+// FILTERS & VIEW
+// ═══════════════════════════════════════
+
+function filterAll() {
+  currentFilter = 'all';
+  document.getElementById('fb-all').classList.add('active');
+  document.getElementById('fb-urgent').classList.remove('active');
+  render();
+}
+function filterUrgent() {
+  currentFilter = 'urgent';
+  document.getElementById('fb-urgent').classList.add('active');
+  document.getElementById('fb-all').classList.remove('active');
+  render();
+}
+function filterStage(s) {
+  currentFilter = s;
+  document.getElementById('fb-all').classList.remove('active');
+  document.getElementById('fb-urgent').classList.remove('active');
+  render();
+}
+function filterPriority(p) {
+  currentFilter = p === 'high' ? 'urgent' : 'all';
+  render();
+}
+function filterSearch() { render(); }
+
+function setView(v) {
+  currentView = v;
+  document.getElementById('pipelineView').style.display = v === 'pipeline' ? 'block' : 'none';
+  document.getElementById('listView').style.display = v === 'list' ? 'block' : 'none';
+  document.getElementById('vb-pipeline').classList.toggle('active', v === 'pipeline');
+  document.getElementById('vb-list').classList.toggle('active', v === 'list');
+  document.querySelectorAll('.sb-item').forEach(el => el.classList.remove('active'));
+  render();
+}
+
+// ═══════════════════════════════════════
+// MODAL NOUVEAU DOSSIER
+// ═══════════════════════════════════════
+
+let nextId = 8;
+function openModal() { document.getElementById('modalOverlay').style.display = 'block'; }
+function closeModal() { document.getElementById('modalOverlay').style.display = 'none'; }
+
+function createDossier() {
+  const prenom = document.getElementById('f-prenom').value.trim();
+  const nom = document.getElementById('f-nom').value.trim();
+  const email = document.getElementById('f-email').value.trim();
+  const tel = document.getElementById('f-tel').value.trim();
+  const type = document.getElementById('f-type').value;
+  const montant = parseInt(document.getElementById('f-montant').value) || 0;
+  const adresse = document.getElementById('f-adresse').value.trim();
+  const priorite = document.getElementById('f-priorite').value;
+  const notes = document.getElementById('f-notes').value.trim();
+
+  if (!prenom || !nom || !montant) { alert('Veuillez remplir les champs obligatoires.'); return; }
+
+  const id = `CNV-2024-00${nextId++}`;
+  const docs = (DOC_TEMPLATES[type] || []).map(n => ({nom:n, status:'manquant'}));
+  const activite = [{texte:'Dossier créé manuellement',time:'À l\'instant',type:'muted'}];
+  if (notes) activite.unshift({texte: notes, time:'À l\'instant', type:'muted'});
+
+  dossiers.push({id,prenom,nom,email,tel,type,montant,adresse,stage:'nouvelle',score:null,priorite,jours:0,docs,activite});
+
+  closeModal();
+  ['f-prenom','f-nom','f-email','f-tel','f-montant','f-adresse','f-notes'].forEach(id => document.getElementById(id).value = '');
+  render();
+}
+
+// ═══════════════════════════════════════
+// UTILS
+// ═══════════════════════════════════════
+
+function formatM(n) {
+  if (n >= 1000000) return (n/1000000).toFixed(n%1000000===0?0:2).replace('.00','') + ' M$';
+  if (n >= 1000) return (n/1000).toFixed(0) + ' k$';
+  return n + ' $';
+}
+
+// ═══════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════
+render();
+</script>
+</body>
+</html>
