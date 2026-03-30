@@ -699,6 +699,7 @@ Print CSS: @media print{body{margin:0}@page{margin:1.4cm;size:letter portrait}p{
     if(!match)throw new Error('Format de réponse invalide — veuillez réessayer.');
     clearInterval(S.ltimer);
     S.analysis=JSON.parse(match[0]);
+    saveToPipeline(S.analysis,S.ci,S.type);
     if(!withPDFs&&S.files.length>0){
       // Add note to analysis
       const noteKey=S.lang==='fr'?'note_analyste':'note_analyste';
@@ -843,6 +844,50 @@ function saveKey(v){localStorage.setItem('cnx_api',v);document.getElementById('k
 function loadKey(){const k=localStorage.getItem('cnx_api')||'';const el=document.getElementById('apikey');if(el){el.value=k;document.getElementById('keyok').style.display=k.startsWith('sk-ant-')?'inline':'none'}return k}
 function getKey(){return loadKey()||document.getElementById('apikey').value}
 renderAll();go(0);setTimeout(loadKey,100);
+</script>
+
+<!-- FIREBASE PIPELINE INTEGRATION -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script>
+const _fbConfig={apiKey:"AIzaSyB511dw1g1hARoIlo5Q3wc2OMM8P8yJRp8",authDomain:"capital-norvex.firebaseapp.com",projectId:"capital-norvex",storageBucket:"capital-norvex.firebasestorage.app",messagingSenderId:"547910657658",appId:"1:547910657658:web:9ae5ebf5fac9c0461ffdc3"};
+firebase.initializeApp(_fbConfig);
+const _db=firebase.firestore();
+
+async function saveToPipeline(analysis,ci,type){
+  try{
+    const yr=new Date().getFullYear();
+    const rid=Math.floor(Math.random()*90000)+10000;
+    const id=`CNV-${yr}-${rid}`;
+    const parts=(ci.name||'').trim().split(' ');
+    const prenom=parts[0]||ci.company||'';
+    const nom=parts.slice(1).join(' ')||ci.company||'';
+    const typeMap={hyp:'Commercial',con:'Construction',ref:'Refinancement',rel:'Pont',inf:'Infrastructure'};
+    const score=analysis.score_norvex?.total||null;
+    const montantRec=analysis.montant_recommande||0;
+    const montantDem=parseInt(ci.amount)||0;
+    const decision=analysis.decision||'';
+    const isApproved=decision.includes('APPROUVÉ')||decision.includes('APPROVED');
+    const isRefused=decision.includes('REFUSÉ')||decision.includes('REFUSED')||decision.includes('DECLINED');
+    const priorite=isRefused?'high':score>=85?'low':'med';
+    const now=new Date().toLocaleString('fr-CA',{dateStyle:'short',timeStyle:'short'});
+    await _db.collection('dossiers').doc(id).set({
+      id,prenom,nom,
+      email:ci.email||'',tel:ci.phone||'',
+      type:typeMap[type]||'Commercial',
+      montant:montantRec||montantDem,
+      adresse:ci.address||'',
+      stage:'analyse',score,decision,priorite,jours:0,
+      docs:[],
+      activite:[
+        {texte:`Analyse IA — Score Norvex™: ${score!==null?score+'/100':'N/A'} — ${decision}`,time:now,type:isApproved?'green':isRefused?'red':'gold'},
+        {texte:`Demande reçue via site web — ${ci.name||ci.email}`,time:now,type:'muted'}
+      ],
+      created_at:firebase.firestore.FieldValue.serverTimestamp()
+    });
+    console.log('✅ Dossier sauvegardé dans le pipeline:',id);
+  }catch(e){console.warn('Pipeline save error:',e);}
+}
 </script>
 </body>
 </html>

@@ -246,6 +246,8 @@ body{background:#eeebe5;color:var(--ink);font-family:'DM Sans',sans-serif;font-w
   .kpi-strip{grid-template-columns:repeat(2,1fr)}
 }
 </style>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
 
@@ -908,6 +910,40 @@ function formatM(n) {
 // INIT
 // ═══════════════════════════════════════
 render();
+
+// FIREBASE — lecture en temps réel
+const _fbConfig={apiKey:"AIzaSyB511dw1g1hARoIlo5Q3wc2OMM8P8yJRp8",authDomain:"capital-norvex.firebaseapp.com",projectId:"capital-norvex",storageBucket:"capital-norvex.firebasestorage.app",messagingSenderId:"547910657658",appId:"1:547910657658:web:9ae5ebf5fac9c0461ffdc3"};
+firebase.initializeApp(_fbConfig);
+const _db=firebase.firestore();
+
+_db.collection('dossiers').orderBy('created_at','desc').onSnapshot(snapshot=>{
+  const fbDossiers=[];
+  snapshot.forEach(doc=>{const d=doc.data();if(d&&d.id)fbDossiers.push({...d,_fbId:doc.id});});
+  const localIds=new Set(fbDossiers.map(d=>d.id));
+  const localOnly=dossiers.filter(d=>!localIds.has(d.id));
+  dossiers=[...fbDossiers,...localOnly];
+  render();
+},err=>console.warn('Firestore error:',err));
+
+// Sauvegarde dans Firestore lors des changements de stage
+const _advanceStageOrig=advanceStage;
+advanceStage=function(id){
+  _advanceStageOrig(id);
+  const d=dossiers.find(x=>x.id===id);
+  if(d)_db.collection('dossiers').doc(id).update({stage:d.stage,activite:d.activite}).catch(()=>{});
+};
+
+const _addNoteOrig=addNote;
+addNote=function(){
+  _addNoteOrig();
+  if(activeDossier)_db.collection('dossiers').doc(activeDossier.id).update({activite:activeDossier.activite}).catch(()=>{});
+};
+
+const _archiveOrig=archiveDossier;
+archiveDossier=function(id){
+  _db.collection('dossiers').doc(id).delete().catch(()=>{});
+  _archiveOrig(id);
+};
 </script>
 </body>
 </html>
