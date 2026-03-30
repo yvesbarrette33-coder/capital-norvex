@@ -1387,8 +1387,8 @@ body {background:#f0ede8;color:var(--ink);font-family:'DM Sans',sans-serif;font-
     
     <button onclick="openPipeline()" style="background:none;border:1px solid rgba(184,151,90,.4);color:var(--gold);padding:.4rem .9rem;font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;cursor:pointer">Pipeline</button>
     <button onclick="openEmailAgent()" style="background:none;border:1px solid rgba(184,151,90,.4);color:var(--gold);padding:.4rem .9rem;font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;cursor:pointer">Emails</button>
-    <button onclick="openPortailClient()" style="background:none;border:1px solid rgba(184,151,90,.4);color:var(--gold);padding:.4rem .9rem;font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;cursor:pointer">Espace Client</button>
-    <button onclick="openPortailPartenaire()" style="background:none;border:1px solid rgba(184,151,90,.4);color:var(--gold);padding:.4rem .9rem;font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;cursor:pointer">Espace Partenaire</button>
+    <button onclick="openPortailClient()" style="background:none;border:1px solid rgba(184,151,90,.4);color:var(--gold);padding:.4rem .9rem;font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;cursor:pointer" data-i18n="nav.client">Espace Client</button>
+    <button onclick="openPortailPartenaire()" style="background:none;border:1px solid rgba(184,151,90,.4);color:var(--gold);padding:.4rem .9rem;font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;cursor:pointer" data-i18n="nav.partenaire">Espace Partenaire</button>
     <button onclick="setLang('fr')" id="btn-fr" style="background:none;border:1px solid rgba(184,151,90,.4);color:var(--gold);padding:.4rem .6rem;font-size:.65rem;cursor:pointer" class="active">FR</button>
     <button onclick="setLang('en')" id="btn-en" style="background:none;border:1px solid rgba(184,151,90,.4);color:var(--muted);padding:.4rem .6rem;font-size:.65rem;cursor:pointer">EN</button>
     <button class="nav-cta" onclick="openAnalyse()" data-i18n="nav.cta">Analyse gratuite →</button>
@@ -1446,20 +1446,20 @@ body {background:#f0ede8;color:var(--ink);font-family:'DM Sans',sans-serif;font-
 <!-- PLATEFORME TEASER -->
 <section id="plateforme" style="background:var(--ink);text-align:center">
   <div class="reveal">
-    <div class="s-tag" style="justify-content:center">Technologie propriétaire</div>
-    <h2 class="s-title light" style="text-align:center;margin-bottom:1.5rem">Analyse automatisée <em>en 30 minutes</em></h2>
-    <p style="font-size:.95rem;color:var(--muted2);max-width:580px;margin:0 auto 2.5rem;line-height:1.85">Notre moteur d'IA analyse votre dossier en temps réel — ratio LTV, DSC, profil de risque, Score Norvex™. Réponse préliminaire complète en <strong style="color:var(--cream)">30 minutes</strong>. Offre formelle en 24 à 48 heures.</p>
+    <div class="s-tag" style="justify-content:center" data-i18n="plat.tag">Technologie propriétaire</div>
+    <h2 class="s-title light" style="text-align:center;margin-bottom:1.5rem" data-i18n="plat.h2">Analyse automatisée <em>en 30 minutes</em></h2>
+    <p style="font-size:.95rem;color:var(--muted2);max-width:580px;margin:0 auto 2.5rem;line-height:1.85" data-i18n="plat.desc">Notre moteur d'IA analyse votre dossier en temps réel — ratio LTV, DSC, profil de risque, Score Norvex™. Réponse préliminaire complète en <strong style="color:var(--cream)">30 minutes</strong>. Offre formelle en 24 à 48 heures.</p>
   </div>
   <div class="plat-steps reveal">
-    <div class="plat-step"><div class="plat-step-num">01</div><h4>Saisie</h4><p>Infos propriété</p><span class="plat-step-time">2 min</span><span class="plat-step-arr">→</span></div>
-    <div class="plat-step"><div class="plat-step-num">02</div><h4>Analyse IA</h4><p>LTV · DSC · Risque</p><span class="plat-step-time">Instantané</span><span class="plat-step-arr">→</span></div>
-    <div class="plat-step"><div class="plat-step-num">03</div><h4>Score Norvex™</h4><p>Score sur 100</p><span class="plat-step-time">Instantané</span><span class="plat-step-arr">→</span></div>
-    <div class="plat-step"><div class="plat-step-num">04</div><h4>Rapport + LOI</h4><p>Sommaire complet</p><span class="plat-step-time">30 min max</span><span class="plat-step-arr">→</span></div>
-    <div class="plat-step"><div class="plat-step-num">05</div><h4>Offre formelle</h4><p>Confirmation équipe</p><span class="plat-step-time">24–48 h</span></div>
+    <div class="plat-step"><div class="plat-step-num">01</div><h4 data-i18n="plat.s1.h">Saisie</h4><p data-i18n="plat.s1.p">Infos propriété</p><span class="plat-step-time" data-i18n="plat.s1.t">2 min</span><span class="plat-step-arr">→</span></div>
+    <div class="plat-step"><div class="plat-step-num">02</div><h4 data-i18n="plat.s2.h">Analyse IA</h4><p data-i18n="plat.s2.p">LTV · DSC · Risque</p><span class="plat-step-time" data-i18n="plat.s2.t">Instantané</span><span class="plat-step-arr">→</span></div>
+    <div class="plat-step"><div class="plat-step-num">03</div><h4 data-i18n="plat.s3.h">Score Norvex™</h4><p data-i18n="plat.s3.p">Score sur 100</p><span class="plat-step-time" data-i18n="plat.s3.t">Instantané</span><span class="plat-step-arr">→</span></div>
+    <div class="plat-step"><div class="plat-step-num">04</div><h4 data-i18n="plat.s4.h">Rapport + LOI</h4><p data-i18n="plat.s4.p">Sommaire complet</p><span class="plat-step-time" data-i18n="plat.s4.t">30 min max</span><span class="plat-step-arr">→</span></div>
+    <div class="plat-step"><div class="plat-step-num">05</div><h4 data-i18n="plat.s5.h">Offre formelle</h4><p data-i18n="plat.s5.p">Confirmation équipe</p><span class="plat-step-time" data-i18n="plat.s5.t">24–48 h</span></div>
   </div>
   <div class="reveal">
-    <button onclick="openAnalyse()" class="btn-gold" style="font-size:.72rem;padding:1.1rem 3rem;letter-spacing:.22em">Lancer mon analyse gratuite en 30 minutes →</button>
-    <div style="margin-top:1rem;font-size:.68rem;color:var(--muted2);letter-spacing:.1em">Confidentiel · Aucun impact sur votre cote de crédit · Disponible 24h/24</div>
+    <button onclick="openAnalyse()" class="btn-gold" style="font-size:.72rem;padding:1.1rem 3rem;letter-spacing:.22em" data-i18n="plat.btn">Lancer mon analyse gratuite en 30 minutes →</button>
+    <div style="margin-top:1rem;font-size:.68rem;color:var(--muted2);letter-spacing:.1em" data-i18n="plat.note">Confidentiel · Aucun impact sur votre cote de crédit · Disponible 24h/24</div>
   </div>
 </section>
 
@@ -1975,7 +1975,7 @@ var TRANSLATIONS={
     "av.item3.p":"Taux 10–12%, frais 3–3,5% — affiché dès le départ. Aucune surprise dans notre processus.",
     "av.item4.h4":"Jusqu'à 100 millions de dollars",
     "av.item4.p":"Des projets de 2,5 M$ aux développements de grande envergure à 100 M$ — nous avons la capacité.",
-    "prod.intro":"Nous finançons sur la base de la valeur réelle de vos actifs. De 2,5 M$ à 100 M$, résidentiel ou commercial. Taux 10–12%, frais 3–3,5%.",
+    "plat.tag":"Technologie propriétaire","plat.h2":"Analyse automatisée <em>en 30 minutes</em>","plat.desc":"Notre moteur d\'IA analyse votre dossier en temps réel — ratio LTV, DSC, profil de risque, Score Norvex™. Réponse préliminaire complète en <strong style=\"color:var(--cream)\">30 minutes</strong>. Offre formelle en 24 à 48 heures.","plat.s1.h":"Saisie","plat.s1.p":"Infos propriété","plat.s1.t":"2 min","plat.s2.h":"Analyse IA","plat.s2.p":"LTV · DSC · Risque","plat.s2.t":"Instantané","plat.s3.h":"Score Norvex™","plat.s3.p":"Score sur 100","plat.s3.t":"Instantané","plat.s4.h":"Rapport + LOI","plat.s4.p":"Sommaire complet","plat.s4.t":"30 min max","plat.s5.h":"Offre formelle","plat.s5.p":"Confirmation équipe","plat.s5.t":"24–48 h","plat.btn":"Lancer mon analyse gratuite en 30 minutes →","plat.note":"Confidentiel · Aucun impact sur votre cote de crédit · Disponible 24h/24","prod.intro":"Nous finançons sur la base de la valeur réelle de vos actifs. De 2,5 M$ à 100 M$, résidentiel ou commercial. Taux 10–12%, frais 3–3,5%.",
     "prod.spec.taux":"Taux","prod.spec.frais":"Frais","prod.spec.ltv":"LTV max","prod.spec.duree":"Durée","prod.spec.structure":"Structure",
     "prod.1.h3":"Prêt en 1<sup>re</sup> hypothèque","prod.1.p":"Financement prioritaire garanti par votre propriété. Pour ceux qui ne se qualifient pas aux critères bancaires ou qui ont besoin de rapidité.","prod.1.tag":"Résidentiel · Commercial",
     "prod.2.h3":"Financement relais (pont)","prod.2.p":"Combler l'écart entre l'achat d'une nouvelle propriété et la vente de l'ancienne. Décisions rapides, termes flexibles, aucun délai bancaire.","prod.2.spec.duree":"3 à 12 mois","prod.2.tag":"Court terme · Stratégique",
@@ -2065,7 +2065,7 @@ var TRANSLATIONS={
     "av.item3.p":"Rate 10–12%, fees 3–3.5% — disclosed upfront. No surprises in our process.",
     "av.item4.h4":"Up to 100 million dollars",
     "av.item4.p":"From $2.5M projects to large-scale $100M developments — we have the capacity.",
-    "prod.intro":"We finance based on the real value of your assets. From $2.5M to $100M, residential or commercial. Rate 10–12%, fees 3–3.5%.",
+    "plat.tag":"Proprietary Technology","plat.h2":"Automated analysis <em>in 30 minutes</em>","plat.desc":"Our AI engine analyzes your file in real time — LTV ratio, DSC, risk profile, Norvex Score™. Complete preliminary response in <strong style=\"color:var(--cream)\">30 minutes</strong>. Formal offer in 24 to 48 hours.","plat.s1.h":"Submission","plat.s1.p":"Property info","plat.s1.t":"2 min","plat.s2.h":"AI Analysis","plat.s2.p":"LTV · DSC · Risk","plat.s2.t":"Instant","plat.s3.h":"Norvex Score™","plat.s3.p":"Score out of 100","plat.s3.t":"Instant","plat.s4.h":"Report + LOI","plat.s4.p":"Full summary","plat.s4.t":"30 min max","plat.s5.h":"Formal offer","plat.s5.p":"Team confirmation","plat.s5.t":"24–48 h","plat.btn":"Start my free 30-minute analysis →","plat.note":"Confidential · No impact on your credit score · Available 24/7","prod.intro":"We finance based on the real value of your assets. From $2.5M to $100M, residential or commercial. Rate 10–12%, fees 3–3.5%.",
     "prod.spec.taux":"Rate","prod.spec.frais":"Fees","prod.spec.ltv":"Max LTV","prod.spec.duree":"Term","prod.spec.structure":"Structure",
     "prod.1.h3":"1st Mortgage Loan","prod.1.p":"Priority financing secured by your property. For those who don't qualify for bank criteria or need speed.","prod.1.tag":"Residential · Commercial",
     "prod.2.h3":"Bridge Financing","prod.2.p":"Bridge the gap between purchasing a new property and selling the old one. Fast decisions, flexible terms, no banking delays.","prod.2.spec.duree":"3 to 12 months","prod.2.tag":"Short-term · Strategic",
