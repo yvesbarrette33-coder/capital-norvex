@@ -525,6 +525,8 @@ async function doAnalysis(withPDFs){
     const exp=expD.toLocaleDateString(S.lang==='fr'?'fr-CA':'en-CA',{year:'numeric',month:'long',day:'numeric'});
     const outLang=S.lang==='fr'?'French (français)':'English';
     const yr=new Date().getFullYear();
+    const rid=Math.floor(Math.random()*9000)+1000;
+    const refId=`CNV-${yr}-${rid}`;
     const pdfCount=content.length;
     const pdfNames=S.files.map(f=>f.name).join(', ')||'None';
 
@@ -623,7 +625,7 @@ Full-width gold line separator: border-top:2px solid #C8A84B;margin:20px 0 24px
 DATE BLOCK (right-aligned): ${today} — font-size:11px;color:#666;letter-spacing:.5px
 
 REFERENCE BOX (light gray background #F7F7F7, left gold border 3px solid #C8A84B, padding:12px 18px, margin:14px 0 18px):
-- "${S.lang==='fr'?'DOSSIER N°:':'FILE No.:'}" with auto-generated reference CNX-${yr}-XXXX (4 random digits)
+- "${S.lang==='fr'?'DOSSIER N°:':'FILE No.:'}" with reference ${refId}
 - "${S.lang==='fr'?'OBJET:':'RE:'}" followed by the full subject line
 - "SCORE NORVEX™:" with the total score and rate
 - "${S.lang==='fr'?'DÉCISION:':'DECISION:'}" with the decision
@@ -701,7 +703,7 @@ Print CSS: @media print{body{margin:0}@page{margin:1.4cm;size:letter portrait}p{
     if(!match)throw new Error('Format de réponse invalide — veuillez réessayer.');
     clearInterval(S.ltimer);
     S.analysis=JSON.parse(match[0]);
-    saveToPipeline(S.analysis,S.ci,S.type);
+    saveToPipeline(S.analysis,S.ci,S.type,refId);
     if(!withPDFs&&S.files.length>0){
       // Add note to analysis
       const noteKey=S.lang==='fr'?'note_analyste':'note_analyste';
@@ -884,11 +886,10 @@ const _fbConfig={apiKey:"AIzaSyB511dw1g1hARoIlo5Q3wc2OMM8P8yJRp8",authDomain:"ca
 firebase.initializeApp(_fbConfig);
 const _db=firebase.firestore();
 
-async function saveToPipeline(analysis,ci,type){
+async function saveToPipeline(analysis,ci,type,refId){
   try{
     const yr=new Date().getFullYear();
-    const rid=Math.floor(Math.random()*90000)+10000;
-    const id=`CNV-${yr}-${rid}`;
+    const id=refId||`CNV-${yr}-${Math.floor(Math.random()*9000)+1000}`;
     const parts=(ci.name||'').trim().split(' ');
     const prenom=parts[0]||ci.company||'';
     const nom=parts.slice(1).join(' ')||ci.company||'';
