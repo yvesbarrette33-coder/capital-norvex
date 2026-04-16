@@ -100,11 +100,12 @@ exports.handler = async (event) => {
 </body>
 </html>`;
 
-  // Configuration SMTP (Gmail App Password)
-  const smtpUser = process.env.SMTP_USER;
-  const smtpPass = process.env.SMTP_PASS;
+  // Configuration SMTP (SendGrid)
+  const mailHost = process.env.MAIL_HOST;
+  const mailUser = process.env.MAIL_USER;
+  const mailPass = process.env.MAIL_PASSWORD;
 
-  if (!smtpUser || !smtpPass) {
+  if (!mailHost || !mailUser || !mailPass) {
     console.warn('⚠️ SMTP non configuré — email non envoyé');
     return {
       statusCode: 200,
@@ -114,14 +115,15 @@ exports.handler = async (event) => {
   }
 
   const transporter = nodemailer.createTransporter({
-    service: 'gmail',
-    auth: { user: smtpUser, pass: smtpPass },
+    host: mailHost,
+    port: 587,
+    auth: { user: mailUser, pass: mailPass },
   });
 
   await transporter.sendMail({
-    from: `"Capital Norvex" <${smtpUser}>`,
+    from: 'Capital Norvex <info@capitalnorvex.com>',
     to: email,
-    bcc: smtpUser, // copie à toi-même
+    bcc: 'info@capitalnorvex.com',
     subject,
     html,
   });
