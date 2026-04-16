@@ -488,13 +488,6 @@ async function runAnalysis(){
 }
 
 async function doAnalysis(withPDFs){
-  const apiKey=getKey();
-  if(!apiKey||!apiKey.startsWith('sk-ant-')){
-    clearInterval(S.ltimer);go(2);
-    const eb=g('errbox');eb.classList.remove('hidden');
-    eb.textContent=S.lang==='fr'?'⚠️ Veuillez entrer votre clé API Anthropic dans le champ en haut à droite (sk-ant-...).':'⚠️ Please enter your Anthropic API key in the field at top right (sk-ant-...).';
-    return;
-  }
   try{
     const content=[];
     let pdfNote='';
@@ -663,13 +656,10 @@ All: font-size:8px;color:#AAA;letter-spacing:.5px
 
 Print CSS: @media print{body{margin:0}@page{margin:1.4cm;size:letter portrait}p{orphans:3;widows:3}}`});
 
-    const resp=await fetch('https://api.anthropic.com/v1/messages',{
+    const resp=await fetch('/.netlify/functions/anthropic',{
       method:'POST',
       headers:{
-        'Content-Type':'application/json',
-        'x-api-key':apiKey,
-        'anthropic-version':'2023-06-01',
-        'anthropic-dangerous-direct-browser-access':'true'
+        'Content-Type':'application/json'
       },
       body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:4000,messages:[{role:'user',content}]})
     });
