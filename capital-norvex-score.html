@@ -892,21 +892,44 @@ async function saveToPipeline(analysis,ci,type,refId){
     const isRefused=decision.includes('REFUSÉ')||decision.includes('REFUSED')||decision.includes('DECLINED');
     const priorite=isRefused?'high':score>=85?'low':'med';
     const now=new Date().toLocaleString('fr-CA',{dateStyle:'short',timeStyle:'short'});
-    await _db.collection('dossiers').doc(id).set({
+    const conditions=analysis.conditions||[];
+    const pointsForts=analysis.points_forts||[];
+    const risques=analysis.risques||[];
+    const dossierData={
       id,prenom,nom,
       email:ci.email||'',tel:ci.phone||'',
       type:typeMap[type]||'Commercial',
       montant:montantRec||montantDem,
+      montant_demande:montantDem,
+      montant_recommande:montantRec,
       adresse:ci.address||'',
       stage:'analyse',score,decision,priorite,jours:0,
-      docs:[],
+      docs:conditions,
+      points_forts:pointsForts,
+      risques:risques,
+      resume:analysis.resume_analyse||'',
       activite:[
         {texte:`Analyse IA — Score Norvex™: ${score!==null?score+'/100':'N/A'} — ${decision}`,time:now,type:isApproved?'green':isRefused?'red':'gold'},
         {texte:`Demande reçue via site web — ${ci.name||ci.email}`,time:now,type:'muted'}
       ],
       created_at:firebase.firestore.FieldValue.serverTimestamp()
-    });
+    };
+    await _db.collection('dossiers').doc(id).set(dossierData);
     console.log('✅ Dossier sauvegardé dans le pipeline:',id);
+    // Déclencher courriel de bienvenue au client
+    fetch('/.netlify/functions/send-welcome-email',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        id,prenom,nom,
+        email:ci.email||'',
+        type:typeMap[type]||'Commercial',
+        montant:montantRec||montantDem,
+        decision,score,
+        conditions,
+        lang:S.lang||'fr'
+      })
+    }).then(r=>r.json()).then(r=>console.log('📧 Email envoyé:',r)).catch(e=>console.warn('Email error:',e));
   }catch(e){console.warn('Pipeline save error:',e);}
 }
 </script>
