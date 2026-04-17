@@ -497,6 +497,7 @@ async function doAnalysis(withPDFs){
   }
   try{
     const content=[];
+    const pdfKeys=[];
     let pdfNote='';
 
     if(withPDFs && S.files.length>0){
@@ -510,6 +511,10 @@ async function doAnalysis(withPDFs){
           :`Note: Files too large skipped (>100 pages est.): ${names}`;
       }
       for(const f of okFiles){
+        try{
+          const sr=await fetch(`/.netlify/functions/store-pdf?name=${encodeURIComponent(f.name)}`,{method:'POST',headers:{'Content-Type':'application/pdf'},body:f});
+          if(sr.ok){const sd=await sr.json();if(sd.key){pdfKeys.push(sd.key);continue;}}
+        }catch(e){console.warn('store-pdf skip',f.name,e)}
         try{
           const b64=await toB64(f);
           content.push({type:'document',source:{type:'base64',media_type:'application/pdf',data:b64}});
@@ -661,16 +666,21 @@ All: font-size:8px;color:#AAA;letter-spacing:.5px
 
 Print CSS: @media print{body{margin:0}@page{margin:1.4cm;size:letter portrait}p{orphans:3;widows:3}}`});
 
-    const resp=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',
-      headers:{
-        'Content-Type':'application/json',
-        'x-api-key':apiKey,
-        'anthropic-version':'2023-06-01',
-        'anthropic-dangerous-direct-browser-access':'true'
-      },
-      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:4000,messages:[{role:'user',content}]})
-    });
+    const promptText=content[content.length-1].text;
+    let resp;
+    if(pdfKeys.length>0){
+      resp=await fetch('/.netlify/functions/analyze-background',{
+        method:'POST',
+        headers:{'Content-Type':'application/json','x-api-key':apiKey},
+        body:JSON.stringify({pdfKeys,inlinePdfs:content.slice(0,-1),prompt:promptText,model:'claude-opus-4-7'})
+      });
+    }else{
+      resp=await fetch('https://api.anthropic.com/v1/messages',{
+        method:'POST',
+        headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+        body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:4000,messages:[{role:'user',content}]})
+      });
+    }
 
     if(!resp.ok){
       const errText=await resp.text();
