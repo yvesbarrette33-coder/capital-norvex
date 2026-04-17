@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dépôt de documents — Capital Norvex</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:   #0a0d13;
+    --gold:  #C9A84C;
+    --gold2: #e8c96a;
+    --cream: #f5f0e8;
+    --cream2:#ede7d9;
+    --muted: #7a7570;
+    --red:   #c0392b;
+    --green: #1a6b3a;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--ink);
+    color: var(--cream);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 1rem 4rem;
+  }
+
+  /* ── Header ── */
+  .header {
+    width: 100%;
+    max-width: 640px;
+    padding: 2.5rem 0 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .6rem;
+    text-align: center;
+  }
+
+  .logo-mark {
+    width: 48px; height: 48px;
+    border: 1.5px solid var(--gold);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: .4rem;
+  }
+  .logo-mark svg { width: 22px; height: 22px; fill: var(--gold); }
+
+  .brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .brand-sub {
+    font-size: .72rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ── Card ── */
+  .card {
+    width: 100%;
+    max-width: 640px;
+    background: #13161f;
+    border: 1px solid #2a2d38;
+    border-radius: 12px;
+    padding: 2rem 2rem 2.5rem;
+  }
+
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.35rem;
+    color: var(--cream);
+    margin-bottom: .35rem;
+  }
+  .card-subtitle {
+    font-size: .82rem;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 1.6rem;
+  }
+
+  /* ── Client info banner ── */
+  .client-banner {
+    background: rgba(201,168,76,.07);
+    border: 1px solid rgba(201,168,76,.2);
+    border-radius: 8px;
+    padding: .9rem 1.1rem;
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.8rem;
+  }
+  .client-field { display: flex; flex-direction: column; gap: .15rem; }
+  .client-field label {
+    font-size: .68rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .client-field span {
+    font-size: .9rem;
+    color: var(--cream);
+    font-weight: 500;
+  }
+
+  /* ── Drop zone ── */
+  .dropzone {
+    border: 2px dashed #2e323f;
+    border-radius: 10px;
+    padding: 2.2rem 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color .2s, background .2s;
+    position: relative;
+    margin-bottom: 1.4rem;
+  }
+  .dropzone:hover, .dropzone.dragover {
+    border-color: var(--gold);
+    background: rgba(201,168,76,.04);
+  }
+  .dropzone input[type="file"] {
+    position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+  }
+
+  .dz-icon { font-size: 2rem; margin-bottom: .6rem; opacity: .6; }
+  .dz-text { font-size: .88rem; color: var(--muted); line-height: 1.5; }
+  .dz-text strong { color: var(--cream); }
+  .dz-formats {
+    margin-top: .4rem;
+    font-size: .72rem;
+    color: #555;
+    letter-spacing: .05em;
+  }
+
+  /* ── File list ── */
+  .file-list { display: flex; flex-direction: column; gap: .6rem; margin-bottom: 1.6rem; }
+
+  .file-item {
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+    background: #1a1d27;
+    border: 1px solid #2a2d38;
+    border-radius: 8px;
+    padding: .75rem 1rem;
+    transition: border-color .2s;
+  }
+  .file-item.success { border-color: rgba(26,107,58,.5); }
+  .file-item.error   { border-color: rgba(192,57,43,.5); }
+  .file-item.uploading { border-color: rgba(201,168,76,.3); }
+
+  .file-icon { font-size: 1.2rem; flex-shrink: 0; }
+  .file-info { flex: 1; min-width: 0; }
+  .file-name {
+    font-size: .85rem; font-weight: 500; color: var(--cream);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .file-meta { font-size: .72rem; color: var(--muted); margin-top: .1rem; }
+
+  .file-status { flex-shrink: 0; font-size: .78rem; font-weight: 500; }
+  .file-status.done   { color: #4caf7d; }
+  .file-status.fail   { color: var(--red); }
+  .file-status.wait   { color: var(--gold); }
+
+  .file-remove {
+    background: none; border: none; color: #444; cursor: pointer;
+    font-size: .9rem; padding: .2rem; transition: color .15s; flex-shrink: 0;
+  }
+  .file-remove:hover { color: var(--red); }
+
+  /* ── Progress bar ── */
+  .progress-wrap {
+    height: 3px; background: #1e2230; border-radius: 2px;
+    margin-top: .4rem; overflow: hidden;
+  }
+  .progress-bar {
+    height: 100%; background: var(--gold);
+    border-radius: 2px; width: 0;
+    transition: width .3s ease;
+  }
+
+  /* ── Buttons ── */
+  .btn-submit {
+    width: 100%;
+    padding: .95rem;
+    background: var(--gold);
+    color: var(--ink);
+    border: none;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .9rem;
+    font-weight: 600;
+    letter-spacing: .04em;
+    cursor: pointer;
+    transition: background .2s, opacity .2s, transform .1s;
+  }
+  .btn-submit:hover:not(:disabled) { background: var(--gold2); transform: translateY(-1px); }
+  .btn-submit:disabled { opacity: .4; cursor: not-allowed; transform: none; }
+
+  /* ── States ── */
+  .state { display: none; }
+  .state.active { display: block; }
+
+  /* ── Error state ── */
+  .error-box {
+    text-align: center;
+    padding: 2rem 1.5rem;
+  }
+  .error-box .error-icon { font-size: 2.5rem; margin-bottom: .8rem; }
+  .error-box h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--cream);
+    margin-bottom: .5rem;
+  }
+  .error-box p { font-size: .83rem; color: var(--muted); line-height: 1.6; }
+
+  /* ── Success state ── */
+  .success-box {
+    text-align: center;
+    padding: 2rem 1.5rem;
+  }
+  .success-box .check-circle {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: rgba(26,107,58,.15);
+    border: 2px solid rgba(76,175,125,.3);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1.2rem;
+    font-size: 1.8rem;
+  }
+  .success-box h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    color: var(--cream);
+    margin-bottom: .6rem;
+  }
+  .success-box p { font-size: .83rem; color: var(--muted); line-height: 1.6; }
+
+  .files-summary {
+    margin-top: 1.2rem;
+    background: #1a1d27;
+    border: 1px solid #2a2d38;
+    border-radius: 8px;
+    padding: .9rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: .4rem;
+  }
+  .summary-row {
+    display: flex; align-items: center; gap: .5rem;
+    font-size: .8rem; color: var(--muted);
+  }
+  .summary-row span.ok { color: #4caf7d; }
+
+  /* ── Loading ── */
+  .loading-box {
+    text-align: center;
+    padding: 3rem 1.5rem;
+  }
+  .spinner {
+    width: 36px; height: 36px;
+    border: 2px solid #2a2d38;
+    border-top-color: var(--gold);
+    border-radius: 50%;
+    animation: spin .8s linear infinite;
+    margin: 0 auto 1rem;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .notice {
+    margin-top: 1.5rem;
+    font-size: .75rem;
+    color: #3a3d4a;
+    text-align: center;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 480px) {
+    .card { padding: 1.5rem 1.2rem 2rem; }
+    .client-banner { gap: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <div class="logo-mark">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 2L3 7v10l9 5 9-5V7L12 2zm0 2.18L19 8.5v7L12 19.82 5 15.5v-7L12 4.18z"/>
+    </svg>
+  </div>
+  <div class="brand">Capital Norvex</div>
+  <div class="brand-sub">Financement Institutionnel</div>
+</div>
+
+<!-- Card -->
+<div class="card">
+
+  <!-- Loading state -->
+  <div id="state-loading" class="state active">
+    <div class="loading-box">
+      <div class="spinner"></div>
+      <div style="font-size:.82rem;color:var(--muted)">Chargement de votre dossier…</div>
+    </div>
+  </div>
+
+  <!-- Error state -->
+  <div id="state-error" class="state">
+    <div class="error-box">
+      <div class="error-icon">⚠️</div>
+      <h3 id="error-title">Lien invalide</h3>
+      <p id="error-msg">Ce lien de dépôt est invalide ou a expiré. Veuillez contacter votre chargé de dossier chez Capital Norvex.</p>
+    </div>
+  </div>
+
+  <!-- Upload state -->
+  <div id="state-upload" class="state">
+    <div class="card-title">Dépôt de documents</div>
+    <div class="card-subtitle" id="upload-subtitle">
+      Veuillez déposer les documents requis pour l'analyse de votre dossier de financement.
+    </div>
+
+    <!-- Client info -->
+    <div class="client-banner" id="client-banner">
+      <div class="client-field">
+        <label>Dossier</label>
+        <span id="info-dossier">—</span>
+      </div>
+      <div class="client-field">
+        <label>Client</label>
+        <span id="info-nom">—</span>
+      </div>
+      <div class="client-field">
+        <label>Projet</label>
+        <span id="info-projet">—</span>
+      </div>
+    </div>
+
+    <!-- Drop zone -->
+    <div class="dropzone" id="dropzone">
+      <input type="file" id="file-input" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+      <div class="dz-icon">📄</div>
+      <div class="dz-text">
+        <strong>Glissez vos fichiers ici</strong><br>
+        ou cliquez pour sélectionner
+      </div>
+      <div class="dz-formats">PDF · DOC · DOCX · JPG · PNG — Max 30 MB par fichier</div>
+    </div>
+
+    <!-- File list -->
+    <div class="file-list" id="file-list"></div>
+
+    <!-- Submit button -->
+    <button class="btn-submit" id="btn-submit" disabled onclick="submitAll()">
+      Envoyer les documents
+    </button>
+  </div>
+
+  <!-- Success state -->
+  <div id="state-success" class="state">
+    <div class="success-box">
+      <div class="check-circle">✓</div>
+      <h3>Documents reçus</h3>
+      <p>Vos documents ont été transmis à Capital Norvex. Notre équipe procédera à l'analyse de votre dossier dans les plus brefs délais.</p>
+      <div class="files-summary" id="files-summary"></div>
+      <p style="margin-top:1.2rem;font-size:.78rem;color:#3a3d4a;">
+        Pour toute question : <a href="mailto:info@capitalnorvex.com" style="color:var(--gold);text-decoration:none">info@capitalnorvex.com</a>
+      </p>
+    </div>
+  </div>
+
+</div>
+
+<div class="notice">
+  Vos documents sont transmis de façon sécurisée et confidentielle.<br>
+  © Capital Norvex inc. — Tous droits réservés.
+</div>
+
+<script>
+// ── State ─────────────────────────────────────────────────────────────────────
+let tokenData = null;
+let currentToken = null;
+let pendingFiles = [];  // [{file, status: 'waiting'|'uploading'|'done'|'error', blobKey, id}]
+let uploadedCount = 0;
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+(async function init() {
+  const params = new URLSearchParams(location.search);
+  const t = params.get('t');
+
+  if (!t) {
+    showError('Lien invalide', 'Aucun token de dépôt trouvé dans l\'URL. Veuillez utiliser le lien fourni par Capital Norvex.');
+    return;
+  }
+
+  currentToken = t;
+
+  try {
+    const resp = await fetch(`/.netlify/functions/get-token-info?t=${encodeURIComponent(t)}`);
+    const data = await resp.json();
+
+    if (!resp.ok || data.error) {
+      showError('Lien expiré', data.error === 'Invalid or expired token'
+        ? 'Ce lien de dépôt est invalide ou a déjà été utilisé. Contactez votre chargé de dossier.'
+        : (data.error || 'Erreur de validation.'));
+      return;
+    }
+
+    tokenData = data;
+    document.documentElement.lang = data.lang || 'fr';
+
+    // Fill info
+    document.getElementById('info-dossier').textContent = data.dossierID || '—';
+    document.getElementById('info-nom').textContent     = data.clientNom  || '—';
+    document.getElementById('info-projet').textContent  = data.projet     || '—';
+
+    if (data.lang === 'en') applyEnglish();
+
+    showState('upload');
+  } catch (e) {
+    showError('Erreur de connexion', 'Impossible de valider votre lien. Vérifiez votre connexion et réessayez.');
+  }
+})();
+
+// ── Language ───────────────────────────────────────────────────────────────────
+function applyEnglish() {
+  document.title = 'Document Upload — Capital Norvex';
+  q('.card-title').textContent = 'Document Upload';
+  q('#upload-subtitle').textContent = 'Please upload the required documents for your financing application review.';
+  q('.dz-text').innerHTML = '<strong>Drag files here</strong><br>or click to select';
+  q('.dz-formats').textContent = 'PDF · DOC · DOCX · JPG · PNG — Max 30 MB per file';
+  q('#btn-submit').textContent = 'Send documents';
+  q('.notice').innerHTML = 'Your documents are transmitted securely and confidentially.<br>© Capital Norvex inc. — All rights reserved.';
+  // labels
+  const labels = document.querySelectorAll('.client-field label');
+  if (labels[0]) labels[0].textContent = 'File';
+  if (labels[1]) labels[1].textContent = 'Client';
+  if (labels[2]) labels[2].textContent = 'Project';
+}
+function q(sel) { return document.querySelector(sel); }
+
+// ── UI helpers ─────────────────────────────────────────────────────────────────
+function showState(name) {
+  document.querySelectorAll('.state').forEach(s => s.classList.remove('active'));
+  document.getElementById('state-' + name).classList.add('active');
+}
+function showError(title, msg) {
+  document.getElementById('error-title').textContent = title;
+  document.getElementById('error-msg').textContent   = msg;
+  showState('error');
+}
+function formatSize(bytes) {
+  if (bytes < 1024)       return bytes + ' B';
+  if (bytes < 1024*1024)  return (bytes/1024).toFixed(1) + ' KB';
+  return (bytes/(1024*1024)).toFixed(1) + ' MB';
+}
+
+// ── File handling ───────────────────────────────────────────────────────────────
+const dropzone  = document.getElementById('dropzone');
+const fileInput = document.getElementById('file-input');
+const fileList  = document.getElementById('file-list');
+const btnSubmit = document.getElementById('btn-submit');
+
+dropzone.addEventListener('dragover', e => { e.preventDefault(); dropzone.classList.add('dragover'); });
+dropzone.addEventListener('dragleave', ()  => dropzone.classList.remove('dragover'));
+dropzone.addEventListener('drop', e => {
+  e.preventDefault(); dropzone.classList.remove('dragover');
+  addFiles(Array.from(e.dataTransfer.files));
+});
+fileInput.addEventListener('change', () => {
+  addFiles(Array.from(fileInput.files));
+  fileInput.value = '';
+});
+
+function addFiles(files) {
+  const MAX = 30 * 1024 * 1024; // 30 MB
+  files.forEach(file => {
+    if (file.size > MAX) {
+      alert(`"${file.name}" dépasse la limite de 30 MB.`);
+      return;
+    }
+    const id = 'f_' + Date.now() + '_' + Math.random().toString(36).slice(2,6);
+    pendingFiles.push({ file, status: 'waiting', blobKey: null, id });
+    renderFileItem({ file, status: 'waiting', id });
+  });
+  updateSubmitBtn();
+}
+
+function renderFileItem(item) {
+  const el = document.createElement('div');
+  el.className = 'file-item';
+  el.id = 'fi_' + item.id;
+  el.innerHTML = `
+    <div class="file-icon">📄</div>
+    <div class="file-info">
+      <div class="file-name">${escHtml(item.file.name)}</div>
+      <div class="file-meta">${formatSize(item.file.size)}</div>
+      <div class="progress-wrap" id="prog_${item.id}"><div class="progress-bar" id="bar_${item.id}"></div></div>
+    </div>
+    <div class="file-status wait" id="st_${item.id}">En attente</div>
+    <button class="file-remove" id="rm_${item.id}" onclick="removeFile('${item.id}')" title="Retirer">✕</button>
+  `;
+  fileList.appendChild(el);
+}
+
+function removeFile(id) {
+  pendingFiles = pendingFiles.filter(f => f.id !== id);
+  const el = document.getElementById('fi_' + id);
+  if (el) el.remove();
+  updateSubmitBtn();
+}
+
+function updateFileUI(id, status, msg) {
+  const el = document.getElementById('fi_' + id);
+  if (!el) return;
+  el.className = 'file-item ' + (status === 'done' ? 'success' : status === 'error' ? 'error' : 'uploading');
+  const st = document.getElementById('st_' + id);
+  if (st) {
+    st.className = 'file-status ' + (status === 'done' ? 'done' : status === 'error' ? 'fail' : 'wait');
+    st.textContent = msg;
+  }
+  const bar = document.getElementById('bar_' + id);
+  if (bar) bar.style.width = status === 'done' ? '100%' : status === 'uploading' ? '60%' : '0';
+  const rm = document.getElementById('rm_' + id);
+  if (rm) rm.style.display = (status === 'done' || status === 'uploading') ? 'none' : '';
+}
+
+function updateSubmitBtn() {
+  const waiting = pendingFiles.filter(f => f.status === 'waiting').length;
+  btnSubmit.disabled = waiting === 0;
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── Upload ─────────────────────────────────────────────────────────────────────
+async function submitAll() {
+  btnSubmit.disabled = true;
+  const toUpload = pendingFiles.filter(f => f.status === 'waiting');
+  if (toUpload.length === 0) return;
+
+  let allOk = true;
+  for (const item of toUpload) {
+    const ok = await uploadOne(item);
+    if (!ok) allOk = false;
+  }
+
+  const anyFailed = pendingFiles.some(f => f.status === 'error');
+  if (anyFailed) {
+    // Some failed — re-enable for retry
+    btnSubmit.disabled = false;
+    btnSubmit.textContent = 'Réessayer les fichiers en erreur';
+    return;
+  }
+
+  // All done → success screen
+  showSuccessScreen();
+}
+
+async function uploadOne(item) {
+  item.status = 'uploading';
+  updateFileUI(item.id, 'uploading', 'Envoi…');
+
+  try {
+    const url = `/.netlify/functions/upload-doc?token=${encodeURIComponent(currentToken)}&name=${encodeURIComponent(item.file.name)}`;
+    const resp = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': item.file.type || 'application/octet-stream' },
+      body: item.file,
+    });
+
+    const data = await resp.json().catch(() => ({}));
+
+    if (!resp.ok || !data.ok) {
+      item.status = 'error';
+      const msg = data.error || ('Erreur ' + resp.status);
+      updateFileUI(item.id, 'error', msg);
+      return false;
+    }
+
+    item.status  = 'done';
+    item.blobKey = data.blobKey;
+    updateFileUI(item.id, 'done', '✓ Reçu');
+    uploadedCount++;
+    return true;
+
+  } catch (e) {
+    item.status = 'error';
+    updateFileUI(item.id, 'error', 'Connexion échouée');
+    return false;
+  }
+}
+
+function showSuccessScreen() {
+  const done = pendingFiles.filter(f => f.status === 'done');
+  const summary = document.getElementById('files-summary');
+  summary.innerHTML = done.map(f => `
+    <div class="summary-row">
+      <span class="ok">✓</span>
+      <span>${escHtml(f.file.name)}</span>
+      <span style="margin-left:auto;font-size:.75rem">${formatSize(f.file.size)}</span>
+    </div>
+  `).join('');
+  showState('success');
+}
+</script>
+</body>
+</html>
