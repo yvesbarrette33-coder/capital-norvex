@@ -1,7 +1,6 @@
 const { getStore } = require('@netlify/blobs');
 
-const PENDING_STAGES = new Set(['analyse', 'docs']);
-
+const PENDING_STAGES = new Set(['nouvelle', 'analyse', 'docs']);
 exports.handler = async (event) => {
   const secret = event.headers['x-internal-secret'];
   if (!secret || secret !== process.env.INTERNAL_SECRET) {
