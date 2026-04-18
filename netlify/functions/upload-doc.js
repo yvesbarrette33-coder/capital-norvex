@@ -29,7 +29,6 @@ exports.handler = async (event) => {
   }
 
   try {
-    // Validate token
     const tokenStore = getStore('upload-tokens');
     const tokenData = await tokenStore.get(token, { type: 'json' });
 
@@ -49,7 +48,6 @@ exports.handler = async (event) => {
       };
     }
 
-    // Store file in Netlify Blobs
     const docStore = getStore('dossier-docs');
     const blobKey = `${tokenData.dossierID}/${Date.now()}_${filename}`;
 
@@ -66,10 +64,10 @@ exports.handler = async (event) => {
       },
     });
 
-    // Record new doc in token metadata for later retrieval
+    // Enregistrer le doc dans les métadonnées du token (setJSON au lieu de set+stringify)
     tokenData.docs = tokenData.docs || [];
     tokenData.docs.push({ blobKey, filename, uploadedAt: new Date().toISOString() });
-    await tokenStore.set(token, JSON.stringify(tokenData));
+    await tokenStore.setJSON(token, tokenData);
 
     return {
       statusCode: 200,
