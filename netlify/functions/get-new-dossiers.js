@@ -1,6 +1,5 @@
 const { getStore } = require('@netlify/blobs');
 
-// Filtre les dossiers sans courriel de bienvenue (stage = 'nouvelle' ou 'analyse')
 exports.handler = async (event) => {
   const secret = event.headers['x-internal-secret'];
   if (!secret || secret !== process.env.INTERNAL_SECRET) {
@@ -29,7 +28,12 @@ exports.handler = async (event) => {
           }
         })
       )
-    ).filter((d) => d && (d.stage === 'nouvelle' || d.stage === 'analyse') && !d.welcomeEmailSent);
+    ).filter(
+      (d) =>
+        d &&
+        ['nouvelle', 'analyse', 'docs'].includes(d.stage) &&
+        !d.welcomeEmailSent
+    );
 
     return {
       statusCode: 200,
