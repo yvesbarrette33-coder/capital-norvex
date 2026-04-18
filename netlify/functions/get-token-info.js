@@ -1,6 +1,17 @@
 const { getStore } = require('@netlify/blobs');
 
 exports.handler = async (event) => {
+  if (event.httpMethod === 'OPTIONS') {
+    return {
+      statusCode: 204,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+      },
+    };
+  }
+
   if (event.httpMethod !== 'GET') {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
@@ -9,7 +20,7 @@ exports.handler = async (event) => {
   if (!token) {
     return {
       statusCode: 400,
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
       body: JSON.stringify({ error: 'Missing token' }),
     };
   }
@@ -21,7 +32,7 @@ exports.handler = async (event) => {
     if (!data) {
       return {
         statusCode: 404,
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
         body: JSON.stringify({ error: 'Invalid or expired token' }),
       };
     }
@@ -29,7 +40,7 @@ exports.handler = async (event) => {
     if (data.expiresAt && new Date(data.expiresAt) < new Date()) {
       return {
         statusCode: 410,
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
         body: JSON.stringify({ error: 'Invalid or expired token' }),
       };
     }
@@ -52,7 +63,7 @@ exports.handler = async (event) => {
     console.error('get-token-info error:', err);
     return {
       statusCode: 500,
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
       body: JSON.stringify({ error: err.message }),
     };
   }
