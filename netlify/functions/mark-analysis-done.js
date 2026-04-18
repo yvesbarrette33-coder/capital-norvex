@@ -1,0 +1,80 @@
+const { getStore } = require('@netlify/blobs');
+
+// Appelé par l'agent après avoir calculé le Score Norvex
+// Body: { dossierId, scoreNorvex, decision, commentaires }
+exports.handler = async (event) => {
+  const secret = event.headers['x-internal-secret'];
+  if (!secret || secret !== process.env.INTERNAL_SECRET) {
+    return {
+      statusCode: 401,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ error: 'Unauthorized' }),
+    };
+  }
+
+  if (event.httpMethod !== 'POST') {
+    return { statusCode: 405, body: 'Method Not Allowed' };
+  }
+
+  let body;
+  try {
+    body = JSON.parse(event.body);
+  } catch {
+    return {
+      statusCode: 400,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ error: 'JSON invalide' }),
+    };
+  }
+
+  const { dossierId, scoreNorvex, decision, commentaires } = body;
+
+  if (!dossierId || scoreNorvex === undefined || !decision) {
+    return {
+      statusCode: 400,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ error: 'Champs requis: dossierId, scoreNorvex, decision' }),
+    };
+  }
+
+  try {
+    const store = getStore('dossiers');
+    const dossier = await store.get(dossierId, { type: 'json' });
+
+    if (!dossier) {
+      return {
+        statusCode: 404,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ error: 'Dossier introuvable' }),
+      };
+    }
+
+    // Déterminer le prochain stage selon la décision
+    const prochainStage = decision === 'approuve' ? 'nouvelle' : 
+                          decision === 'refuse' ? 'refuse' : 'docs';
+
+    const dossierMisAJour = {
+      ...dossier,
+      scoreNorvex,
+      decision,
+      commentaires: commentaires || '',
+      stage: prochainStage,
+      analysisDate: new Date().toISOString(),
+    };
+
+    await store.setJSON(dossierId, dossierMisAJour);
+
+    return {
+      statusCode: 200,
+      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+      body: JSON.stringify({ ok: true, dossierId, stage: prochainStage }),
+    };
+  } catch (err) {
+    console.error('mark-analysis-done error:', err);
+    return {
+      statusCode: 500,
+      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+      body: JSON.stringify({ ok: false, error: err.message }),
+    };
+  }
+};
