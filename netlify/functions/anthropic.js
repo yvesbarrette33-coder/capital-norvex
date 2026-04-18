@@ -3,7 +3,17 @@ exports.handler = async (event) => {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
 
-  const apiKey = event.headers['x-api-key'];
+  // Clé API uniquement depuis les variables d'environnement Netlify — jamais du navigateur
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+
+  if (!apiKey) {
+    return {
+      statusCode: 500,
+      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+      body: JSON.stringify({ error: 'API key not configured on server' }),
+    };
+  }
+
   const beta = event.headers['anthropic-beta'];
 
   const headers = {
