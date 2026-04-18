@@ -1,7 +1,5 @@
 const { getStore } = require('@netlify/blobs');
 
-const APPROVED_STAGES = new Set(['loi', 'final', 'notaire', 'decaisse']);
-
 exports.handler = async (event) => {
   if (event.httpMethod === 'OPTIONS') {
     return {
@@ -18,7 +16,7 @@ exports.handler = async (event) => {
   if (!secret || secret !== process.env.INTERNAL_SECRET) {
     return {
       statusCode: 401,
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
       body: JSON.stringify({ error: 'Unauthorized' }),
     };
   }
@@ -38,7 +36,7 @@ exports.handler = async (event) => {
       if (!alert.dossierID) continue;
       const key = `${alert.dossierID}_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`;
       const record = { ...alert, createdAt: new Date().toISOString() };
-      await store.set(key, JSON.stringify(record));
+      await store.setJSON(key, record);
       saved.push(key);
     }
 
