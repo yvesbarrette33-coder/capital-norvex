@@ -7,7 +7,7 @@ exports.handler = async (event) => {
       headers: {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'POST, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type, x-api-key',
+        'Access-Control-Allow-Headers': 'Content-Type',
       },
     };
   }
@@ -16,25 +16,24 @@ exports.handler = async (event) => {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
 
+  // Clé API uniquement depuis les variables d'environnement Netlify — jamais du navigateur
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+
+  if (!apiKey) {
+    return {
+      statusCode: 500,
+      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+      body: JSON.stringify({ error: 'API key not configured on server' }),
+    };
+  }
+
   try {
     const { pdfKeys = [], inlinePdfs = [], prompt, model = 'claude-opus-4-7' } =
       JSON.parse(event.body);
 
-    const apiKey =
-      process.env.ANTHROPIC_API_KEY || event.headers['x-api-key'];
-
-    if (!apiKey) {
-      return {
-        statusCode: 401,
-        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
-        body: JSON.stringify({ error: 'Missing API key' }),
-      };
-    }
-
     const store = getStore('pdfs');
     const content = [];
 
-    // Load PDFs from Netlify Blobs
     for (const key of pdfKeys) {
       try {
         const buffer = await store.get(key, { type: 'arrayBuffer' });
@@ -52,7 +51,6 @@ exports.handler = async (event) => {
       }
     }
 
-    // Append any inline base64 PDFs that were passed as fallback
     for (const doc of inlinePdfs) {
       content.push(doc);
     }
