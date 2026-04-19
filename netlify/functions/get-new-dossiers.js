@@ -18,7 +18,7 @@ exports.handler = async (event) => {
     const store = getStore({
       name: 'dossiers',
       siteID: process.env.NETLIFY_SITE_ID,
-      token: process.env.NETLIFY_AUTH_TOKEN,
+      token: process.env.BLOBS_TOKEN,
     });
     const { blobs } = await store.list();
 
