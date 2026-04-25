@@ -50,7 +50,12 @@ exports.handler = async (event) => {
     }
 
     // Déterminer le prochain stage selon la décision
-    const prochainStage = decision === 'approuve' ? 'nouvelle' : 
+    // Pipeline: nouvelle → analyse → loi → docs → final → notaire → decaisse
+    // Après calcul du Score Norvex (en stage "docs") :
+    //   - approuvé → "final" (analyse finale)
+    //   - refusé   → "refuse" (terminal)
+    //   - autre    → "docs"  (reste en attente)
+    const prochainStage = decision === 'approuve' ? 'final' :
                           decision === 'refuse' ? 'refuse' : 'docs';
 
     const dossierMisAJour = {
