@@ -1,6 +1,7 @@
-const { getStore } = require('@netlify/blobs');
+const { listDocs } = require('../lib/firestore');
 
-// Retourne les dossiers en stage "docs" qui attendent l'analyse Score Norvex
+// Retourne les dossiers en stage "docs" qui ont reçu le courriel de bienvenue
+// mais qui n'ont pas encore de Score Norvex calculé
 exports.handler = async (event) => {
   const secret = event.headers['x-internal-secret'];
   if (!secret || secret !== process.env.INTERNAL_SECRET) {
@@ -16,20 +17,14 @@ exports.handler = async (event) => {
   }
 
   try {
-    const store = getStore('dossiers');
-    const { blobs } = await store.list();
-
-    const dossiers = (
-      await Promise.all(
-        blobs.map(async ({ key }) => {
-          try {
-            return await store.get(key, { type: 'json' });
-          } catch {
-            return null;
-          }
-        })
-      )
-    ).filter((d) => d && d.stage === 'docs' && d.welcomeEmailSent === true && !d.scoreNorvex);
+    const all = await listDocs('dossiers');
+    const dossiers = all.filter(
+      (d) =>
+        d &&
+        d.stage === 'docs' &&
+        d.welcomeEmailSent === true &&
+        !d.scoreNorvex
+    );
 
     return {
       statusCode: 200,

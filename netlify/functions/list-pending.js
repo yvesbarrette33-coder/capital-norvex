@@ -1,6 +1,7 @@
-const { getStore } = require('@netlify/blobs');
+const { listDocs } = require('../lib/firestore');
 
 const PENDING_STAGES = new Set(['nouvelle', 'analyse', 'docs']);
+
 exports.handler = async (event) => {
   const secret = event.headers['x-internal-secret'];
   if (!secret || secret !== process.env.INTERNAL_SECRET) {
@@ -16,20 +17,8 @@ exports.handler = async (event) => {
   }
 
   try {
-    const store = getStore('dossiers');
-    const { blobs } = await store.list();
-
-    const dossiers = (
-      await Promise.all(
-        blobs.map(async ({ key }) => {
-          try {
-            return await store.get(key, { type: 'json' });
-          } catch {
-            return null;
-          }
-        })
-      )
-    ).filter((d) => d && PENDING_STAGES.has(d.stage));
+    const all = await listDocs('dossiers');
+    const dossiers = all.filter((d) => d && PENDING_STAGES.has(d.stage));
 
     return {
       statusCode: 200,

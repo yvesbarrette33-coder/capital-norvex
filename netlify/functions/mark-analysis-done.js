@@ -1,4 +1,4 @@
-const { getStore } = require('@netlify/blobs');
+const { getDoc, updateDoc } = require('../lib/firestore');
 
 // Appelé par l'agent après avoir calculé le Score Norvex
 // Body: { dossierId, scoreNorvex, decision, commentaires }
@@ -38,9 +38,7 @@ exports.handler = async (event) => {
   }
 
   try {
-    const store = getStore('dossiers');
-    const dossier = await store.get(dossierId, { type: 'json' });
-
+    const dossier = await getDoc('dossiers', dossierId);
     if (!dossier) {
       return {
         statusCode: 404,
@@ -49,7 +47,6 @@ exports.handler = async (event) => {
       };
     }
 
-    // Déterminer le prochain stage selon la décision
     // Pipeline: nouvelle → analyse → loi → docs → final → notaire → decaisse
     // Après calcul du Score Norvex (en stage "docs") :
     //   - approuvé → "final" (analyse finale)
@@ -58,16 +55,13 @@ exports.handler = async (event) => {
     const prochainStage = decision === 'approuve' ? 'final' :
                           decision === 'refuse' ? 'refuse' : 'docs';
 
-    const dossierMisAJour = {
-      ...dossier,
+    await updateDoc('dossiers', dossierId, {
       scoreNorvex,
       decision,
       commentaires: commentaires || '',
       stage: prochainStage,
       analysisDate: new Date().toISOString(),
-    };
-
-    await store.setJSON(dossierId, dossierMisAJour);
+    });
 
     return {
       statusCode: 200,
