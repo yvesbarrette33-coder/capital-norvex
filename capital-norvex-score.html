@@ -488,13 +488,9 @@ async function runAnalysis(){
 }
 
 async function doAnalysis(withPDFs){
-  const apiKey=getKey();
-  if(!apiKey||!apiKey.startsWith('sk-ant-')){
-    clearInterval(S.ltimer);go(2);
-    const eb=g('errbox');eb.classList.remove('hidden');
-    eb.textContent=S.lang==='fr'?'⚠️ Veuillez entrer votre clé API Anthropic dans le champ en haut à droite (sk-ant-...).':'⚠️ Please enter your Anthropic API key in the field at top right (sk-ant-...).';
-    return;
-  }
+  // La clé API est gérée côté serveur (Netlify env var ANTHROPIC_API_KEY).
+  // Le navigateur peut envoyer une clé en fallback (panneau admin double-clic logo) — sinon le serveur utilise sa propre clé.
+  const apiKey=getKey()||'';
   try{
     const content=[];
     const pdfKeys=[];
@@ -667,20 +663,22 @@ All: font-size:8px;color:#AAA;letter-spacing:.5px
 Print CSS: @media print{body{margin:0}@page{margin:1.4cm;size:letter portrait}p{orphans:3;widows:3}}`});
 
     const promptText=content[content.length-1].text;
-    let resp;
-    if(pdfKeys.length>0){
-      resp=await fetch('/.netlify/functions/analyze-background',{
-        method:'POST',
-        headers:{'Content-Type':'application/json','x-api-key':apiKey},
-        body:JSON.stringify({pdfKeys,inlinePdfs:content.slice(0,-1),prompt:promptText,model:'claude-opus-4-7'})
-      });
-    }else{
-      resp=await fetch('https://api.anthropic.com/v1/messages',{
-        method:'POST',
-        headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
-        body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:4000,messages:[{role:'user',content}]})
-      });
-    }
+    const inlinePdfs=content.slice(0,-1);
+    const hasPdfs=pdfKeys.length>0||inlinePdfs.length>0;
+    // Toutes les analyses passent par analyze-background — clé gérée côté serveur.
+    // Modèle: opus-4-7 pour PDF (analyse approfondie), sonnet-4-6 sinon (plus rapide).
+    const headers={'Content-Type':'application/json'};
+    if(apiKey)headers['x-api-key']=apiKey;
+    const resp=await fetch('/.netlify/functions/analyze-background',{
+      method:'POST',
+      headers,
+      body:JSON.stringify({
+        pdfKeys,
+        inlinePdfs,
+        prompt:promptText,
+        model:hasPdfs?'claude-opus-4-7':'claude-sonnet-4-6'
+      })
+    });
 
     if(!resp.ok){
       const errText=await resp.text();
