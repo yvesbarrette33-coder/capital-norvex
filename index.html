@@ -4510,16 +4510,16 @@ var EA_C = {
   red: '#B8372A', green: '#2A8C56', greenBg: '#E6F5ED', blue: '#2B6FA0', blueBg: '#E8F0F8',
 };
 
-var EA_SIGNATURE = "\n\n\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\nYves Barrette\nFondateur & Directeur \u2014 Capital Norvex\nPr\u00eateur Priv\u00e9 Hypoth\u00e9caire | Qu\u00e9bec & Ontario\n\u260e\ufe0f  514\u2011531\u20112705\n\u2709\ufe0f  info@capitalnorvex.ca\n\ud83c\udf10  capitalnorvex.ca\n\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\nCONFIDENTIALIT\u00c9 : Ce courriel et ses pi\u00e8ces jointes sont destin\u00e9s exclusivement \u00e0 leur destinataire. Si vous avez re\u00e7u ce message par erreur, veuillez le supprimer et en aviser l\u2019exp\u00e9diteur.";
+var EA_SIGNATURE = "\n\n\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\nYves Barrette\nFondateur & Directeur \u2014 Capital Norvex\nPr\u00eateur Priv\u00e9 Hypoth\u00e9caire | Qu\u00e9bec & Ontario\n\u260e\ufe0f  514\u2011531\u20112705\n\u2709\ufe0f  info@capitalnorvex.com\n\ud83c\udf10  capitalnorvex.com\n\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\nCONFIDENTIALIT\u00c9 : Ce courriel et ses pi\u00e8ces jointes sont destin\u00e9s exclusivement \u00e0 leur destinataire. Si vous avez re\u00e7u ce message par erreur, veuillez le supprimer et en aviser l\u2019exp\u00e9diteur.";
 
 var EA_TYPES = {
   emprunteur: {
     label: 'Emprunteur', icon: '🏠', color: EA_C.gold, desc: 'Prospection prêt privé',
-    system: "Tu es l'agent de sollicitation courriel de Capital Norvex, prêteur privé haut de gamme au Québec et Ontario.\nRédige un courriel de prospection pour un emprunteur potentiel.\nTON: Professionnel, chaleureux, confiant. Français québécois élégant.\nAVANTAGES: Financement rapide 24-48h, critères souples, prêts hypothécaires 1er/2e rang, achat/refinancement/consolidation, service personnalisé et confidentiel. Taux 10-12%.\nFORMAT STRICT - Réponds UNIQUEMENT en JSON valide sans markdown ni backticks:\n{\"objet\":\"Objet du courriel\",\"corps\":\"Corps complet avec salutation et signature:\\n\\nYves Barrette\\nFondateur & Directeur — Capital Norvex\\nPrêteur Privé Hypothécaire | Québec & Ontario\\n☎️  514‑531‑2705\\n✉️  info@capitalnorvex.ca\\n🌐  capitalnorvex.ca\"}\nMax 180 mots pour le corps. Inclus un appel à l'action clair et précis. Ton haut de gamme, classe mondiale."
+    system: "Tu es l'agent de sollicitation courriel de Capital Norvex, prêteur privé haut de gamme au Québec et Ontario.\nRédige un courriel de prospection pour un emprunteur potentiel.\nTON: Professionnel, chaleureux, confiant. Français québécois élégant.\nAVANTAGES: Financement rapide 24-48h, critères souples, prêts hypothécaires 1er/2e rang, achat/refinancement/consolidation, service personnalisé et confidentiel. Taux 10-12%.\nFORMAT STRICT - Réponds UNIQUEMENT en JSON valide sans markdown ni backticks:\n{\"objet\":\"Objet du courriel\",\"corps\":\"Corps complet avec salutation et signature:\\n\\nYves Barrette\\nFondateur & Directeur — Capital Norvex\\nPrêteur Privé Hypothécaire | Québec & Ontario\\n☎️  514‑531‑2705\\n✉️  info@capitalnorvex.com\\n🌐  capitalnorvex.com\"}\nMax 180 mots pour le corps. Inclus un appel à l'action clair et précis. Ton haut de gamme, classe mondiale."
   },
   partenaire: {
     label: 'Partenaire', icon: '🤝', color: EA_C.blue, desc: 'Courtier / Notaire / Agent',
-    system: "Tu es l'agent de sollicitation courriel de Capital Norvex, prêteur privé haut de gamme au Québec et Ontario.\nRédige un courriel de recrutement pour un partenaire potentiel (courtier, notaire, agent immobilier).\nTON: Professionnel B2B, partenariat gagnant-gagnant. Français québécois élégant.\nAVANTAGES: Commissions compétitives, processus rapide 24-48h, taux transparents 10-12%, support dédié, complémentarité avec prêteurs traditionnels, plateforme IA unique au Canada.\nFORMAT STRICT - Réponds UNIQUEMENT en JSON valide sans markdown ni backticks:\n{\"objet\":\"Objet du courriel\",\"corps\":\"Corps complet avec salutation et signature:\\n\\nYves Barrette\\nFondateur & Directeur — Capital Norvex\\nPrêteur Privé Hypothécaire | Québec & Ontario\\n☎️  514‑531‑2705\\n✉️  info@capitalnorvex.ca\\n🌐  capitalnorvex.ca\"}\nMax 180 mots pour le corps. Propose une rencontre ou un appel. Ton haut de gamme, classe mondiale."
+    system: "Tu es l'agent de sollicitation courriel de Capital Norvex, prêteur privé haut de gamme au Québec et Ontario.\nRédige un courriel de recrutement pour un partenaire potentiel (courtier, notaire, agent immobilier).\nTON: Professionnel B2B, partenariat gagnant-gagnant. Français québécois élégant.\nAVANTAGES: Commissions compétitives, processus rapide 24-48h, taux transparents 10-12%, support dédié, complémentarité avec prêteurs traditionnels, plateforme IA unique au Canada.\nFORMAT STRICT - Réponds UNIQUEMENT en JSON valide sans markdown ni backticks:\n{\"objet\":\"Objet du courriel\",\"corps\":\"Corps complet avec salutation et signature:\\n\\nYves Barrette\\nFondateur & Directeur — Capital Norvex\\nPrêteur Privé Hypothécaire | Québec & Ontario\\n☎️  514‑531‑2705\\n✉️  info@capitalnorvex.com\\n🌐  capitalnorvex.com\"}\nMax 180 mots pour le corps. Propose une rencontre ou un appel. Ton haut de gamme, classe mondiale."
   }
 };
 
@@ -4556,7 +4556,7 @@ function eaBuildUI() {
     + '<div style="width:38px;height:38px;border-radius:9px;background:linear-gradient(135deg,'+EA_C.gold+','+EA_C.goldDark+');display:flex;align-items:center;justify-content:center;font-size:17px;color:'+EA_C.white+';font-family:\'Playfair Display\',serif;font-weight:700">N</div>'
     + '<div><div style="font-family:\'Playfair Display\',serif;font-size:17px;color:'+EA_C.white+';font-weight:600">Capital Norvex</div>'
     + '<div style="font-size:10px;color:'+EA_C.gold+';letter-spacing:1.5px;text-transform:uppercase;font-weight:500">Agent de Sollicitation</div></div></div>'
-    + '<div style="font-size:11px;color:'+EA_C.g400+';letter-spacing:.5px">info@capitalnorvex.ca</div>'
+    + '<div style="font-size:11px;color:'+EA_C.g400+';letter-spacing:.5px">info@capitalnorvex.com</div>'
     + '</header>'
     + '<div style="max-width:880px;margin:0 auto;padding:24px 20px">'
     + '<div style="background:'+EA_C.white+';border-radius:12px;padding:6px;display:inline-flex;gap:4px;margin-bottom:24px;box-shadow:0 1px 3px rgba(26,26,46,.06)">'
@@ -4624,7 +4624,7 @@ function eaBuildCompose() {
       + '<div style="text-align:right">'
       + '<div style="font-size:12px;font-weight:600;color:rgba(184,151,106,.95);letter-spacing:.5px">Yves Barrette</div>'
       + '<div style="font-size:10px;color:rgba(255,255,255,.55);margin-top:1px">Fondateur &amp; Directeur</div>'
-      + '<div style="font-size:10px;color:rgba(255,255,255,.45);margin-top:4px">514‑531‑2705 · info@capitalnorvex.ca</div>'
+      + '<div style="font-size:10px;color:rgba(255,255,255,.45);margin-top:4px">514‑531‑2705 · info@capitalnorvex.com</div>'
       + '</div></div>'
       /* ── Gold divider ── */
       + '<div style="height:3px;background:linear-gradient(90deg,#B8976A,#D4B896,#B8976A)"></div>'
@@ -4637,7 +4637,7 @@ function eaBuildCompose() {
       + '<textarea onchange="eaSetField(\'editBody\',this.value)" oninput="eaSetField(\'editBody\',this.value)" style="width:100%;padding:0;border:none;background:transparent;font-family:\'DM Sans\',sans-serif;font-size:13.5px;color:#1a1a2e;line-height:1.85;resize:vertical;min-height:240px;outline:none">'+eaEsc(EA.editBody)+'</textarea></div>'
       /* ── Footer signature band ── */
       + '<div style="background:#F9F7F4;border-top:1px solid #EDE8DF;padding:14px 28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">'
-      + '<div style="font-size:11px;color:#8C8070"><strong style="color:#0A0D13">Yves Barrette</strong> · Fondateur &amp; Directeur · <span style="color:#B8976A">capitalnorvex.ca</span></div>'
+      + '<div style="font-size:11px;color:#8C8070"><strong style="color:#0A0D13">Yves Barrette</strong> · Fondateur &amp; Directeur · <span style="color:#B8976A">capitalnorvex.com</span></div>'
       + '<div style="display:flex;gap:8px;flex-wrap:wrap">'
       + '<button onclick="eaCopyDraft(\'all\')" style="padding:8px 14px;border:1px solid #D4CEC3;border-radius:6px;cursor:pointer;background:white;color:#0A0D13;font-family:inherit;font-size:12px;font-weight:500">'+(EA.copied==='all'?'✅ Copié !':'📋 Copier')+'</button>'
       + '<button onclick="eaSaveDraft()" style="padding:8px 14px;border:none;border-radius:6px;cursor:pointer;background:linear-gradient(135deg,'+EA_C.gold+','+EA_C.goldDark+');color:white;font-family:inherit;font-size:12px;font-weight:600">💾 Sauvegarder</button>'
@@ -4719,7 +4719,7 @@ function eaBuildHistory() {
     var t = EA_TYPES[h.type] || {};
     var expanded = EA.expandedHistory === h.id;
     var detail = expanded ? '<div style="padding:0 18px 16px;border-top:1px solid #EDE8DF;padding-top:14px">'
-      + '<div style="margin-bottom:8px"><span style="font-size:11px;font-weight:600;color:'+EA_C.g500+';text-transform:uppercase;letter-spacing:.5px">De: </span><span style="font-size:13px;color:'+EA_C.g500+'">info@capitalnorvex.ca</span></div>'
+      + '<div style="margin-bottom:8px"><span style="font-size:11px;font-weight:600;color:'+EA_C.g500+';text-transform:uppercase;letter-spacing:.5px">De: </span><span style="font-size:13px;color:'+EA_C.g500+'">info@capitalnorvex.com</span></div>'
       + '<div style="margin-bottom:8px"><span style="font-size:11px;font-weight:600;color:'+EA_C.g500+';text-transform:uppercase;letter-spacing:.5px">À: </span><span style="font-size:13px;color:'+EA_C.g500+'">'+eaEsc(h.contact && h.contact.email || '')+'</span></div>'
       + '<div style="margin-bottom:8px"><span style="font-size:11px;font-weight:600;color:'+EA_C.g500+';text-transform:uppercase;letter-spacing:.5px">Objet: </span><span style="font-size:13px;color:'+EA_C.ink+';font-weight:500">'+eaEsc(h.objet)+'</span></div>'
       + '<div style="background:'+EA_C.g100+';border-radius:8px;padding:14px;font-size:13px;line-height:1.7;color:'+EA_C.ink+';white-space:pre-wrap;margin-bottom:12px">'+eaEsc(h.corps)+'</div>'
@@ -4781,11 +4781,15 @@ window.eaGenerate = async function() {
     +'\nGénère le courriel maintenant.';
 
   try {
-    var resp = await fetch('https://api.anthropic.com/v1/messages', {
+    // Toutes les requêtes passent par /.netlify/functions/anthropic — clé gérée côté serveur
+    var eaHeaders = { 'Content-Type': 'application/json' };
+    var eaKey = eaGetApiKey();
+    if (eaKey) eaHeaders['x-api-key'] = eaKey;
+    var resp = await fetch('/.netlify/functions/anthropic', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'x-api-key': eaGetApiKey(), 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
+      headers: eaHeaders,
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514', max_tokens: 1000,
+        model: 'claude-sonnet-4-6', max_tokens: 1000,
         system: EA_TYPES[EA.type].system,
         messages: [{ role: 'user', content: msg }],
       }),

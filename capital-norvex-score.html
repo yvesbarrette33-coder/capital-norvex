@@ -488,37 +488,28 @@ async function runAnalysis(){
 }
 
 async function doAnalysis(withPDFs){
-  const apiKey=getKey();
-  if(!apiKey||!apiKey.startsWith('sk-ant-')){
-    clearInterval(S.ltimer);go(2);
-    const eb=g('errbox');eb.classList.remove('hidden');
-    eb.textContent=S.lang==='fr'?'⚠️ Veuillez entrer votre clé API Anthropic dans le champ en haut à droite (sk-ant-...).':'⚠️ Please enter your Anthropic API key in the field at top right (sk-ant-...).';
-    return;
-  }
+  // La clé API est gérée côté serveur (Netlify env var ANTHROPIC_API_KEY).
+  // Le navigateur peut envoyer une clé en fallback (panneau admin double-clic logo) — sinon le serveur utilise sa propre clé.
+  const apiKey=getKey()||'';
   try{
     const content=[];
-    const pdfKeys=[];
-    let pdfNote='';
+    const storageFiles=[];
 
     if(withPDFs && S.files.length>0){
-      const MAX_MB=4;
-      const okFiles=S.files.filter(f=>f.type==='application/pdf'&&f.size<=MAX_MB*1024*1024);
-      const bigFiles=S.files.filter(f=>f.type==='application/pdf'&&f.size>MAX_MB*1024*1024);
-      if(bigFiles.length>0){
-        const names=bigFiles.map(f=>f.name).join(', ');
-        pdfNote=S.lang==='fr'
-          ?`Note: Fichiers trop volumineux ignorés (>100 pages estimées): ${names}`
-          :`Note: Files too large skipped (>100 pages est.): ${names}`;
-      }
-      for(const f of okFiles){
+      const pdfs=S.files.filter(f=>f.type==='application/pdf');
+      for(const f of pdfs){
         try{
-          const sr=await fetch(`/.netlify/functions/store-pdf?name=${encodeURIComponent(f.name)}`,{method:'POST',headers:{'Content-Type':'application/pdf'},body:f});
-          if(sr.ok){const sd=await sr.json();if(sd.key){pdfKeys.push(sd.key);continue;}}
-        }catch(e){console.warn('store-pdf skip',f.name,e)}
-        try{
-          const b64=await toB64(f);
-          content.push({type:'document',source:{type:'base64',media_type:'application/pdf',data:b64}});
-        }catch(e){console.warn('PDF skip',f.name,e)}
+          const safeName=f.name.replace(/[^a-zA-Z0-9._\-() ]/g,'_');
+          const path=`score-pdfs/${Date.now()}_${Math.random().toString(36).slice(2,6)}_${safeName}`;
+          await _fbStorage.ref(path).put(f,{customMetadata:{source:'score-norvex'}});
+          storageFiles.push({path,filename:f.name});
+        }catch(e){
+          console.warn('Firebase upload failed, fallback inline',f.name,e);
+          try{
+            const b64=await toB64(f);
+            content.push({type:'document',source:{type:'base64',media_type:'application/pdf',data:b64}});
+          }catch(e2){console.warn('PDF skip',f.name,e2)}
+        }
       }
     }
 
@@ -621,7 +612,7 @@ HEADER SECTION (top of page — DARK PREMIUM BAND):
 - Right side (text-align:right):
   * "${S.lang==='fr'?'FINANCEMENT PRIVÉ COMMERCIAL':'PRIVATE COMMERCIAL FINANCING'}" — font-size:8px;letter-spacing:3px;color:#C8A84B;text-transform:uppercase;font-family:Arial,sans-serif;font-weight:600
   * "Québec, Canada" — font-size:10px;color:#888;margin-top:6px;display:block
-  * "capitalnorvex.ca" — font-size:10px;color:#C8A84B;margin-top:3px;display:block
+  * "capitalnorvex.com" — font-size:10px;color:#C8A84B;margin-top:3px;display:block
 
 Full-width gold line separator: border-top:2px solid #C8A84B;margin:20px 0 24px
 
@@ -661,26 +652,28 @@ FOOTER (margin-top:48px, border-top:1px solid #DDD, padding-top:14px):
 Three columns flex:
 - Left: "${S.lang==='fr'?'Confidentiel — Usage exclusif du destinataire':'Confidential — For the exclusive use of the addressee'}"
 - Center: "© ${yr} Capital Norvex — ${S.lang==='fr'?'Tous droits réservés':'All rights reserved'}"
-- Right: "capitalnorvex.ca"
+- Right: "capitalnorvex.com"
 All: font-size:8px;color:#AAA;letter-spacing:.5px
 
 Print CSS: @media print{body{margin:0}@page{margin:1.4cm;size:letter portrait}p{orphans:3;widows:3}}`});
 
     const promptText=content[content.length-1].text;
-    let resp;
-    if(pdfKeys.length>0){
-      resp=await fetch('/.netlify/functions/analyze-background',{
-        method:'POST',
-        headers:{'Content-Type':'application/json','x-api-key':apiKey},
-        body:JSON.stringify({pdfKeys,inlinePdfs:content.slice(0,-1),prompt:promptText,model:'claude-opus-4-7'})
-      });
-    }else{
-      resp=await fetch('https://api.anthropic.com/v1/messages',{
-        method:'POST',
-        headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
-        body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:4000,messages:[{role:'user',content}]})
-      });
-    }
+    const inlinePdfs=content.slice(0,-1);
+    const hasPdfs=storageFiles.length>0||inlinePdfs.length>0;
+    // Toutes les analyses passent par analyze-background — clé gérée côté serveur.
+    // Modèle: opus-4-7 pour PDF (analyse approfondie), sonnet-4-6 sinon (plus rapide).
+    const headers={'Content-Type':'application/json'};
+    if(apiKey)headers['x-api-key']=apiKey;
+    const resp=await fetch('/.netlify/functions/analyze-background',{
+      method:'POST',
+      headers,
+      body:JSON.stringify({
+        storageFiles,
+        inlinePdfs,
+        prompt:promptText,
+        model:hasPdfs?'claude-opus-4-7':'claude-sonnet-4-6'
+      })
+    });
 
     if(!resp.ok){
       const errText=await resp.text();
@@ -888,11 +881,13 @@ renderAll();go(0);setTimeout(loadKey,100);
 
 <!-- FIREBASE PIPELINE INTEGRATION -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 <script>
 const _fbConfig={apiKey:"AIzaSyB511dw1g1hARoIlo5Q3wc2OMM8P8yJRp8",authDomain:"capital-norvex.firebaseapp.com",projectId:"capital-norvex",storageBucket:"capital-norvex.firebasestorage.app",messagingSenderId:"547910657658",appId:"1:547910657658:web:9ae5ebf5fac9c0461ffdc3"};
 firebase.initializeApp(_fbConfig);
 const _db=firebase.firestore();
+const _fbStorage=firebase.storage();
 
 async function saveToPipeline(analysis,ci,type){
   try{

@@ -1,4 +1,4 @@
-const { getStore } = require('@netlify/blobs');
+const { listDocs } = require('../lib/firestore');
 
 const APPROVED_STAGES = new Set(['loi', 'final', 'notaire', 'decaisse']);
 
@@ -17,20 +17,8 @@ exports.handler = async (event) => {
   }
 
   try {
-    const store = getStore('dossiers');
-    const { blobs } = await store.list();
-
-    const dossiers = (
-      await Promise.all(
-        blobs.map(async ({ key }) => {
-          try {
-            return await store.get(key, { type: 'json' });
-          } catch {
-            return null;
-          }
-        })
-      )
-    ).filter((d) => d && APPROVED_STAGES.has(d.stage));
+    const all = await listDocs('dossiers');
+    const dossiers = all.filter((d) => d && APPROVED_STAGES.has(d.stage));
 
     return {
       statusCode: 200,

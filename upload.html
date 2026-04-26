@@ -357,7 +357,7 @@
         <strong>Glissez vos fichiers ici</strong><br>
         ou cliquez pour sélectionner
       </div>
-      <div class="dz-formats">PDF · DOC · DOCX · JPG · PNG — Max 30 MB par fichier</div>
+      <div class="dz-formats">PDF · DOC · DOCX · JPG · PNG — Max 500 MB par fichier</div>
     </div>
 
     <!-- File list -->
@@ -389,11 +389,24 @@
   © Capital Norvex inc. — Tous droits réservés.
 </div>
 
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage-compat.js"></script>
 <script>
+const _fbConfig = {
+  apiKey: "AIzaSyB511dw1g1hARoIlo5Q3wc2OMM8P8yJRp8",
+  authDomain: "capital-norvex.firebaseapp.com",
+  projectId: "capital-norvex",
+  storageBucket: "capital-norvex.firebasestorage.app",
+  messagingSenderId: "547910657658",
+  appId: "1:547910657658:web:9ae5ebf5fac9c0461ffdc3"
+};
+firebase.initializeApp(_fbConfig);
+const storage = firebase.storage();
+
 // ── State ─────────────────────────────────────────────────────────────────────
 let tokenData = null;
 let currentToken = null;
-let pendingFiles = [];  // [{file, status: 'waiting'|'uploading'|'done'|'error', blobKey, id}]
+let pendingFiles = [];  // [{file, status: 'waiting'|'uploading'|'done'|'error', storagePath, id}]
 let uploadedCount = 0;
 
 // ── Init ──────────────────────────────────────────────────────────────────────
@@ -441,7 +454,7 @@ function applyEnglish() {
   q('.card-title').textContent = 'Document Upload';
   q('#upload-subtitle').textContent = 'Please upload the required documents for your financing application review.';
   q('.dz-text').innerHTML = '<strong>Drag files here</strong><br>or click to select';
-  q('.dz-formats').textContent = 'PDF · DOC · DOCX · JPG · PNG — Max 30 MB per file';
+  q('.dz-formats').textContent = 'PDF · DOC · DOCX · JPG · PNG — Max 500 MB per file';
   q('#btn-submit').textContent = 'Send documents';
   q('.notice').innerHTML = 'Your documents are transmitted securely and confidentially.<br>© Capital Norvex inc. — All rights reserved.';
   // labels
@@ -486,14 +499,14 @@ fileInput.addEventListener('change', () => {
 });
 
 function addFiles(files) {
-  const MAX = 30 * 1024 * 1024; // 30 MB
+  const MAX = 500 * 1024 * 1024; // 500 MB
   files.forEach(file => {
     if (file.size > MAX) {
-      alert(`"${file.name}" dépasse la limite de 30 MB.`);
+      alert(`"${file.name}" dépasse la limite de 500 MB.`);
       return;
     }
     const id = 'f_' + Date.now() + '_' + Math.random().toString(36).slice(2,6);
-    pendingFiles.push({ file, status: 'waiting', blobKey: null, id });
+    pendingFiles.push({ file, status: 'waiting', storagePath: null, id });
     renderFileItem({ file, status: 'waiting', id });
   });
   updateSubmitBtn();
@@ -553,60 +566,81 @@ async function submitAll() {
   const toUpload = pendingFiles.filter(f => f.status === 'waiting');
   if (toUpload.length === 0) return;
 
-  let allOk = true;
   for (const item of toUpload) {
-    const ok = await uploadOne(item);
-    if (!ok) allOk = false;
+    await uploadOne(item);
   }
 
   const anyFailed = pendingFiles.some(f => f.status === 'error');
   if (anyFailed) {
-    // Some failed — re-enable for retry
     btnSubmit.disabled = false;
-    btnSubmit.textContent = 'Réessayer les fichiers en erreur';
+    btnSubmit.textContent = tokenData?.lang === 'en' ? 'Retry failed files' : 'Réessayer les fichiers en erreur';
     return;
   }
 
-  // All done → success screen
-  showSuccessScreen();
+  await showSuccessScreen();
 }
 
-async function uploadOne(item) {
+function uploadOne(item) {
   item.status = 'uploading';
-  updateFileUI(item.id, 'uploading', 'Envoi…');
+  updateFileUI(item.id, 'uploading', '0%');
 
-  try {
-    const url = `/.netlify/functions/upload-doc?token=${encodeURIComponent(currentToken)}&name=${encodeURIComponent(item.file.name)}`;
-    const resp = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': item.file.type || 'application/octet-stream' },
-      body: item.file,
+  return new Promise((resolve) => {
+    const safeName = item.file.name.replace(/[^a-zA-Z0-9._\-() ]/g, '_');
+    const path = `dossier-docs/${tokenData.dossierID}/${Date.now()}_${safeName}`;
+    const ref = storage.ref(path);
+    const task = ref.put(item.file, {
+      customMetadata: {
+        dossierID: tokenData.dossierID,
+        uploadToken: currentToken,
+        originalName: item.file.name,
+      },
     });
 
-    const data = await resp.json().catch(() => ({}));
-
-    if (!resp.ok || !data.ok) {
-      item.status = 'error';
-      const msg = data.error || ('Erreur ' + resp.status);
-      updateFileUI(item.id, 'error', msg);
-      return false;
-    }
-
-    item.status  = 'done';
-    item.blobKey = data.blobKey;
-    updateFileUI(item.id, 'done', '✓ Reçu');
-    uploadedCount++;
-    return true;
-
-  } catch (e) {
-    item.status = 'error';
-    updateFileUI(item.id, 'error', 'Connexion échouée');
-    return false;
-  }
+    task.on('state_changed',
+      (snap) => {
+        const pct = Math.round((snap.bytesTransferred / snap.totalBytes) * 100);
+        const bar = document.getElementById('bar_' + item.id);
+        if (bar) bar.style.width = pct + '%';
+        const st = document.getElementById('st_' + item.id);
+        if (st) st.textContent = pct + '%';
+      },
+      (err) => {
+        item.status = 'error';
+        updateFileUI(item.id, 'error', err.code === 'storage/unauthorized' ? 'Accès refusé' : (err.message || 'Erreur'));
+        resolve(false);
+      },
+      () => {
+        item.status = 'done';
+        item.storagePath = task.snapshot.ref.fullPath;
+        updateFileUI(item.id, 'done', '✓ Reçu');
+        uploadedCount++;
+        resolve(true);
+      }
+    );
+  });
 }
 
-function showSuccessScreen() {
+async function showSuccessScreen() {
   const done = pendingFiles.filter(f => f.status === 'done');
+
+  // Enregistrer les chemins Firebase Storage dans Firestore via la fonction Netlify
+  try {
+    await fetch('/.netlify/functions/register-uploads', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        token: currentToken,
+        files: done.map(f => ({
+          path: f.storagePath,
+          filename: f.file.name,
+          size: f.file.size,
+        })),
+      }),
+    });
+  } catch (e) {
+    console.warn('register-uploads failed (non-fatal):', e);
+  }
+
   const summary = document.getElementById('files-summary');
   summary.innerHTML = done.map(f => `
     <div class="summary-row">
