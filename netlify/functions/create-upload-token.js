@@ -55,7 +55,7 @@ exports.handler = async (event) => {
     });
 
     const baseUrl = process.env.SITE_URL || 'https://capitalnorvex.com';
-    const uploadUrl = `${baseUrl}/upload.html?token=${token}`;
+    const uploadUrl = `${baseUrl}/upload.html?t=${token}`;
 
     return {
       statusCode: 200,

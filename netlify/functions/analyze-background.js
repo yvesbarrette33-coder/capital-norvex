@@ -28,8 +28,11 @@ exports.handler = async (event) => {
   }
 
   try {
-    const { pdfKeys = [], inlinePdfs = [], prompt, model = 'claude-opus-4-7' } =
+    const { pdfKeys = [], inlinePdfs = [], storageFiles = [], prompt, model = 'claude-opus-4-7' } =
       JSON.parse(event.body);
+
+    const FIREBASE_API_KEY = process.env.FIREBASE_SERVICE_ACCOUNT;
+    const STORAGE_BUCKET = 'capital-norvex.firebasestorage.app';
 
     const store = getStore('pdfs');
     const content = [];
@@ -48,6 +51,28 @@ exports.handler = async (event) => {
         }
       } catch (e) {
         console.warn('analyze-background: failed to read key', key, e.message);
+      }
+    }
+
+    // Télécharger les fichiers depuis Firebase Storage
+    for (const sf of storageFiles) {
+      try {
+        const encodedPath = encodeURIComponent(sf.path);
+        const dlUrl = `https://firebasestorage.googleapis.com/v0/b/${STORAGE_BUCKET}/o/${encodedPath}?alt=media&key=${FIREBASE_API_KEY}`;
+        const dlResp = await fetch(dlUrl);
+        if (dlResp.ok) {
+          const buffer = await dlResp.arrayBuffer();
+          const b64 = Buffer.from(buffer).toString('base64');
+          const mime = sf.path.toLowerCase().endsWith('.pdf') ? 'application/pdf' : (sf.mime || 'application/pdf');
+          content.push({
+            type: 'document',
+            source: { type: 'base64', media_type: mime, data: b64 },
+          });
+        } else {
+          console.warn('analyze-background: Firebase Storage download failed', sf.path, dlResp.status);
+        }
+      } catch (e) {
+        console.warn('analyze-background: Firebase Storage error', sf.path, e.message);
       }
     }
 
