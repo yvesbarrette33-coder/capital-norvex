@@ -493,28 +493,23 @@ async function doAnalysis(withPDFs){
   const apiKey=getKey()||'';
   try{
     const content=[];
-    const pdfKeys=[];
-    let pdfNote='';
+    const storageFiles=[];
 
     if(withPDFs && S.files.length>0){
-      const MAX_MB=4;
-      const okFiles=S.files.filter(f=>f.type==='application/pdf'&&f.size<=MAX_MB*1024*1024);
-      const bigFiles=S.files.filter(f=>f.type==='application/pdf'&&f.size>MAX_MB*1024*1024);
-      if(bigFiles.length>0){
-        const names=bigFiles.map(f=>f.name).join(', ');
-        pdfNote=S.lang==='fr'
-          ?`Note: Fichiers trop volumineux ignorés (>100 pages estimées): ${names}`
-          :`Note: Files too large skipped (>100 pages est.): ${names}`;
-      }
-      for(const f of okFiles){
+      const pdfs=S.files.filter(f=>f.type==='application/pdf');
+      for(const f of pdfs){
         try{
-          const sr=await fetch(`/.netlify/functions/store-pdf?name=${encodeURIComponent(f.name)}`,{method:'POST',headers:{'Content-Type':'application/pdf'},body:f});
-          if(sr.ok){const sd=await sr.json();if(sd.key){pdfKeys.push(sd.key);continue;}}
-        }catch(e){console.warn('store-pdf skip',f.name,e)}
-        try{
-          const b64=await toB64(f);
-          content.push({type:'document',source:{type:'base64',media_type:'application/pdf',data:b64}});
-        }catch(e){console.warn('PDF skip',f.name,e)}
+          const safeName=f.name.replace(/[^a-zA-Z0-9._\-() ]/g,'_');
+          const path=`score-pdfs/${Date.now()}_${Math.random().toString(36).slice(2,6)}_${safeName}`;
+          await _fbStorage.ref(path).put(f,{customMetadata:{source:'score-norvex'}});
+          storageFiles.push({path,filename:f.name});
+        }catch(e){
+          console.warn('Firebase upload failed, fallback inline',f.name,e);
+          try{
+            const b64=await toB64(f);
+            content.push({type:'document',source:{type:'base64',media_type:'application/pdf',data:b64}});
+          }catch(e2){console.warn('PDF skip',f.name,e2)}
+        }
       }
     }
 
@@ -664,7 +659,7 @@ Print CSS: @media print{body{margin:0}@page{margin:1.4cm;size:letter portrait}p{
 
     const promptText=content[content.length-1].text;
     const inlinePdfs=content.slice(0,-1);
-    const hasPdfs=pdfKeys.length>0||inlinePdfs.length>0;
+    const hasPdfs=storageFiles.length>0||inlinePdfs.length>0;
     // Toutes les analyses passent par analyze-background — clé gérée côté serveur.
     // Modèle: opus-4-7 pour PDF (analyse approfondie), sonnet-4-6 sinon (plus rapide).
     const headers={'Content-Type':'application/json'};
@@ -673,7 +668,7 @@ Print CSS: @media print{body{margin:0}@page{margin:1.4cm;size:letter portrait}p{
       method:'POST',
       headers,
       body:JSON.stringify({
-        pdfKeys,
+        storageFiles,
         inlinePdfs,
         prompt:promptText,
         model:hasPdfs?'claude-opus-4-7':'claude-sonnet-4-6'
@@ -886,11 +881,13 @@ renderAll();go(0);setTimeout(loadKey,100);
 
 <!-- FIREBASE PIPELINE INTEGRATION -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 <script>
 const _fbConfig={apiKey:"AIzaSyB511dw1g1hARoIlo5Q3wc2OMM8P8yJRp8",authDomain:"capital-norvex.firebaseapp.com",projectId:"capital-norvex",storageBucket:"capital-norvex.firebasestorage.app",messagingSenderId:"547910657658",appId:"1:547910657658:web:9ae5ebf5fac9c0461ffdc3"};
 firebase.initializeApp(_fbConfig);
 const _db=firebase.firestore();
+const _fbStorage=firebase.storage();
 
 async function saveToPipeline(analysis,ci,type){
   try{
