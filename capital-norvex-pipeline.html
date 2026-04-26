@@ -955,9 +955,17 @@ const _fbConfig={apiKey:"AIzaSyB511dw1g1hARoIlo5Q3wc2OMM8P8yJRp8",authDomain:"ca
 firebase.initializeApp(_fbConfig);
 const _db=firebase.firestore();
 
-_db.collection('dossiers').orderBy('created_at','desc').onSnapshot(snapshot=>{
+_db.collection('dossiers').onSnapshot(snapshot=>{
   const fbDossiers=[];
-  snapshot.forEach(doc=>{const d=doc.data();if(d&&d.id)fbDossiers.push({...d,_fbId:doc.id});});
+  snapshot.forEach(doc=>{
+    const d=doc.data();
+    if(d&&(d.id||doc.id))fbDossiers.push({...d,id:d.id||doc.id,_fbId:doc.id});
+  });
+  fbDossiers.sort((a,b)=>{
+    const ta=a.created_at?(a.created_at.toMillis?a.created_at.toMillis():new Date(a.created_at).getTime()):0;
+    const tb=b.created_at?(b.created_at.toMillis?b.created_at.toMillis():new Date(b.created_at).getTime()):0;
+    return tb-ta;
+  });
   const localIds=new Set(fbDossiers.map(d=>d.id));
   const localOnly=dossiers.filter(d=>!localIds.has(d.id));
   dossiers=[...fbDossiers,...localOnly];
