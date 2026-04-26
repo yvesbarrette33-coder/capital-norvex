@@ -4781,9 +4781,13 @@ window.eaGenerate = async function() {
     +'\nGénère le courriel maintenant.';
 
   try {
-    var resp = await fetch('https://api.anthropic.com/v1/messages', {
+    // Toutes les requêtes passent par /.netlify/functions/anthropic — clé gérée côté serveur
+    var eaHeaders = { 'Content-Type': 'application/json' };
+    var eaKey = eaGetApiKey();
+    if (eaKey) eaHeaders['x-api-key'] = eaKey;
+    var resp = await fetch('/.netlify/functions/anthropic', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'x-api-key': eaGetApiKey(), 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
+      headers: eaHeaders,
       body: JSON.stringify({
         model: 'claude-sonnet-4-6', max_tokens: 1000,
         system: EA_TYPES[EA.type].system,
