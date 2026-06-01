@@ -1,0 +1,177 @@
+/**
+ * POST /.netlify/functions/_admin-seed-test-dossiers
+ * Header: X-Internal-Secret
+ *
+ * FONCTION ADMIN TEMPORAIRE — crée 2 dossiers fictifs pour tester Norah V2.
+ * Dossier Yves (514-531-2705) + Dossier Suzanne (450-631-1688).
+ *
+ * À supprimer une fois les vrais dossiers en production.
+ */
+
+import {
+  json,
+  unauthorized,
+  serverError,
+  checkInternalSecret,
+  firestoreCreate,
+} from "./_norah-shared.mjs";
+
+// Sessions pré-validées (1 an) pour permettre à Yves et Suzanne de tester
+// sans repasser par le 2FA SMS à chaque appel.
+const PRE_VALIDATED_SESSIONS = [
+  {
+    phone: "+15145312705",
+    role: "yves",
+    display_name: "Yves Barrette",
+  },
+  {
+    phone: "+14506311688",
+    role: "yves", // Suzanne a le même niveau d'accès que Yves
+    display_name: "Suzanne Breton",
+  },
+];
+
+const TEST_DOSSIERS = [
+  {
+    id: "DOSSIER-TEST-YVES-001",
+    data: {
+      // Identification client
+      tel: "+15145312705",
+      client_phone: "+15145312705",
+      client_name: "Yves Barrette",
+      prenom: "Yves",
+      nom: "Barrette",
+      email: "yves@capitalnorvex.com",
+
+      // Statut & étapes
+      stage: 5,
+      etape_actuelle: "Analyse complète",
+      statut: "en cours",
+      pipeline_position: "5/8 — Analyse complète",
+
+      // Agent attitré
+      agent_attitre: "Norvex Score",
+      agent_email: "score@capitalnorvex.com",
+
+      // Documents
+      documents_recus: [
+        "Demande de prêt remplie",
+        "Pro forma financière",
+        "Plans architecturaux",
+        "Permis de construction",
+      ],
+      documents_manquants: [
+        "Évaluation immobilière professionnelle (AACI)",
+        "États financiers société (2 dernières années)",
+      ],
+
+      // Projet (info générale, PAS de décision)
+      type: "Construction multi-résidentielle",
+      ville: "Verdun (Île-des-Sœurs)",
+      montant: 5000000,
+      description: "Projet de construction de 24 unités locatives à Verdun",
+
+      // Métadonnées
+      last_update: "2026-05-03",
+      derniere_communication: "2026-05-02",
+      date_soumission: "2026-04-15",
+      created_at: new Date(),
+
+      // Marqueur de test (à supprimer plus tard)
+      _is_test_dossier: true,
+    },
+  },
+  {
+    id: "DOSSIER-TEST-SUZ-002",
+    data: {
+      // Identification client
+      tel: "+14506311688",
+      client_phone: "+14506311688",
+      client_name: "Suzanne Breton",
+      prenom: "Suzanne",
+      nom: "Breton",
+      email: "suzanne@capitalnorvex.com",
+
+      // Statut & étapes
+      stage: 4,
+      etape_actuelle: "Collecte documentaire",
+      statut: "en cours",
+      pipeline_position: "4/8 — Collecte documentaire",
+
+      // Agent attitré
+      agent_attitre: "Norvex Score",
+      agent_email: "score@capitalnorvex.com",
+
+      // Documents
+      documents_recus: [
+        "Demande de prêt remplie",
+        "Pro forma financière",
+      ],
+      documents_manquants: [
+        "Plans architecturaux",
+        "Permis de construction",
+        "Évaluation immobilière professionnelle (AACI)",
+        "États financiers société (2 dernières années)",
+        "Étude environnementale Phase I",
+      ],
+
+      // Projet
+      type: "Acquisition multi-résidentielle",
+      ville: "Sherbrooke",
+      montant: 8500000,
+      description: "Acquisition d'un immeuble multi-résidentiel de 36 unités à Sherbrooke",
+
+      // Métadonnées
+      last_update: "2026-05-03",
+      derniere_communication: "2026-05-01",
+      date_soumission: "2026-04-22",
+      created_at: new Date(),
+
+      // Marqueur de test
+      _is_test_dossier: true,
+    },
+  },
+];
+
+export default async (req) => {
+  if (req.method !== "POST") return new Response("Method Not Allowed", { status: 405 });
+  if (!checkInternalSecret(req)) return unauthorized();
+
+  const results = [];
+
+  // 1) Créer les dossiers test
+  for (const dossier of TEST_DOSSIERS) {
+    try {
+      await firestoreCreate("dossiers", dossier.data, dossier.id);
+      results.push({ type: "dossier", id: dossier.id, ok: true });
+    } catch (e) {
+      results.push({ type: "dossier", id: dossier.id, ok: false, error: e.message });
+    }
+  }
+
+  // 2) Créer les sessions pré-validées pour Yves et Suzanne (1 an)
+  const oneYearFromNow = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000);
+  for (const session of PRE_VALIDATED_SESSIONS) {
+    try {
+      const docId = session.phone.replace(/^\+/, "p");
+      await firestoreCreate(
+        "norahSessions",
+        {
+          phone: session.phone,
+          role: session.role,
+          display_name: session.display_name,
+          verified_at: new Date(),
+          expires_at: oneYearFromNow,
+          pre_validated: true,
+        },
+        docId
+      );
+      results.push({ type: "session", id: session.phone, ok: true });
+    } catch (e) {
+      results.push({ type: "session", id: session.phone, ok: false, error: e.message });
+    }
+  }
+
+  const allOk = results.every((r) => r.ok);
+  return json({ ok: allOk, results }, allOk ? 200 : 500);
+};

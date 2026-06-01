@@ -1,0 +1,121 @@
+{
+  "_meta": {
+    "source": "Liste fournie par Yves le 2026-05-01 (recherche Chat GPT)",
+    "specialty_focus": "Multi-prêts commercial / multilogement 5+ / semi-commercial / gros actifs",
+    "language_default": "fr",
+    "region_default": "QC",
+    "relationshipStatus_default": "cold"
+  },
+  "groups": [
+    {
+      "firmName": "Hypotheca",
+      "firmNote": "Spécialisés multilogement 5+ et semi-commercial",
+      "specialty": ["multilogement", "semi-commercial"],
+      "brokers": [
+        {"name": "Stéphane Galarneau", "email": "sgalarneau@hypotheca.ca"},
+        {"name": "Gabriel Malka", "email": "gmalka@hypotheca.ca"},
+        {"name": "Vincent Roy", "email": "vroy@hypotheca.ca"},
+        {"name": "Dany Clément", "email": "dclement@hypotheca.ca"},
+        {"name": "Mathias Correia", "email": "mcorreia@hypotheca.ca"},
+        {"name": "Mélanie Rioux", "email": "mrioux@hypotheca.ca"},
+        {"name": "Julien Ouvrard", "email": "jouvrard@hypotheca.ca"},
+        {"name": "Renaud Warren", "email": "rwarren@hypotheca.ca"},
+        {"name": "Daniel Caltagirone", "email": "dcaltagirone@hypotheca.ca"},
+        {"name": "Bogdan Duma", "email": "bduma@hypotheca.ca"}
+      ]
+    },
+    {
+      "firmName": "Planiprêt",
+      "firmNote": "Division Commercial très active à Montréal",
+      "specialty": ["commercial", "multilogement"],
+      "brokers": [
+        {"name": "Alexandre Lafitte", "email": "alafitte@planipret.com"},
+        {"name": "Luc Guilbault", "email": "lguilbault@planipret.com"},
+        {"name": "Stéphane Bruyère", "email": "sbruyere@planipret.com"},
+        {"name": "Guy Desrosiers", "email": "gdesrosiers@planipret.com"},
+        {"name": "Patrick-André Cloutier", "email": "pacloutier@planipret.com"},
+        {"name": "Isabelle Guay", "email": "iguay@planipret.com"},
+        {"name": "Martin Desfossés", "email": "mdesfosses@planipret.com"},
+        {"name": "Sébastien Viau", "email": "sviau@planipret.com"},
+        {"name": "Frédéric Larose", "email": "flarose@planipret.com"},
+        {"name": "Daniel Archambault", "email": "darchambault@planipret.com"}
+      ]
+    },
+    {
+      "firmName": "MCommercial & Cabinets Spécialisés",
+      "firmNote": "Pancanadien, gros actifs (industriel, hôtels, bureaux)",
+      "specialty": ["industriel", "commercial", "gros-actifs"],
+      "brokers": [
+        {"name": "Peter Dardarian", "email": "pdardarian@mcommercial.ca", "firmName": "MCommercial"},
+        {"name": "Christophe Meeus", "email": "cmeeus@mcommercial.ca", "firmName": "MCommercial"},
+        {"name": "Michael Levine (Team Levine)", "email": "mlevine@mcommercial.ca", "firmName": "MCommercial"},
+        {"name": "Gilbert Checoury", "email": "gchecoury@mcommercial.ca", "firmName": "MCommercial"},
+        {"name": "Mohamed Ali Achour", "email": "machour@mcommercial.ca", "firmName": "MCommercial"},
+        {"name": "George Macris", "email": "gmacris@mcommercial.ca", "firmName": "MCommercial"},
+        {"name": "Alain Roy", "email": "aroy@aroycommercial.com", "firmName": "E4524 Inc. / A. Roy Commercial"},
+        {"name": "Denis Nadeau", "email": "denis@multilogements.ca", "firmName": "Multilogements.ca", "specialty": ["multilogement"]},
+        {"name": "Charles-Benoît Parent", "email": "charlesbenoit.parent@cmls.ca", "firmName": "CMLS"},
+        {"name": "Charles-André Roy", "email": "charlesandre.roy@cmls.ca", "firmName": "CMLS"}
+      ]
+    },
+    {
+      "firmName": "Multi-Prêts",
+      "firmNote": "Réseau Multi-Prêts — division commerciale (équipes indépendantes)",
+      "specialty": ["commercial", "multilogement"],
+      "brokers": [
+        {"name": "Jimmy Perreault", "email": "jperreault@multi-prets.ca"},
+        {"name": "Phan Cam Nguyen Le", "email": "pcnguyenle@multi-prets.ca"},
+        {"name": "Sylvain Simard", "email": "ssimard@multi-prets.ca"},
+        {"name": "Benoit Lavigne", "email": "blavigne@multi-prets.ca"},
+        {"name": "Marc-Antoine St-Pierre", "email": "mastpierre@multi-prets.ca"}
+      ]
+    },
+    {
+      "firmName": "Ratehub",
+      "firmNote": "Réseau Ratehub — division commerciale",
+      "specialty": ["commercial", "multilogement"],
+      "brokers": [
+        {"name": "Éric English", "email": "eenglish@ratehub.ca"},
+        {"name": "Samuel Chagnon", "email": "schagnon@ratehub.ca"},
+        {"name": "Philippe Breault", "email": "pbreault@ratehub.ca"},
+        {"name": "Raphael Essiminy", "email": "ressiminy@ratehub.ca"},
+        {"name": "Dannyk Bourgeois", "email": "dbourgeois@ratehub.ca"}
+      ]
+    },
+    {
+      "firmName": "Multi-Prêts Commercial",
+      "firmNote": "Division dédiée commercial sous bannière Multi-Prêts (équipe distincte)",
+      "specialty": ["commercial", "multilogement", "industriel"],
+      "brokers": [
+        {"name": "Peter Quinn", "email": "pquinn@multi-prets.ca", "notes": "Directeur général Multi-Prêts Commercial"},
+        {"name": "Jean-Luc Dion", "email": "jldion@multi-prets.ca"},
+        {"name": "Marylène Vachon", "email": "mvachon@multi-prets.ca"},
+        {"name": "Caroline Imbeault", "email": "cimbeault@multi-prets.ca"},
+        {"name": "Geneviève Lacombe", "email": "glacombe@multi-prets.ca"},
+        {"name": "Frédéric Brodeur", "email": "fbrodeur@multi-prets.ca"},
+        {"name": "Anick Lalonde", "email": "alalonde@multi-prets.ca"},
+        {"name": "Antoine Bolduc", "email": "abolduc@multi-prets.ca"},
+        {"name": "Simon Baril", "email": "sbaril@multi-prets.ca"},
+        {"name": "Ariel Gervais", "email": "agervais@multi-prets.ca"}
+      ]
+    },
+    {
+      "firmName": "Indépendants & divers",
+      "firmNote": "Pour projets hors-normes ou financement privé",
+      "specialty": ["prive", "hors-normes"],
+      "brokers": [
+        {"name": "Stéphanie Kowalew", "email": "skowalew@skcommercial.ca", "firmName": "SK Commercial"},
+        {"name": "Jacob Shaffer", "email": "jshaffer@mortgageshaffer.ca", "firmName": "Mortgage Shaffer"},
+        {"name": "Olivier Hébert", "email": "ohebert@hypotheca.ca", "firmName": "Hypotheca"},
+        {"name": "Antoine Feghali", "email": "afeghali@hypothequesinc.com", "firmName": "Hypothèques Inc."},
+        {"name": "Jason Zuckerman", "email": "info@mortgageratesmontreal.com", "firmName": "Zuckerman Financial"},
+        {"name": "Lisa Leblanc", "email": "lleblanc@lisaleblanc.ca", "firmName": "Lisa Leblanc Courtier"},
+        {"name": "Nathalie Bélanger", "email": "nbelanger@nbcourtier.com", "firmName": "NB Courtier"},
+        {"name": "Méline Descarreaux", "email": "mdescarreaux@melinedescarreaux.com", "firmName": "Méline Descarreaux Courtier"},
+        {"name": "Cyprien Hakizimana", "email": "chakizimana@hypotheca.ca", "firmName": "Hypotheca"},
+        {"name": "Kevens Alexis", "email": "kalexis@hypotheca.ca", "firmName": "Hypotheca"},
+        {"name": "Samuel Plourde-Bergeron", "email": "splourde@hypotheca.ca", "firmName": "Hypotheca"}
+      ]
+    }
+  ]
+}

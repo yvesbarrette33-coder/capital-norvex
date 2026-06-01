@@ -1,0 +1,719 @@
+{
+  "_meta": {
+    "description": "Quebec family offices - recherche web publique 2026-05-07. Capital Norvex Inc. cible : single-family offices, multi-family offices, holdings de familles fortunées QC qui placent du capital en immobilier privé commercial / hypothèques privées. Tickets 1M-50M$. Sources : Canadian Family Offices, sites corporatifs, LinkedIn pages publiques, presse (Les Affaires, La Presse, Finance et Investissement), CAFA.",
+    "version": 1,
+    "created": "2026-05-07",
+    "researcher": "Claude (Cowork)",
+    "filtres_appliques": {
+      "tier_zero_filter": "OUI",
+      "deduplication": "OUI",
+      "tier_zero_rejected": 0
+    }
+  },
+  "familyOffices": [
+    {
+      "name": "Paul Desmarais III",
+      "organization": "Sagard Holdings",
+      "title": "Chairman & CEO",
+      "region": "QC",
+      "city": "Montréal",
+      "language": "fr",
+      "investmentThesis": "Global alternative assets (PE, VC, credit, real estate) for institutional and family clients; North American real estate via Everwest platform",
+      "approachAngle": "Commercial real estate 5M-30M CAD via PE vehicle; mandats discrétionnaires pour capital famille en immobilier québécois",
+      "ticketRange": {
+        "min": 5000000,
+        "max": 50000000
+      },
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "website": "https://www.sagard.com"
+      },
+      "sourceUrl": "https://www.sagard.com/board-of-directors/",
+      "notes": "Sagard 45B$+ AUM. Family office via Power Corp. Everwest real estate funds. Présence QC."
+    },
+    {
+      "name": "Stephen Bronfman",
+      "organization": "Claridge Inc.",
+      "title": "Principal",
+      "region": "QC",
+      "city": "Montréal",
+      "language": "en",
+      "investmentThesis": "Private equity, real estate, and diversified long-term investments NA with focus on Quebec development projects",
+      "approachAngle": "Direct Quebec RE development (2000+ unit residential portfolio); institutional co-investment multifamily 10M-30M$",
+      "ticketRange": {
+        "min": 5000000,
+        "max": 50000000
+      },
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "website": "https://www.claridgeinc.com"
+      },
+      "sourceUrl": "https://www.claridgeinc.com/",
+      "notes": "Établi 1987. Les Bassins du Nouveau Havre (2000 units), Le Seville (120M$). Construction et RE syndication active."
+    },
+    {
+      "name": "Pierre Somers",
+      "organization": "Walter Group / Walter Capital Partners",
+      "title": "Chairman & CEO",
+      "region": "QC",
+      "city": "Westmount",
+      "language": "en",
+      "investmentThesis": "Private equity, venture capital, public markets, real estate; focus innovation et entrepreneurial ventures",
+      "approachAngle": "Mid-market QC commercial RE co-investment; family office 6.4B$ AUM cherche structures discrétionnaires private credit/equity",
+      "ticketRange": {
+        "min": 3000000,
+        "max": 30000000
+      },
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "website": "https://waltergroup.ca"
+      },
+      "sourceUrl": "https://waltergroup.ca/who-we-are/",
+      "notes": "Fondé 1952. 6.4B$ AUM. Walter Capital Partners mid-market PE."
+    },
+    {
+      "name": "Lorne Trottier",
+      "organization": "Trottier Family Foundation / Eclipx",
+      "title": "Founder",
+      "region": "QC",
+      "city": "Montréal",
+      "language": "en",
+      "investmentThesis": "Alternative asset classes (PE, VC, RE, agriculture) avec focus ESG/sustainability et réduction GES",
+      "approachAngle": "Quebec real estate aligné climat/impact social; capital patient cherche tickets 10M-25M$ co-investment",
+      "ticketRange": {
+        "min": 5000000,
+        "max": 30000000
+      },
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "website": "https://www.trottierfoundation.com"
+      },
+      "sourceUrl": "https://www.trottierfoundation.com/investments",
+      "notes": "Eclipx family office. Foundation 1B$+ assets. Co-fondateur Matrox. Mandat sustainability."
+    },
+    {
+      "name": "à identifier",
+      "organization": "Richter Family Office",
+      "title": "Family Office Principal",
+      "region": "QC",
+      "city": "Montréal",
+      "language": "en",
+      "investmentThesis": "Bespoke wealth management; real estate capital access via institutional development partnerships",
+      "approachAngle": "Direct QC commercial/multifamily via Richter Real Estate Capital; institutional yield 5M-20M$",
+      "ticketRange": {
+        "min": 2000000,
+        "max": 20000000
+      },
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "website": "https://www.richter.ca/richter-family-office/"
+      },
+      "sourceUrl": "https://www.richter.ca/richter-family-office/",
+      "notes": "8B$ AUM. HQ Montréal (1926). Real Estate Capital direct investment access."
+    },
+    {
+      "name": "à identifier",
+      "organization": "Palomino Capital",
+      "title": "Principal",
+      "region": "QC",
+      "city": "Montréal",
+      "language": "en",
+      "investmentThesis": "Long-term proprietary capital across hedge funds, PE, private credit, direct real estate",
+      "approachAngle": "Private credit syndication et direct RE equity; family office structure mandats confidentiels QC commercial",
+      "ticketRange": {
+        "min": 2000000,
+        "max": 25000000
+      },
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "website": "https://www.palominocapital.com"
+      },
+      "sourceUrl": "https://www.palominocapital.com/",
+      "notes": "Établi 1992. Multi-asset family office MTL. Estate planning et intergenerational wealth."
+    },
+    {
+      "name": "Mark Pathy",
+      "organization": "MAVRIK Corp.",
+      "title": "CEO & Chairman",
+      "region": "QC",
+      "city": "Montréal",
+      "language": "en",
+      "investmentThesis": "VC, PE, private credit, real estate, royalties; focus innovation, entrepreneurship, responsible investing",
+      "approachAngle": "QC RE syndication ESG/impact; family office 5M-20M$ multifamily projects durables",
+      "ticketRange": {
+        "min": 3000000,
+        "max": 25000000
+      },
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "website": "https://www.mavrik.com"
+      },
+      "sourceUrl": "https://www.mavrik.com/",
+      "notes": "Fondé 2009. Fednav International founder wealth. Climat tech et RE."
+    },
+    {
+      "name": "Pierre Karl Péladeau",
+      "organization": "Péladeau Investments Inc. / Financière Outremont",
+      "title": "Principal",
+      "region": "QC",
+      "city": "Montréal",
+      "language": "fr",
+      "investmentThesis": "Multi-asset control via dual-class structure; media/telecom dominance via Quebecor",
+      "approachAngle": "Family office capital via personal holding; QC RE aligné écosystème Quebecor 10M-30M$",
+      "ticketRange": {
+        "min": 5000000,
+        "max": 30000000
+      },
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "website": ""
+      },
+      "sourceUrl": "https://en.wikipedia.org/wiki/Pierre_Karl_P%C3%A9ladeau",
+      "notes": "Quebecor CEO. Vidéotron founder legacy wealth. Holding via Péladeau Investments. 40M$+ philanthropie/an."
+    },
+    {
+      "name": "Famille Chagnon (héritiers)",
+      "organization": "Lucie and André Chagnon Foundation",
+      "title": "Foundation Board",
+      "region": "QC",
+      "city": "Montréal",
+      "language": "fr",
+      "investmentThesis": "Plus grosse fondation familiale Canada; prévention pauvreté et développement jeunesse; investissements RE student housing et community",
+      "approachAngle": "Non-profit RE development partnerships; capital fondation pour social-impact RE QC (student housing, community 5M-15M$)",
+      "ticketRange": {
+        "min": 2000000,
+        "max": 15000000
+      },
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "website": "https://fondationchagnon.org"
+      },
+      "sourceUrl": "https://fondationchagnon.org/en/",
+      "notes": "Vidéotron founder (1.4B$ endowment création). 32M$+ distributions/an. RE activity dans student housing."
+    },
+    {
+      "name": "François J. Coutu",
+      "organization": "Jean Coutu Family Holdings",
+      "title": "Principal",
+      "region": "QC",
+      "city": "Varennes",
+      "language": "fr",
+      "investmentThesis": "Pharmacy chain legacy wealth; family-controlled retail enterprise avec RE holdings QC",
+      "approachAngle": "Post-Metro acquisition (2018) wealth diversification; portfolio 400+ pharmacies legacy holdings",
+      "ticketRange": {
+        "min": 1000000,
+        "max": 15000000
+      },
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "website": ""
+      },
+      "sourceUrl": "https://en.wikipedia.org/wiki/Jean_Coutu_Group",
+      "notes": "Jean Coutu Group vendu Metro 2018 (4.5B$). Family liquidity. Pharmacy RE portfolio."
+    },
+    {
+      "name": "Marcel Dutil",
+      "organization": "Placements CMI / Canam Group",
+      "title": "Patriarch / Principal",
+      "region": "QC",
+      "city": "Saint-Gédéon (Beauce)",
+      "language": "fr",
+      "investmentThesis": "Manufacturing et construction products; family reinvestment via Placements CMI; steel/structural fabrication",
+      "approachAngle": "Family office capital construction-related RE; relations promoteurs Beauce; infrastructure 5M-20M$",
+      "ticketRange": {
+        "min": 3000000,
+        "max": 25000000
+      },
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "website": ""
+      },
+      "sourceUrl": "https://www.canam.com/en/our-history-2020-2029/",
+      "notes": "3B$+ Canam business. 2020 acquisition avec CDPQ/FTQ. Manufacturing wealth. Construction expertise."
+    },
+    {
+      "name": "Louis Audet",
+      "organization": "Gestion Audem Inc. (Cogeco Family Holding)",
+      "title": "Principal",
+      "region": "QC",
+      "city": "Montréal",
+      "language": "fr",
+      "investmentThesis": "Telecom/media dominance via Cogeco; multiple voting share structure; defensive family wealth",
+      "approachAngle": "Family office diversification de telecom; QC RE hors écosystème Cogeco 5M-20M$ discrétionnaire",
+      "ticketRange": {
+        "min": 2000000,
+        "max": 20000000
+      },
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "website": ""
+      },
+      "sourceUrl": "https://en.wikipedia.org/wiki/Cogeco",
+      "notes": "Famille Audet contrôle 71% voting via Gestion Audem. Cogeco 7B$+ telecom. Famille refusé multiples takeover bids."
+    },
+    {
+      "name": "Rémi Marcoux",
+      "organization": "Marcoux Family Office / TC Transcontinental",
+      "title": "Founder",
+      "region": "QC",
+      "city": "Montréal",
+      "language": "fr",
+      "investmentThesis": "Printing et media legacy; family-controlled public company; 2.5M$+ philanthropic capital/an",
+      "approachAngle": "Family discretionary capital hors TC; QC RE development; printing/industrial RE expertise 5M-15M$",
+      "ticketRange": {
+        "min": 2000000,
+        "max": 15000000
+      },
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "website": ""
+      },
+      "sourceUrl": "https://tctranscontinental.com/en-us/about-us/governance/board-directors-and-committees/remi-marcoux-cm-oq-fcpa-fca",
+      "notes": "TC Transcontinental founder 1976. 2B$+ enterprise value. Famille contrôle via founder shares."
+    },
+    {
+      "name": "Isabelle Marcoux",
+      "organization": "Marcoux Family Office / TC Transcontinental",
+      "title": "Chair of the Board",
+      "region": "QC",
+      "city": "Montréal",
+      "language": "fr",
+      "investmentThesis": "2e gen leadership TC Transcontinental; family legacy wealth; Order of Canada",
+      "approachAngle": "Intergenerational wealth transfer leadership; QC community RE investments 3M-15M$",
+      "ticketRange": {
+        "min": 1000000,
+        "max": 15000000
+      },
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "website": ""
+      },
+      "sourceUrl": "https://tctranscontinental.com/",
+      "notes": "Next-gen FO leader. CEO 2012. Order of Canada 2019. Philanthropic signals forts."
+    },
+    {
+      "name": "Pierre Lassonde",
+      "organization": "Firelight Investment LLC / Lassonde Industries",
+      "title": "Principal",
+      "region": "QC",
+      "city": "Saint-Hyacinthe (origines QC)",
+      "language": "en",
+      "investmentThesis": "Mining/royalty company founder; private FO mining investments et angel investor; international",
+      "approachAngle": "Mining wealth avec RE diversification; racines QC; co-invest RE 5M-20M$",
+      "ticketRange": {
+        "min": 3000000,
+        "max": 25000000
+      },
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "website": ""
+      },
+      "sourceUrl": "https://en.wikipedia.org/wiki/Pierre_Lassonde",
+      "notes": "Franco-Nevada founder (1.2B$+ IPO). Mining royalty expertise. Scope international via Firelight."
+    },
+    {
+      "name": "Charles Sirois",
+      "organization": "Telesystem Ltd. / Sirois Family Holdings",
+      "title": "Founder/Chairman/CEO",
+      "region": "QC",
+      "city": "Montréal",
+      "language": "fr",
+      "investmentThesis": "Private holding diverse telecom, media, software, technology ventures; entrepreneurial family legacy",
+      "approachAngle": "Family office QC opportunities; telecom infrastructure RE; diversification hors Telesystem 5M-20M$",
+      "ticketRange": {
+        "min": 2000000,
+        "max": 20000000
+      },
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "website": "https://telesystem.ca/about-us/team/"
+      },
+      "sourceUrl": "https://telesystem.ca/about-us/team/",
+      "notes": "Fondé 1984. François-Charles Sirois (fils) CEO. Investissements diverses mobile, satellite, software."
+    },
+    {
+      "name": "François-Charles Sirois",
+      "organization": "Telesystem Ltd.",
+      "title": "President & CEO",
+      "region": "QC",
+      "city": "Montréal",
+      "language": "fr",
+      "investmentThesis": "Next-gen leadership diversified telecom/tech holding; international communications et satellite",
+      "approachAngle": "Intergenerational FO capital; QC telecom/infrastructure RE; technology co-invest 3M-15M$",
+      "ticketRange": {
+        "min": 1000000,
+        "max": 15000000
+      },
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "website": "https://telesystem.ca/"
+      },
+      "sourceUrl": "https://telesystem.ca/",
+      "notes": "2e gen CEO (2012). Père Charles Chairman. Telecom sector wealth."
+    },
+    {
+      "name": "Aldo Bensadoun",
+      "organization": "ALDO Group",
+      "title": "Founder & Executive Chairman",
+      "region": "QC",
+      "city": "Montréal",
+      "language": "en",
+      "investmentThesis": "Retail fashion/footwear; family-controlled private enterprise; RE holdings global retail network",
+      "approachAngle": "Retail RE portfolio diversification; FO non-retail opportunities; fashion/retail expertise 3M-15M$",
+      "ticketRange": {
+        "min": 1000000,
+        "max": 15000000
+      },
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "website": "https://www.aldoshoes.com/"
+      },
+      "sourceUrl": "https://en.wikipedia.org/wiki/Aldo_(brand)",
+      "notes": "Fondé 1972. David Bensadoun (fils) CEO. 4 générations chaussure. 25M$ McGill donation (Bensadoun School of Retail Management)."
+    },
+    {
+      "name": "David Bensadoun",
+      "organization": "ALDO Group",
+      "title": "Chief Executive Officer",
+      "region": "QC",
+      "city": "Montréal",
+      "language": "en",
+      "investmentThesis": "Next-gen leadership global retail footwear; family legacy preservation et expansion",
+      "approachAngle": "Intergenerational wealth mgmt; retail RE portfolio optimization; diversification 2M-12M$",
+      "ticketRange": {
+        "min": 1000000,
+        "max": 12000000
+      },
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "website": "https://www.aldoshoes.com/"
+      },
+      "sourceUrl": "https://www.businessoffashion.com/people/aldo-bensadoun/",
+      "notes": "2e gen family CEO (2017). Global ALDO footprint."
+    },
+    {
+      "name": "Roberto Bellini",
+      "organization": "Picchio Pharma / Bellini Family Office",
+      "title": "Principal",
+      "region": "QC",
+      "city": "Montréal",
+      "language": "en",
+      "investmentThesis": "Healthcare et pharma investments; BioChem Pharma founder legacy (4B$ Shire sale 2001); biotech/pharma family office",
+      "approachAngle": "Healthcare RE co-investment; biotech property partnerships; NY/Canada RE portfolio 5M-20M$",
+      "ticketRange": {
+        "min": 3000000,
+        "max": 20000000
+      },
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "website": ""
+      },
+      "sourceUrl": "https://www.famcap.com/2024/11/bellini-brothers-family-office-takes-stake-in-biotech-pioneering-parkinsons-disease-treatment/",
+      "notes": "Fils de Francesco Bellini (BioChem Pharma 4B$ Shire sale). Picchio Int'l healthcare. NYC RE portfolio."
+    },
+    {
+      "name": "Carlo Bellini",
+      "organization": "Picchio Pharma / Bellini Family Office",
+      "title": "Principal",
+      "region": "QC",
+      "city": "Montréal",
+      "language": "en",
+      "investmentThesis": "Biotech/pharma wealth diversification; recent FO formation; Parkinson's biotech stakes",
+      "approachAngle": "Healthcare/RE portfolio building; pharma co-development RE; FO capital 3M-15M$",
+      "ticketRange": {
+        "min": 1000000,
+        "max": 15000000
+      },
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "website": ""
+      },
+      "sourceUrl": "https://www.famcap.com/2024/11/bellini-brothers-family-office-takes-stake-in-biotech-pioneering-parkinsons-disease-treatment/",
+      "notes": "Frère de Roberto. Recent FO formation. Healthcare investment expertise."
+    },
+    {
+      "name": "Philippe de Gaspé Beaubien III",
+      "organization": "de Gaspé Beaubien Family Office",
+      "title": "Principal",
+      "region": "QC",
+      "city": "Montréal",
+      "language": "fr",
+      "investmentThesis": "Multi-gen family wealth de Télémédia; cellular/satellite broadcasting licenses; philanthropic capital",
+      "approachAngle": "FO RE diversification de media base; QC community RE partnerships; capital patient 5M-20M$",
+      "ticketRange": {
+        "min": 3000000,
+        "max": 20000000
+      },
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "website": ""
+      },
+      "sourceUrl": "https://montreal-wealth.com/speakers/mr-philippe-de-gaspe-beaubien-iii/",
+      "notes": "14e gen famille QC. Télémédia founder wealth. 740M$ family net worth (2015 estimate)."
+    },
+    {
+      "name": "François M. de Gaspé Beaubien",
+      "organization": "de Gaspé Beaubien Family Office",
+      "title": "Principal",
+      "region": "QC",
+      "city": "Montréal",
+      "language": "fr",
+      "investmentThesis": "Next-gen family wealth mgmt; media empire legacy; philanthropic et commercial investment balance",
+      "approachAngle": "Intergenerational wealth transfer; QC RE; diversification de legacy media 2M-15M$",
+      "ticketRange": {
+        "min": 1000000,
+        "max": 15000000
+      },
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "website": ""
+      },
+      "sourceUrl": "https://montreal-wealth.com/speakers/francois-m-de-gaspe-beaubien/",
+      "notes": "Next-gen FO leadership. Télémédia legacy. Philanthropic commitments."
+    },
+    {
+      "name": "à identifier",
+      "organization": "FÉRIQUE Gestion Privée",
+      "title": "Family Office Team",
+      "region": "QC",
+      "city": "Montréal",
+      "language": "fr",
+      "investmentThesis": "MFO providing private wealth, RE optimization, estate planning pour familles HNW",
+      "approachAngle": "QC FO services platform; private RE co-invest opportunities; entry 1M$+ AUM (co-invest 2M-10M$)",
+      "ticketRange": {
+        "min": 1000000,
+        "max": 12000000
+      },
+      "publicContact": {
+        "email": "",
+        "phone": "514-840-9204 ext. 678",
+        "linkedin": "",
+        "website": "https://www.ferique.com/en/private-management"
+      },
+      "sourceUrl": "https://www.ferique.com/en/private-management",
+      "notes": "Multi-family office MTL. Private wealth focus. RE et estate asset optimization."
+    },
+    {
+      "name": "à identifier",
+      "organization": "Letko Brosseau Wealth",
+      "title": "Senior Investment Counsellor",
+      "region": "QC",
+      "city": "Montréal",
+      "language": "en",
+      "investmentThesis": "Independent investment manager pour FO, foundations, endowments; 27B$+ AUM; private clients depuis 1987",
+      "approachAngle": "Tax-efficient family wealth structures; co-investment via tax lawyers/accountants; institutional RE 3M-15M$",
+      "ticketRange": {
+        "min": 2000000,
+        "max": 15000000
+      },
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "website": "https://www.lba.ca/"
+      },
+      "sourceUrl": "https://www.lba.ca/investors-private/",
+      "notes": "27B$ AUM. 400+ clients institutionnels. FO experience depuis 1987. Tax coordination."
+    },
+    {
+      "name": "à identifier",
+      "organization": "Banque Nationale Gestion Privée 1859",
+      "title": "Wealth Advisor",
+      "region": "QC",
+      "city": "Montréal",
+      "language": "fr",
+      "investmentThesis": "Private banking et wealth mgmt pour individus et familles aisés; planning holistique; intergenerational structuring",
+      "approachAngle": "FO banking services; RE financing et asset protection; structures HNW pour 5M$+ portfolios (1M-10M$ deployment)",
+      "ticketRange": {
+        "min": 1000000,
+        "max": 10000000
+      },
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "website": "https://www.privatebanking1859.ca/"
+      },
+      "sourceUrl": "https://www.privatebanking1859.ca/",
+      "notes": "Banque Nationale subsidiary. 1859 heritage. Private banking. QC francophone wealth tradition. 205+ employees."
+    },
+    {
+      "name": "à identifier",
+      "organization": "Fiera Capital - Private Wealth",
+      "title": "Wealth Advisor",
+      "region": "QC",
+      "city": "Montréal",
+      "language": "en",
+      "investmentThesis": "Publicly-traded asset manager offrant strategies customisées pour HNW individuals, families, foundations",
+      "approachAngle": "Institutional RE strategies; FO asset allocation; QC commercial/multifamily co-investment 3M-20M$",
+      "ticketRange": {
+        "min": 2000000,
+        "max": 20000000
+      },
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "website": "https://pw.fieracapital.com/"
+      },
+      "sourceUrl": "https://www.fieracapital.com/en/",
+      "notes": "Publicly traded. HQ MTL. Private Wealth division. CGOV M&A enhanced HNW. Multi-asset class."
+    },
+    {
+      "name": "à identifier",
+      "organization": "EdgePoint Wealth Management (bureau Montréal)",
+      "title": "Investment Partner",
+      "region": "QC",
+      "city": "Montréal",
+      "language": "en",
+      "investmentThesis": "Investment-led boutique wealth manager; no sales/marketing; partner ownership; individual et institutional",
+      "approachAngle": "FO-aligned investment philosophy; QC institutional co-invest RE; partner-approach aligns incentives 5M-20M$",
+      "ticketRange": {
+        "min": 2000000,
+        "max": 20000000
+      },
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "website": "https://edgepointwealth.com/"
+      },
+      "sourceUrl": "https://edgepointwealth.com/contact-us/",
+      "notes": "TO-based avec bureau MTL. Tous staff sont owner-partners. Boutique. Institutional investor focus."
+    },
+    {
+      "name": "à identifier",
+      "organization": "Highgate Group",
+      "title": "Family Office Advisor",
+      "region": "QC",
+      "city": "Montréal",
+      "language": "en",
+      "investmentThesis": "Multi-office FO providing wealth, asset, et RE management pour UHNW",
+      "approachAngle": "QC immigrant investor program expertise; RE transaction mgmt; FO infrastructure 3M-15M$",
+      "ticketRange": {
+        "min": 1000000,
+        "max": 15000000
+      },
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "website": "https://highgategroup.ca"
+      },
+      "sourceUrl": "https://highgategroup.ca/services/family-office/",
+      "notes": "Echelon Wealth Partners subsidiary. QC IIPP focus. TO/MTL/OTT/VAN. RE mgmt services."
+    },
+    {
+      "name": "Peter Tsakiris",
+      "organization": "Whitemont Services Financiers Inc.",
+      "title": "Founder",
+      "region": "QC",
+      "city": "Montréal",
+      "language": "fr",
+      "investmentThesis": "Independent financial planning et FO services; estate, tax, philanthropy, investment oversight",
+      "approachAngle": "Boutique FO model; QC et Eastern Canada; discretionary wealth pour familles HNW 2M-15M$",
+      "ticketRange": {
+        "min": 1000000,
+        "max": 15000000
+      },
+      "publicContact": {
+        "email": "",
+        "phone": "514-393-1790",
+        "linkedin": "",
+        "website": "https://whitemont.com/"
+      },
+      "sourceUrl": "https://whitemont.com/en/family-office/",
+      "notes": "Indépendant des banques. Bureaux MTL et Québec. Estate planning. Philanthropic advisory."
+    },
+    {
+      "name": "Anne-Marie Boucher",
+      "organization": "Garber-Boucher Family Office / Lalotte Ventures",
+      "title": "Principal",
+      "region": "QC",
+      "city": "Montréal",
+      "language": "en",
+      "investmentThesis": "Early-stage VC avec broader FO holdings; tech investments, PE, RE, sports ownership",
+      "approachAngle": "FO co-invest opportunities; tech-driven RE; portfolio diversifié QC 2M-15M$",
+      "ticketRange": {
+        "min": 1000000,
+        "max": 15000000
+      },
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "website": "https://www.lalotteventures.com/"
+      },
+      "sourceUrl": "https://www.lalotteventures.com/family-office/anne-marie-boucher",
+      "notes": "Lalotte Ventures VC platform. Iconiq Capital partnership. NHL team ownership."
+    },
+    {
+      "name": "à identifier",
+      "organization": "Jarislowsky Fraser Limited - Private Wealth Practice",
+      "title": "Portfolio Manager",
+      "region": "QC",
+      "city": "Montréal",
+      "language": "en",
+      "investmentThesis": "Investment manager établi (1955); 62.3B$ AUM; private wealth pour HNW individuals et families; Scotiabank subsidiary",
+      "approachAngle": "Institutional-grade RE allocation; FO co-investment via established platform; tax-efficient 5M-25M$",
+      "ticketRange": {
+        "min": 3000000,
+        "max": 25000000
+      },
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "website": "https://montreal.scotiawealthmanagement.com/scotia-jarislowsky-fraser/"
+      },
+      "sourceUrl": "https://montreal.scotiawealthmanagement.com/scotia-jarislowsky-fraser/",
+      "notes": "Fondé 1955. 62.3B$ AUM. Stephen Jarislowsky founder. Scotiabank ownership (2018)."
+    }
+  ]
+}

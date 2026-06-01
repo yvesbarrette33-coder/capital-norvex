@@ -1,0 +1,104 @@
+/**
+ * POST /api/camille-list-drafts
+ * Header: X-Internal-Secret
+ * Body: { status?, limit? }
+ *
+ * Liste les drafts Camille (par défaut : status=pending_yves_approval).
+ * Trie par date de création desc.
+ */
+
+import {
+  getFirestoreToken,
+  jsonResponse,
+  listDocs,
+  loadServiceAccount,
+  queryDocs,
+} from "./_camille-shared.mjs";
+
+const COLLECTION_DRAFTS = "camilleDrafts";
+const COLLECTION_EMAILS = "camilleEmails";
+
+export default async function handler(req) {
+  if (req.method !== "POST") {
+    return jsonResponse({ error: "Method not allowed" }, 405);
+  }
+  const secret = req.headers.get("x-internal-secret");
+  if (!process.env.INTERNAL_SECRET || secret !== process.env.INTERNAL_SECRET) {
+    return jsonResponse({ error: "Unauthorized" }, 401);
+  }
+
+  let body = {};
+  try {
+    body = await req.json();
+  } catch {
+    body = {};
+  }
+  const wantedStatus = body.status || "pending_yves_approval";
+  const limit = Math.min(Math.max(body.limit || 50, 1), 200);
+
+  try {
+    const sa = await loadServiceAccount();
+    const projectId = sa.project_id;
+    const fsToken = await getFirestoreToken(sa);
+
+    // Query Firestore avec filtre côté serveur (runQuery + structuredQuery).
+    // Fallback listDocs (avec pagination) si status=all.
+    let filtered;
+    if (wantedStatus === "all") {
+      filtered = await listDocs(projectId, fsToken, COLLECTION_DRAFTS, {
+        limit: Math.min(limit * 3, 300),
+      });
+    } else {
+      filtered = await queryDocs(projectId, fsToken, COLLECTION_DRAFTS, {
+        whereField: "status",
+        whereOp: "EQUAL",
+        whereValue: wantedStatus,
+        orderByField: "createdAt",
+        orderByDirection: "DESCENDING",
+        limit: Math.min(limit * 3, 300),
+      });
+    }
+
+    // Tri par date de création (lastModifiedAt > approvedAt > sentAt)
+    filtered.sort((a, b) => {
+      const ta = new Date(
+        a.lastModifiedAt || a.approvedAt || a.sentAt || a.createdAt || 0
+      ).getTime();
+      const tb = new Date(
+        b.lastModifiedAt || b.approvedAt || b.sentAt || b.createdAt || 0
+      ).getTime();
+      return tb - ta;
+    });
+
+    return jsonResponse({
+      ok: true,
+      count: filtered.length,
+      drafts: filtered.slice(0, limit).map((d) => ({
+        id: d._id,
+        status: d.status,
+        sourceMailbox: d.sourceMailbox,
+        persona: d.persona,
+        toRecipient: d.toRecipient,
+        ccRecipients: d.ccRecipients || [],
+        subject: d.subject,
+        bodyHtml: d.bodyHtml,
+        signedHtml: d.signedHtml,
+        internalNoteForYves: d.internalNoteForYves,
+        openQuestions: d.openQuestions || [],
+        needsYvesInputBeforeSend: d.needsYvesInputBeforeSend,
+        triageSnapshot: d.triageSnapshot,
+        createdAt: d.createdAt,
+        approvedAt: d.approvedAt,
+        rejectedAt: d.rejectedAt,
+        sentAt: d.sentAt,
+        rejectionReason: d.rejectionReason,
+      })),
+    });
+  } catch (e) {
+    return jsonResponse({ error: e.message }, 500);
+  }
+}
+
+export const config = {
+  path: "/api/camille-list-drafts",
+};

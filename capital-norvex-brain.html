@@ -1,0 +1,2739 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a0a0a">
+<link rel="apple-touch-icon" href="/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Norvex Brain">
+<title>Norvex Brain™ — Capital Norvex</title>
+  <!-- PWA Admin (Suzanne+Yves installable) - 2026-05-20 -->
+  <link rel="manifest" href="/manifest-admin.json">
+  <meta name="theme-color" content="#0a0a0a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Norvex Admin">
+  <link rel="apple-touch-icon" href="/icon-192.png">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ink:#0a0d13;--ink2:#131720;--ink3:#1b2231;
+  --gold:#b8975a;--gold2:#d4b07a;--gold-pale:#f0e6d0;
+  --cream:#faf8f4;--stone:#e8e3da;--muted:#7a8294;--muted2:#a0a8b8;
+  --green:#2d6a4f;--green2:#52b788;--green-bg:rgba(82,183,136,.12);
+  --red:#c0392b;--red2:#e74c3c;--red-bg:rgba(192,57,43,.1);
+  --amber:#b7791f;--amber2:#d4a017;--amber-bg:rgba(183,121,31,.12);
+  --blue:#1a5276;--blue2:#2e86c1;--blue-bg:rgba(46,134,193,.1);
+  --purple:#6c3483;--purple2:#9b59b6;--purple-bg:rgba(155,89,182,.1);
+  --border:rgba(184,151,90,.15);
+  --sidebar:230px;
+}
+html{scroll-behavior:smooth}
+body{background:#eeebe5;color:var(--ink);font-family:'DM Sans',sans-serif;font-weight:300;min-height:100vh;overflow-x:hidden}
+
+/* ── LOGIN ── */
+#loginScreen{position:fixed;inset:0;background:var(--ink);display:flex;align-items:center;justify-content:center;z-index:9999}
+.login-box{width:380px;padding:3rem 3rem 2.5rem;border:1px solid var(--border)}
+.login-logo{font-family:'Playfair Display',serif;font-size:1.15rem;color:var(--gold);letter-spacing:.06em;margin-bottom:.3rem}
+.login-sub{font-size:.55rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem}
+.login-badge{display:inline-flex;align-items:center;gap:.4rem;font-size:.52rem;letter-spacing:.18em;text-transform:uppercase;background:var(--purple-bg);color:var(--purple2);border:1px solid rgba(155,89,182,.3);padding:.22rem .65rem;margin-bottom:2rem}
+.login-field{width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:var(--cream);font-family:'DM Sans',sans-serif;font-size:.8rem;padding:.85rem 1rem;outline:none;transition:border .2s;margin-bottom:.8rem}
+.login-field:focus{border-color:var(--gold)}
+.login-field::placeholder{color:var(--muted)}
+.login-btn{width:100%;background:var(--gold);color:var(--ink);border:none;padding:.9rem;font-family:'DM Sans',sans-serif;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;font-weight:500;cursor:pointer;transition:background .2s}
+.login-btn:hover{background:var(--gold2)}
+.login-err{color:var(--red2);font-size:.65rem;margin-top:.7rem;display:none}
+.login-version{font-size:.5rem;letter-spacing:.15em;color:var(--muted);opacity:.4;margin-top:1.5rem;text-transform:uppercase}
+
+/* ── TOPBAR ── */
+.topbar{background:var(--ink);display:flex;align-items:center;justify-content:space-between;padding:.85rem 2rem;position:sticky;top:0;z-index:300;border-bottom:1px solid var(--border)}
+.tb-left{display:flex;align-items:center;gap:1.2rem}
+.tb-logo{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--gold);letter-spacing:.04em}
+.tb-sep{width:1px;height:20px;background:rgba(255,255,255,.1)}
+.tb-title{font-size:.55rem;letter-spacing:.26em;text-transform:uppercase;color:var(--purple2)}
+.tb-right{display:flex;align-items:center;gap:1rem}
+.tb-badge{display:flex;align-items:center;gap:.4rem;font-size:.54rem;letter-spacing:.15em;text-transform:uppercase;background:var(--purple-bg);color:var(--purple2);border:1px solid rgba(155,89,182,.3);padding:.28rem .75rem}
+.live{width:6px;height:6px;background:var(--purple2);border-radius:50%;animation:blink 1.5s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+#invoiceDropZone.drag-over{border-color:var(--gold);background:rgba(184,151,90,.06)}
+.tb-date{font-size:.58rem;color:var(--muted);font-family:'DM Mono',monospace}
+.tb-logout{font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted2);background:transparent;border:1px solid rgba(255,255,255,.1);padding:.32rem .8rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+.tb-logout:hover{border-color:var(--red2);color:var(--red2)}
+
+/* ── LAYOUT ── */
+#app{display:none}
+.app-shell{display:grid;grid-template-columns:var(--sidebar) 1fr;min-height:calc(100vh - 48px)}
+
+/* ── SIDEBAR ── */
+.sidebar{background:var(--ink2);border-right:1px solid var(--border);padding:1.5rem 0;position:sticky;top:48px;height:calc(100vh - 48px);overflow-y:auto;display:flex;flex-direction:column}
+.sb-label{font-size:.5rem;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);padding:.8rem 1.4rem .3rem;display:block}
+.sb-item{display:flex;align-items:center;justify-content:space-between;padding:.6rem 1.4rem;cursor:pointer;font-size:.72rem;color:var(--muted2);transition:all .2s;border-left:2px solid transparent;user-select:none}
+.sb-item:hover{color:var(--cream);background:rgba(255,255,255,.03);border-left-color:rgba(184,151,90,.3)}
+.sb-item.active{color:var(--cream);background:rgba(255,255,255,.05);border-left-color:var(--gold)}
+.sb-ico{width:16px;text-align:center;margin-right:.5rem;font-size:.8rem}
+.sb-count{font-size:.52rem;background:rgba(184,151,90,.15);color:var(--gold);padding:.12rem .45rem;border-radius:2px;font-family:'DM Mono',monospace}
+.sb-count.red{background:var(--red-bg);color:var(--red2)}
+.sb-count.green{background:var(--green-bg);color:var(--green2)}
+.sb-count.purple{background:var(--purple-bg);color:var(--purple2)}
+.sb-divider{height:1px;background:var(--border);margin:.8rem 1.4rem}
+.sb-bottom{margin-top:auto;padding:1rem 1.4rem;border-top:1px solid var(--border)}
+.sb-version{font-size:.52rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);opacity:.5}
+
+/* ── MAIN ── */
+.main{padding:2rem;overflow-y:auto;max-height:calc(100vh - 48px)}
+.section{display:none}
+.section.active{display:block}
+
+/* ── PAGE HEADER ── */
+.page-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2rem}
+.page-tag{font-size:.58rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:.7rem;margin-bottom:.5rem}
+.page-tag::before{content:"";display:block;width:1.5rem;height:1px;background:var(--gold)}
+.page-title{font-family:'Playfair Display',serif;font-size:2rem;font-weight:400;color:var(--ink)}
+.page-title em{font-style:italic;color:var(--gold)}
+.page-title span.tm{font-family:'DM Sans',sans-serif;font-size:.55rem;letter-spacing:.2em;vertical-align:super;color:var(--muted);font-weight:400}
+
+/* ── KPI STRIP ── */
+.kpi-strip{display:grid;gap:1px;background:var(--stone);margin-bottom:2rem}
+.kpi-strip-5{grid-template-columns:repeat(5,1fr)}
+.kpi-strip-4{grid-template-columns:repeat(4,1fr)}
+.kpi-strip-3{grid-template-columns:repeat(3,1fr)}
+.kpi{background:var(--cream);padding:1.2rem 1.4rem;position:relative}
+.kpi-label{font-size:.52rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem}
+.kpi-value{font-family:'DM Mono',monospace;font-size:1.5rem;color:var(--ink);font-weight:400}
+.kpi-value.gold{color:var(--gold)}
+.kpi-value.green{color:var(--green2)}
+.kpi-value.red{color:var(--red2)}
+.kpi-value.purple{color:var(--purple2)}
+.kpi-sub{font-size:.58rem;color:var(--muted);margin-top:.2rem}
+
+/* ── TOOL LAUNCHERS ── */
+.launcher-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2rem}
+.launcher-card{background:var(--cream);border:1px solid var(--stone);padding:1.6rem;cursor:pointer;transition:all .2s;display:flex;flex-direction:column;gap:.5rem;text-decoration:none;position:relative;overflow:hidden}
+.launcher-card::after{content:"";position:absolute;inset:0;background:var(--gold);opacity:0;transition:opacity .2s}
+.launcher-card:hover{border-color:var(--gold);transform:translateY(-2px);box-shadow:0 4px 20px rgba(184,151,90,.15)}
+.lc-ico{font-size:1.6rem;margin-bottom:.2rem}
+.lc-name{font-family:'Playfair Display',serif;font-size:1rem;color:var(--ink)}
+.lc-name em{font-style:italic;color:var(--gold)}
+.lc-sub{font-size:.6rem;color:var(--muted);letter-spacing:.05em}
+.lc-status{display:inline-flex;align-items:center;gap:.3rem;font-size:.5rem;letter-spacing:.15em;text-transform:uppercase;padding:.2rem .5rem;margin-top:.2rem;width:fit-content}
+.lc-status.live{background:var(--green-bg);color:var(--green2);border:1px solid rgba(82,183,136,.3)}
+.lc-status.live .dot{width:5px;height:5px;background:var(--green2);border-radius:50%}
+.lc-arrow{position:absolute;top:1.4rem;right:1.4rem;font-size:.8rem;color:var(--muted);opacity:.4;transition:all .2s}
+.launcher-card:hover .lc-arrow{opacity:1;color:var(--gold);transform:translate(2px,-2px)}
+
+/* ── CARDS ── */
+.card{background:var(--cream);border:1px solid var(--stone);padding:1.5rem;margin-bottom:1.5rem}
+.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem}
+.card-title{font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.card-action{font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);cursor:pointer;border:none;background:none;font-family:'DM Sans',sans-serif}
+.card-action:hover{color:var(--gold2)}
+
+/* ── ACTIVITY FEED ── */
+.feed-item{display:flex;align-items:flex-start;gap:.9rem;padding:.75rem 0;border-bottom:1px solid rgba(0,0,0,.05)}
+.feed-item:last-child{border-bottom:none}
+.feed-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.feed-dot.green{background:var(--green2)}
+.feed-dot.gold{background:var(--gold)}
+.feed-dot.red{background:var(--red2)}
+.feed-dot.blue{background:var(--blue2)}
+.feed-dot.purple{background:var(--purple2)}
+.feed-text{font-size:.72rem;color:var(--ink);line-height:1.5}
+.feed-time{font-size:.58rem;color:var(--muted);margin-top:.15rem;font-family:'DM Mono',monospace}
+
+/* ── TRANSACTIONS TABLE ── */
+.section-actions{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;gap:1rem;flex-wrap:wrap}
+.filters{display:flex;gap:.5rem;flex-wrap:wrap}
+.filter-btn{background:var(--cream);border:1px solid var(--stone);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;padding:.38rem .9rem;cursor:pointer;font-family:'DM Sans',sans-serif;color:var(--muted);transition:all .2s}
+.filter-btn.active,.filter-btn:hover{border-color:var(--gold);color:var(--gold);background:#fdfcf9}
+.btn-add{background:var(--gold);color:var(--ink);padding:.6rem 1.4rem;font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s;display:flex;align-items:center;gap:.5rem}
+.btn-add:hover{background:var(--gold2)}
+.btn-secondary{background:var(--cream);color:var(--ink);padding:.6rem 1.2rem;font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;border:1px solid var(--stone);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+.btn-secondary:hover{border-color:var(--gold);color:var(--gold)}
+.btn-primary{background:var(--gold);color:var(--ink);padding:.6rem 1.4rem;font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;font-weight:500;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s;display:inline-flex;align-items:center;gap:.5rem}
+.btn-primary:hover{background:var(--gold2)}
+
+.tx-table{width:100%;border-collapse:collapse;background:var(--cream)}
+.tx-table th{font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);padding:.75rem 1rem;text-align:left;border-bottom:1px solid var(--stone);background:var(--cream);font-weight:400}
+.tx-table td{padding:.85rem 1rem;border-bottom:1px solid rgba(0,0,0,.04);font-size:.72rem;vertical-align:middle}
+.tx-table tr:last-child td{border-bottom:none}
+.tx-table tr:hover td{background:rgba(0,0,0,.015)}
+.tx-amount{font-family:'DM Mono',monospace;font-weight:500}
+.tx-amount.pos{color:var(--green2)}
+.tx-amount.neg{color:var(--red2)}
+.tx-amount.part{color:var(--amber2)}
+.tx-badge{font-size:.5rem;letter-spacing:.12em;text-transform:uppercase;padding:.18rem .5rem;border-radius:2px;white-space:nowrap}
+.tx-badge.revenu{background:var(--green-bg);color:var(--green2);border:1px solid rgba(82,183,136,.3)}
+.tx-badge.depense{background:var(--red-bg);color:var(--red2);border:1px solid rgba(192,57,43,.2)}
+.tx-badge.partenaire{background:var(--amber-bg);color:var(--amber2);border:1px solid rgba(183,121,31,.3)}
+.tx-badge.confirme{background:var(--green-bg);color:var(--green2)}
+.tx-badge.pending{background:var(--amber-bg);color:var(--amber2)}
+.tx-dossier{font-size:.6rem;color:var(--muted);font-family:'DM Mono',monospace}
+.tx-action-btn{background:none;border:none;cursor:pointer;font-size:.7rem;color:var(--muted);padding:.2rem .4rem;transition:color .2s}
+.tx-action-btn:hover{color:var(--red2)}
+.tx-empty{text-align:center;padding:3rem;color:var(--muted);font-size:.75rem}
+
+/* ── PL VIEW ── */
+.pl-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem}
+.pl-block{background:var(--cream);border:1px solid var(--stone);padding:1.4rem}
+.pl-block-title{font-size:.55rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem}
+.pl-line{display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;border-bottom:1px solid rgba(0,0,0,.04);font-size:.72rem}
+.pl-line:last-child{border-bottom:none;font-weight:500;padding-top:.7rem}
+.pl-line-label{color:var(--muted)}
+.pl-line-val{font-family:'DM Mono',monospace}
+.pl-line-val.pos{color:var(--green2)}
+.pl-line-val.neg{color:var(--red2)}
+.pl-total{background:var(--ink);padding:1.4rem;display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
+.pl-total-label{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted2)}
+.pl-total-val{font-family:'DM Mono',monospace;font-size:1.4rem;color:var(--gold)}
+.pl-total-val.pos{color:var(--green2)}
+.pl-total-val.neg{color:var(--red2)}
+
+/* ── MONTH SELECTOR ── */
+.month-sel{display:flex;align-items:center;gap:.5rem}
+.month-btn{background:none;border:1px solid var(--stone);color:var(--muted);width:28px;height:28px;cursor:pointer;font-size:.8rem;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.month-btn:hover{border-color:var(--gold);color:var(--gold)}
+.month-label{font-family:'DM Mono',monospace;font-size:.68rem;color:var(--ink);min-width:110px;text-align:center}
+
+/* ── MODAL ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:500;display:none;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal{background:var(--cream);width:500px;max-width:95vw;max-height:90vh;overflow-y:auto;border:1px solid var(--stone)}
+.modal-header{background:var(--ink);padding:1.2rem 1.5rem;display:flex;justify-content:space-between;align-items:center}
+.modal-title{font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
+.modal-close{background:none;border:none;color:var(--muted2);cursor:pointer;font-size:1.2rem;line-height:1}
+.modal-close:hover{color:var(--cream)}
+.modal-body{padding:1.5rem}
+.form-row{margin-bottom:1rem}
+.form-row label{display:block;font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem}
+.form-row input,.form-row select,.form-row textarea{width:100%;border:1px solid var(--stone);background:white;font-family:'DM Sans',sans-serif;font-size:.78rem;padding:.65rem .8rem;outline:none;transition:border .2s;color:var(--ink)}
+.form-row input:focus,.form-row select:focus,.form-row textarea:focus{border-color:var(--gold)}
+.form-row textarea{resize:vertical;min-height:60px}
+.form-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.modal-footer{padding:1rem 1.5rem;border-top:1px solid var(--stone);display:flex;justify-content:flex-end;gap:.8rem}
+
+/* ── PARTENAIRES ── */
+.part-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.part-card{background:var(--cream);border:1px solid var(--stone);padding:1.2rem}
+.part-name{font-family:'Playfair Display',serif;font-size:.95rem;margin-bottom:.3rem}
+.part-total{font-family:'DM Mono',monospace;font-size:1.1rem;color:var(--amber2);margin-bottom:.2rem}
+.part-count{font-size:.6rem;color:var(--muted)}
+.part-bar{height:3px;background:var(--stone);margin-top:.8rem;overflow:hidden}
+.part-bar-fill{height:100%;background:var(--gold);transition:width .8s ease}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .launcher-grid{grid-template-columns:1fr 1fr}
+  .kpi-strip-5{grid-template-columns:repeat(3,1fr)}
+  .pl-grid{grid-template-columns:1fr}
+  .part-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:650px){
+  :root{--sidebar:0px}
+  .sidebar{display:none}
+  .launcher-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">Capital Norvex</div>
+    <div class="login-sub">Administration</div>
+    <div class="login-badge"><span>●</span> Norvex Brain™</div>
+    <input class="login-field" type="password" id="pwdInput" placeholder="Mot de passe" onkeydown="if(event.key==='Enter')checkLogin()">
+    <button class="login-btn" onclick="checkLogin()">Accéder au système</button>
+    <div class="login-err" id="loginErr">Mot de passe incorrect</div>
+    <div class="login-version">Norvex Brain™ v1.0 — 2026</div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="tb-left">
+    <div class="tb-logo">Capital Norvex</div>
+    <div class="tb-sep"></div>
+    <div class="tb-title">Norvex Brain™</div>
+  </div>
+  <div class="tb-right">
+    <div class="tb-badge"><div class="live"></div> Système actif</div>
+    <div class="tb-date" id="tbDate"></div>
+    <button class="tb-logout" onclick="doLogout()">⎋ Quitter</button>
+  </div>
+</div>
+
+<div class="app-shell">
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <span class="sb-label">Navigation</span>
+  <div class="sb-item active" onclick="nav('dashboard')" id="nav-dashboard">
+    <span><span class="sb-ico">◈</span>Tableau de bord</span>
+  </div>
+  <div class="sb-item" onclick="nav('outils')" id="nav-outils">
+    <span><span class="sb-ico">⊞</span>Mes outils</span>
+  </div>
+
+  <div class="sb-divider"></div>
+  <span class="sb-label">Comptabilité</span>
+  <div class="sb-item" onclick="nav('transactions')" id="nav-transactions">
+    <span><span class="sb-ico">⟁</span>Transactions</span>
+    <span class="sb-count" id="sbPendingCount" style="display:none">0</span>
+  </div>
+  <div class="sb-item" onclick="nav('factures')" id="nav-factures">
+    <span><span class="sb-ico">◧</span>Factures reçues</span>
+    <span class="sb-count" id="sbFacturesCount" style="display:none">0</span>
+  </div>
+  <div class="sb-item" onclick="nav('paie')" id="nav-paie">
+    <span><span class="sb-ico">⊙</span>Paie</span>
+  </div>
+  <div class="sb-item" onclick="nav('facturation')" id="nav-facturation">
+    <span><span class="sb-ico">◈</span>Facturation clients</span>
+  </div>
+  <div class="sb-item" onclick="nav('pl')" id="nav-pl">
+    <span><span class="sb-ico">≋</span>Résultats P&L</span>
+  </div>
+  <div class="sb-item" onclick="nav('partenaires')" id="nav-partenaires">
+    <span><span class="sb-ico">◉</span>Partenaires</span>
+  </div>
+
+  <div class="sb-divider"></div>
+  <span class="sb-label">Orchestration</span>
+  <div class="sb-item" onclick="nav('maestro')" id="nav-maestro">
+    <span><span class="sb-ico">♬</span>Maestro™</span>
+    <span class="sb-count" id="sbMaestroAlerts" style="display:none">0</span>
+  </div>
+
+  <div class="sb-divider"></div>
+  <span class="sb-label">Alertes</span>
+  <div class="sb-item" onclick="window.open('/capital-norvex-track.html','_blank')" id="nav-track-alerts">
+    <span><span class="sb-ico">🔔</span>Demandes Track</span>
+    <span class="sb-count red" id="sbTrackAlerts">…</span>
+  </div>
+
+  <div class="sb-bottom">
+    <div class="sb-version">Brain™ v1.0 · 2026</div>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- ═══ DASHBOARD ═══ -->
+  <section class="section active" id="sec-dashboard">
+    <div class="page-header">
+      <div>
+        <div class="page-tag">Vue d'ensemble</div>
+        <h1 class="page-title">Tableau de <em>bord</em><span class="tm"> ™</span></h1>
+      </div>
+      <div class="tb-date" id="dashDate" style="font-family:'DM Mono',monospace;font-size:.75rem;color:var(--muted)"></div>
+    </div>
+
+    <div class="kpi-strip kpi-strip-5" id="dashKpis">
+      <div class="kpi"><div class="kpi-label">Dossiers actifs</div><div class="kpi-value gold" id="kpiDossiers">…</div><div class="kpi-sub">en cours</div></div>
+      <div class="kpi"><div class="kpi-label">Volume financé</div><div class="kpi-value" id="kpiVolume">…</div><div class="kpi-sub">total portefeuille</div></div>
+      <div class="kpi"><div class="kpi-label">Revenus ce mois</div><div class="kpi-value green" id="kpiRevMois">…</div><div class="kpi-sub" id="kpiRevMoisSub">chargement…</div></div>
+      <div class="kpi"><div class="kpi-label">Dépenses ce mois</div><div class="kpi-value red" id="kpiDepMois">…</div><div class="kpi-sub">charges</div></div>
+      <div class="kpi"><div class="kpi-label">Net ce mois</div><div class="kpi-value purple" id="kpiNet">…</div><div class="kpi-sub">résultat</div></div>
+    </div>
+
+    <!-- Launchers + Activity -->
+    <div style="display:grid;grid-template-columns:1fr 320px;gap:1.5rem">
+      <div>
+        <div style="font-size:.55rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem">Accès rapide aux outils</div>
+        <div class="launcher-grid">
+          <a class="launcher-card" href="/capital-norvex-pipeline.html" target="_blank">
+            <div class="lc-ico">⬡</div>
+            <div class="lc-name">Capital <em>Pipeline</em></div>
+            <div class="lc-sub">Gestion des dossiers de financement</div>
+            <div class="lc-status live"><span class="dot"></span>Live</div>
+            <span class="lc-arrow">↗</span>
+          </a>
+          <a class="launcher-card" href="/capital-norvex-track.html" target="_blank">
+            <div class="lc-ico">⬡</div>
+            <div class="lc-name">Norvex <em>Track</em>™</div>
+            <div class="lc-sub">Suivi des déboursés construction</div>
+            <div class="lc-status live"><span class="dot"></span>Live</div>
+            <span class="lc-arrow">↗</span>
+          </a>
+          <a class="launcher-card" href="/capital-norvex-cost-analyzer.html" target="_blank">
+            <div class="lc-ico">⬡</div>
+            <div class="lc-name">Norvex <em>Cost Analyzer</em>™</div>
+            <div class="lc-sub">Analyseur de coûts de construction</div>
+            <div class="lc-status live"><span class="dot"></span>Live</div>
+            <span class="lc-arrow">↗</span>
+          </a>
+          <a class="launcher-card" href="/capital-norvex-intel.html" target="_blank">
+            <div class="lc-ico">⬡</div>
+            <div class="lc-name">Norvex <em>Intel</em>™</div>
+            <div class="lc-sub">Évaluation immobilière IA — 3 approches, valeur prêteur</div>
+            <div class="lc-status live"><span class="dot"></span>Live</div>
+            <span class="lc-arrow">↗</span>
+          </a>
+          <a class="launcher-card" href="/capital-norvex-agents.html" target="_blank">
+            <div class="lc-ico">⬡</div>
+            <div class="lc-name">Norvex <em>Agents</em>™</div>
+            <div class="lc-sub">Agents IA — Capital, Courtiers, Promoteurs</div>
+            <div class="lc-status live"><span class="dot"></span>Live</div>
+            <span class="lc-arrow">↗</span>
+          </a>
+          <a class="launcher-card" href="/capital-norvex-talk.html" target="_blank">
+            <div class="lc-ico">⬡</div>
+            <div class="lc-name">Norvex <em>Talk</em>™</div>
+            <div class="lc-sub">Téléphonie IA · Norah — appels 24/7, 2FA, alertes VIP</div>
+            <div class="lc-status live"><span class="dot"></span>Live</div>
+            <span class="lc-arrow">↗</span>
+          </a>
+          <a class="launcher-card" href="/capital-norvex-courtiers-admin.html" target="_blank">
+            <div class="lc-ico">⬡</div>
+            <div class="lc-name">Candidatures <em>Courtiers</em></div>
+            <div class="lc-sub">Examiner, approuver ou refuser les candidatures au programme partenaire</div>
+            <div class="lc-status live"><span class="dot"></span><span id="brokerAppsBadge">Live</span></div>
+            <span class="lc-arrow">↗</span>
+          </a>
+          <a class="launcher-card" href="/camille-admin.html" target="_blank">
+            <div class="lc-ico">⬡</div>
+            <div class="lc-name">NORVEX <em>Counsel</em>™</div>
+            <div class="lc-sub">Coordination juridique IA — drafts en attente d'approbation, historique des envois (notaires, avocats, RDPRM)</div>
+            <div class="lc-status live"><span class="dot"></span>Live</div>
+            <span class="lc-arrow">↗</span>
+          </a>
+          <a class="launcher-card" href="/sophie-admin.html" target="_blank">
+            <div class="lc-ico">⬡</div>
+            <div class="lc-name">NORVEX <em>Relations</em>™</div>
+            <div class="lc-sub">Sophie — service clientèle IA (info@) — accueil prospects, redirection Score Norvex, autonomie quotidienne (Yves CC)</div>
+            <div class="lc-status live"><span class="dot"></span>Live</div>
+            <span class="lc-arrow">↗</span>
+          </a>
+          <a class="launcher-card" href="/hugo-admin.html" target="_blank">
+            <div class="lc-ico">⬡</div>
+            <div class="lc-name">NORVEX <em>Chantier</em>™</div>
+            <div class="lc-sub">Hugo — coordonnateur technique chantier IA — orchestre Intel + Track + Cost Analyzer, synthèse + verdict + push Brain</div>
+            <div class="lc-status live"><span class="dot"></span>Live</div>
+            <span class="lc-arrow">↗</span>
+          </a>
+          <a class="launcher-card" href="/beatrice-admin.html" target="_blank">
+            <div class="lc-ico">⬡</div>
+            <div class="lc-name">NORVEX <em>Executive</em>™</div>
+            <div class="lc-sub">Béatrice — assistante exécutive IA d'Yves (yves@) — ghostwriter privé, drafts non-juridiques, chat itératif, approbation systématique</div>
+            <div class="lc-status live"><span class="dot"></span>Live</div>
+            <span class="lc-arrow">↗</span>
+          </a>
+          <a class="launcher-card" href="/norvex-visibility.html" target="_blank">
+            <div class="lc-ico">⬡</div>
+            <div class="lc-name">Norvex <em>Visibility</em>™</div>
+            <div class="lc-sub">Tableau visibility — clics email humains filtrés (SendGrid), sessions Clarity, activité site capitalnorvex.com</div>
+            <div class="lc-status live"><span class="dot"></span>Live</div>
+            <span class="lc-arrow">↗</span>
+          </a>
+          <div class="launcher-card" onclick="nav('transactions')" style="cursor:pointer">
+            <div class="lc-ico">⬡</div>
+            <div class="lc-name">NORVEX <em>Finance</em>™</div>
+            <div class="lc-sub">Karine — CPA + fiscaliste IA — détecte factures/paiements/notes de frais, catégorisation fiscale, transactions pending pour validation</div>
+            <div class="lc-status live"><span class="dot"></span><span id="karinePendingBadge">Live</span></div>
+            <span class="lc-arrow">↗</span>
+          </div>
+          <div class="launcher-card" onclick="nav('maestro')" style="cursor:pointer">
+            <div class="lc-ico">⬡</div>
+            <div class="lc-name">NORVEX <em>Maestro</em>™</div>
+            <div class="lc-sub">Méta-orchestrateur IA — lit toutes les boîtes, route chaque email vers le bon spécialiste (Camille/Sophie/Béatrice/Karine), alerte les urgences</div>
+            <div class="lc-status live"><span class="dot"></span><span id="maestroBadge">Live</span></div>
+            <span class="lc-arrow">↗</span>
+          </div>
+          <a class="launcher-card" href="/diligence-admin.html" target="_blank">
+            <div class="lc-ico">⚖</div>
+            <div class="lc-name">NORVEX <em>Diligence</em>™</div>
+            <div class="lc-sub">Avocat senior IA — vérifie REQ + RBQ + OACIQ + AMF + analyse Registre foncier (hypothèques, rangs, saisies, marge libre). Verdict 🟢/🟡/🔴 avant lettre d'engagement</div>
+            <div class="lc-status live"><span class="dot"></span>Live</div>
+            <span class="lc-arrow">↗</span>
+          </a>
+          <div class="launcher-card" onclick="nav('transactions')" style="cursor:pointer">
+            <div class="lc-ico">⬡</div>
+            <div class="lc-name">Norvex <em>Brain</em>™</div>
+            <div class="lc-sub">Comptabilité &amp; gestion interne</div>
+            <div class="lc-status live"><span class="dot"></span>Ce module</div>
+            <span class="lc-arrow">→</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Activity -->
+      <div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Activité récente</div>
+            <button class="card-action" onclick="loadActivity()">↺</button>
+          </div>
+          <div id="activityFeed">
+            <div class="feed-item"><div class="feed-dot gold"></div><div><div class="feed-text" style="color:var(--muted)">Chargement…</div></div></div>
+          </div>
+        </div>
+
+        <!-- Track alerts summary -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Alertes Track™</div>
+            <button class="card-action" onclick="window.open('/capital-norvex-track.html','_blank')">Ouvrir →</button>
+          </div>
+          <div id="trackAlertsSummary" style="font-size:.72rem;color:var(--muted)">Chargement…</div>
+        </div>
+
+        <!-- Mode Mobile Béatrice -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Mode Béatrice</div>
+            <span id="beatriceMobileStatus" style="font-size:.7rem;color:var(--muted)">…</span>
+          </div>
+          <div style="font-size:.72rem;color:var(--muted);margin-bottom:8px;line-height:1.4">
+            Quand tu es sur la route, active le Mode Mobile. Béatrice envoie un SMS au lieu d'attendre dans le dashboard.
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;justify-content:space-between;">
+            <label style="display:flex;align-items:center;gap:8px;font-size:.78rem;color:var(--ink);cursor:pointer;">
+              <input type="checkbox" id="beatriceMobileToggle" onchange="toggleBeatriceMobile(this.checked)" style="cursor:pointer;width:16px;height:16px;accent-color:#C9A227;">
+              <span id="beatriceMobileLabel">Bureau (dashboard)</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ OUTILS ═══ -->
+  <section class="section" id="sec-outils">
+    <div class="page-header">
+      <div>
+        <div class="page-tag">Accès centralisé</div>
+        <h1 class="page-title">Mes <em>outils</em></h1>
+      </div>
+    </div>
+    <div class="launcher-grid" style="grid-template-columns:repeat(3,1fr)">
+      <a class="launcher-card" href="/capital-norvex-pipeline.html" target="_blank">
+        <div class="lc-ico">⬡</div><div class="lc-name">Capital <em>Pipeline</em></div>
+        <div class="lc-sub">Gestion complète des dossiers de financement — statuts, documents, LOI</div>
+        <div class="lc-status live"><span class="dot"></span>Live</div><span class="lc-arrow">↗</span>
+      </a>
+      <a class="launcher-card" href="/capital-norvex-track.html" target="_blank">
+        <div class="lc-ico">⬡</div><div class="lc-name">Norvex <em>Track</em>™</div>
+        <div class="lc-sub">Suivi des déboursés, ventilation des postes, approbation en 3 étapes</div>
+        <div class="lc-status live"><span class="dot"></span>Live</div><span class="lc-arrow">↗</span>
+      </a>
+      <a class="launcher-card" href="/capital-norvex-cost-analyzer.html" target="_blank">
+        <div class="lc-ico">⬡</div><div class="lc-name">Norvex <em>Cost Analyzer</em>™</div>
+        <div class="lc-sub">5 modules financiers — équité, honoraires, coût/porte, holdback, soft costs</div>
+        <div class="lc-status live"><span class="dot"></span>Live</div><span class="lc-arrow">↗</span>
+      </a>
+      <a class="launcher-card" href="/capital-norvex-intel.html" target="_blank">
+        <div class="lc-ico">⬡</div><div class="lc-name">Norvex <em>Intel</em>™</div>
+        <div class="lc-sub">Évaluation immobilière IA — 3 approches, réconciliation, valeur prêteur, sensibilité</div>
+        <div class="lc-status live"><span class="dot"></span>Live</div><span class="lc-arrow">↗</span>
+      </a>
+      <a class="launcher-card" href="/capital-norvex-agents.html" target="_blank">
+        <div class="lc-ico">⬡</div><div class="lc-name">Norvex <em>Agents</em>™</div>
+        <div class="lc-sub">Console IA — recherche cibles, lettres premium, courtiers, deal cards (TIER ZERO protégé)</div>
+        <div class="lc-status live"><span class="dot"></span>Live</div><span class="lc-arrow">↗</span>
+      </a>
+      <a class="launcher-card" href="/capital-norvex-courtiers-admin.html" target="_blank">
+        <div class="lc-ico">⬡</div><div class="lc-name">Candidatures <em>Courtiers</em></div>
+        <div class="lc-sub">Console admin — examiner, approuver ou refuser les candidatures au programme partenaire (numéro CN-AAAA-NNN auto-généré)</div>
+        <div class="lc-status live"><span class="dot"></span>Live</div><span class="lc-arrow">↗</span>
+      </a>
+      <a class="launcher-card" href="/camille-admin.html" target="_blank">
+        <div class="lc-ico">⬡</div><div class="lc-name">NORVEX <em>Counsel</em>™</div>
+        <div class="lc-sub">Coordination juridique IA — drafts notaires/avocats/RDPRM en attente d'approbation, historique, modification, envoi (Yves toujours en CC)</div>
+        <div class="lc-status live"><span class="dot"></span>Live</div><span class="lc-arrow">↗</span>
+      </a>
+      <a class="launcher-card" href="/sophie-admin.html" target="_blank">
+        <div class="lc-ico">⬡</div><div class="lc-name">NORVEX <em>Relations</em>™</div>
+        <div class="lc-sub">Sophie — service clientèle IA (info@) — accueil prospects/courtiers/promoteurs, redirection intelligente, autonomie Yves CC</div>
+        <div class="lc-status live"><span class="dot"></span>Live</div><span class="lc-arrow">↗</span>
+      </a>
+      <a class="launcher-card" href="/beatrice-admin.html" target="_blank">
+        <div class="lc-ico">⬡</div><div class="lc-name">NORVEX <em>Executive</em>™</div>
+        <div class="lc-sub">Béatrice — assistante exécutive IA d'Yves (yves@) — ghostwriter privé, drafts non-juridiques en attente, chat itératif (refaire/raccourcir/inverser le ton), approbation systématique</div>
+        <div class="lc-status live"><span class="dot"></span>Live</div><span class="lc-arrow">↗</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ═══ TRANSACTIONS ═══ -->
+  <section class="section" id="sec-transactions">
+    <div class="page-header">
+      <div>
+        <div class="page-tag">Comptabilité</div>
+        <h1 class="page-title">Trans<em>actions</em></h1>
+      </div>
+    </div>
+
+    <div class="section-actions">
+      <div style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap">
+        <div class="filters">
+          <button class="filter-btn active" data-filter="all" onclick="setTxFilter('all',this)">Toutes</button>
+          <button class="filter-btn" data-filter="revenu" onclick="setTxFilter('revenu',this)">Revenus</button>
+          <button class="filter-btn" data-filter="depense" onclick="setTxFilter('depense',this)">Dépenses</button>
+          <button class="filter-btn" data-filter="partenaire" onclick="setTxFilter('partenaire',this)">Partenaires</button>
+        </div>
+        <div class="month-sel">
+          <button class="month-btn" onclick="changeMonth(-1)">‹</button>
+          <div class="month-label" id="txMonthLabel"></div>
+          <button class="month-btn" onclick="changeMonth(1)">›</button>
+        </div>
+      </div>
+      <button class="btn-add" onclick="openAddTx()">+ Ajouter</button>
+    </div>
+
+    <!-- Summary strip -->
+    <div class="kpi-strip kpi-strip-3" style="margin-bottom:1.5rem">
+      <div class="kpi"><div class="kpi-label">Revenus</div><div class="kpi-value green" id="txRevTotal">0 $</div></div>
+      <div class="kpi"><div class="kpi-label">Dépenses</div><div class="kpi-value red" id="txDepTotal">0 $</div></div>
+      <div class="kpi"><div class="kpi-label">Net</div><div class="kpi-value" id="txNetTotal">0 $</div></div>
+    </div>
+
+    <table class="tx-table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Type</th>
+          <th>Catégorie</th>
+          <th>Description</th>
+          <th>Dossier</th>
+          <th>Statut</th>
+          <th style="text-align:right">Montant</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="txBody">
+        <tr><td colspan="8" class="tx-empty">Chargement…</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ═══ P&L ═══ -->
+  <section class="section" id="sec-pl">
+    <div class="page-header">
+      <div>
+        <div class="page-tag">Comptabilité</div>
+        <h1 class="page-title">Résultats <em>P&L</em></h1>
+      </div>
+      <div style="display:flex;align-items:center;gap:1rem">
+        <div class="month-sel">
+          <button class="month-btn" onclick="changePlMonth(-1)">‹</button>
+          <div class="month-label" id="plMonthLabel"></div>
+          <button class="month-btn" onclick="changePlMonth(1)">›</button>
+        </div>
+        <button class="btn-add" onclick="generateRapportPDF()" style="background:var(--gold);color:var(--ink)">⬇ Rapport PDF</button>
+      </div>
+    </div>
+
+    <div class="pl-total">
+      <div class="pl-total-label">Résultat net du mois</div>
+      <div class="pl-total-val" id="plNetTotal">—</div>
+    </div>
+
+    <div class="pl-grid">
+      <div class="pl-block">
+        <div class="pl-block-title">Revenus</div>
+        <div id="plRevLines"></div>
+      </div>
+      <div class="pl-block">
+        <div class="pl-block-title">Dépenses</div>
+        <div id="plDepLines"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Vue annuelle — <span id="plYear">2026</span></div>
+      </div>
+      <table class="tx-table">
+        <thead>
+          <tr><th>Mois</th><th style="text-align:right">Revenus</th><th style="text-align:right">Dépenses</th><th style="text-align:right">Partenaires</th><th style="text-align:right">Net</th></tr>
+        </thead>
+        <tbody id="plAnnuelBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ═══ PARTENAIRES ═══ -->
+  <section class="section" id="sec-partenaires">
+    <div class="page-header">
+      <div>
+        <div class="page-tag">Comptabilité</div>
+        <h1 class="page-title">Paie<em>ments</em> partenaires</h1>
+      </div>
+      <button class="btn-add" onclick="openAddTx('partenaire')">+ Ajouter paiement</button>
+    </div>
+
+    <div class="kpi-strip kpi-strip-3" style="margin-bottom:1.5rem">
+      <div class="kpi"><div class="kpi-label">Total versé</div><div class="kpi-value" id="partTotalVerse">…</div></div>
+      <div class="kpi"><div class="kpi-label">Ce mois</div><div class="kpi-value" id="partCeMois">…</div></div>
+      <div class="kpi"><div class="kpi-label">Partenaires actifs</div><div class="kpi-value gold" id="partActifs">…</div></div>
+    </div>
+
+    <div class="part-grid" id="partnerCards"></div>
+
+    <div class="card" style="margin-top:1.5rem">
+      <div class="card-header"><div class="card-title">Historique des paiements</div></div>
+      <table class="tx-table">
+        <thead>
+          <tr><th>Date</th><th>Partenaire</th><th>Dossier</th><th>Description</th><th style="text-align:right">Montant</th><th></th></tr>
+        </thead>
+        <tbody id="partBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ═══ FACTURES ═══ -->
+  <section class="section" id="sec-factures">
+    <div class="section-actions">
+      <div>
+        <div class="page-tag">Intelligence comptable</div>
+        <h1 class="page-title">Mes <em>factures</em></h1>
+      </div>
+      <div style="display:flex;gap:.75rem;align-items:center">
+        <select id="factCatFilter" onchange="loadFactures()" style="background:var(--ink2);border:1px solid var(--border);color:var(--cream);font-family:'DM Sans',sans-serif;font-size:.65rem;padding:.5rem .8rem;letter-spacing:.05em">
+          <option value="">Toutes les catégories</option>
+          <option value="loyer_bureau">Loyer / Bureau</option>
+          <option value="salaires_contractuels">Salaires / Contractuels</option>
+          <option value="services_professionnels">Services professionnels</option>
+          <option value="marketing_pub">Marketing / Pub</option>
+          <option value="telecom_logiciels">Télécom / Logiciels</option>
+          <option value="assurances">Assurances</option>
+          <option value="fournitures_bureau">Fournitures de bureau</option>
+          <option value="transport_deplacement">Transport / Déplacement</option>
+          <option value="repas_representation">Repas / Représentation</option>
+          <option value="formation">Formation</option>
+          <option value="frais_bancaires">Frais bancaires</option>
+          <option value="autre">Autre</option>
+        </select>
+        <input type="month" id="factMonthFilter" onchange="loadFactures()" style="background:var(--ink2);border:1px solid var(--border);color:var(--cream);font-family:'DM Sans',sans-serif;font-size:.65rem;padding:.5rem .8rem">
+        <select id="factPersonFilter" onchange="loadFactures()" style="background:var(--ink2);border:1px solid var(--border);color:var(--cream);font-family:'DM Sans',sans-serif;font-size:.65rem;padding:.5rem .8rem">
+          <option value="">Tous</option>
+          <option value="Yves Barrette">Yves Barrette</option>
+          <option value="Suzanne Breton">Suzanne Breton</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Zone d'upload -->
+    <div id="invoiceDropZone" onclick="document.getElementById('invoiceFileInput').click()" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handleInvoiceDrop(event)" style="border:2px dashed var(--border);padding:2.5rem;text-align:center;cursor:pointer;transition:all .2s;margin-bottom:1.5rem;position:relative">
+      <input type="file" id="invoiceFileInput" accept="image/*,.pdf" style="display:none" onchange="handleInvoiceFile(this.files[0])">
+      <div id="invoiceDropContent">
+        <div style="font-size:1.8rem;margin-bottom:.75rem;opacity:.4">◧</div>
+        <div style="font-size:.75rem;color:var(--gold);font-weight:500;margin-bottom:.35rem">Déposer une facture ici</div>
+        <div style="font-size:.6rem;color:var(--muted);letter-spacing:.08em">Photo (JPG, PNG) ou PDF · Cliquer ou glisser</div>
+      </div>
+      <div id="invoiceAnalyzing" style="display:none">
+        <div style="font-size:.65rem;color:var(--gold);letter-spacing:.15em;text-transform:uppercase;animation:pulse 1.5s infinite">Claude AI analyse la facture…</div>
+        <div style="margin-top:.5rem;font-size:.55rem;color:var(--muted)">Extraction des données en cours</div>
+      </div>
+    </div>
+
+    <!-- Totaux du mois -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem" id="facturesSummary">
+      <div style="background:var(--ink2);border:1px solid var(--border);padding:1.2rem">
+        <div style="font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem">Total factures</div>
+        <div id="factTotalMontant" style="font-size:1.3rem;font-family:'Playfair Display',serif;color:var(--cream)">—</div>
+      </div>
+      <div style="background:var(--ink2);border:1px solid var(--border);padding:1.2rem">
+        <div style="font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem">Taxes (TPS+TVQ)</div>
+        <div id="factTotalTaxes" style="font-size:1.3rem;font-family:'Playfair Display',serif;color:var(--cream)">—</div>
+      </div>
+      <div style="background:var(--ink2);border:1px solid var(--border);padding:1.2rem">
+        <div style="font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem">Nombre de factures</div>
+        <div id="factTotalCount" style="font-size:1.3rem;font-family:'Playfair Display',serif;color:var(--cream)">—</div>
+      </div>
+    </div>
+
+    <!-- Liste factures -->
+    <div id="facturesListWrap">
+      <table style="width:100%;border-collapse:collapse;font-size:.72rem">
+        <thead>
+          <tr style="border-bottom:1px solid var(--border)">
+            <th style="text-align:left;padding:.6rem .8rem;font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:400">Date</th>
+            <th style="text-align:left;padding:.6rem .8rem;font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:400">Fournisseur</th>
+            <th style="text-align:left;padding:.6rem .8rem;font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:400">Catégorie</th>
+            <th style="text-align:left;padding:.6rem .8rem;font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:400">Description</th>
+            <th style="text-align:right;padding:.6rem .8rem;font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:400">Avant taxes</th>
+            <th style="text-align:right;padding:.6rem .8rem;font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:400">Total</th>
+            <th style="text-align:left;padding:.6rem .8rem;font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:400">Par</th>
+            <th style="text-align:center;padding:.6rem .8rem;font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:400">Statut</th>
+            <th style="padding:.6rem .8rem"></th>
+          </tr>
+        </thead>
+        <tbody id="facturesTbody">
+          <tr><td colspan="8" style="padding:2rem;text-align:center;color:var(--muted);font-size:.65rem">Chargement…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ═══ PAIE ═══ -->
+  <section class="section" id="sec-paie">
+    <div class="section-actions">
+      <div>
+        <div class="page-tag">Administration</div>
+        <h1 class="page-title">Paie <em>hebdomadaire</em></h1>
+      </div>
+      <button class="btn-primary" onclick="ouvrirModalPaie()">+ Générer la paie</button>
+    </div>
+
+    <div style="background:rgba(184,151,90,.08);border:1px solid rgba(184,151,90,.25);padding:.7rem 1rem;margin-bottom:1.5rem;font-size:.6rem;color:var(--muted);letter-spacing:.04em">
+      ⚠️ Taux 2026 approximatifs — valider avec votre comptable avant la première paie.
+    </div>
+
+    <!-- Cartes employés -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem" id="paieEmployeCards">
+      <div style="background:var(--ink2);border:1px solid var(--border);padding:1.5rem;color:var(--muted);font-size:.65rem">Chargement…</div>
+      <div style="background:var(--ink2);border:1px solid var(--border);padding:1.5rem;color:var(--muted);font-size:.65rem">Chargement…</div>
+    </div>
+
+    <!-- KPIs YTD -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem">
+      <div style="background:var(--ink2);border:1px solid var(--border);padding:1.2rem">
+        <div style="font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem">Total brut YTD</div>
+        <div id="paieTotalBrut" style="font-size:1.2rem;font-family:'Playfair Display',serif;color:var(--cream)">—</div>
+      </div>
+      <div style="background:var(--ink2);border:1px solid var(--border);padding:1.2rem">
+        <div style="font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem">Total net YTD</div>
+        <div id="paieTotalNet" style="font-size:1.2rem;font-family:'Playfair Display',serif;color:var(--cream)">—</div>
+      </div>
+      <div style="background:var(--ink2);border:1px solid var(--border);padding:1.2rem">
+        <div style="font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem">Impôts retenus YTD</div>
+        <div id="paieTotalImpots" style="font-size:1.2rem;font-family:'Playfair Display',serif;color:var(--amber2)">—</div>
+      </div>
+      <div style="background:var(--ink2);border:1px solid var(--border);padding:1.2rem">
+        <div style="font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem">Nb. de paies</div>
+        <div id="paieTotalCount" style="font-size:1.2rem;font-family:'Playfair Display',serif;color:var(--cream)">—</div>
+      </div>
+    </div>
+
+    <!-- Historique -->
+    <table style="width:100%;border-collapse:collapse;font-size:.72rem">
+      <thead>
+        <tr style="border-bottom:1px solid var(--border)">
+          <th style="text-align:left;padding:.6rem .8rem;font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:400">Période</th>
+          <th style="text-align:left;padding:.6rem .8rem;font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:400">Employé</th>
+          <th style="text-align:right;padding:.6rem .8rem;font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:400">Brut</th>
+          <th style="text-align:right;padding:.6rem .8rem;font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:400">RRQ</th>
+          <th style="text-align:right;padding:.6rem .8rem;font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:400">AE</th>
+          <th style="text-align:right;padding:.6rem .8rem;font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:400">RQAP</th>
+          <th style="text-align:right;padding:.6rem .8rem;font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:400">Impôt féd.</th>
+          <th style="text-align:right;padding:.6rem .8rem;font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:400">Impôt prov.</th>
+          <th style="text-align:right;padding:.6rem .8rem;font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:400">Net</th>
+          <th style="text-align:center;padding:.6rem .8rem;font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:400">Statut</th>
+          <th style="padding:.6rem .8rem"></th>
+        </tr>
+      </thead>
+      <tbody id="paieTbody">
+        <tr><td colspan="11" style="padding:2rem;text-align:center;color:var(--muted);font-size:.65rem">Chargement…</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ═══ FACTURATION CLIENTS ═══ -->
+  <section class="section" id="sec-facturation">
+    <div class="section-actions">
+      <div>
+        <div class="page-tag">Facturation</div>
+        <h1 class="page-title">Facturation <em>clients</em></h1>
+      </div>
+      <button class="btn-primary" onclick="openNewInvoice()">+ Nouvelle facture</button>
+    </div>
+
+    <!-- Stats -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem">
+      <div style="background:var(--ink2);border:1px solid var(--border);padding:1.2rem">
+        <div style="font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem">Total facturé</div>
+        <div id="invStatTotal" style="font-size:1.3rem;font-family:'Playfair Display',serif;color:var(--cream)">—</div>
+      </div>
+      <div style="background:var(--ink2);border:1px solid var(--border);padding:1.2rem">
+        <div style="font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem">En attente</div>
+        <div id="invStatPending" style="font-size:1.3rem;font-family:'Playfair Display',serif;color:var(--amber2)">—</div>
+      </div>
+      <div style="background:var(--ink2);border:1px solid var(--border);padding:1.2rem">
+        <div style="font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem">Payées</div>
+        <div id="invStatPaid" style="font-size:1.3rem;font-family:'Playfair Display',serif;color:var(--green2)">—</div>
+      </div>
+    </div>
+
+    <!-- Liste -->
+    <table style="width:100%;border-collapse:collapse;font-size:.72rem">
+      <thead>
+        <tr style="border-bottom:1px solid var(--border)">
+          <th style="text-align:left;padding:.6rem .8rem;font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:400">N°</th>
+          <th style="text-align:left;padding:.6rem .8rem;font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:400">Date</th>
+          <th style="text-align:left;padding:.6rem .8rem;font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:400">Dossier</th>
+          <th style="text-align:left;padding:.6rem .8rem;font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:400">Notaire</th>
+          <th style="text-align:right;padding:.6rem .8rem;font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:400">Montant</th>
+          <th style="text-align:center;padding:.6rem .8rem;font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:400">Statut</th>
+          <th style="padding:.6rem .8rem"></th>
+        </tr>
+      </thead>
+      <tbody id="invoicesTbody">
+        <tr><td colspan="7" style="padding:2rem;text-align:center;color:var(--muted);font-size:.65rem">Chargement…</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ═══ NORVEX MAESTRO™ ═══ -->
+  <section class="section" id="sec-maestro">
+    <div class="page-header">
+      <div>
+        <div class="page-tag">Méta-orchestrateur</div>
+        <h1 class="page-title">Norvex <em>Maestro</em><span class="tm">™</span></h1>
+      </div>
+      <div style="display:flex;gap:.5rem;align-items:center">
+        <select id="maestroPeriod" onchange="loadMaestro()" style="background:var(--ink2);border:1px solid var(--border);color:var(--cream);padding:.5rem .8rem;font-size:.7rem;font-family:'DM Mono',monospace;cursor:pointer">
+          <option value="24">24 dernières heures</option>
+          <option value="72">3 jours</option>
+          <option value="168">7 jours</option>
+        </select>
+        <button onclick="loadMaestro()" style="background:var(--gold-dark);color:#000;border:none;padding:.6rem 1rem;font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;cursor:pointer">Actualiser</button>
+        <span id="maestro-last-refresh" style="font-size:11px;color:var(--muted);align-self:center;margin-left:8px;">—</span>
+        <a href="/maestro-admin.html" style="background:var(--gold);color:#0A0A0A;border:none;padding:.6rem 1rem;font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;text-decoration:none;font-weight:600">📋 TODO par dossier →</a>
+      </div>
+    </div>
+
+    <p style="color:var(--muted);font-size:.75rem;line-height:1.6;margin:0 0 1.5rem 0;max-width:780px">
+      Maestro lit toutes les boîtes (info@, yves@) toutes les 5 minutes et route chaque courriel vers le bon spécialiste : Camille (juridique), Sophie (relations clients), Béatrice (exécutif Yves), Karine (comptabilité). Les urgences déclenchent une alerte immédiate. <strong style="color:var(--gold)">Le bouton « TODO par dossier »</strong> ouvre la vue anti-oubli : pour chaque dossier actif, l'état des 9 étapes (Score → agent_docs → Hugo → RDV Teams → Norvex Final → Diligence → Camille → Notaire → Déboursé) avec ✅⏳🔴 et clic direct vers la prochaine action.
+    </p>
+
+    <!-- KPI strip -->
+    <div class="kpi-strip kpi-strip-5" style="margin-bottom:1.5rem">
+      <div class="kpi"><div class="kpi-label">Total routé</div><div class="kpi-value gold" id="maestroTotal">…</div><div class="kpi-sub">période sélectionnée</div></div>
+      <div class="kpi"><div class="kpi-label">Alertes urgentes</div><div class="kpi-value red" id="maestroAlerts">…</div><div class="kpi-sub">à voir tout de suite</div></div>
+      <div class="kpi"><div class="kpi-label">Priorité haute</div><div class="kpi-value purple" id="maestroHigh">…</div><div class="kpi-sub">high + critical</div></div>
+      <div class="kpi"><div class="kpi-label">info@</div><div class="kpi-value" id="maestroInfo">…</div><div class="kpi-sub">routé depuis info@</div></div>
+      <div class="kpi"><div class="kpi-label">yves@</div><div class="kpi-value" id="maestroYves">…</div><div class="kpi-sub">routé depuis yves@</div></div>
+    </div>
+
+    <!-- Répartition par agent -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.5rem">
+      <div style="background:var(--ink2);border:1px solid var(--border);padding:1.2rem">
+        <div style="font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:.8rem">Répartition par spécialiste</div>
+        <div id="maestroByRoute" style="display:flex;flex-direction:column;gap:.6rem;font-size:.72rem">
+          <div style="color:var(--muted)">Chargement…</div>
+        </div>
+      </div>
+      <div style="background:var(--ink2);border:1px solid var(--border);padding:1.2rem">
+        <div style="font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:.8rem">Alertes récentes — à voir en priorité</div>
+        <div id="maestroAlertsList" style="display:flex;flex-direction:column;gap:.6rem;font-size:.7rem">
+          <div style="color:var(--muted)">Chargement…</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:var(--ink2);border:1px solid var(--border);padding:1.2rem">
+      <div style="font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:.8rem">Comment Maestro fonctionne</div>
+      <ul style="margin:0;padding-left:1.2rem;color:var(--cream);font-size:.7rem;line-height:1.8">
+        <li><strong>Cron 5 min</strong> — plus rapide que les agents spécialistes (10-30 min)</li>
+        <li><strong>Sonnet 4.6 méta-triage</strong> — chaque email est routé en 1-2 secondes</li>
+        <li><strong>Anti-doublon</strong> — chaque Message-ID Internet n'est routé qu'une seule fois</li>
+        <li><strong>Garde-fous absolus</strong> — Maestro NE drafte JAMAIS, NE répond JAMAIS, NE supprime JAMAIS rien</li>
+        <li><strong>Score Norvex protégé</strong> — Maestro surveille mais ne touche PAS la porte d'entrée client</li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+</div><!-- end app-shell -->
+</div><!-- end app -->
+
+<!-- MODAL INVOICE CONFIRMATION -->
+<div class="modal-overlay" id="modalInvoice">
+  <div class="modal" style="max-width:560px">
+    <div class="modal-header">
+      <div class="modal-title">Confirmer la facture analysée</div>
+      <button class="modal-close" onclick="closeModal('modalInvoice')">×</button>
+    </div>
+    <div class="modal-body">
+      <div id="invoiceConfidenceBadge" style="margin-bottom:1rem;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;padding:.3rem .8rem;display:inline-block"></div>
+      <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
+        <div>
+          <label>Fournisseur</label>
+          <input id="invFournisseur" type="text" placeholder="Nom du fournisseur">
+        </div>
+        <div>
+          <label>Date</label>
+          <input id="invDate" type="date">
+        </div>
+      </div>
+      <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:.75rem">
+        <div>
+          <label>N° facture (optionnel)</label>
+          <input id="invNumero" type="text" placeholder="INV-001">
+        </div>
+        <div>
+          <label>Catégorie</label>
+          <select id="invCategorie">
+            <option value="loyer_bureau">Loyer / Bureau</option>
+            <option value="salaires_contractuels">Salaires / Contractuels</option>
+            <option value="services_professionnels">Services professionnels</option>
+            <option value="marketing_pub">Marketing / Pub</option>
+            <option value="telecom_logiciels">Télécom / Logiciels</option>
+            <option value="assurances">Assurances</option>
+            <option value="fournitures_bureau">Fournitures de bureau</option>
+            <option value="transport_deplacement">Transport / Déplacement</option>
+            <option value="repas_representation">Repas / Représentation</option>
+            <option value="formation">Formation</option>
+            <option value="frais_bancaires">Frais bancaires</option>
+            <option value="autre">Autre</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.75rem;margin-top:.75rem">
+        <div>
+          <label>Avant taxes</label>
+          <input id="invMontantHT" type="number" step="0.01" placeholder="0.00">
+        </div>
+        <div>
+          <label>TPS</label>
+          <input id="invTPS" type="number" step="0.01" placeholder="0.00">
+        </div>
+        <div>
+          <label>TVQ</label>
+          <input id="invTVQ" type="number" step="0.01" placeholder="0.00">
+        </div>
+      </div>
+      <div class="form-row" style="margin-top:.75rem">
+        <label>Total payé</label>
+        <input id="invTotal" type="number" step="0.01" placeholder="0.00" style="background:rgba(184,151,90,.08);border-color:var(--gold)">
+      </div>
+      <div class="form-row" style="margin-top:.75rem">
+        <label>Description</label>
+        <input id="invDescription" type="text" placeholder="Description courte">
+      </div>
+      <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:.75rem">
+        <div>
+          <label>Statut</label>
+          <select id="invStatut">
+            <option value="payée">Payée</option>
+            <option value="en_attente">En attente de paiement</option>
+            <option value="récurrente">Récurrente</option>
+          </select>
+        </div>
+        <div>
+          <label>Soumis par</label>
+          <select id="invSoumispar">
+            <option value="Yves Barrette">Yves Barrette</option>
+            <option value="Suzanne Breton">Suzanne Breton</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeModal('modalInvoice')">Annuler</button>
+      <button class="btn-primary" onclick="saveInvoice()">Sauvegarder la facture</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL PAIE -->
+<div class="modal-overlay" id="modalPaie">
+  <div class="modal" style="max-width:720px">
+    <div class="modal-header">
+      <div class="modal-title">Générer la paie</div>
+      <button class="modal-close" onclick="closeModal('modalPaie')">×</button>
+    </div>
+    <div class="modal-body">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1.25rem">
+        <div>
+          <label>Début de période</label>
+          <input type="date" id="paiePeriodeDebut" onchange="actualiserPreviewPaie()">
+        </div>
+        <div>
+          <label>Fin de période</label>
+          <input type="date" id="paiePeriodeFin">
+        </div>
+      </div>
+      <div id="paiePreviewContainer">
+        <div style="font-size:.65rem;color:var(--muted);text-align:center;padding:1rem">Calcul en cours…</div>
+      </div>
+      <div style="margin-top:1rem;font-size:.58rem;color:var(--muted);border-top:1px solid var(--border);padding-top:.75rem">
+        ⚠️ Taux approximatifs 2026 — RRQ 4.0%, AE 1.64%, RQAP 0.494%. Valider avec votre comptable.
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeModal('modalPaie')">Annuler</button>
+      <button class="btn-primary" onclick="confirmerPaie()">Confirmer &amp; sauvegarder</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL NOUVELLE FACTURE CLIENT -->
+<div class="modal-overlay" id="modalNewInvoice">
+  <div class="modal" style="max-width:600px">
+    <div class="modal-header">
+      <div class="modal-title">Nouvelle facture client</div>
+      <button class="modal-close" onclick="closeModal('modalNewInvoice')">×</button>
+    </div>
+    <div class="modal-body">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
+        <div class="form-row">
+          <label>N° de facture</label>
+          <input type="text" id="newInvNumero" placeholder="CNX-2026-001" readonly style="background:rgba(184,151,90,.06)">
+        </div>
+        <div class="form-row">
+          <label>Date</label>
+          <input type="date" id="newInvDate">
+        </div>
+      </div>
+      <div class="form-row" style="margin-top:.75rem">
+        <label>Dossier (nom du client)</label>
+        <input type="text" id="newInvDossier" placeholder="Ex: Jean Dupont">
+      </div>
+      <div class="form-row" style="margin-top:.75rem">
+        <label>Adresse de la propriété</label>
+        <input type="text" id="newInvAdresse" placeholder="Ex: 456 rue Notre-Dame, Montréal, QC">
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:.75rem">
+        <div class="form-row">
+          <label>Montant du prêt ($)</label>
+          <input type="number" id="newInvMontantPret" placeholder="0.00" step="0.01" min="0" oninput="calcInvoiceAmount()">
+        </div>
+        <div class="form-row">
+          <label>Taux des frais</label>
+          <select id="newInvTaux" onchange="calcInvoiceAmount()" style="background:var(--ink2);border:1px solid var(--border);color:var(--cream);font-family:'DM Sans',sans-serif;font-size:.72rem;padding:.5rem .75rem">
+            <option value="3">3%</option>
+            <option value="3.5">3,5%</option>
+            <option value="4">4%</option>
+            <option value="2.5">2,5%</option>
+            <option value="custom">Autre…</option>
+          </select>
+        </div>
+      </div>
+      <div id="newInvTauxCustomRow" style="display:none;margin-top:.75rem" class="form-row">
+        <label>Taux personnalisé (%)</label>
+        <input type="number" id="newInvTauxCustom" placeholder="Ex: 2.75" step="0.01" min="0" oninput="calcInvoiceAmount()">
+      </div>
+      <div class="form-row" style="margin-top:.75rem">
+        <label>Honoraires calculés ($) — aucune taxe applicable</label>
+        <input type="number" id="newInvMontant" placeholder="Calculé automatiquement" step="0.01" min="0" style="background:rgba(184,151,90,.08);border-color:var(--gold)" readonly>
+      </div>
+
+      <div style="border-top:1px solid var(--border);margin:1.25rem 0;padding-top:1.25rem">
+        <div style="font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem">Destinataires</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
+          <div class="form-row">
+            <label>Notaire — Nom <span style="color:var(--red2)">*</span></label>
+            <input type="text" id="newInvNotaireNom" placeholder="Me Jean Tremblay">
+          </div>
+          <div class="form-row">
+            <label>Notaire — Email <span style="color:var(--red2)">*</span></label>
+            <input type="email" id="newInvNotaireEmail" placeholder="notaire@etude.ca">
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:.75rem">
+          <div class="form-row">
+            <label>Copie client — Nom</label>
+            <input type="text" id="newInvClientNom" placeholder="Optionnel">
+          </div>
+          <div class="form-row">
+            <label>Copie client — Email</label>
+            <input type="email" id="newInvClientEmail" placeholder="Optionnel">
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:.75rem">
+          <div class="form-row">
+            <label>Copie partenaire — Nom</label>
+            <input type="text" id="newInvPartNom" placeholder="Optionnel">
+          </div>
+          <div class="form-row">
+            <label>Copie partenaire — Email</label>
+            <input type="email" id="newInvPartEmail" placeholder="Optionnel">
+          </div>
+        </div>
+      </div>
+
+      <div id="invSendStatus" style="display:none;margin-top:.75rem;padding:.6rem 1rem;font-size:.65rem;letter-spacing:.08em"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="previewInvoice()">Aperçu PDF</button>
+      <button class="btn-secondary" onclick="closeModal('modalNewInvoice')">Annuler</button>
+      <button class="btn-primary" id="btnSendInvoice" onclick="sendClientInvoice()">Envoyer au notaire →</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL ADD TRANSACTION -->
+<div class="modal-overlay" id="modalTx">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modalTxTitle">Ajouter une transaction</div>
+      <button class="modal-close" onclick="closeModal('modalTx')">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row">
+        <label>Type de transaction</label>
+        <select id="txType" onchange="onTxTypeChange()">
+          <option value="revenu">Revenu</option>
+          <option value="depense">Dépense</option>
+          <option value="partenaire">Paiement partenaire</option>
+        </select>
+      </div>
+      <div class="form-grid-2">
+        <div class="form-row">
+          <label>Date</label>
+          <input type="date" id="txDate">
+        </div>
+        <div class="form-row">
+          <label>Montant ($)</label>
+          <input type="number" id="txMontant" placeholder="0.00" step="0.01" min="0">
+        </div>
+      </div>
+      <div class="form-row">
+        <label>Catégorie</label>
+        <select id="txCat">
+          <option value="honoraires_montage">Honoraires de montage</option>
+          <option value="frais_admin">Frais administratifs</option>
+          <option value="interets">Intérêts</option>
+          <option value="autres_revenus">Autres revenus</option>
+        </select>
+      </div>
+      <div class="form-row" id="partenaireRow" style="display:none">
+        <label>Nom du partenaire</label>
+        <input type="text" id="txPartenaire" placeholder="Nom du partenaire investisseur">
+      </div>
+      <div class="form-row">
+        <label>Dossier associé (optionnel)</label>
+        <select id="txDossier">
+          <option value="">— Aucun dossier —</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label>Description</label>
+        <textarea id="txDesc" placeholder="Notes ou détails…"></textarea>
+      </div>
+      <div class="form-row">
+        <label>Statut</label>
+        <select id="txStatut">
+          <option value="confirme">Confirmé / Reçu</option>
+          <option value="pending">En attente</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeModal('modalTx')">Annuler</button>
+      <button class="btn-add" onclick="saveTx()">💾 Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- FIREBASE -->
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+<script>
+// ── FIREBASE ──
+const _FK='AIzaSyC3TAhWRX'+'BEVBiVT5MhxZDVvYYQeqX5tVI';
+const _FC={apiKey:_FK,authDomain:"capital-norvex.firebaseapp.com",projectId:"capital-norvex"};
+firebase.initializeApp(_FC);
+const _db=firebase.firestore();
+
+// ── AUTH ── (SSO partagé Norvex : 1 login Brain → tous les dashboards déverrouillés)
+const _HASH='7dd44fbc2584c810301f0512ec2262bb649b98acb907f7459824c2e87e5ceaab';
+// INTERNAL_SECRET partagé : sert d'authentification pour TOUS les dashboards
+// Norvex (Camille, Sophie, Norvex Talk, Pipeline) — stocké après login Brain.
+const _NORVEX_SECRET = 'Norvex2026!';
+async function sha256(s){const b=new TextEncoder().encode(s);const h=await crypto.subtle.digest('SHA-256',b);return Array.from(new Uint8Array(h)).map(x=>x.toString(16).padStart(2,'0')).join('');}
+function _setSSO(){
+  // Pose les clés SSO partagées (lues par tous les dashboards Norvex)
+  localStorage.setItem('cnx_brain_auth','1');
+  localStorage.setItem('norvex_secret', _NORVEX_SECRET);
+  // Compatibilité retro : anciennes clés utilisées par certains dashboards
+  localStorage.setItem('camille_secret', _NORVEX_SECRET);
+  localStorage.setItem('sophie_secret', _NORVEX_SECRET);
+  localStorage.setItem('norah_secret', _NORVEX_SECRET);
+  localStorage.setItem('beatrice_secret', _NORVEX_SECRET);
+  localStorage.setItem('beatrice_admin_secret', _NORVEX_SECRET);
+}
+async function checkLogin(){
+  const pw=document.getElementById('pwdInput').value;
+  const h=await sha256(pw);
+  if(h===_HASH){_setSSO();document.getElementById('loginScreen').style.display='none';document.getElementById('app').style.display='block';initApp();}
+  else{document.getElementById('loginErr').style.display='block';}
+}
+function doLogout(){
+  ['cnx_brain_auth','norvex_secret','camille_secret','sophie_secret','norah_secret','beatrice_secret','beatrice_admin_secret'].forEach(k=>localStorage.removeItem(k));
+  document.getElementById('app').style.display='none';document.getElementById('loginScreen').style.display='flex';document.getElementById('pwdInput').value='';
+}
+if(localStorage.getItem('cnx_brain_auth')==='1'){
+  // Migration : s'assurer que TOUTES les clés SSO sont posées (ancien login partiel)
+  _setSSO();
+  document.getElementById('loginScreen').style.display='none';document.getElementById('app').style.display='block';
+}
+
+// ── INIT ──
+function initApp(){
+  // Date display
+  const now=new Date();
+  const opts={weekday:'long',year:'numeric',month:'long',day:'numeric'};
+  const d=now.toLocaleDateString('fr-CA',opts);
+  document.getElementById('tbDate').textContent=d;
+  document.getElementById('dashDate').textContent=d;
+  // Init month selectors
+  _txMonth={y:now.getFullYear(),m:now.getMonth()};
+  _plMonth={y:now.getFullYear(),m:now.getMonth()};
+  updateMonthLabel('txMonthLabel',_txMonth);
+  updateMonthLabel('plMonthLabel',_plMonth);
+  document.getElementById('plYear').textContent=now.getFullYear();
+  // Load data
+  loadDashboard();
+  loadDossierOptions();
+  loadTransactions();
+  // Charge Maestro stats en arrière-plan pour mettre à jour les badges (tile + sidebar)
+  setTimeout(()=>{try{loadMaestro();}catch(e){}}, 500);
+}
+
+// ── NAVIGATION ──
+function nav(id){
+  document.querySelectorAll('.sb-item').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.section').forEach(el=>el.classList.remove('active'));
+  const navEl=document.getElementById('nav-'+id);
+  if(navEl) navEl.classList.add('active');
+  const sec=document.getElementById('sec-'+id);
+  if(sec) sec.classList.add('active');
+  if(id==='transactions') loadTransactions();
+  if(id==='pl') loadPL();
+  if(id==='partenaires') loadPartenaires();
+  if(id==='dashboard') loadDashboard();
+  if(id==='factures') loadFactures();
+  if(id==='paie') loadPaie();
+  if(id==='facturation') loadInvoicesClients();
+  if(id==='maestro') loadMaestro();
+}
+
+// ── NORVEX MAESTRO™ ──
+const ROUTE_LABELS={
+  to_camille:{label:'Camille NORVEX COUNSEL™',color:'#9b59b6',icon:'⚖'},
+  to_sophie:{label:'Sophie NORVEX RELATIONS™',color:'#3498db',icon:'☕'},
+  to_beatrice:{label:'Béatrice (ghostwriter Yves)',color:'#1abc9c',icon:'✎'},
+  to_karine:{label:'Karine NORVEX FINANCE™',color:'#c9a227',icon:'⚖'},
+  to_hugo_pipeline:{label:'Hugo (via Pipeline)',color:'#e67e22',icon:'⌂'},
+  to_yves_directly:{label:'Yves directement',color:'#95a5a6',icon:'☞'},
+  alert_yves_priority:{label:'⚠ ALERTE URGENTE',color:'#e74c3c',icon:'⚠'},
+  ignore_no_reply:{label:'Ignoré (no-reply/spam)',color:'#7f8c8d',icon:'✗'},
+};
+
+async function loadMaestro(){
+  const period=document.getElementById('maestroPeriod')?.value||'24';
+  const setText=(id,val)=>{const el=document.getElementById(id);if(el)el.textContent=val;};
+  setText('maestroTotal','…');
+  setText('maestroAlerts','…');
+  setText('maestroHigh','…');
+  setText('maestroInfo','…');
+  setText('maestroYves','…');
+  try{
+    const secret=localStorage.getItem('norvex_secret')||(typeof _NORVEX_SECRET!=='undefined'?_NORVEX_SECRET:'');
+    const r=await fetch('/api/maestro-stats?hours='+encodeURIComponent(period)+'&t='+Date.now(),{
+      headers:{'X-Internal-Secret':secret},
+      cache:'no-store'
+    });
+    if(!r.ok)throw new Error('HTTP '+r.status);
+    const data=await r.json();
+    if(!data.ok)throw new Error(data.error||'Erreur');
+    const lr=document.getElementById('maestro-last-refresh');
+    if(lr)lr.textContent='Maj : '+new Date().toLocaleTimeString('fr-CA');
+
+    setText('maestroTotal',data.total||0);
+    setText('maestroAlerts',data.alertsCount||0);
+    const high=(data.byPriority?.high||0)+(data.byPriority?.critical||0);
+    setText('maestroHigh',high);
+    setText('maestroInfo',data.byMailbox?.['info@capitalnorvex.com']||0);
+    setText('maestroYves',data.byMailbox?.['yves@capitalnorvex.com']||0);
+
+    // Sidebar badge alertes
+    const sbA=document.getElementById('sbMaestroAlerts');
+    if(sbA){if((data.alertsCount||0)>0){sbA.style.display='';sbA.textContent=data.alertsCount;sbA.className='sb-count red';}else{sbA.style.display='none';}}
+
+    // Tile dashboard badge
+    const tileBadge=document.getElementById('maestroBadge');
+    if(tileBadge)tileBadge.textContent=data.total>0?(data.total+' routés · 24h'):'Live';
+
+    // Répartition par route
+    const routeBox=document.getElementById('maestroByRoute');
+    if(routeBox){
+      const routes=Object.entries(data.byRoute||{}).sort((a,b)=>b[1]-a[1]);
+      if(!routes.length){
+        routeBox.innerHTML='<div style="color:var(--muted)">Aucun email routé sur cette période.</div>';
+      }else{
+        routeBox.innerHTML=routes.map(([k,v])=>{
+          const meta=ROUTE_LABELS[k]||{label:k,color:'#7f8c8d',icon:'·'};
+          return `<div style="display:flex;justify-content:space-between;align-items:center;padding:.5rem .7rem;background:rgba(255,255,255,.02);border-left:3px solid ${meta.color}">
+            <span><span style="color:${meta.color};margin-right:.5rem">${meta.icon}</span>${meta.label}</span>
+            <span style="font-family:'DM Mono',monospace;color:var(--cream);font-weight:600">${v}</span>
+          </div>`;
+        }).join('');
+      }
+    }
+
+    // Alertes récentes
+    const alertsBox=document.getElementById('maestroAlertsList');
+    if(alertsBox){
+      const alerts=data.recentAlerts||[];
+      if(!alerts.length){
+        alertsBox.innerHTML='<div style="color:var(--muted)">Aucune alerte urgente — système opérationnel.</div>';
+      }else{
+        alertsBox.innerHTML=alerts.map(a=>`
+          <div style="padding:.6rem .7rem;background:rgba(231,76,60,.08);border-left:3px solid #e74c3c">
+            <div style="display:flex;justify-content:space-between;align-items:center;font-size:.6rem;color:var(--muted);margin-bottom:.25rem">
+              <span>${escapeAttr(a.from||'')}</span>
+              <span>${a.dispatchedAt?new Date(a.dispatchedAt).toLocaleString('fr-CA',{hour:'2-digit',minute:'2-digit',day:'2-digit',month:'short'}):''}</span>
+            </div>
+            <div style="font-weight:600;color:var(--cream);font-size:.72rem;margin-bottom:.2rem">${escapeAttr(a.subject||'(sans objet)')}</div>
+            <div style="font-size:.65rem;color:#fcd5c5;font-style:italic">${escapeAttr(a.summary||'')}</div>
+          </div>
+        `).join('');
+      }
+    }
+  }catch(e){
+    setText('maestroTotal','—');
+    setText('maestroAlerts','—');
+    const routeBox=document.getElementById('maestroByRoute');
+    if(routeBox)routeBox.innerHTML='<div style="color:#e74c3c">Erreur: '+e.message+'</div>';
+  }
+}
+
+// ── MONTH UTILS ──
+let _txMonth={y:2026,m:0};
+let _plMonth={y:2026,m:0};
+const MOIS=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+function updateMonthLabel(id,mo){document.getElementById(id).textContent=MOIS[mo.m]+' '+mo.y;}
+function changeMonth(d){_txMonth.m+=d;if(_txMonth.m>11){_txMonth.m=0;_txMonth.y++;}if(_txMonth.m<0){_txMonth.m=11;_txMonth.y--;}updateMonthLabel('txMonthLabel',_txMonth);loadTransactions();}
+function changePlMonth(d){_plMonth.m+=d;if(_plMonth.m>11){_plMonth.m=0;_plMonth.y++;}if(_plMonth.m<0){_plMonth.m=11;_plMonth.y--;}updateMonthLabel('plMonthLabel',_plMonth);loadPL();}
+
+function fmtCad(n){return(n||0).toLocaleString('fr-CA',{style:'currency',currency:'CAD',minimumFractionDigits:0,maximumFractionDigits:0});}
+function fmtDate(s){if(!s)return'—';const d=new Date(s);return d.toLocaleDateString('fr-CA',{year:'numeric',month:'short',day:'numeric'});}
+
+// ── DASHBOARD ──
+async function loadDashboard(){
+  loadActivity();
+  loadTrackAlerts();
+  loadDashKpis();
+  loadBeatriceMobileMode();
+}
+
+// ── MODE MOBILE BÉATRICE ──
+async function loadBeatriceMobileMode(){
+  const status=document.getElementById('beatriceMobileStatus');
+  const toggle=document.getElementById('beatriceMobileToggle');
+  const label=document.getElementById('beatriceMobileLabel');
+  if(!status||!toggle||!label)return;
+  try{
+    const secret=localStorage.getItem('norvex_secret')||_NORVEX_SECRET;
+    const r=await fetch('/api/beatrice-toggle-mobile-mode',{
+      method:'GET',
+      headers:{'X-Internal-Secret':secret}
+    });
+    const data=await r.json();
+    if(!data.ok)throw new Error(data.error||'erreur');
+    toggle.checked=!!data.mobile_mode;
+    _updateBeatriceMobileLabel(data.mobile_mode);
+    status.textContent=data.updatedAt?('màj '+fmtDate(data.updatedAt)):'';
+  }catch(e){
+    status.textContent='erreur';
+    status.style.color='#c33';
+  }
+}
+function _updateBeatriceMobileLabel(active){
+  const label=document.getElementById('beatriceMobileLabel');
+  if(!label)return;
+  if(active){
+    label.innerHTML='📱 Mobile (SMS) — <span style="color:#2d8a3e;font-weight:600">Actif</span>';
+  }else{
+    label.textContent='💻 Bureau (dashboard)';
+  }
+}
+async function toggleBeatriceMobile(checked){
+  const status=document.getElementById('beatriceMobileStatus');
+  const toggle=document.getElementById('beatriceMobileToggle');
+  try{
+    const secret=localStorage.getItem('norvex_secret')||_NORVEX_SECRET;
+    const r=await fetch('/api/beatrice-toggle-mobile-mode',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','X-Internal-Secret':secret},
+      body:JSON.stringify({mobile_mode:!!checked})
+    });
+    const data=await r.json();
+    if(!data.ok)throw new Error(data.error||'erreur');
+    _updateBeatriceMobileLabel(data.mobile_mode);
+    status.textContent=data.message||'';
+    status.style.color=data.mobile_mode?'#2d8a3e':'var(--muted)';
+    setTimeout(()=>{status.textContent='màj '+fmtDate(new Date().toISOString());status.style.color='var(--muted)';},3500);
+  }catch(e){
+    status.textContent='erreur : '+e.message;
+    status.style.color='#c33';
+    toggle.checked=!checked;  // revert UI
+  }
+}
+
+async function loadDashKpis(){
+  try{
+    // Dossiers actifs
+    const snap=await _db.collection('dossiers').get();
+    let actifs=0,vol=0;
+    snap.forEach(d=>{const dt=d.data();const st=dt.stage||dt.status;if(st&&st!=='archive'&&st!=='refuse'&&st!=='closed'){actifs++;if(dt.montant)vol+=Number(dt.montant)||0;}});
+    document.getElementById('kpiDossiers').textContent=actifs;
+    document.getElementById('kpiVolume').textContent=fmtCad(vol);
+    // Monthly accounting
+    const now=new Date();
+    const m0=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0');
+    const txSnap=await _db.collection('transactions').get();
+    let rev=0,dep=0;
+    txSnap.forEach(d=>{const t=d.data();if((t.date||'').startsWith(m0)){if(t.type==='revenu')rev+=Number(t.montant)||0;else if(t.type==='depense'||t.type==='partenaire')dep+=Number(t.montant)||0;}});
+    document.getElementById('kpiRevMois').textContent=fmtCad(rev);
+    document.getElementById('kpiRevMoisSub').textContent=MOIS[now.getMonth()];
+    document.getElementById('kpiDepMois').textContent=fmtCad(dep);
+    const net=rev-dep;
+    const netEl=document.getElementById('kpiNet');
+    netEl.textContent=fmtCad(net);
+    netEl.className='kpi-value '+(net>=0?'green':'red');
+  }catch(e){console.warn('dashKpis error:',e);}
+}
+
+async function loadActivity(){
+  const feed=document.getElementById('activityFeed');
+  try{
+    const snap=await _db.collection('dossiers').orderBy('created_at','desc').limit(5).get();
+    let html='';
+    snap.forEach(d=>{
+      const dt=d.data();
+      const rawTs=dt.created_at||dt.createdAt;
+      const ts=rawTs&&rawTs.toDate?rawTs.toDate().toLocaleDateString('fr-CA',{month:'short',day:'numeric'}):'—';
+      const nom=(dt.prenom||dt.nom)?((dt.prenom||'')+' '+(dt.nom||'')).trim():(dt.nomProjet||dt.clientNom||d.id);
+      const stageLabel=dt.stage?` <span style="color:var(--muted);font-size:.65rem">· ${dt.stage}</span>`:'';
+      html+=`<div class="feed-item"><div class="feed-dot gold"></div><div><div class="feed-text">Dossier <strong>${nom}</strong>${stageLabel}</div><div class="feed-time">${ts}</div></div></div>`;
+    });
+    if(!html)html='<div style="font-size:.7rem;color:var(--muted);padding:.5rem 0">Aucun dossier récent</div>';
+    // Add recent transactions
+    const txSnap=await _db.collection('transactions').orderBy('createdAt','desc').limit(3).get();
+    txSnap.forEach(d=>{
+      const t=d.data();
+      const dot=t.type==='revenu'?'green':t.type==='partenaire'?'gold':'red';
+      const ts2=t.createdAt?t.createdAt.toDate().toLocaleDateString('fr-CA',{month:'short',day:'numeric'}):'—';
+      html+=`<div class="feed-item"><div class="feed-dot ${dot}"></div><div><div class="feed-text">${t.description||t.categorie||t.type} — <strong>${fmtCad(t.montant)}</strong></div><div class="feed-time">${ts2}</div></div></div>`;
+    });
+    feed.innerHTML=html||'<div style="font-size:.7rem;color:var(--muted)">Aucune activité récente</div>';
+  }catch(e){feed.innerHTML='<div style="font-size:.7rem;color:var(--muted)">Aucun dossier trouvé (vérifier Firestore)</div>';}
+}
+
+async function loadTrackAlerts(){
+  const el=document.getElementById('trackAlertsSummary');
+  const badge=document.getElementById('sbTrackAlerts');
+  try{
+    const snap=await _db.collection('trackAlerts').where('status','==','pending').get();
+    const n=snap.size;
+    badge.textContent=n;
+    if(n>0){
+      let html=`<div style="font-size:.72rem;color:var(--amber2);margin-bottom:.5rem;font-weight:500">⚡ ${n} demande${n>1?'s':''} en attente d'approbation</div>`;
+      snap.forEach(d=>{const t=d.data();html+=`<div style="font-size:.65rem;color:var(--muted);padding:.2rem 0;border-bottom:1px solid rgba(0,0,0,.04)">${t.dossierName||t.dossierId} — ${t.type}</div>`;});
+      html+=`<button class="card-action" style="margin-top:.8rem" onclick="window.open('/capital-norvex-track.html','_blank')">Traiter dans Track →</button>`;
+      el.innerHTML=html;
+    }else{el.innerHTML='<div style="font-size:.7rem;color:var(--muted)">Aucune demande en attente ✓</div>';}
+  }catch(e){el.innerHTML='<div style="font-size:.7rem;color:var(--muted)">—</div>';badge.textContent='—';}
+}
+
+// ── LOAD DOSSIER OPTIONS ──
+async function loadDossierOptions(){
+  try{
+    const snap=await _db.collection('dossiers').orderBy('nomProjet').get();
+    const sel=document.getElementById('txDossier');
+    snap.forEach(d=>{const dt=d.data();const opt=document.createElement('option');opt.value=d.id;opt.textContent=dt.nomProjet||dt.clientNom||d.id;sel.appendChild(opt);});
+  }catch(e){}
+}
+
+// ── TRANSACTIONS ──
+let _allTx=[];
+let _txFilter='all';
+
+function setTxFilter(f,btn){
+  _txFilter=f;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderTx();
+}
+
+async function loadTransactions(){
+  const body=document.getElementById('txBody');
+  body.innerHTML='<tr><td colspan="8" class="tx-empty">Chargement…</td></tr>';
+  try{
+    const snap=await _db.collection('transactions').orderBy('date','desc').get();
+    _allTx=[];
+    snap.forEach(d=>_allTx.push({id:d.id,...d.data()}));
+    renderTx();
+  }catch(e){body.innerHTML=`<tr><td colspan="8" class="tx-empty">Erreur: ${e.message}</td></tr>`;}
+}
+
+function renderTx(){
+  const {y,m}=_txMonth;
+  const prefix=y+'-'+String(m+1).padStart(2,'0');
+  const filtered=_allTx.filter(t=>{
+    if(_txFilter!=='all'&&t.type!==_txFilter) return false;
+    if(!(t.date||'').startsWith(prefix)) return false;
+    return true;
+  });
+  let rev=0,dep=0;
+  filtered.forEach(t=>{if(t.type==='revenu')rev+=Number(t.montant)||0;else dep+=Number(t.montant)||0;});
+  document.getElementById('txRevTotal').textContent=fmtCad(rev);
+  document.getElementById('txDepTotal').textContent=fmtCad(dep);
+  const net=rev-dep;
+  const netEl=document.getElementById('txNetTotal');
+  netEl.textContent=fmtCad(net);
+  netEl.className='kpi-value '+(net>=0?'green':'red');
+
+  // Badge count pending
+  const pending=_allTx.filter(t=>t.statut==='pending').length;
+  const sbP=document.getElementById('sbPendingCount');
+  if(pending>0){sbP.style.display='';sbP.textContent=pending;}else{sbP.style.display='none';}
+
+  if(!filtered.length){document.getElementById('txBody').innerHTML='<tr><td colspan="8" class="tx-empty">Aucune transaction ce mois</td></tr>';return;}
+
+  const CAT_LABELS={honoraires_montage:'Honoraires montage',frais_admin:'Frais admin',interets:'Intérêts',autres_revenus:'Autres revenus',salaire:'Salaires',loyer:'Loyer',comptable:'Comptable',marketing:'Marketing',materiel:'Matériel',paiement_partenaire:'Paiement partenaire',autres_depenses:'Autres dépenses'};
+
+  document.getElementById('txBody').innerHTML=filtered.map(t=>{
+    const isKarine=(t.source==='karine_norvex_finance'||t.agent==='karine_norvex_finance');
+    const reviewFlag=t.requires_yves_review===true;
+    const taxNote=t.tax_note||'';
+    const fournisseur=t.fournisseur||'';
+    const conf=Number(t.confidence)||0;
+    const sourceFrom=t.sourceEmailFrom||'';
+    return `
+    <tr${isKarine?' data-karine="1" style="border-left:3px solid #c9a227"':''}>
+      <td style="font-family:'DM Mono',monospace;font-size:.65rem">${fmtDate(t.date)}</td>
+      <td>
+        <span class="tx-badge ${t.type}">${t.type==='revenu'?'Revenu':t.type==='depense'?'Dépense':'Partenaire'}</span>
+        ${isKarine?'<div style="margin-top:.2rem;font-size:.48rem;letter-spacing:.12em;text-transform:uppercase;background:rgba(201,162,39,.15);color:#c9a227;border:1px solid rgba(201,162,39,.4);padding:.1rem .4rem;display:inline-block">⚖ Karine</div>':''}
+        ${reviewFlag?'<div style="margin-top:.2rem;font-size:.48rem;letter-spacing:.12em;text-transform:uppercase;background:rgba(231,76,60,.15);color:#e74c3c;border:1px solid rgba(231,76,60,.4);padding:.1rem .4rem;display:inline-block" title="Karine recommande une révision avant confirmation">⚠ Révision</div>':''}
+      </td>
+      <td style="font-size:.68rem">${CAT_LABELS[t.categorie]||t.categorie||'—'}</td>
+      <td style="max-width:200px;font-size:.7rem">
+        <div style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${escapeAttr(t.description||'')}">${t.description||'—'}</div>
+        ${fournisseur?`<div style="font-size:.6rem;color:var(--muted);margin-top:.1rem">${fournisseur}</div>`:''}
+        ${taxNote?`<div style="font-size:.58rem;color:#c9a227;margin-top:.2rem;font-style:italic;line-height:1.3" title="${escapeAttr(taxNote)}">⚖ ${taxNote.length>80?taxNote.slice(0,80)+'…':taxNote}</div>`:''}
+        ${sourceFrom?`<div style="font-size:.55rem;color:var(--muted);margin-top:.15rem">↳ ${sourceFrom}</div>`:''}
+      </td>
+      <td class="tx-dossier">
+        ${t.source==='pipeline'?'<span style="font-size:.48rem;letter-spacing:.12em;text-transform:uppercase;background:rgba(155,89,182,.15);color:var(--purple2);border:1px solid rgba(155,89,182,.3);padding:.1rem .4rem;margin-right:.4rem">Pipeline</span>':''}
+        ${t.dossierNom||'—'}
+        ${t.adresse?`<div style="font-size:.6rem;color:var(--muted);margin-top:.1rem">${t.adresse}</div>`:''}
+      </td>
+      <td>
+        <span class="tx-badge ${t.statut}">${t.statut==='confirme'?'✓ Confirmé':'En attente'}</span>
+        ${isKarine&&conf?`<div style="font-size:.55rem;color:var(--muted);margin-top:.2rem">conf. ${conf}%</div>`:''}
+      </td>
+      <td style="text-align:right"><span class="tx-amount ${t.type==='revenu'?'pos':t.type==='partenaire'?'part':'neg'}">${t.type==='revenu'?'+':'−'}${fmtCad(t.montant)}</span></td>
+      <td style="white-space:nowrap">
+        ${t.statut==='pending'?`<button class="tx-action-btn" onclick="confirmTx('${t.id}')" title="Confirmer cette transaction" style="color:#27ae60">✓</button>`:''}
+        <button class="tx-action-btn" onclick="editTx('${t.id}')" title="Modifier">✎</button>
+        <button class="tx-action-btn" onclick="deleteTx('${t.id}')" title="Supprimer">🗑</button>
+      </td>
+    </tr>`;}).join('');
+}
+
+function escapeAttr(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+
+async function confirmTx(id){
+  try{
+    await _db.collection('transactions').doc(id).update({statut:'confirme',confirmedAt:firebase.firestore.FieldValue.serverTimestamp(),confirmedBy:'yves'});
+    await loadTransactions();await loadDashKpis();
+  }catch(e){alert('Erreur: '+e.message);}
+}
+
+async function editTx(id){
+  try{
+    const doc=await _db.collection('transactions').doc(id).get();
+    if(!doc.exists){alert('Transaction introuvable');return;}
+    const t=doc.data();
+    // Pré-remplir le modal avec les données actuelles
+    document.getElementById('txType').value=t.type||'depense';
+    document.getElementById('txDate').value=t.date||new Date().toISOString().split('T')[0];
+    document.getElementById('txMontant').value=t.montant||'';
+    document.getElementById('txDesc').value=t.description||'';
+    document.getElementById('txStatut').value=t.statut||'pending';
+    onTxTypeChange();
+    setTimeout(()=>{document.getElementById('txCat').value=t.categorie||'';},50);
+    // Stocker l'ID pour saveTx
+    window._editingTxId=id;
+    document.getElementById('modalTx').classList.add('open');
+  }catch(e){alert('Erreur: '+e.message);}
+}
+
+async function deleteTx(id){
+  if(!confirm('Supprimer cette transaction?')) return;
+  try{await _db.collection('transactions').doc(id).delete();await loadTransactions();await loadDashKpis();}
+  catch(e){alert('Erreur: '+e.message);}
+}
+
+// ── ADD TX ──
+function openAddTx(type='revenu'){
+  window._editingTxId=null;  // Reset mode édition
+  document.getElementById('txType').value=type;
+  document.getElementById('txDate').value=new Date().toISOString().split('T')[0];
+  document.getElementById('txMontant').value='';
+  document.getElementById('txDesc').value='';
+  document.getElementById('txStatut').value='confirme';
+  document.getElementById('txDossier').value='';
+  onTxTypeChange();
+  document.getElementById('modalTx').classList.add('open');
+}
+
+function onTxTypeChange(){
+  const t=document.getElementById('txType').value;
+  const catSel=document.getElementById('txCat');
+  const partRow=document.getElementById('partenaireRow');
+  if(t==='revenu'){
+    catSel.innerHTML='<option value="honoraires_montage">Honoraires de montage</option><option value="frais_admin">Frais administratifs</option><option value="interets">Intérêts</option><option value="autres_revenus">Autres revenus</option>';
+    partRow.style.display='none';
+  }else if(t==='depense'){
+    catSel.innerHTML='<option value="salaire">Salaires</option><option value="loyer">Loyer / Bureau</option><option value="comptable">Comptable / Légal</option><option value="marketing">Marketing</option><option value="materiel">Matériel / Équipement</option><option value="autres_depenses">Autres dépenses</option>';
+    partRow.style.display='none';
+  }else{
+    catSel.innerHTML='<option value="paiement_partenaire">Paiement partenaire</option>';
+    partRow.style.display='block';
+  }
+}
+
+async function saveTx(){
+  const type=document.getElementById('txType').value;
+  const date=document.getElementById('txDate').value;
+  const montant=parseFloat(document.getElementById('txMontant').value)||0;
+  const cat=document.getElementById('txCat').value;
+  const desc=document.getElementById('txDesc').value.trim();
+  const statut=document.getElementById('txStatut').value;
+  const dossierSel=document.getElementById('txDossier');
+  const dossierId=dossierSel.value;
+  const dossierNom=dossierId?dossierSel.options[dossierSel.selectedIndex].text:'';
+  const partenaire=document.getElementById('txPartenaire').value.trim();
+  if(!date||!montant){alert('Date et montant requis.');return;}
+  const editingId=window._editingTxId||null;
+  const data={type,date,montant,categorie:cat,description:desc,statut,dossierId,dossierNom};
+  if(partenaire) data.partenaire=partenaire;
+  try{
+    if(editingId){
+      // Mode édition : update partiel (préserve tax_note, fournisseur, etc.)
+      data.lastEditedAt=firebase.firestore.FieldValue.serverTimestamp();
+      data.lastEditedBy='yves';
+      await _db.collection('transactions').doc(editingId).update(data);
+      window._editingTxId=null;
+    }else{
+      data.createdAt=firebase.firestore.FieldValue.serverTimestamp();
+      await _db.collection('transactions').add(data);
+    }
+    closeModal('modalTx');
+    await loadTransactions();
+    await loadDashKpis();
+    loadActivity();
+  }catch(e){alert('Erreur Firestore: '+e.message);}
+}
+
+// ── P&L ──
+async function loadPL(){
+  try{
+    const {y,m}=_plMonth;
+    const prefix=y+'-'+String(m+1).padStart(2,'0');
+    const snap=await _db.collection('transactions').get();
+    const txs=[];snap.forEach(d=>txs.push(d.data()));
+    // Bug fix Yves 2026-05-09 : connecter aussi les factures rentrées dans
+    // « Mes factures » au P&L. Standard comptable QC : on utilise montant_ht
+    // (taxes TPS/TVQ récupérables séparément). Fallback : montant_total - taxes.
+    const facSnap=await _db.collection('factures').get();
+    const factures=[];facSnap.forEach(d=>factures.push(d.data()));
+    const month=txs.filter(t=>(t.date||'').startsWith(prefix));
+    const monthFac=factures.filter(f=>(f.date||'').startsWith(prefix));
+    // Group revenue by cat
+    const revCats={};const depCats={};let partTotal=0;
+    month.forEach(t=>{
+      if(t.type==='revenu'){revCats[t.categorie]=(revCats[t.categorie]||0)+Number(t.montant);}
+      else if(t.type==='depense'){depCats[t.categorie]=(depCats[t.categorie]||0)+Number(t.montant);}
+      else if(t.type==='partenaire'){partTotal+=Number(t.montant);}
+    });
+    // Ajouter factures comme dépenses (montant HT)
+    monthFac.forEach(f=>{
+      const ht=Number(f.montant_ht)||(Number(f.montant_total)-Number(f.tps||0)-Number(f.tvq||0))||Number(f.montant_total)||0;
+      const cat=f.categorie||'autres_depenses';
+      depCats[cat]=(depCats[cat]||0)+ht;
+    });
+    const CAT_LABELS={honoraires_montage:'Honoraires montage',frais_admin:'Frais admin',interets:'Intérêts',autres_revenus:'Autres revenus',salaire:'Salaires',loyer:'Loyer',comptable:'Comptable / Légal',marketing:'Marketing',materiel:'Matériel',paiement_partenaire:'Paiement partenaire',autres_depenses:'Autres dépenses'};
+    let totRev=0,totDep=0;
+    let revHtml='';
+    Object.entries(revCats).forEach(([k,v])=>{totRev+=v;revHtml+=`<div class="pl-line"><span class="pl-line-label">${CAT_LABELS[k]||k}</span><span class="pl-line-val pos">${fmtCad(v)}</span></div>`;});
+    if(partTotal){depCats['paiement_partenaire']=partTotal;}
+    let depHtml='';
+    Object.entries(depCats).forEach(([k,v])=>{totDep+=v;depHtml+=`<div class="pl-line"><span class="pl-line-label">${CAT_LABELS[k]||k}</span><span class="pl-line-val neg">${fmtCad(v)}</span></div>`;});
+    if(!revHtml) revHtml='<div style="font-size:.7rem;color:var(--muted);padding:.5rem 0">Aucun revenu ce mois</div>';
+    if(!depHtml) depHtml='<div style="font-size:.7rem;color:var(--muted);padding:.5rem 0">Aucune dépense ce mois</div>';
+    revHtml+=`<div class="pl-line" style="border-top:1px solid var(--stone);margin-top:.3rem"><span>Total revenus</span><span class="pl-line-val pos">${fmtCad(totRev)}</span></div>`;
+    depHtml+=`<div class="pl-line" style="border-top:1px solid var(--stone);margin-top:.3rem"><span>Total dépenses</span><span class="pl-line-val neg">${fmtCad(totDep)}</span></div>`;
+    document.getElementById('plRevLines').innerHTML=revHtml;
+    document.getElementById('plDepLines').innerHTML=depHtml;
+    const net=totRev-totDep;
+    const netEl=document.getElementById('plNetTotal');
+    netEl.textContent=fmtCad(net);
+    netEl.className='pl-total-val '+(net>=0?'pos':'neg');
+    // Annual view
+    await loadAnnuel(y,txs,factures);
+  }catch(e){console.warn('loadPL error:',e);}
+}
+
+async function loadAnnuel(year,txs,factures=[]){
+  const rows=[];
+  for(let mm=0;mm<12;mm++){
+    const prefix=year+'-'+String(mm+1).padStart(2,'0');
+    let r=0,d=0,p=0;
+    txs.filter(t=>(t.date||'').startsWith(prefix)).forEach(t=>{
+      if(t.type==='revenu') r+=Number(t.montant)||0;
+      else if(t.type==='depense') d+=Number(t.montant)||0;
+      else if(t.type==='partenaire') p+=Number(t.montant)||0;
+    });
+    // Factures du mois (montant HT)
+    factures.filter(f=>(f.date||'').startsWith(prefix)).forEach(f=>{
+      const ht=Number(f.montant_ht)||(Number(f.montant_total)-Number(f.tps||0)-Number(f.tvq||0))||Number(f.montant_total)||0;
+      d+=ht;
+    });
+    const net=r-d-p;
+    rows.push(`<tr>
+      <td style="font-size:.7rem">${MOIS[mm]}</td>
+      <td style="text-align:right"><span class="tx-amount ${r>0?'pos':''}">${fmtCad(r)}</span></td>
+      <td style="text-align:right"><span class="tx-amount ${d>0?'neg':''}">${fmtCad(d)}</span></td>
+      <td style="text-align:right"><span class="tx-amount ${p>0?'part':''}">${fmtCad(p)}</span></td>
+      <td style="text-align:right;font-weight:500"><span class="tx-amount ${net>0?'pos':net<0?'neg':''}">${fmtCad(net)}</span></td>
+    </tr>`);
+  }
+  document.getElementById('plAnnuelBody').innerHTML=rows.join('');
+}
+
+// ── RAPPORT PDF ──
+async function generateRapportPDF(){
+  const {y,m}=_plMonth;
+  const prefix=y+'-'+String(m+1).padStart(2,'0');
+  const MOIS_FR=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+  const monthLabel=MOIS_FR[m]+' '+y;
+  const fmt$=v=>new Intl.NumberFormat('fr-CA',{style:'currency',currency:'CAD'}).format(v);
+  const CAT={honoraires_montage:'Honoraires de montage',frais_admin:'Frais administratifs',interets:'Intérêts',autres_revenus:'Autres revenus',salaire:'Salaires',loyer:'Loyer',comptable:'Comptable / Légal',marketing:'Marketing',materiel:'Matériel',paiement_partenaire:'Paiements partenaires',autres_depenses:'Autres dépenses'};
+
+  // Fetch data (incl. factures pour P&L cohérent — bug fix Yves 2026-05-09)
+  const [txSnap, dossierSnap, invSnap, facSnap] = await Promise.all([
+    _db.collection('transactions').get(),
+    _db.collection('dossiers').get(),
+    _db.collection('invoices_clients').get(),
+    _db.collection('factures').get()
+  ]);
+
+  const txs=[];txSnap.forEach(d=>txs.push(d.data()));
+  const factures=[];facSnap.forEach(d=>factures.push(d.data()));
+  const month=txs.filter(t=>(t.date||'').startsWith(prefix));
+  const monthFac=factures.filter(f=>(f.date||'').startsWith(prefix));
+
+  // Group
+  const revCats={};const depCats={};let partTotal=0;
+  month.forEach(t=>{
+    if(t.type==='revenu') revCats[t.categorie]=(revCats[t.categorie]||0)+Number(t.montant);
+    else if(t.type==='depense') depCats[t.categorie]=(depCats[t.categorie]||0)+Number(t.montant);
+    else if(t.type==='partenaire') partTotal+=Number(t.montant);
+  });
+  // Factures du mois (montant HT)
+  monthFac.forEach(f=>{
+    const ht=Number(f.montant_ht)||(Number(f.montant_total)-Number(f.tps||0)-Number(f.tvq||0))||Number(f.montant_total)||0;
+    const cat=f.categorie||'autres_depenses';
+    depCats[cat]=(depCats[cat]||0)+ht;
+  });
+  let totRev=Object.values(revCats).reduce((s,v)=>s+v,0);
+  let totDep=Object.values(depCats).reduce((s,v)=>s+v,0)+partTotal;
+  const net=totRev-totDep;
+
+  // Dossiers actifs
+  const dossiers=[];dossierSnap.forEach(d=>dossiers.push(d.data()));
+  const actifs=dossiers.filter(d=>d.stage&&d.stage!=='decaisse');
+
+  // Factures du mois
+  const invs=[];invSnap.forEach(d=>invs.push(d.data()));
+  const invMonth=invs.filter(i=>(i.date||'').startsWith(prefix));
+
+  // Build revenue rows
+  const revRows=Object.entries(revCats).map(([k,v])=>`
+    <tr><td>${CAT[k]||k}</td><td style="text-align:right;color:#2d6a4f;font-weight:500">${fmt$(v)}</td></tr>`).join('');
+
+  // Build expense rows
+  const depRows=[
+    ...Object.entries(depCats).map(([k,v])=>`<tr><td>${CAT[k]||k}</td><td style="text-align:right;color:#c0392b">${fmt$(v)}</td></tr>`),
+    partTotal?`<tr><td>Paiements partenaires</td><td style="text-align:right;color:#b7791f">${fmt$(partTotal)}</td></tr>`:''
+  ].join('');
+
+  // Dossiers actifs table
+  const dossierRows=actifs.length?actifs.map(d=>`
+    <tr><td>${d.prenom||''} ${d.nom||''}</td><td>${d.adresse||'—'}</td><td>${d.type||'—'}</td><td style="text-align:right">${fmt$(d.montant||0)}</td><td><span style="font-size:10px;padding:2px 8px;border:1px solid #e8e3da;text-transform:uppercase">${d.stage||'—'}</span></td></tr>`).join('')
+    :'<tr><td colspan="5" style="text-align:center;color:#999;padding:16px">Aucun dossier actif</td></tr>';
+
+  // Factures table
+  const invRows=invMonth.length?invMonth.map(i=>`
+    <tr><td>${i.numero||'—'}</td><td>${i.dossierNom||'—'}</td><td>${i.notaireNom||'—'}</td><td style="text-align:right;font-weight:600">${fmt$(i.montant||0)}</td><td><span style="font-size:10px;color:${i.statut==='payée'?'#2d6a4f':'#b7791f'}">${i.statut==='payée'?'✓ Payée':'En attente'}</span></td></tr>`).join('')
+    :'<tr><td colspan="5" style="text-align:center;color:#999;padding:16px">Aucune facture ce mois</td></tr>';
+
+  const netColor=net>=0?'#2d6a4f':'#c0392b';
+
+  const html=`<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8">
+<title>Rapport Mensuel — ${monthLabel}</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#f5f3ef;font-family:'Helvetica Neue',Arial,sans-serif;color:#1a1a1a;padding:40px}
+.page{max-width:780px;margin:0 auto;background:#fff;border:1px solid #e0d8cc}
+.header{background:#0a0d13;padding:32px 48px;display:flex;justify-content:space-between;align-items:center}
+.logo-img{height:44px;object-fit:contain}
+.logo-txt{color:#b8975a;font-size:16px;font-weight:700;letter-spacing:2px}
+.report-title{text-align:right}
+.report-lbl{color:#b8975a;font-size:10px;letter-spacing:3px;text-transform:uppercase}
+.report-month{color:#fff;font-size:22px;font-weight:300;margin-top:4px;font-family:Georgia,serif}
+.body{padding:40px 48px}
+.section-title{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#b8975a;margin:28px 0 10px;display:flex;align-items:center;gap:10px}
+.section-title::after{content:'';flex:1;height:1px;background:#e8e3da}
+.net-banner{background:#0a0d13;padding:18px 24px;display:flex;justify-content:space-between;align-items:center;margin-bottom:28px}
+.net-lbl{color:#7a8294;font-size:11px;letter-spacing:2px;text-transform:uppercase}
+.net-val{font-size:26px;font-weight:700;color:${netColor};font-family:'Helvetica Neue',sans-serif}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:8px}
+.block-title{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#999;margin-bottom:8px}
+table{width:100%;border-collapse:collapse}
+th{padding:8px 10px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#999;font-weight:400;text-align:left;border-bottom:2px solid #0a0d13}
+th:last-child{text-align:right}
+td{padding:10px;font-size:12px;border-bottom:1px solid #f0ebe3}
+.total-row td{background:#faf8f4;font-weight:600;font-size:13px}
+.note{margin-top:32px;padding:14px 18px;background:#faf8f4;border-left:3px solid #b8975a;font-size:11px;color:#666;line-height:1.7}
+.footer{background:#0a0d13;padding:18px 48px;display:flex;justify-content:space-between;align-items:center;margin-top:32px}
+.footer p{color:#4a5568;font-size:10px;letter-spacing:1px}
+@media print{body{padding:0;background:#fff}.page{border:none}}
+</style></head><body>
+<div class="page">
+<div class="header">
+  <div>
+    <img src="https://capitalnorvex.com/norvex-v2/assets/logo.png" class="logo-img" alt="Capital Norvex" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+    <div class="logo-txt" style="display:none">CAPITAL NORVEX</div>
+    <div style="color:#7a8294;font-size:9px;letter-spacing:3px;text-transform:uppercase;margin-top:4px">Rapport Financier Mensuel</div>
+  </div>
+  <div class="report-title">
+    <div class="report-lbl">Période</div>
+    <div class="report-month">${monthLabel}</div>
+  </div>
+</div>
+<div class="body">
+
+  <div class="net-banner">
+    <div><div class="net-lbl">Résultat net du mois</div><div style="color:#7a8294;font-size:10px;margin-top:2px">Revenus − Dépenses − Partenaires</div></div>
+    <div class="net-val">${fmt$(net)}</div>
+  </div>
+
+  <div class="section-title">Sommaire financier</div>
+  <div class="two-col">
+    <div>
+      <div class="block-title">Revenus</div>
+      <table><tbody>
+        ${revRows||'<tr><td style="color:#999">Aucun revenu</td><td></td></tr>'}
+        <tr class="total-row"><td>Total revenus</td><td style="text-align:right;color:#2d6a4f">${fmt$(totRev)}</td></tr>
+      </tbody></table>
+    </div>
+    <div>
+      <div class="block-title">Dépenses</div>
+      <table><tbody>
+        ${depRows||'<tr><td style="color:#999">Aucune dépense</td><td></td></tr>'}
+        <tr class="total-row"><td>Total dépenses</td><td style="text-align:right;color:#c0392b">${fmt$(totDep)}</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+
+  <div class="section-title">Dossiers actifs (${actifs.length})</div>
+  <table>
+    <thead><tr><th>Client</th><th>Propriété</th><th>Type</th><th style="text-align:right">Montant</th><th>Étape</th></tr></thead>
+    <tbody>${dossierRows}</tbody>
+  </table>
+
+  <div class="section-title">Factures émises — ${monthLabel} (${invMonth.length})</div>
+  <table>
+    <thead><tr><th>N°</th><th>Client</th><th>Notaire</th><th style="text-align:right">Honoraires</th><th>Statut</th></tr></thead>
+    <tbody>${invRows}</tbody>
+  </table>
+
+  <div class="note">
+    <strong>Capital Norvex — Prêteur privé</strong><br>
+    Aucune taxe applicable (TPS/TVQ) sur les honoraires de financement.<br>
+    2705-1000 André-Prévost, Verdun, QC H3E 0G2 · info@capitalnorvex.com<br>
+    Rapport généré le ${new Date().toLocaleDateString('fr-CA')} à ${new Date().toLocaleTimeString('fr-CA',{hour:'2-digit',minute:'2-digit'})}
+  </div>
+</div>
+<div class="footer">
+  <p style="color:#b8975a;letter-spacing:2px">CAPITAL NORVEX · capitalnorvex.com</p>
+  <p style="color:#4a5568">Confidentiel — Usage interne</p>
+</div>
+</div>
+<script>window.onload=()=>window.print();<\/script>
+</body></html>`;
+
+  const w=window.open('','_blank');
+  w.document.write(html);
+  w.document.close();
+}
+
+// ── PARTENAIRES ──
+async function loadPartenaires(){
+  try{
+    const snap=await _db.collection('transactions').where('type','==','partenaire').get();
+    const partMap={};
+    snap.forEach(d=>{
+      const t=d.data();
+      const n=t.partenaire||'Partenaire inconnu';
+      if(!partMap[n]) partMap[n]={total:0,count:0,dernierPaiement:'',tx:[]};
+      partMap[n].total+=Number(t.montant)||0;
+      partMap[n].count++;
+      if(!partMap[n].dernierPaiement||t.date>partMap[n].dernierPaiement) partMap[n].dernierPaiement=t.date;
+      partMap[n].tx.push({id:d.id,...t});
+    });
+    const parts=Object.entries(partMap);
+    const totalVerse=parts.reduce((s,[,v])=>s+v.total,0);
+    const now=new Date();
+    const nowPfx=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0');
+    let ceMois=0;
+    snap.forEach(d=>{const t=d.data();if((t.date||'').startsWith(nowPfx)) ceMois+=Number(t.montant)||0;});
+    document.getElementById('partTotalVerse').textContent=fmtCad(totalVerse);
+    document.getElementById('partCeMois').textContent=fmtCad(ceMois);
+    document.getElementById('partActifs').textContent=parts.length;
+    const maxTotal=parts.reduce((s,[,v])=>Math.max(s,v.total),1);
+    document.getElementById('partnerCards').innerHTML=parts.length?parts.map(([name,p])=>`
+      <div class="part-card">
+        <div class="part-name">${name}</div>
+        <div class="part-total">${fmtCad(p.total)}</div>
+        <div class="part-count">${p.count} paiement${p.count>1?'s':''} · Dernier: ${fmtDate(p.dernierPaiement)}</div>
+        <div class="part-bar"><div class="part-bar-fill" style="width:${Math.round(p.total/maxTotal*100)}%"></div></div>
+      </div>`).join(''):
+      '<div style="font-size:.75rem;color:var(--muted);grid-column:1/-1;padding:2rem 0">Aucun paiement partenaire enregistré</div>';
+    // History table
+    const allTx=[];snap.forEach(d=>allTx.push({id:d.id,...d.data()}));
+    allTx.sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+    document.getElementById('partBody').innerHTML=allTx.length?allTx.map(t=>`
+      <tr>
+        <td style="font-family:'DM Mono',monospace;font-size:.65rem">${fmtDate(t.date)}</td>
+        <td style="font-size:.72rem">${t.partenaire||'—'}</td>
+        <td class="tx-dossier">${t.dossierNom||'—'}</td>
+        <td style="font-size:.7rem">${t.description||'—'}</td>
+        <td style="text-align:right"><span class="tx-amount part">${fmtCad(t.montant)}</span></td>
+        <td><button class="tx-action-btn" onclick="deleteTx('${t.id}')" title="Supprimer">🗑</button></td>
+      </tr>`).join(''):
+      '<tr><td colspan="6" class="tx-empty">Aucun paiement partenaire</td></tr>';
+  }catch(e){console.warn('loadPartenaires error:',e);}
+}
+
+// ── MODAL UTILS ──
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+document.addEventListener('click',e=>{if(e.target.classList.contains('modal-overlay'))e.target.classList.remove('open');});
+document.addEventListener('keydown',e=>{if(e.key==='Escape') document.querySelectorAll('.modal-overlay.open').forEach(m=>m.classList.remove('open'));});
+
+// ════════════════════════════════════════════════════════
+// ── MODULE FACTURES ──
+// ════════════════════════════════════════════════════════
+
+const CATS_FACTURES = {
+  loyer_bureau:'Loyer / Bureau',
+  salaires_contractuels:'Salaires / Contractuels',
+  services_professionnels:'Services professionnels',
+  marketing_pub:'Marketing / Pub',
+  telecom_logiciels:'Télécom / Logiciels',
+  assurances:'Assurances',
+  fournitures_bureau:'Fournitures de bureau',
+  transport_deplacement:'Transport / Déplacement',
+  repas_representation:'Repas / Représentation',
+  formation:'Formation',
+  frais_bancaires:'Frais bancaires',
+  autre:'Autre'
+};
+
+function handleInvoiceDrop(e){
+  e.preventDefault();
+  document.getElementById('invoiceDropZone').classList.remove('drag-over');
+  const file = e.dataTransfer.files[0];
+  if(file) handleInvoiceFile(file);
+}
+
+function handleInvoiceFile(file){
+  if(!file) return;
+  const allowed = ['image/jpeg','image/png','image/webp','application/pdf'];
+  if(!allowed.includes(file.type)){showToast('Format non supporté (JPG, PNG, WEBP, PDF)','warn');return;}
+  const dz = document.getElementById('invoiceDropZone');
+  document.getElementById('invoiceDropContent').style.display='none';
+  document.getElementById('invoiceAnalyzing').style.display='block';
+  dz.style.pointerEvents='none';
+
+  const reader = new FileReader();
+  reader.onload = async (ev) => {
+    const base64Full = ev.target.result;
+    // base64Full = "data:image/jpeg;base64,XXXX"
+    const base64 = base64Full.split(',')[1];
+    try {
+      const resp = await fetch('/.netlify/functions/analyze-invoice',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({imageBase64: base64, mediaType: file.type})
+      });
+      const result = await resp.json();
+      if(!result.success) throw new Error(result.error || 'Erreur analyse');
+      showInvoiceModal(result.data);
+    } catch(err){
+      showToast('Erreur analyse AI: '+err.message,'error');
+    } finally {
+      document.getElementById('invoiceDropContent').style.display='block';
+      document.getElementById('invoiceAnalyzing').style.display='none';
+      dz.style.pointerEvents='auto';
+      document.getElementById('invoiceFileInput').value='';
+    }
+  };
+  reader.readAsDataURL(file);
+}
+
+function showInvoiceModal(data){
+  const badge = document.getElementById('invoiceConfidenceBadge');
+  const conf = data.confiance || 'moyenne';
+  badge.textContent = '● Confiance AI : ' + conf.toUpperCase();
+  badge.style.background = conf==='haute' ? 'rgba(82,183,136,.12)' : conf==='faible' ? 'rgba(192,57,43,.12)' : 'rgba(183,121,31,.12)';
+  badge.style.color = conf==='haute' ? 'var(--green2)' : conf==='faible' ? 'var(--red2)' : 'var(--amber2)';
+  badge.style.border = '1px solid ' + (conf==='haute' ? 'rgba(82,183,136,.3)' : conf==='faible' ? 'rgba(192,57,43,.3)' : 'rgba(183,121,31,.3)');
+
+  document.getElementById('invFournisseur').value = data.fournisseur || '';
+  document.getElementById('invDate').value = data.date || new Date().toISOString().split('T')[0];
+  document.getElementById('invNumero').value = data.numero || '';
+  document.getElementById('invMontantHT').value = data.montant_ht != null ? data.montant_ht : '';
+  document.getElementById('invTPS').value = data.tps != null ? data.tps : 0;
+  document.getElementById('invTVQ').value = data.tvq != null ? data.tvq : 0;
+  document.getElementById('invTotal').value = data.montant_total != null ? data.montant_total : '';
+  document.getElementById('invDescription').value = data.description || '';
+  if(data.categorie) document.getElementById('invCategorie').value = data.categorie;
+
+  document.getElementById('modalInvoice').classList.add('open');
+}
+
+async function saveInvoice(){
+  const fournisseur = document.getElementById('invFournisseur').value.trim();
+  const total = parseFloat(document.getElementById('invTotal').value);
+  if(!fournisseur){showToast('Entrez le nom du fournisseur','warn');return;}
+  if(isNaN(total)||total<=0){showToast('Entrez le montant total','warn');return;}
+
+  const invoice = {
+    fournisseur,
+    date: document.getElementById('invDate').value || new Date().toISOString().split('T')[0],
+    numero: document.getElementById('invNumero').value.trim() || null,
+    montant_ht: parseFloat(document.getElementById('invMontantHT').value)||0,
+    tps: parseFloat(document.getElementById('invTPS').value)||0,
+    tvq: parseFloat(document.getElementById('invTVQ').value)||0,
+    montant_total: total,
+    categorie: document.getElementById('invCategorie').value,
+    description: document.getElementById('invDescription').value.trim(),
+    statut: document.getElementById('invStatut').value,
+    soumis_par: document.getElementById('invSoumispar').value,
+    source: 'ai',
+    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+  };
+
+  try {
+    await _db.collection('factures').add(invoice);
+    closeModal('modalInvoice');
+    showToast('Facture sauvegardée ✓','ok');
+    loadFactures();
+  } catch(e){
+    showToast('Erreur Firestore: '+e.message,'error');
+  }
+}
+
+async function loadFactures(){
+  const tbody = document.getElementById('facturesTbody');
+  tbody.innerHTML = '<tr><td colspan="9" style="padding:2rem;text-align:center;color:var(--muted);font-size:.65rem">Chargement…</td></tr>';
+
+  const catFilter = document.getElementById('factCatFilter')?.value || '';
+  const monthFilter = document.getElementById('factMonthFilter')?.value || '';
+
+  try {
+    let q = _db.collection('factures').orderBy('date','desc');
+    if(catFilter) q = q.where('categorie','==',catFilter);
+    const snap = await q.limit(100).get();
+
+    let docs = snap.docs.map(d=>({id:d.id,...d.data()}));
+
+    // Filtres côté client
+    if(monthFilter) docs = docs.filter(d => d.date && d.date.startsWith(monthFilter));
+    const personFilter = document.getElementById('factPersonFilter')?.value || '';
+    if(personFilter) docs = docs.filter(d => d.soumis_par === personFilter);
+
+    // Totaux
+    const total = docs.reduce((s,d)=>s+(d.montant_total||0),0);
+    const taxes = docs.reduce((s,d)=>s+(d.tps||0)+(d.tvq||0),0);
+    document.getElementById('factTotalMontant').textContent = total>0 ? fmt$(total) : '—';
+    document.getElementById('factTotalTaxes').textContent = taxes>0 ? fmt$(taxes) : '—';
+    document.getElementById('factTotalCount').textContent = docs.length;
+
+    if(!docs.length){
+      tbody.innerHTML='<tr><td colspan="9" style="padding:2rem;text-align:center;color:var(--muted);font-size:.65rem">Aucune facture trouvée</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = docs.map(f=>{
+      const statutStyle = f.statut==='payée' ? 'color:var(--green2);background:var(--green-bg)' :
+        f.statut==='en_attente' ? 'color:var(--amber2);background:var(--amber-bg)' :
+        'color:var(--muted2);background:rgba(255,255,255,.04)';
+      const statutLabel = f.statut==='payée' ? 'Payée' : f.statut==='en_attente' ? 'En attente' : 'Récurrente';
+      return `<tr style="border-bottom:1px solid rgba(255,255,255,.04);transition:background .15s" onmouseover="this.style.background='rgba(255,255,255,.02)'" onmouseout="this.style.background=''">
+        <td style="padding:.7rem .8rem;color:var(--muted2);font-family:'DM Mono',monospace;font-size:.65rem">${f.date||'—'}</td>
+        <td style="padding:.7rem .8rem;font-weight:500;font-size:.75rem">${f.fournisseur||'—'}</td>
+        <td style="padding:.7rem .8rem;font-size:.62rem;color:var(--muted2)">${CATS_FACTURES[f.categorie]||f.categorie||'—'}</td>
+        <td style="padding:.7rem .8rem;font-size:.68rem;color:var(--muted)">${f.description||'—'}</td>
+        <td style="padding:.7rem .8rem;text-align:right;font-family:'DM Mono',monospace;font-size:.72rem">${fmt$(f.montant_ht||0)}</td>
+        <td style="padding:.7rem .8rem;text-align:right;font-family:'DM Mono',monospace;font-size:.75rem;font-weight:500">${fmt$(f.montant_total||0)}</td>
+        <td style="padding:.7rem .8rem;font-size:.62rem;color:var(--muted2)">${f.soumis_par ? f.soumis_par.split(' ')[0] : '—'}</td>
+        <td style="padding:.7rem .8rem;text-align:center"><span style="font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;padding:.2rem .6rem;${statutStyle}">${statutLabel}</span></td>
+        <td style="padding:.7rem .8rem;text-align:right"><button onclick="deleteFacture('${f.id}')" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:.7rem;opacity:.5" title="Supprimer">✕</button></td>
+      </tr>`;
+    }).join('');
+
+  } catch(e){
+    tbody.innerHTML=`<tr><td colspan="9" style="padding:2rem;text-align:center;color:var(--red2);font-size:.65rem">Erreur: ${e.message}</td></tr>`;
+  }
+}
+
+async function deleteFacture(id){
+  if(!confirm('Supprimer cette facture?')) return;
+  await _db.collection('factures').doc(id).delete();
+  showToast('Facture supprimée','ok');
+  loadFactures();
+}
+
+function fmt$(n){
+  return '$'+(n||0).toLocaleString('fr-CA',{minimumFractionDigits:2,maximumFractionDigits:2});
+}
+
+function showToast(msg, type='ok'){
+  let t = document.getElementById('_brainToast');
+  if(!t){
+    t = document.createElement('div');
+    t.id = '_brainToast';
+    t.style.cssText = 'position:fixed;bottom:2rem;right:2rem;z-index:99999;padding:.75rem 1.25rem;font-family:"DM Sans",sans-serif;font-size:.7rem;letter-spacing:.06em;border-radius:2px;transition:opacity .3s;pointer-events:none';
+    document.body.appendChild(t);
+  }
+  const colors = {ok:'background:#1b2231;border:1px solid var(--green2);color:var(--green2)',
+    warn:'background:#1b2231;border:1px solid var(--amber2);color:var(--amber2)',
+    error:'background:#1b2231;border:1px solid var(--red2);color:var(--red2)',
+    info:'background:#1b2231;border:1px solid var(--gold);color:var(--gold)'};
+  t.style.cssText += ';'+( colors[type]||colors.info);
+  t.textContent = msg;
+  t.style.opacity = '1';
+  clearTimeout(t._timer);
+  t._timer = setTimeout(()=>{ t.style.opacity='0'; }, 3000);
+}
+
+// ════════════════════════════════════════════════════════
+// ── MODULE FACTURATION CLIENTS ──
+// ════════════════════════════════════════════════════════
+
+async function getNextInvoiceNumber() {
+  const year = new Date().getFullYear();
+  const snap = await _db.collection('invoices_clients')
+    .where('numero', '>=', `CNX-${year}-`)
+    .where('numero', '<=', `CNX-${year}-999`)
+    .orderBy('numero','desc').limit(1).get();
+  if(snap.empty) return `CNX-${year}-001`;
+  const last = snap.docs[0].data().numero;
+  const seq = parseInt(last.split('-')[2] || '0') + 1;
+  return `CNX-${year}-${String(seq).padStart(3,'0')}`;
+}
+
+function calcInvoiceAmount() {
+  const montantPret = parseFloat(document.getElementById('newInvMontantPret').value) || 0;
+  const tauxSel = document.getElementById('newInvTaux').value;
+  const customRow = document.getElementById('newInvTauxCustomRow');
+  let taux;
+  if(tauxSel === 'custom') {
+    customRow.style.display = 'block';
+    taux = parseFloat(document.getElementById('newInvTauxCustom').value) || 0;
+  } else {
+    customRow.style.display = 'none';
+    taux = parseFloat(tauxSel) || 3;
+  }
+  const honoraires = montantPret * taux / 100;
+  document.getElementById('newInvMontant').value = honoraires > 0 ? honoraires.toFixed(2) : '';
+}
+
+async function openNewInvoice() {
+  const numero = await getNextInvoiceNumber();
+  document.getElementById('newInvNumero').value = numero;
+  document.getElementById('newInvDate').value = new Date().toISOString().split('T')[0];
+  document.getElementById('newInvMontant').value = '';
+  document.getElementById('newInvMontantPret').value = '';
+  document.getElementById('newInvTaux').value = '3';
+  document.getElementById('newInvTauxCustomRow').style.display = 'none';
+  document.getElementById('newInvAdresse').value = '';
+  document.getElementById('newInvDossier').value = '';
+  document.getElementById('newInvNotaireNom').value = '';
+  document.getElementById('newInvNotaireEmail').value = '';
+  document.getElementById('newInvClientNom').value = '';
+  document.getElementById('newInvClientEmail').value = '';
+  document.getElementById('newInvPartNom').value = '';
+  document.getElementById('newInvPartEmail').value = '';
+  document.getElementById('invSendStatus').style.display = 'none';
+  const btn = document.getElementById('btnSendInvoice');
+  btn.disabled = false;
+  btn.textContent = 'Envoyer au notaire →';
+  document.getElementById('modalNewInvoice').classList.add('open');
+}
+
+function getInvoiceFormData() {
+  const tauxSel = document.getElementById('newInvTaux').value;
+  const taux = tauxSel === 'custom'
+    ? parseFloat(document.getElementById('newInvTauxCustom').value) || 0
+    : parseFloat(tauxSel) || 3;
+  const montantPret = parseFloat(document.getElementById('newInvMontantPret').value) || 0;
+  return {
+    numero: document.getElementById('newInvNumero').value,
+    date: document.getElementById('newInvDate').value,
+    dossierNom: document.getElementById('newInvDossier').value.trim(),
+    adresse: document.getElementById('newInvAdresse').value.trim(),
+    montantPret,
+    taux,
+    description: 'Frais d\'analyse',
+    montant: parseFloat(document.getElementById('newInvMontant').value) || 0,
+    notaireNom: document.getElementById('newInvNotaireNom').value.trim(),
+    notaireEmail: document.getElementById('newInvNotaireEmail').value.trim(),
+    clientNom: document.getElementById('newInvClientNom').value.trim() || null,
+    clientEmail: document.getElementById('newInvClientEmail').value.trim() || null,
+    partenaireNom: document.getElementById('newInvPartNom').value.trim() || null,
+    partenaireEmail: document.getElementById('newInvPartEmail').value.trim() || null,
+  };
+}
+
+function buildInvoiceHtmlClient(inv) {
+  const fmt$ = v => new Intl.NumberFormat('fr-CA',{style:'currency',currency:'CAD'}).format(v);
+  const montantPretFmt = inv.montantPret ? fmt$(inv.montantPret) : null;
+  const montantFmt = fmt$(inv.montant);
+  const tauxLabel = inv.taux ? inv.taux + '%' : null;
+  const dossierId = [inv.dossierNom, inv.adresse].filter(Boolean).join(' — ');
+  const detailDesc = [
+    'Frais d\'analyse',
+    montantPretFmt ? `Prêt de ${montantPretFmt}` : null,
+    inv.adresse || null
+  ].filter(Boolean).join(' · ');
+
+  return `<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8">
+<title>Facture ${inv.numero}</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#f5f3ef;font-family:'Helvetica Neue',Arial,sans-serif;color:#1a1a1a;padding:40px}
+.wrapper{max-width:700px;margin:0 auto;background:#fff;border:1px solid #e0d8cc}
+.header{background:#0a0d13;padding:32px 48px;display:flex;justify-content:space-between;align-items:center}
+.logo-img{height:52px;object-fit:contain}
+.inv-title{text-align:right}.inv-title .lbl{color:#b8975a;font-size:11px;letter-spacing:3px;text-transform:uppercase}
+.inv-title .num{color:#fff;font-size:20px;font-weight:300;margin-top:4px;font-family:Georgia,serif}
+.body{padding:48px}
+.meta{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-bottom:40px}
+.meta-label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#999;margin-bottom:6px}
+.meta-value{font-size:13px;line-height:1.6}
+hr{border:none;border-top:1px solid #e8e3da;margin:32px 0}
+table{width:100%;border-collapse:collapse}
+thead tr{border-bottom:2px solid #0a0d13}
+th{padding:10px 12px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#666;font-weight:400;text-align:left}
+th:last-child,td:last-child{text-align:right}
+td{padding:14px 12px;font-size:13px;border-bottom:1px solid #f0ebe3;vertical-align:top}
+td:last-child{font-weight:600;white-space:nowrap}
+.td-sub{font-size:11px;color:#888;margin-top:4px}
+.total td{background:#0a0d13;color:#fff;font-size:14px;border:none;padding:16px 12px}
+.total td:last-child{color:#b8975a;font-size:17px;font-weight:700}
+.note{margin-top:36px;padding:18px 22px;background:#faf8f4;border-left:3px solid #b8975a;font-size:11.5px;color:#666;line-height:1.75}
+.footer{background:#0a0d13;padding:22px 48px;text-align:center}
+.footer p{color:#4a5568;font-size:10px;letter-spacing:1px;margin:3px 0}
+@media print{body{padding:0;background:#fff}}
+</style></head><body>
+<div class="wrapper">
+<div class="header">
+  <img src="https://capitalnorvex.com/norvex-v2/assets/logo.png" class="logo-img" alt="Capital Norvex" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+  <div style="display:none;color:#b8975a;font-size:17px;font-weight:600;letter-spacing:2px;text-transform:uppercase">Capital Norvex</div>
+  <div class="inv-title"><div class="lbl">Facture</div><div class="num">${inv.numero}</div></div>
+</div>
+<div class="body">
+  <div class="meta">
+    <div><div class="meta-label">Émetteur</div><div class="meta-value"><strong>Capital Norvex</strong><br>2705-1000 André-Prévost<br>Verdun, QC  H3E 0G2<br>info@capitalnorvex.com</div></div>
+    <div><div class="meta-label">Facturé au client</div><div class="meta-value"><strong>${inv.dossierNom||'—'}</strong>${inv.adresse?'<br>'+inv.adresse:''}</div></div>
+    <div><div class="meta-label">Date d'émission</div><div class="meta-value">${inv.date}</div></div>
+    <div><div class="meta-label">Transmis au notaire</div><div class="meta-value"><strong>${inv.notaireNom||'—'}</strong><br><span style="font-size:11px;color:#999">Payable à la clôture notariale</span></div></div>
+  </div>
+  <hr>
+  <table>
+    <thead><tr><th>Description</th><th style="text-align:right">Montant prêt</th><th style="text-align:right">Taux</th><th style="text-align:right">Honoraires</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>
+          <div style="font-weight:600">Frais d'analyse — Financement privé</div>
+          <div class="td-sub">Client : ${inv.dossierNom||'—'}</div>
+          ${inv.adresse?`<div class="td-sub">Propriété : ${inv.adresse}</div>`:''}
+        </td>
+        <td style="text-align:right">${montantPretFmt||'—'}</td>
+        <td style="text-align:right">${tauxLabel||'—'}</td>
+        <td style="text-align:right">${montantFmt}</td>
+      </tr>
+    </tbody>
+    <tfoot><tr class="total"><td colspan="3" style="color:#fff">Total dû — Aucune taxe applicable (TPS/TVQ)</td><td style="text-align:right">${montantFmt}</td></tr></tfoot>
+  </table>
+  <div class="note">Les frais de Capital Norvex sont des honoraires de financement privé. <strong>Aucune taxe applicable (TPS/TVQ).</strong><br>Payable à la clôture devant notaire. Pour toute question : <strong>info@capitalnorvex.com</strong></div>
+</div>
+<div class="footer"><p style="color:#7a8294">2705-1000 André-Prévost, Verdun, QC  H3E 0G2</p><p style="color:#b8975a;letter-spacing:2px">CAPITAL NORVEX · capitalnorvex.com</p></div>
+</div>
+<script>window.onload=()=>window.print();<\/script>
+</body></html>`;
+}
+
+function previewInvoice() {
+  const inv = getInvoiceFormData();
+  if(!inv.montant){showToast('Entrez le montant du prêt pour calculer les honoraires','warn');return;}
+  const html = buildInvoiceHtmlClient(inv);
+  const w = window.open('','_blank');
+  w.document.write(html);
+  w.document.close();
+}
+
+async function sendClientInvoice() {
+  const inv = getInvoiceFormData();
+  if(!inv.notaireEmail){showToast('Email du notaire requis','warn');return;}
+  if(!inv.montant){showToast('Entrez le montant','warn');return;}
+
+  const btn = document.getElementById('btnSendInvoice');
+  const status = document.getElementById('invSendStatus');
+  btn.disabled = true;
+  btn.textContent = 'Envoi…';
+  status.style.display='block';
+  status.style.cssText='display:block;margin-top:.75rem;padding:.6rem 1rem;font-size:.65rem;letter-spacing:.08em;background:var(--ink2);border:1px solid var(--border);color:var(--muted)';
+  status.textContent = 'Envoi en cours…';
+
+  try {
+    const resp = await fetch('/.netlify/functions/send-invoice',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({invoice: inv})
+    });
+    const result = await resp.json();
+    if(!result.success) throw new Error(result.error || 'Erreur envoi');
+
+    // Sauvegarder dans Firestore
+    await _db.collection('invoices_clients').add({
+      ...inv,
+      statut: 'envoyée',
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+
+    status.style.background='rgba(82,183,136,.08)';
+    status.style.borderColor='rgba(82,183,136,.3)';
+    status.style.color='var(--green2)';
+    status.textContent = `✓ Envoyée à ${inv.notaireEmail}${result.cc?.length ? ' + ' + result.cc.join(', ') : ''}`;
+    btn.textContent = '✓ Envoyée';
+    loadInvoicesClients();
+  } catch(err){
+    status.style.background='rgba(192,57,43,.08)';
+    status.style.borderColor='rgba(192,57,43,.3)';
+    status.style.color='var(--red2)';
+    status.textContent = 'Erreur : ' + err.message;
+    btn.disabled = false;
+    btn.textContent = 'Envoyer au notaire →';
+  }
+}
+
+async function loadInvoicesClients() {
+  const tbody = document.getElementById('invoicesTbody');
+  if(!tbody) return;
+  try {
+    const snap = await _db.collection('invoices_clients').orderBy('createdAt','desc').limit(100).get();
+    const docs = snap.docs.map(d=>({id:d.id,...d.data()}));
+
+    const total = docs.reduce((s,d)=>s+(d.montant||0),0);
+    const pending = docs.filter(d=>d.statut!=='payée').reduce((s,d)=>s+(d.montant||0),0);
+    const paid = docs.filter(d=>d.statut==='payée').reduce((s,d)=>s+(d.montant||0),0);
+    document.getElementById('invStatTotal').textContent = total ? fmt$(total) : '—';
+    document.getElementById('invStatPending').textContent = pending ? fmt$(pending) : '—';
+    document.getElementById('invStatPaid').textContent = paid ? fmt$(paid) : '—';
+
+    if(!docs.length){
+      tbody.innerHTML='<tr><td colspan="7" style="padding:2rem;text-align:center;color:var(--muted);font-size:.65rem">Aucune facture</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = docs.map(inv=>{
+      const isPaid = inv.statut==='payée';
+      const statStyle = isPaid ? 'color:var(--green2);background:var(--green-bg)' : 'color:var(--amber2);background:var(--amber-bg)';
+      const statLabel = isPaid ? 'Payée' : 'En attente';
+      return `<tr style="border-bottom:1px solid rgba(255,255,255,.04)" onmouseover="this.style.background='rgba(255,255,255,.02)'" onmouseout="this.style.background=''">
+        <td style="padding:.7rem .8rem;font-family:'DM Mono',monospace;font-size:.65rem;color:var(--gold)">${inv.numero||'—'}</td>
+        <td style="padding:.7rem .8rem;font-size:.65rem;color:var(--muted2)">${inv.date||'—'}</td>
+        <td style="padding:.7rem .8rem;font-size:.75rem">${inv.dossierNom||'—'}</td>
+        <td style="padding:.7rem .8rem;font-size:.7rem;color:var(--muted)">${inv.notaireNom||'—'}</td>
+        <td style="padding:.7rem .8rem;text-align:right;font-family:'DM Mono',monospace;font-weight:500">${fmt$(inv.montant||0)}</td>
+        <td style="padding:.7rem .8rem;text-align:center">
+          <span style="font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;padding:.2rem .6rem;${statStyle}">${statLabel}</span>
+        </td>
+        <td style="padding:.7rem .8rem;text-align:right;display:flex;gap:.5rem;justify-content:flex-end">
+          ${!isPaid ? `<button onclick="markInvoicePaid('${inv.id}')" style="background:none;border:1px solid rgba(82,183,136,.3);color:var(--green2);cursor:pointer;font-size:.55rem;letter-spacing:.1em;padding:.2rem .6rem">Payée</button>` : ''}
+          <button onclick="deleteClientInvoice('${inv.id}')" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:.7rem;opacity:.4" title="Supprimer">✕</button>
+        </td>
+      </tr>`;
+    }).join('');
+  } catch(e){
+    tbody.innerHTML=`<tr><td colspan="7" style="padding:2rem;text-align:center;color:var(--red2);font-size:.65rem">Erreur: ${e.message}</td></tr>`;
+  }
+}
+
+async function markInvoicePaid(id){
+  await _db.collection('invoices_clients').doc(id).update({statut:'payée'});
+  showToast('Facture marquée payée ✓','ok');
+  loadInvoicesClients();
+}
+
+async function deleteClientInvoice(id){
+  if(!confirm('Supprimer cette facture?')) return;
+  await _db.collection('invoices_clients').doc(id).delete();
+  showToast('Facture supprimée','ok');
+  loadInvoicesClients();
+}
+
+// ═══════════════════════════════════════════════════════
+// MODULE PAIE — Québec 2026 (⚠️ taux approximatifs)
+// ═══════════════════════════════════════════════════════
+const TAUX_2026 = {
+  rrq:  { taux: 0.0400, maxGains: 73200, exemption: 3500 },
+  rrq2: { taux: 0.0400, plancher: 73200, plafond: 81200 },
+  ae:   { taux: 0.0164, maxGains: 65700 },
+  rqap: { taux: 0.00494, maxGains: 98000 },
+  fed: {
+    tranches: [57375, 114750, 158519, 220000],
+    taux: [0.15, 0.205, 0.26, 0.29, 0.33],
+    montantBase: 16129,
+    abattementQC: 0.165
+  },
+  prov: {
+    tranches: [51780, 103545, 126000],
+    taux: [0.14, 0.19, 0.24, 0.2575],
+    montantBase: 17183
+  }
+};
+
+const EMPLOYES_PAIE = [
+  { id: 'yves_barrette',   nom: 'Yves Barrette',   salaire_annuel: 375000 },
+  { id: 'suzanne_breton',  nom: 'Suzanne Breton',   salaire_annuel: 150000 }
+];
+
+function _calcImpot(revenu, tranches, taux) {
+  let impot = 0, prev = 0;
+  for (let i = 0; i < taux.length; i++) {
+    const tranche = i < tranches.length ? tranches[i] : Infinity;
+    if (revenu > prev) impot += (Math.min(revenu, tranche) - prev) * taux[i];
+    prev = tranche;
+  }
+  return Math.max(0, impot);
+}
+
+function _cotisationPeriode(ytd, brut, taux, maxGains, exempt = 0) {
+  const avant = Math.max(0, Math.min(ytd, maxGains) - exempt);
+  const apres = Math.max(0, Math.min(ytd + brut, maxGains) - exempt);
+  return Math.max(0, (apres - avant) * taux);
+}
+
+function calculerPaie(salaire_annuel, ytd_brut) {
+  const periodes = 52;
+  const brut = salaire_annuel / periodes;
+  const T = TAUX_2026;
+
+  // Cotisations sociales avec plafonds YTD
+  const rrq  = _cotisationPeriode(ytd_brut, brut, T.rrq.taux,  T.rrq.maxGains,   T.rrq.exemption);
+  const rrq2 = _cotisationPeriode(ytd_brut, brut, T.rrq2.taux, T.rrq2.plafond,   T.rrq2.plancher);
+  const ae   = _cotisationPeriode(ytd_brut, brut, T.ae.taux,   T.ae.maxGains);
+  const rqap = _cotisationPeriode(ytd_brut, brut, T.rqap.taux, T.rqap.maxGains);
+
+  // Impôt — méthode annualisée
+  const rrq_an  = Math.max(0, Math.min(salaire_annuel, T.rrq.maxGains)  - T.rrq.exemption)  * T.rrq.taux;
+  const rrq2_an = Math.max(0, Math.min(salaire_annuel, T.rrq2.plafond)  - T.rrq2.plancher)  * T.rrq2.taux;
+  const ae_an   = Math.min(salaire_annuel, T.ae.maxGains)   * T.ae.taux;
+  const rqap_an = Math.min(salaire_annuel, T.rqap.maxGains) * T.rqap.taux;
+
+  // Fédéral
+  const rev_fed = Math.max(0, salaire_annuel - rrq_an - rrq2_an - rqap_an);
+  const impot_fed_brut = _calcImpot(rev_fed, T.fed.tranches, T.fed.taux);
+  const credit_fed = T.fed.montantBase * 0.15;
+  const impot_fed_an = Math.max(0, (impot_fed_brut - credit_fed) * (1 - T.fed.abattementQC));
+  const impot_fed = impot_fed_an / periodes;
+
+  // Provincial
+  const rev_prov = Math.max(0, salaire_annuel - rrq_an - rrq2_an - ae_an - rqap_an);
+  const impot_prov_brut = _calcImpot(rev_prov, T.prov.tranches, T.prov.taux);
+  const credit_prov = T.prov.montantBase * T.prov.taux[0];
+  const impot_prov = Math.max(0, impot_prov_brut - credit_prov) / periodes;
+
+  const total_deductions = rrq + rrq2 + ae + rqap + impot_fed + impot_prov;
+  return { brut, rrq, rrq2, ae, rqap, impot_fed, impot_prov, total_deductions, net: brut - total_deductions };
+}
+
+async function _getYTD(employe_id) {
+  const snap = await _db.collection('paie_records').where('employe_id','==',employe_id).get();
+  return snap.docs.reduce((s, d) => s + (d.data().brut || 0), 0);
+}
+
+async function _prochainePeriode() {
+  const snap = await _db.collection('paie_records').orderBy('periode_debut','desc').limit(1).get();
+  if (snap.empty) return { debut: '2026-06-01', fin: '2026-06-07' };
+  const d = new Date(snap.docs[0].data().periode_debut + 'T12:00:00');
+  d.setDate(d.getDate() + 7);
+  const debut = d.toISOString().split('T')[0];
+  const finD = new Date(d); finD.setDate(finD.getDate() + 6);
+  return { debut, fin: finD.toISOString().split('T')[0] };
+}
+
+async function ouvrirModalPaie() {
+  const { debut, fin } = await _prochainePeriode();
+  document.getElementById('paiePeriodeDebut').value = debut;
+  document.getElementById('paiePeriodeFin').value   = fin;
+  await actualiserPreviewPaie();
+  document.getElementById('modalPaie').classList.add('open');
+}
+
+async function actualiserPreviewPaie() {
+  const preview = document.getElementById('paiePreviewContainer');
+  preview.innerHTML = '<div style="font-size:.65rem;color:var(--muted);text-align:center;padding:1rem">Calcul en cours…</div>';
+  try {
+    const calculs = [];
+    for (const emp of EMPLOYES_PAIE) {
+      const ytd = await _getYTD(emp.id);
+      calculs.push({ ...emp, ytd, paie: calculerPaie(emp.salaire_annuel, ytd) });
+    }
+    window._paieCalculs = calculs;
+
+    preview.innerHTML = calculs.map(c => `
+      <div style="background:var(--ink2);border:1px solid var(--border);padding:1.25rem;margin-bottom:.75rem">
+        <div style="font-weight:600;font-size:.8rem;margin-bottom:1rem;color:var(--gold)">${c.nom} <span style="font-size:.55rem;color:var(--muted);font-weight:400">· ${fmt$(c.salaire_annuel)}/an · YTD brut: ${fmt$(c.ytd)}</span></div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem;font-size:.65rem">
+          <div style="background:rgba(255,255,255,.03);padding:.7rem">
+            <div style="color:var(--muted);font-size:.48rem;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.3rem">Brut</div>
+            <div style="font-family:'DM Mono',monospace;font-weight:600;font-size:.9rem;color:var(--cream)">${fmt$(c.paie.brut)}</div>
+          </div>
+          <div style="padding:.7rem"><div style="color:var(--muted);font-size:.48rem;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.3rem">RRQ + RRQ2</div><div style="font-family:'DM Mono',monospace">-${fmt$(c.paie.rrq + c.paie.rrq2)}</div></div>
+          <div style="padding:.7rem"><div style="color:var(--muted);font-size:.48rem;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.3rem">AE</div><div style="font-family:'DM Mono',monospace">-${fmt$(c.paie.ae)}</div></div>
+          <div style="padding:.7rem"><div style="color:var(--muted);font-size:.48rem;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.3rem">RQAP</div><div style="font-family:'DM Mono',monospace">-${fmt$(c.paie.rqap)}</div></div>
+          <div style="padding:.7rem"><div style="color:var(--muted);font-size:.48rem;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.3rem">Impôt fédéral</div><div style="font-family:'DM Mono',monospace">-${fmt$(c.paie.impot_fed)}</div></div>
+          <div style="padding:.7rem"><div style="color:var(--muted);font-size:.48rem;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.3rem">Impôt provincial</div><div style="font-family:'DM Mono',monospace">-${fmt$(c.paie.impot_prov)}</div></div>
+          <div style="padding:.7rem"><div style="color:var(--muted);font-size:.48rem;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.3rem">Total déductions</div><div style="font-family:'DM Mono',monospace;color:var(--amber2)">-${fmt$(c.paie.total_deductions)}</div></div>
+          <div style="background:rgba(184,151,90,.1);border:1px solid rgba(184,151,90,.25);padding:.7rem">
+            <div style="color:var(--gold);font-size:.48rem;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.3rem">NET</div>
+            <div style="font-family:'DM Mono',monospace;font-weight:700;font-size:.95rem;color:var(--cream)">${fmt$(c.paie.net)}</div>
+          </div>
+        </div>
+      </div>`).join('');
+  } catch(e) {
+    preview.innerHTML = `<div style="color:var(--red2);font-size:.65rem;padding:1rem">Erreur: ${e.message}</div>`;
+  }
+}
+
+async function confirmerPaie() {
+  if (!window._paieCalculs || !window._paieCalculs.length) return;
+  const debut = document.getElementById('paiePeriodeDebut').value;
+  const fin   = document.getElementById('paiePeriodeFin').value;
+  if (!debut || !fin) { showToast('Entrez les dates de période','warn'); return; }
+  try {
+    const batch = _db.batch();
+    for (const c of window._paieCalculs) {
+      const ref = _db.collection('paie_records').doc();
+      batch.set(ref, {
+        employe_id: c.id, employe_nom: c.nom, salaire_annuel: c.salaire_annuel,
+        periode_debut: debut, periode_fin: fin,
+        brut: c.paie.brut, rrq: c.paie.rrq, rrq2: c.paie.rrq2,
+        ae: c.paie.ae, rqap: c.paie.rqap,
+        impot_fed: c.paie.impot_fed, impot_prov: c.paie.impot_prov,
+        total_deductions: c.paie.total_deductions, net: c.paie.net,
+        ytd_brut_avant: c.ytd, statut: 'versé',
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+    }
+    await batch.commit();
+    closeModal('modalPaie');
+    showToast('Paie enregistrée ✓','ok');
+    loadPaie();
+  } catch(e) { showToast('Erreur: '+e.message,'error'); }
+}
+
+async function loadPaie() {
+  const tbody = document.getElementById('paieTbody');
+  tbody.innerHTML = '<tr><td colspan="11" style="padding:2rem;text-align:center;color:var(--muted);font-size:.65rem">Chargement…</td></tr>';
+  try {
+    const snap = await _db.collection('paie_records').orderBy('periode_debut','desc').get();
+    const docs = snap.docs.map(d => ({id:d.id,...d.data()}));
+
+    // KPIs
+    const tBrut = docs.reduce((s,d)=>s+(d.brut||0),0);
+    const tNet  = docs.reduce((s,d)=>s+(d.net||0),0);
+    const tImp  = docs.reduce((s,d)=>s+(d.impot_fed||0)+(d.impot_prov||0),0);
+    document.getElementById('paieTotalBrut').textContent   = tBrut>0 ? fmt$(tBrut) : '—';
+    document.getElementById('paieTotalNet').textContent    = tNet>0  ? fmt$(tNet)  : '—';
+    document.getElementById('paieTotalImpots').textContent = tImp>0  ? fmt$(tImp)  : '—';
+    document.getElementById('paieTotalCount').textContent  = docs.length;
+
+    // Cartes employés
+    _renderCartesEmployes(docs);
+
+    if (!docs.length) {
+      tbody.innerHTML='<tr><td colspan="11" style="padding:2rem;text-align:center;color:var(--muted);font-size:.65rem">Aucune paie enregistrée — première paie prévue : semaine du 1er juin 2026</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = docs.map(p => {
+      const ss = p.statut==='versé' ? 'color:var(--green2);background:var(--green-bg)' : 'color:var(--amber2);background:var(--amber-bg)';
+      return `<tr style="border-bottom:1px solid rgba(255,255,255,.04)" onmouseover="this.style.background='rgba(255,255,255,.02)'" onmouseout="this.style.background=''">
+        <td style="padding:.7rem .8rem;font-family:'DM Mono',monospace;font-size:.6rem;color:var(--muted2)">${p.periode_debut} → ${p.periode_fin}</td>
+        <td style="padding:.7rem .8rem;font-size:.72rem;font-weight:500">${p.employe_nom}</td>
+        <td style="padding:.7rem .8rem;text-align:right;font-family:'DM Mono',monospace;font-size:.72rem">${fmt$(p.brut)}</td>
+        <td style="padding:.7rem .8rem;text-align:right;font-family:'DM Mono',monospace;font-size:.62rem;color:var(--muted2)">${fmt$((p.rrq||0)+(p.rrq2||0))}</td>
+        <td style="padding:.7rem .8rem;text-align:right;font-family:'DM Mono',monospace;font-size:.62rem;color:var(--muted2)">${fmt$(p.ae||0)}</td>
+        <td style="padding:.7rem .8rem;text-align:right;font-family:'DM Mono',monospace;font-size:.62rem;color:var(--muted2)">${fmt$(p.rqap||0)}</td>
+        <td style="padding:.7rem .8rem;text-align:right;font-family:'DM Mono',monospace;font-size:.62rem;color:var(--muted2)">${fmt$(p.impot_fed||0)}</td>
+        <td style="padding:.7rem .8rem;text-align:right;font-family:'DM Mono',monospace;font-size:.62rem;color:var(--muted2)">${fmt$(p.impot_prov||0)}</td>
+        <td style="padding:.7rem .8rem;text-align:right;font-family:'DM Mono',monospace;font-size:.75rem;font-weight:600;color:var(--cream)">${fmt$(p.net||0)}</td>
+        <td style="padding:.7rem .8rem;text-align:center"><span style="font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;padding:.2rem .6rem;${ss}">${p.statut||'—'}</span></td>
+        <td style="padding:.7rem .8rem;text-align:right"><button onclick="deletePaie('${p.id}')" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:.7rem;opacity:.5" title="Supprimer">✕</button></td>
+      </tr>`;
+    }).join('');
+  } catch(e) {
+    tbody.innerHTML=`<tr><td colspan="11" style="padding:2rem;text-align:center;color:var(--red2);font-size:.65rem">Erreur: ${e.message}</td></tr>`;
+  }
+}
+
+function _renderCartesEmployes(docs) {
+  const container = document.getElementById('paieEmployeCards');
+  container.innerHTML = EMPLOYES_PAIE.map(emp => {
+    const empDocs = docs.filter(d => d.employe_id === emp.id);
+    const ytd_brut = empDocs.reduce((s,d)=>s+(d.brut||0),0);
+    const ytd_net  = empDocs.reduce((s,d)=>s+(d.net||0),0);
+    const preview  = calculerPaie(emp.salaire_annuel, ytd_brut);
+    return `<div style="background:var(--ink2);border:1px solid var(--border);padding:1.5rem">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.25rem">
+        <div>
+          <div style="font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem">Employé</div>
+          <div style="font-size:.9rem;font-weight:600">${emp.nom}</div>
+          <div style="font-size:.6rem;color:var(--muted);margin-top:.25rem">${fmt$(emp.salaire_annuel)}/an · ${fmt$(emp.salaire_annuel/52)}/sem.</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:.48rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem">Prochaine paie nette</div>
+          <div style="font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--gold)">${fmt$(preview.net)}</div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.5rem;font-size:.62rem;border-top:1px solid var(--border);padding-top:.75rem">
+        <div><span style="color:var(--muted)">YTD brut : </span><span style="font-family:'DM Mono',monospace">${fmt$(ytd_brut)}</span></div>
+        <div><span style="color:var(--muted)">YTD net : </span><span style="font-family:'DM Mono',monospace">${fmt$(ytd_net)}</span></div>
+        <div><span style="color:var(--muted)">Paies : </span>${empDocs.length}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function deletePaie(id) {
+  if (!confirm('Supprimer cette entrée de paie?')) return;
+  await _db.collection('paie_records').doc(id).delete();
+  showToast('Entrée supprimée','ok');
+  loadPaie();
+}
+</script>
+</body>
+</html>

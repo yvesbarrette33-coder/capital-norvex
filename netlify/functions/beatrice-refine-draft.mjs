@@ -1,0 +1,272 @@
+/**
+ * POST /api/beatrice-refine-draft
+ * Header: X-Internal-Secret
+ * Body: { draftId, instruction }
+ *
+ * KILLER FEATURE — Itération conversationnelle Yves ↔ Béatrice
+ *
+ * Yves donne une instruction en langage naturel (« Refais plus court et plus
+ * chaleureux, ajoute une référence à notre rencontre du 15 avril »). Béatrice
+ * régénère le draft en appliquant cette instruction.
+ *
+ * Workflow :
+ * 1. Charge le draft actuel + email original depuis Firestore
+ * 2. Appelle Anthropic Opus 4.6 avec :
+ *    - System prompt voix Yves Capital Norvex
+ *    - Augmenté avec instruction du patron
+ *    - User : email original + draft actuel
+ * 3. Récupère le nouveau bodyHtml
+ * 4. Append signature Yves Barrette (style noir)
+ * 5. Push nouvelle version dans versions[]
+ * 6. Update bodyHtml + signedHtml courants
+ * 7. Return : { ok, newHtml, version }
+ */
+
+import {
+  createAuditLog,
+  getDoc,
+  getFirestoreToken,
+  jsonResponse,
+  loadServiceAccount,
+  patchDoc,
+} from "./_camille-shared.mjs";
+import { signatureYvesHtml } from "./_signature.mjs";
+
+const COLLECTION_DRAFTS = "beatriceDrafts";
+const COLLECTION_EMAILS = "beatriceEmails";
+
+const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
+const MODEL_DRAFTING = "claude-opus-4-6";
+const MAX_TOKENS = 4096;
+
+// ─── Voix Yves — System prompt drafting condensé ────────────────────────
+//
+// Pour le raffinement, on utilise un prompt focused sur la voix + l'instruction
+// (plutôt que le system prompt complet de drafting initial qui est dans
+// agents/beatrice_assistante_yves/system_prompts.py). Le draft existant sert
+// déjà de baseline. On demande juste de réviser selon l'instruction.
+//
+const REFINEMENT_SYSTEM_PROMPT = `Tu es l'assistante exécutive ghostwriter d'Yves Barrette, Directeur-Fondateur de Capital Norvex Inc.
+
+Tu réécris des courriels au nom de M. Barrette. Toutes tes réponses sont signées « Yves Barrette ». Tu es invisible pour le destinataire — c'est M. Barrette qui parle.
+
+## Voix d'Yves
+- Ultra professionnel, niveau institutionnel (Stikeman, BlackRock, Brookfield)
+- Humain et chaleureux — JAMAIS robotique
+- Direct, droit au point, sans blabla
+- Courtois, formules sobres
+- JAMAIS d'humour, blagues, familiarité
+- JAMAIS d'émojis dans les courriels d'affaires
+- JAMAIS de tournures « IA évidente » : « En tant qu'assistant », « Je serais ravi », « Je reste à votre entière disposition »
+- Niveau de langue SOUTENU (pas familier, pas guindé)
+- FR québécois soutenu / EN canadien neutre
+
+## Contexte Capital Norvex (1000%)
+- Plateforme technologique de financement immobilier privé (QC + ON)
+- Frais Capital Norvex : 3 % à 3,5 % (prélevés au notaire/avocat instrumentant)
+- Rémunération courtier : jusqu'à 1,00 % maximum (en sus, prélevée à même les fonds du financement)
+- Fourchettes : 2,5 M$ à 100 M$, taux 10-12 %, durée 6-24 mois
+- Processus : Score Norvex → LOI → Lettre d'engagement → Notaire → Déboursé
+- Tagline : « Capital structuré. Ambition maîtrisée. »
+- Adresse : 2705-1000 André-Prévost, Île-des-Sœurs (Verdun), Montréal, QC H3E 0G2
+- Tél compagnie : 438-533-PRÊT (7738)
+- Equipe : Suzanne Breton (Administratrice), Sophie (relations clients sur info@), Camille (juridique), Norah (téléphone)
+
+## Garde-fous absolus
+- Aucune promesse de taux/montant exact sans LOI signée
+- Pas de divulgation d'informations confidentielles d'autres dossiers
+- Si juridique technique → renvoyer vers notaire/avocat
+- Si demande hors-scope ou ambiguë → demander clarification poliment
+
+## Format de sortie
+Tu retournes UNIQUEMENT le nouveau corps HTML du courriel (sans <html>, sans <body>, sans signature — la signature sera ajoutée automatiquement). Format : paragraphes <p> avec mise en forme institutionnelle propre. Pas de Markdown.`;
+
+// ─── Helper : appel Anthropic ────────────────────────────────────────────
+
+async function callAnthropic(systemPrompt, userMessage) {
+  if (!ANTHROPIC_API_KEY) {
+    throw new Error("ANTHROPIC_API_KEY manquant");
+  }
+  const response = await fetch("https://api.anthropic.com/v1/messages", {
+    method: "POST",
+    headers: {
+      "x-api-key": ANTHROPIC_API_KEY,
+      "anthropic-version": "2023-06-01",
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({
+      model: MODEL_DRAFTING,
+      max_tokens: MAX_TOKENS,
+      system: systemPrompt,
+      messages: [{ role: "user", content: userMessage }],
+    }),
+  });
+  if (!response.ok) {
+    const errText = await response.text();
+    throw new Error(`Anthropic API error ${response.status}: ${errText.slice(0, 300)}`);
+  }
+  const data = await response.json();
+  // Extract text content
+  const blocks = data.content || [];
+  const textBlock = blocks.find((b) => b.type === "text");
+  if (!textBlock) {
+    throw new Error("Aucun contenu texte retourné par Anthropic");
+  }
+  return textBlock.text;
+}
+
+// Signature Yves : voir _signature.mjs (vrai logo PNG + signature manuscrite
+// scannée en base64 inline). Bug fix 2026-05-08.
+
+// ─── Handler ─────────────────────────────────────────────────────────────
+
+export default async function handler(req) {
+  if (req.method !== "POST") {
+    return jsonResponse({ error: "Method not allowed" }, 405);
+  }
+  const secret = req.headers.get("x-internal-secret");
+  if (!process.env.INTERNAL_SECRET || secret !== process.env.INTERNAL_SECRET) {
+    return jsonResponse({ error: "Unauthorized" }, 401);
+  }
+
+  let body;
+  try {
+    body = await req.json();
+  } catch {
+    return jsonResponse({ error: "Invalid JSON" }, 400);
+  }
+
+  const { draftId, instruction } = body;
+  if (!draftId) return jsonResponse({ error: "draftId requis" }, 400);
+  if (!instruction || typeof instruction !== "string" || instruction.trim().length < 3) {
+    return jsonResponse({ error: "instruction requise (texte langage naturel)" }, 400);
+  }
+
+  try {
+    const sa = await loadServiceAccount();
+    const projectId = sa.project_id;
+    const fsToken = await getFirestoreToken(sa);
+
+    // Charge le draft actuel
+    const draft = await getDoc(projectId, fsToken, COLLECTION_DRAFTS, draftId);
+    if (!draft) return jsonResponse({ error: "Draft introuvable" }, 404);
+    if (draft.status === "sent") {
+      return jsonResponse({ error: "Draft déjà envoyé, raffinement interdit" }, 409);
+    }
+
+    // Charge l'email original
+    let originalEmail = "(email original non trouvé)";
+    if (draft.incomingEmailId) {
+      const originalDoc = await getDoc(
+        projectId,
+        fsToken,
+        COLLECTION_EMAILS,
+        draft.incomingEmailId
+      );
+      if (originalDoc) {
+        const from = originalDoc.from || "(inconnu)";
+        const subj = originalDoc.subject || "";
+        const bodyText = originalDoc.bodyText || originalDoc.bodyPreview || "";
+        originalEmail = `De : ${from}\nSujet : ${subj}\n\n${bodyText}`;
+      }
+    }
+
+    // Détecte la langue (depuis triage snapshot ou défaut FR)
+    const lang = (draft.triageSnapshot && draft.triageSnapshot.language) || "fr";
+
+    // Construit le user message
+    const currentDraft = draft.bodyHtml || "(draft vide)";
+    const userMessage = `EMAIL ORIGINAL REÇU :
+${originalEmail}
+
+DRAFT ACTUEL DE BÉATRICE (à réviser) :
+${currentDraft}
+
+🚨 INSTRUCTION DU PATRON YVES POUR CETTE RÉVISION (À RESPECTER ABSOLUMENT) :
+${instruction}
+
+Réécris le corps du courriel en appliquant l'instruction ci-dessus, en gardant la voix d'Yves (ultra professionnel, humain, sans blabla). Retourne UNIQUEMENT le nouveau HTML du body (paragraphes <p>...</p>), sans <html>, sans <body>, sans signature. La signature sera ajoutée automatiquement.`;
+
+    // Appel Opus
+    const newBodyHtml = await callAnthropic(REFINEMENT_SYSTEM_PROMPT, userMessage);
+
+    // Cleanup éventuel : retire balises wrapper si Opus en a mis quand même
+    let cleanBody = newBodyHtml.trim();
+    cleanBody = cleanBody.replace(/^```html\s*/i, "").replace(/\s*```$/i, "");
+    cleanBody = cleanBody.replace(/^<html[^>]*>/i, "").replace(/<\/html>$/i, "");
+    cleanBody = cleanBody.replace(/^<body[^>]*>/i, "").replace(/<\/body>$/i, "");
+
+    // Append signature
+    const signedHtml = cleanBody + "\n" + signatureYvesHtml(lang);
+
+    // Push nouvelle version
+    const previousVersions = Array.isArray(draft.versions) ? draft.versions : [];
+    const newVersion = previousVersions.length + 1;
+    const versionEntry = {
+      version: newVersion,
+      bodyHtml: cleanBody,
+      signedHtml: signedHtml,
+      instruction: instruction,
+      createdAt: new Date().toISOString(),
+      generatedBy: "beatrice-refine-draft (Opus 4.6)",
+    };
+    const newVersions = [...previousVersions, versionEntry];
+
+    // Si c'est la première fois qu'on raffine, on archive aussi la v1 originale
+    let finalVersions = newVersions;
+    if (previousVersions.length === 0) {
+      const v1Entry = {
+        version: 1,
+        bodyHtml: draft.bodyHtml || "",
+        signedHtml: draft.signedHtml || "",
+        instruction: "(version initiale auto-générée)",
+        createdAt: draft.createdAt || new Date().toISOString(),
+        generatedBy: "beatrice-orchestrator (Opus 4.6, initial)",
+      };
+      finalVersions = [v1Entry, { ...versionEntry, version: 2 }];
+    }
+
+    // Update draft
+    const patch = {
+      bodyHtml: cleanBody,
+      signedHtml: signedHtml,
+      versions: finalVersions,
+      lastModifiedAt: new Date(),
+      lastModifiedBy: "Yves Barrette (refine via dashboard)",
+      lastInstruction: instruction,
+      currentVersion: finalVersions.length,
+    };
+
+    await patchDoc(projectId, fsToken, COLLECTION_DRAFTS, draftId, patch);
+
+    await createAuditLog(projectId, fsToken, {
+      agent: "beatrice",
+      action: "refine_draft",
+      targetType: COLLECTION_DRAFTS,
+      targetId: draftId,
+      result: "success",
+      details: {
+        instruction: instruction.slice(0, 200),
+        newVersion: finalVersions.length,
+      },
+    });
+
+    return jsonResponse({
+      ok: true,
+      draftId,
+      version: finalVersions.length,
+      newBodyHtml: cleanBody,
+      newSignedHtml: signedHtml,
+      versionsCount: finalVersions.length,
+    });
+  } catch (e) {
+    return jsonResponse(
+      { error: e.message, where: "beatrice-refine-draft" },
+      500
+    );
+  }
+}
+
+export const config = {
+  path: "/api/beatrice-refine-draft",
+};

@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Norvex Maestro™ — Dashboard exécutif</title>
+  <!-- PWA Admin (Suzanne+Yves installable) - 2026-05-20 -->
+  <link rel="manifest" href="/manifest-admin.json">
+  <meta name="theme-color" content="#0a0a0a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Norvex Admin">
+  <link rel="apple-touch-icon" href="/icon-192.png">
+<style>
+  :root {
+    --bg: #f7f5ef;
+    --paper: #fdfcf6;
+    --ink: #1a1a1a;
+    --muted: #6b6b6b;
+    --gold: #C9A227;
+    --gold-dark: #9A8554;
+    --green: #2d8a3e;
+    --orange: #c87800;
+    --red: #b8341a;
+    --grey: #c8c8c8;
+    --border: #e2dccc;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: Georgia, "Times New Roman", serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+    padding: 0;
+  }
+  header {
+    background: linear-gradient(180deg, #0A0A0A, #181410);
+    color: #f4ecd6;
+    padding: 28px 40px;
+    border-bottom: 3px solid var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .h-title {
+    font-family: Georgia, serif;
+    font-size: 26px;
+    font-weight: normal;
+    letter-spacing: 1.5px;
+    color: var(--gold);
+  }
+  .h-title em {
+    font-style: italic;
+    color: #f4ecd6;
+  }
+  .h-sub {
+    font-family: -apple-system, sans-serif;
+    font-size: 11px;
+    letter-spacing: 2.5px;
+    color: #9A8554;
+    margin-top: 6px;
+    text-transform: uppercase;
+  }
+  .h-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .btn {
+    background: transparent;
+    border: 1px solid var(--gold-dark);
+    color: var(--gold);
+    padding: 10px 18px;
+    font-family: -apple-system, sans-serif;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 3px;
+  }
+  .btn:hover { background: rgba(201,162,39,0.1); }
+  .btn-primary {
+    background: var(--gold);
+    color: #0A0A0A;
+    border-color: var(--gold);
+    font-weight: 600;
+  }
+  .btn-primary:hover { background: #d4ad36; }
+
+  main {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 30px 40px 80px;
+  }
+
+  .stats-bar {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  .stat-card {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    padding: 18px 22px;
+    border-radius: 4px;
+  }
+  .stat-label {
+    font-family: -apple-system, sans-serif;
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+  .stat-value {
+    font-family: Georgia, serif;
+    font-size: 32px;
+    color: var(--ink);
+    margin-top: 6px;
+  }
+  .stat-value.green { color: var(--green); }
+  .stat-value.orange { color: var(--orange); }
+  .stat-value.red { color: var(--red); }
+
+  .filter-bar {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .filter-bar input {
+    flex: 1;
+    min-width: 240px;
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    background: var(--paper);
+    font-family: -apple-system, sans-serif;
+    font-size: 14px;
+  }
+  .filter-bar select {
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    background: var(--paper);
+    font-family: -apple-system, sans-serif;
+    font-size: 13px;
+  }
+
+  .dossier-card {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--gold);
+    border-radius: 4px;
+    margin-bottom: 18px;
+    overflow: hidden;
+  }
+  .dossier-card.has-blocked {
+    border-left-color: var(--red);
+  }
+  .dossier-card.has-progress {
+    border-left-color: var(--orange);
+  }
+  .dossier-card.complete {
+    border-left-color: var(--green);
+  }
+  .d-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 24px;
+    background: linear-gradient(180deg, #fdfcf6, #f7f3e6);
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .d-title {
+    font-family: Georgia, serif;
+    font-size: 19px;
+    color: var(--ink);
+  }
+  .d-meta {
+    font-family: -apple-system, sans-serif;
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+  .d-meta span {
+    margin-right: 14px;
+  }
+  .d-meta strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .d-progress {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .progress-bar {
+    width: 140px;
+    height: 8px;
+    background: var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold-dark), var(--gold));
+    transition: width 0.3s;
+  }
+  .progress-pct {
+    font-family: -apple-system, sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gold-dark);
+    min-width: 40px;
+  }
+
+  .next-banner {
+    padding: 14px 24px;
+    background: rgba(201,162,39,0.08);
+    border-bottom: 1px solid var(--border);
+    font-family: -apple-system, sans-serif;
+    font-size: 13px;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .next-banner.blocked {
+    background: rgba(184,52,26,0.08);
+    color: var(--red);
+  }
+  .next-banner.complete {
+    background: rgba(45,138,62,0.08);
+    color: var(--green);
+  }
+  .next-banner-arrow {
+    font-size: 16px;
+  }
+  .next-banner-link {
+    margin-left: auto;
+    background: var(--ink);
+    color: #f4ecd6;
+    padding: 6px 14px;
+    border-radius: 3px;
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .next-banner-link:hover {
+    background: var(--gold);
+    color: #0A0A0A;
+  }
+
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    gap: 0;
+  }
+  .step {
+    padding: 16px 8px;
+    text-align: center;
+    border-right: 1px solid var(--border);
+    text-decoration: none;
+    color: inherit;
+    background: var(--paper);
+    transition: background 0.2s;
+  }
+  .step:last-child { border-right: none; }
+  .step:hover {
+    background: rgba(201,162,39,0.05);
+  }
+  .step-icon {
+    font-size: 20px;
+    line-height: 1;
+  }
+  .step-label {
+    font-family: -apple-system, sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    margin-top: 8px;
+    line-height: 1.3;
+  }
+  .step.done {
+    background: rgba(45,138,62,0.04);
+  }
+  .step.done .step-label {
+    color: var(--green);
+    font-weight: 600;
+  }
+  .step.in_progress {
+    background: rgba(200,120,0,0.06);
+  }
+  .step.in_progress .step-label {
+    color: var(--orange);
+    font-weight: 600;
+  }
+  .step.blocked {
+    background: rgba(184,52,26,0.06);
+  }
+  .step.blocked .step-label {
+    color: var(--red);
+    font-weight: 600;
+  }
+
+  .login-screen {
+    max-width: 380px;
+    margin: 80px auto;
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 40px;
+    text-align: center;
+  }
+  .login-screen h1 {
+    font-family: Georgia, serif;
+    font-size: 22px;
+    color: var(--gold-dark);
+    margin-bottom: 24px;
+  }
+  .login-screen input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    margin-bottom: 16px;
+    font-family: -apple-system, sans-serif;
+    font-size: 14px;
+  }
+  .login-screen button {
+    width: 100%;
+    padding: 12px;
+    background: var(--ink);
+    color: #f4ecd6;
+    border: none;
+    border-radius: 3px;
+    font-family: -apple-system, sans-serif;
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--muted);
+    font-family: -apple-system, sans-serif;
+  }
+
+  .toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--ink);
+    color: #f4ecd6;
+    padding: 14px 22px;
+    border-radius: 4px;
+    font-family: -apple-system, sans-serif;
+    font-size: 13px;
+    z-index: 1000;
+    border-left: 4px solid var(--gold);
+  }
+  .toast.error { border-left-color: var(--red); }
+  .toast.success { border-left-color: var(--green); }
+
+  .spinner {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid #f4ecd6;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+    vertical-align: middle;
+    margin-right: 6px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  @media (max-width: 1100px) {
+    .steps-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .step:nth-child(3n) { border-right: none; }
+    .step { border-bottom: 1px solid var(--border); }
+  }
+  @media (max-width: 600px) {
+    header { padding: 20px; }
+    main { padding: 20px; }
+    .h-title { font-size: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="loginScreen" class="login-screen" style="display:none">
+  <h1>Norvex Maestro™</h1>
+  <input type="password" id="secretInput" placeholder="Mot de passe administrateur" autocomplete="current-password" />
+  <button onclick="doLogin()">Accéder</button>
+</div>
+
+<div id="appContainer" style="display:none">
+  <header>
+    <div>
+      <div class="h-title">Norvex <em>Maestro</em>™</div>
+      <div class="h-sub">Dashboard exécutif · Vue anti-oubli par dossier</div>
+    </div>
+    <div class="h-actions">
+      <span id="last-refresh" style="font-size:12px;color:#888;margin-right:8px;align-self:center;">Dernière mise à jour : —</span>
+      <button class="btn" onclick="loadStatus()">↻ Rafraîchir</button>
+      <a href="/capital-norvex-brain.html" class="btn">← Brain</a>
+      <button class="btn" onclick="logout()">Quitter</button>
+    </div>
+  </header>
+
+  <main>
+    <div class="stats-bar" id="statsBar">
+      <div class="stat-card">
+        <div class="stat-label">Dossiers actifs</div>
+        <div class="stat-value" id="statTotal">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">En progression</div>
+        <div class="stat-value orange" id="statProgress">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Bloqués</div>
+        <div class="stat-value red" id="statBlocked">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Prêts à finaliser</div>
+        <div class="stat-value green" id="statReady">—</div>
+      </div>
+    </div>
+
+    <div class="filter-bar">
+      <input type="text" id="search" placeholder="🔍 Filtrer par emprunteur, type de prêt, statut…" oninput="renderDossiers()" />
+      <select id="filterStatus" onchange="renderDossiers()">
+        <option value="all">Tous les dossiers</option>
+        <option value="progress">En progression</option>
+        <option value="blocked">Bloqués</option>
+        <option value="pending_action">Action requise</option>
+      </select>
+    </div>
+
+    <div id="dossiersContainer">
+      <div class="empty-state">
+        <span class="spinner" style="border-color: var(--gold-dark); border-top-color: transparent;"></span>
+        Chargement des dossiers…
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+  const STORAGE_KEY = "maestro_admin_secret";
+  let _allDossiers = [];
+  let _steps = [];
+
+  function getSecret() {
+    return (
+      localStorage.getItem("norvex_secret") ||
+      localStorage.getItem("beatrice_secret") ||
+      localStorage.getItem("camille_secret") ||
+      localStorage.getItem(STORAGE_KEY) ||
+      ""
+    );
+  }
+
+  function showToast(msg, type) {
+    const old = document.querySelector(".toast"); if (old) old.remove();
+    const el = document.createElement("div");
+    el.className = "toast " + (type || "");
+    el.textContent = msg;
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 4000);
+  }
+
+  function escapeHtml(s) {
+    if (!s) return "";
+    return String(s).replace(/[&<>"']/g, (c) => ({
+      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;",
+    }[c]));
+  }
+
+  function fmtMoney(n) {
+    if (!Number.isFinite(n)) return "—";
+    return new Intl.NumberFormat("fr-CA", { style: "currency", currency: "CAD", maximumFractionDigits: 0 }).format(n);
+  }
+
+  function fmtPct(n) {
+    if (!Number.isFinite(n)) return "—";
+    return n.toFixed(2) + " %";
+  }
+
+  function doLogin() {
+    const v = document.getElementById("secretInput").value.trim();
+    if (!v) { showToast("Mot de passe requis", "error"); return; }
+    localStorage.setItem(STORAGE_KEY, v);
+    showApp();
+  }
+
+  function logout() {
+    localStorage.removeItem(STORAGE_KEY);
+    location.reload();
+  }
+
+  function showApp() {
+    document.getElementById("loginScreen").style.display = "none";
+    document.getElementById("appContainer").style.display = "block";
+    loadStatus();
+    // Auto-refresh toutes les 60s
+    setInterval(loadStatus, 60000);
+  }
+
+  async function loadStatus() {
+    try {
+      const r = await fetch("/api/maestro-dossier-status?t=" + Date.now(), {
+        headers: { "X-Internal-Secret": getSecret() },
+        cache: "no-store",
+      });
+      if (r.status === 401) { logout(); return; }
+      const data = await r.json();
+      if (!data.ok) throw new Error(data.error || "erreur");
+      _allDossiers = data.dossiers || [];
+      _steps = data.steps || [];
+      updateStats();
+      renderDossiers();
+      const lr = document.getElementById("last-refresh");
+      if (lr) lr.textContent = "Dernière mise à jour : " + new Date().toLocaleTimeString("fr-CA");
+      showToast("Données rafraîchies (" + _allDossiers.length + " dossiers)", "success");
+    } catch (e) {
+      showToast("Erreur : " + e.message, "error");
+      document.getElementById("dossiersContainer").innerHTML = `<div class="empty-state">Erreur : ${escapeHtml(e.message)}</div>`;
+    }
+  }
+
+  function updateStats() {
+    const total = _allDossiers.length;
+    const progress = _allDossiers.filter((d) => d.matrix.some((m) => m.status === "in_progress")).length;
+    const blocked = _allDossiers.filter((d) => d.blockedCount > 0).length;
+    const ready = _allDossiers.filter((d) => d.progressPct >= 75 && d.blockedCount === 0).length;
+    document.getElementById("statTotal").textContent = total;
+    document.getElementById("statProgress").textContent = progress;
+    document.getElementById("statBlocked").textContent = blocked;
+    document.getElementById("statReady").textContent = ready;
+  }
+
+  function renderDossiers() {
+    const container = document.getElementById("dossiersContainer");
+    const search = document.getElementById("search").value.toLowerCase().trim();
+    const filter = document.getElementById("filterStatus").value;
+
+    let filtered = _allDossiers;
+    if (search) {
+      filtered = filtered.filter((d) => {
+        return [d.borrowerName, d.loanType, d.status, d.id].join(" ").toLowerCase().includes(search);
+      });
+    }
+    if (filter === "progress") {
+      filtered = filtered.filter((d) => d.matrix.some((m) => m.status === "in_progress"));
+    } else if (filter === "blocked") {
+      filtered = filtered.filter((d) => d.blockedCount > 0);
+    } else if (filter === "pending_action") {
+      filtered = filtered.filter((d) => d.nextStep && d.blockedCount === 0);
+    }
+
+    if (filtered.length === 0) {
+      container.innerHTML = `<div class="empty-state">Aucun dossier ${search || filter !== "all" ? "ne correspond à ces critères" : "actif pour l'instant"}.</div>`;
+      return;
+    }
+
+    container.innerHTML = filtered.map(dossierCard).join("");
+  }
+
+  function dossierCard(d) {
+    let cls = "dossier-card";
+    if (d.blockedCount > 0) cls += " has-blocked";
+    else if (d.matrix.some((m) => m.status === "in_progress")) cls += " has-progress";
+    else if (d.progressPct === 100) cls += " complete";
+
+    const stepsHtml = d.matrix.map((m) => `
+      <a href="${escapeHtml(m.link)}?dossierId=${escapeHtml(d.id)}" class="step ${m.status}" title="${escapeHtml(m.label)} — ${m.status}">
+        <div class="step-icon">${m.icon}</div>
+        <div class="step-label">${escapeHtml(m.label)}</div>
+      </a>
+    `).join("");
+
+    let nextBanner = "";
+    if (d.blockedCount > 0) {
+      const blockedStep = d.matrix.find((m) => m.status === "blocked");
+      nextBanner = `
+        <div class="next-banner blocked">
+          <span class="next-banner-arrow">🔴</span>
+          <span><strong>Bloqué :</strong> ${escapeHtml(blockedStep?.label || "—")} — vérification requise</span>
+          <a href="${escapeHtml(blockedStep?.link || "#")}?dossierId=${escapeHtml(d.id)}" class="next-banner-link">Vérifier →</a>
+        </div>`;
+    } else if (d.progressPct === 100) {
+      nextBanner = `
+        <div class="next-banner complete">
+          <span class="next-banner-arrow">✅</span>
+          <span><strong>Dossier complet</strong> — toutes les étapes terminées</span>
+        </div>`;
+    } else if (d.nextStep) {
+      const nextLabel = d.nextStep.status === "in_progress" ? "En cours" : "Prochaine étape";
+      nextBanner = `
+        <div class="next-banner">
+          <span class="next-banner-arrow">→</span>
+          <span><strong>${nextLabel} :</strong> ${escapeHtml(d.nextStep.label)}</span>
+          <a href="${escapeHtml(d.nextStep.link)}?dossierId=${escapeHtml(d.id)}" class="next-banner-link">Ouvrir →</a>
+        </div>`;
+    }
+
+    return `
+      <div class="${cls}">
+        <div class="d-header">
+          <div>
+            <div class="d-title">${escapeHtml(d.borrowerName)}</div>
+            <div class="d-meta">
+              <span><strong>ID :</strong> ${escapeHtml(d.id)}</span>
+              <span><strong>Type :</strong> ${escapeHtml(d.loanType)}</span>
+              ${d.loanAmount ? `<span><strong>Montant :</strong> ${fmtMoney(d.loanAmount)}</span>` : ""}
+              ${d.score ? `<span><strong>Score :</strong> ${d.score}/100</span>` : ""}
+              ${d.finalRate ? `<span><strong>Taux final :</strong> ${fmtPct(d.finalRate)}</span>` : ""}
+            </div>
+          </div>
+          <div class="d-progress">
+            <div class="progress-bar"><div class="progress-fill" style="width:${d.progressPct}%"></div></div>
+            <div class="progress-pct">${d.progressPct} %</div>
+          </div>
+        </div>
+        ${nextBanner}
+        <div class="steps-grid">${stepsHtml}</div>
+      </div>`;
+  }
+
+  // Init
+  if (getSecret()) {
+    showApp();
+  } else {
+    document.getElementById("loginScreen").style.display = "block";
+  }
+</script>
+
+</body>
+</html>

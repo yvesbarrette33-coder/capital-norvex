@@ -1,0 +1,16 @@
+[Unit]
+Description=Norvex Diligence API
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/norvex-diligence
+ExecStart=/usr/bin/node /opt/norvex-diligence/server.js
+Restart=always
+RestartSec=5
+StandardOutput=append:/var/log/norvex-diligence.log
+StandardError=append:/var/log/norvex-diligence.log
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,1431 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="/manifest-pipeline.json">
+<meta name="theme-color" content="#0a0d13">
+<link rel="apple-touch-icon" href="/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Cost Analyzer">
+<title>Norvex Cost Analyzer™ — Capital Norvex</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ink:#0a0d13;--ink2:#131720;--ink3:#1b2231;
+  --gold:#b8975a;--gold2:#d4b07a;--gold-pale:#f0e6d0;
+  --cream:#faf8f4;--stone:#e8e3da;--muted:#7a8294;--muted2:#a0a8b8;
+  --ok:#2d6a4f;--ok2:#52b788;--ok-bg:rgba(82,183,136,.10);--ok-br:rgba(82,183,136,.30);
+  --warn:#b7791f;--warn2:#d4a017;--warn-bg:rgba(212,160,23,.10);--warn-br:rgba(212,160,23,.35);
+  --crit:#c0392b;--crit2:#e74c3c;--crit-bg:rgba(192,57,43,.08);--crit-br:rgba(192,57,43,.30);
+  --blue:#1a5276;--blue2:#2e86c1;--blue-bg:rgba(46,134,193,.10);
+  --border:rgba(184,151,90,.15);
+}
+html{scroll-behavior:smooth}
+body{background:#eeebe5;color:var(--ink);font-family:'DM Sans',sans-serif;font-weight:300;min-height:100vh}
+
+/* ── AUTH ── */
+#loginScreen{position:fixed;inset:0;background:#0a0d13;z-index:9999;display:flex;align-items:center;justify-content:center}
+.login-box{background:#131720;border:1px solid rgba(184,151,90,.2);padding:3rem;width:100%;max-width:380px;text-align:center}
+.login-logo{font-family:'Playfair Display',serif;font-size:1.4rem;color:#b8975a;margin-bottom:.3rem;letter-spacing:.06em}
+.login-sub{font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:#7a8294;margin-bottom:2.5rem}
+.login-label{display:block;font-size:.54rem;letter-spacing:.18em;text-transform:uppercase;color:#7a8294;margin-bottom:.5rem;text-align:left}
+.login-input{width:100%;background:#0a0d13;border:1px solid rgba(184,151,90,.2);padding:.8rem 1rem;font-size:.9rem;color:#faf8f4;font-family:'DM Sans',sans-serif;outline:none;margin-bottom:1.2rem;transition:border-color .2s}
+.login-input:focus{border-color:#b8975a}
+.login-btn{width:100%;background:#b8975a;border:none;color:#0a0d13;padding:.85rem;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s}
+.login-btn:hover{background:#d4b07a}
+.login-err{color:#e74c3c;font-size:.72rem;margin-top:.8rem;display:none}
+
+/* ── TOPBAR ── */
+.topbar{background:var(--ink);display:flex;align-items:center;justify-content:space-between;padding:.85rem 2rem;position:sticky;top:0;z-index:300;border-bottom:1px solid var(--border)}
+.tb-left{display:flex;align-items:center;gap:1.2rem}
+.tb-logo{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--gold);letter-spacing:.04em;cursor:pointer;text-decoration:none}
+.tb-sep{width:1px;height:20px;background:rgba(255,255,255,.1)}
+.tb-title{font-size:.58rem;letter-spacing:.24em;text-transform:uppercase;color:var(--muted2)}
+.tb-right{display:flex;align-items:center;gap:1rem}
+.tb-back{font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted2);text-decoration:none;border:1px solid rgba(255,255,255,.12);padding:.38rem .9rem;transition:all .2s;cursor:pointer;background:transparent;font-family:'DM Sans',sans-serif}
+.tb-back:hover{border-color:var(--gold);color:var(--gold)}
+.tb-badge{display:flex;align-items:center;gap:.4rem;font-size:.54rem;letter-spacing:.15em;text-transform:uppercase;background:var(--ok-bg);color:var(--ok2);border:1px solid var(--ok-br);padding:.28rem .75rem}
+.live{width:6px;height:6px;background:var(--ok2);border-radius:50%;animation:blink 1.5s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* ── LAYOUT ── */
+.app{max-width:1200px;margin:0 auto;padding:2rem}
+
+/* ── DOSSIER SELECTOR ── */
+.selector-bar{background:var(--ink2);border:1px solid var(--border);padding:1.2rem 1.8rem;display:flex;align-items:center;gap:1.5rem;margin-bottom:2rem;flex-wrap:wrap}
+.selector-label{font-size:.56rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted2);white-space:nowrap}
+.selector-select{background:#0a0d13;border:1px solid rgba(184,151,90,.25);color:var(--cream);padding:.55rem 1.2rem;font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:300;outline:none;cursor:pointer;min-width:280px;transition:border-color .2s}
+.selector-select:focus{border-color:var(--gold)}
+.selector-info{display:flex;gap:2rem;flex:1}
+.sinfo-item{display:flex;flex-direction:column;gap:.2rem}
+.sinfo-lbl{font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.sinfo-val{font-family:'Playfair Display',serif;font-size:1rem;color:var(--gold)}
+.selector-placeholder{font-size:.72rem;color:var(--muted);font-style:italic}
+
+/* ── SECTION HEADER ── */
+.page-header{margin-bottom:2rem}
+.page-tag{font-size:.58rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:.7rem;margin-bottom:.5rem}
+.page-tag::before{content:"";display:block;width:1.5rem;height:1px;background:var(--gold)}
+.page-title{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:400;color:var(--ink)}
+.page-title em{font-style:italic;color:var(--gold)}
+.page-sub{font-size:.72rem;color:var(--muted);margin-top:.4rem;letter-spacing:.03em}
+
+/* ── SCORE STRIP ── */
+.score-strip{display:grid;grid-template-columns:repeat(5,1fr) 2fr;gap:1px;background:var(--stone);margin-bottom:2rem}
+.score-cell{background:var(--cream);padding:1.2rem 1.4rem;display:flex;flex-direction:column;gap:.4rem}
+.score-cell.final-cell{background:var(--ink);padding:1.4rem 2rem;justify-content:center}
+.sc-label{font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.sc-verdict{font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;padding:.2rem .6rem;border:1px solid;display:inline-flex;align-items:center;gap:.3rem;width:fit-content}
+.sc-verdict.ok{border-color:var(--ok-br);color:var(--ok2);background:var(--ok-bg)}
+.sc-verdict.warn{border-color:var(--warn-br);color:var(--warn2);background:var(--warn-bg)}
+.sc-verdict.crit{border-color:var(--crit-br);color:var(--crit2);background:var(--crit-bg)}
+.sc-verdict.neutral{border-color:rgba(160,168,184,.3);color:var(--muted);background:transparent}
+.sc-val{font-family:'DM Mono',monospace;font-size:.9rem;color:var(--ink)}
+.final-label{font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted2);margin-bottom:.5rem}
+.final-reco{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--cream)}
+.final-reco.proceder{color:var(--ok2)}
+.final-reco.restructure{color:var(--warn2)}
+.final-reco.rejet{color:var(--crit2)}
+.score-num{font-family:'Playfair Display',serif;font-size:2.5rem;color:var(--gold);line-height:1}
+.score-den{font-size:.7rem;color:var(--muted);margin-top:.2rem}
+
+/* ── GRID ── */
+.analysis-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2rem}
+.analysis-grid.wide{grid-template-columns:1fr}
+
+/* ── MODULE CARD ── */
+.mod{background:var(--cream);border:1px solid var(--stone);overflow:hidden}
+.mod-header{background:var(--ink);padding:1rem 1.4rem;display:flex;align-items:center;justify-content:space-between}
+.mod-title{font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:.6rem}
+.mod-title::before{content:"";display:block;width:1rem;height:1px;background:var(--gold)}
+.mod-verdict{font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;padding:.22rem .65rem;border:1px solid}
+.mod-verdict.ok{border-color:var(--ok-br);color:var(--ok2);background:rgba(82,183,136,.08)}
+.mod-verdict.warn{border-color:var(--warn-br);color:var(--warn2);background:rgba(212,160,23,.08)}
+.mod-verdict.crit{border-color:var(--crit-br);color:var(--crit2);background:rgba(192,57,43,.06)}
+.mod-verdict.neutral{border-color:rgba(255,255,255,.1);color:var(--muted2);background:transparent}
+.mod-body{padding:1.4rem}
+
+/* ── FIELD ── */
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin-bottom:.9rem}
+.field-row.triple{grid-template-columns:1fr 1fr 1fr}
+.field-row.single{grid-template-columns:1fr}
+.field{display:flex;flex-direction:column;gap:.4rem}
+.field label{font-size:.52rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:400}
+.field input,.field select{background:#f2ede6;border:1px solid var(--stone);color:var(--ink);padding:.6rem .85rem;font-family:'DM Mono',monospace;font-size:.82rem;font-weight:400;outline:none;width:100%;transition:border-color .2s;-moz-appearance:textfield}
+.field input::-webkit-outer-spin-button,.field input::-webkit-inner-spin-button{-webkit-appearance:none}
+.field input:focus,.field select:focus{border-color:var(--gold);background:#fdf9f0}
+.field select{cursor:pointer;font-family:'DM Sans',sans-serif;font-size:.78rem}
+.field.auto input{background:#e8f4ee;border-color:var(--ok-br);color:var(--ok);cursor:not-allowed;font-weight:500}
+.field.auto label::after{content:" — Auto";color:var(--ok2);font-style:normal}
+
+/* ── METRIC BAR ── */
+.metric-bar-wrap{margin-top:1rem;padding-top:1rem;border-top:1px solid var(--stone)}
+.metric-bar-label{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.4rem}
+.mbl-name{font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.mbl-val{font-family:'DM Mono',monospace;font-size:.82rem;color:var(--ink);font-weight:500}
+.metric-bar{height:6px;background:var(--stone);border-radius:0;overflow:hidden;position:relative}
+.metric-fill{height:100%;transition:width .6s cubic-bezier(.4,0,.2,1),background .4s;border-radius:0}
+.metric-fill.ok{background:var(--ok2)}
+.metric-fill.warn{background:var(--warn2)}
+.metric-fill.crit{background:var(--crit2)}
+.metric-fill.neutral{background:var(--muted)}
+.metric-threshold{position:absolute;top:0;bottom:0;width:2px;background:rgba(0,0,0,.2)}
+
+/* ── DIVIDER ── */
+.divider{height:1px;background:var(--stone);margin:1rem 0}
+
+/* ── CALCULATED RESULT ── */
+.calc-result{background:#f0ebe2;border-left:3px solid var(--gold);padding:.9rem 1.1rem;margin-top:.9rem}
+.cr-row{display:flex;justify-content:space-between;align-items:baseline;padding:.2rem 0}
+.cr-row:not(:last-child){border-bottom:1px solid rgba(184,151,90,.15)}
+.cr-lbl{font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.cr-val{font-family:'DM Mono',monospace;font-size:.9rem;color:var(--ink);font-weight:500}
+.cr-val.gold{color:var(--gold)}
+.cr-val.ok{color:var(--ok2)}
+.cr-val.warn{color:var(--warn2)}
+.cr-val.crit{color:var(--crit2)}
+
+/* ── NOTES ── */
+.notes-wrap{margin-top:1rem}
+.notes-wrap textarea{width:100%;background:#f2ede6;border:1px solid var(--stone);color:var(--ink);padding:.75rem 1rem;font-family:'DM Sans',sans-serif;font-size:.78rem;font-weight:300;outline:none;resize:vertical;min-height:80px;transition:border-color .2s;line-height:1.6}
+.notes-wrap textarea:focus{border-color:var(--gold);background:#fdf9f0}
+
+/* ── FINAL RECOMMENDATION BLOCK ── */
+.reco-block{background:var(--ink);padding:2.5rem 3rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;margin-bottom:2rem;flex-wrap:wrap}
+.reco-left{}
+.reco-tag{font-size:.54rem;letter-spacing:.24em;text-transform:uppercase;color:var(--muted2);margin-bottom:.6rem}
+.reco-main{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:400;line-height:1.1}
+.reco-main.proceder{color:var(--ok2)}
+.reco-main.restructure{color:var(--warn2)}
+.reco-main.rejet{color:var(--crit2)}
+.reco-main.pending{color:var(--muted)}
+.reco-sub{font-size:.72rem;color:var(--muted2);margin-top:.5rem;max-width:480px;line-height:1.6}
+.reco-right{display:flex;flex-direction:column;align-items:center;gap:.5rem}
+.reco-score-circle{width:110px;height:110px;border-radius:50%;border:3px solid;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:border-color .4s}
+.reco-score-circle.proceder{border-color:var(--ok2)}
+.reco-score-circle.restructure{border-color:var(--warn2)}
+.reco-score-circle.rejet{border-color:var(--crit2)}
+.reco-score-circle.pending{border-color:var(--muted)}
+.rsc-num{font-family:'Playfair Display',serif;font-size:2.2rem;color:var(--cream);line-height:1}
+.rsc-label{font-size:.48rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted2)}
+.reco-verdict-pills{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center;margin-top:.3rem}
+.rvp{font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;padding:.18rem .5rem;border:1px solid}
+.rvp.ok{border-color:var(--ok-br);color:var(--ok2)}
+.rvp.warn{border-color:var(--warn-br);color:var(--warn2)}
+.rvp.crit{border-color:var(--crit-br);color:var(--crit2)}
+
+/* ── ACTIONS ── */
+.actions{display:flex;align-items:center;gap:1rem;margin-bottom:3rem;flex-wrap:wrap}
+.btn{font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;padding:.75rem 1.8rem;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500;transition:all .2s;display:flex;align-items:center;gap:.5rem}
+.btn:hover{opacity:.85;transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+.btn:disabled{opacity:.35;cursor:not-allowed;transform:none}
+.btn-primary{background:var(--gold);color:var(--ink)}
+.btn-primary:hover{background:var(--gold2)}
+.btn-secondary{background:transparent;color:var(--muted);border:1px solid var(--stone)}
+.btn-secondary:hover{border-color:var(--gold);color:var(--gold)}
+.btn-danger{background:transparent;color:var(--crit2);border:1px solid var(--crit-br)}
+.btn-danger:hover{background:var(--crit-bg)}
+.save-status{font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ok2);display:none;align-items:center;gap:.4rem}
+.save-status.show{display:flex}
+
+/* ── HISTORY ── */
+.history-section{margin-bottom:3rem}
+.hist-title{font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid var(--stone);padding-bottom:.6rem;margin-bottom:1rem;display:flex;align-items:center;gap:.6rem}
+.hist-title::before{content:"";display:block;width:1rem;height:1px;background:var(--gold)}
+.hist-table{width:100%;border-collapse:collapse;background:var(--cream)}
+.hist-table th{background:var(--ink);color:var(--cream);font-size:.52rem;letter-spacing:.16em;text-transform:uppercase;padding:.7rem 1rem;text-align:left;font-weight:300}
+.hist-table td{padding:.75rem 1rem;border-bottom:1px solid var(--stone);font-size:.75rem;vertical-align:middle}
+.hist-table tr:hover td{background:#fdf9f4;cursor:pointer}
+.hist-table td.mono{font-family:'DM Mono',monospace;font-size:.7rem}
+
+/* ── TOOLTIPS ── */
+.tip{display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border-radius:50%;background:rgba(184,151,90,.2);color:var(--gold);font-size:.55rem;cursor:help;margin-left:.3rem;font-style:normal;font-weight:600;flex-shrink:0}
+
+/* ── EMPTY STATE ── */
+.empty-state{text-align:center;padding:4rem 2rem;color:var(--muted)}
+.empty-state h3{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--ink);margin-bottom:.5rem;font-weight:400}
+.empty-state p{font-size:.78rem;line-height:1.7}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  .analysis-grid{grid-template-columns:1fr}
+  .score-strip{grid-template-columns:1fr 1fr 1fr}
+  .score-strip .final-cell{grid-column:span 3}
+  .field-row,.field-row.triple{grid-template-columns:1fr}
+  .reco-block{padding:1.5rem;flex-direction:column}
+  .selector-info{gap:1rem}
+  .app{padding:1rem}
+}
+
+/* ── PRINT ── */
+@media print{
+  .topbar,.actions,.selector-bar,.history-section,#loginScreen{display:none!important}
+  body{background:#fff}
+  .mod{break-inside:avoid;border:1px solid #ddd}
+  .analysis-grid{grid-template-columns:1fr 1fr}
+}
+
+/* ── LOADING ── */
+.spinner{width:20px;height:20px;border:2px solid rgba(184,151,90,.2);border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite;display:none}
+.spinner.show{display:block}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── FADE IN ── */
+.fade-in{animation:fadeIn .4s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+
+<!-- AUTH -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">Capital Norvex</div>
+    <div class="login-sub">Norvex Cost Analyzer™</div>
+    <label class="login-label">Mot de passe</label>
+    <input type="password" id="loginInput" class="login-input" placeholder="••••••••••••" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="login-btn" onclick="doLogin()">Accéder à l'analyseur →</button>
+    <div class="login-err" id="loginErr">Mot de passe incorrect</div>
+  </div>
+</div>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="tb-left">
+    <a href="/capital-norvex-pipeline.html" class="tb-logo">Capital Norvex</a>
+    <div class="tb-sep"></div>
+    <div class="tb-title">Norvex Cost Analyzer™</div>
+  </div>
+  <div class="tb-right">
+    <div class="tb-badge"><div class="live"></div>Firestore Live</div>
+    <a href="/capital-norvex-pipeline.html" class="tb-back">← Pipeline</a>
+  </div>
+</div>
+
+<!-- APP -->
+<div class="app">
+
+  <!-- HEADER -->
+  <div class="page-header fade-in">
+    <div class="page-tag">Norvex Intelligence™</div>
+    <h1 class="page-title">Cost <em>Analyzer</em></h1>
+    <p class="page-sub">Analyse financière complète · Calcul en temps réel · Recommandation IA</p>
+  </div>
+
+  <!-- DOSSIER SELECTOR -->
+  <div class="selector-bar fade-in">
+    <div class="selector-label">Dossier</div>
+    <select class="selector-select" id="dossierSelect" onchange="onDossierChange()">
+      <option value="">— Sélectionner un dossier —</option>
+    </select>
+    <div class="selector-info" id="selectorInfo" style="display:none">
+      <div class="sinfo-item">
+        <span class="sinfo-lbl">Emprunteur</span>
+        <span class="sinfo-val" id="si-nom">—</span>
+      </div>
+      <div class="sinfo-item">
+        <span class="sinfo-lbl">Prêt demandé</span>
+        <span class="sinfo-val" id="si-montant">—</span>
+      </div>
+      <div class="sinfo-item">
+        <span class="sinfo-lbl">Type</span>
+        <span class="sinfo-val" id="si-type">—</span>
+      </div>
+      <div class="sinfo-item">
+        <span class="sinfo-lbl">Stage</span>
+        <span class="sinfo-val" id="si-stage">—</span>
+      </div>
+    </div>
+    <div class="selector-placeholder" id="selectorPlaceholder">Sélectionnez un dossier pour démarrer l'analyse</div>
+    <div class="spinner" id="loadSpinner"></div>
+  </div>
+
+  <!-- SCORE STRIP -->
+  <div class="score-strip fade-in" id="scoreStrip">
+    <div class="score-cell">
+      <div class="sc-label">Équité / Lift</div>
+      <div class="sc-verdict neutral" id="sv-equity">— EN ATTENTE</div>
+      <div class="sc-val" id="sv-equity-val">—</div>
+    </div>
+    <div class="score-cell">
+      <div class="sc-label">Honoraires</div>
+      <div class="sc-verdict neutral" id="sv-fees">— EN ATTENTE</div>
+      <div class="sc-val" id="sv-fees-val">—</div>
+    </div>
+    <div class="score-cell">
+      <div class="sc-label">Coût / Porte</div>
+      <div class="sc-verdict neutral" id="sv-units">— EN ATTENTE</div>
+      <div class="sc-val" id="sv-units-val">—</div>
+    </div>
+    <div class="score-cell">
+      <div class="sc-label">Holdback</div>
+      <div class="sc-verdict neutral" id="sv-holdback">— EN ATTENTE</div>
+      <div class="sc-val" id="sv-holdback-val">—</div>
+    </div>
+    <div class="score-cell">
+      <div class="sc-label">Coûts Access.</div>
+      <div class="sc-verdict neutral" id="sv-soft">— EN ATTENTE</div>
+      <div class="sc-val" id="sv-soft-val">—</div>
+    </div>
+    <div class="score-cell final-cell">
+      <div class="final-label">Score Global</div>
+      <div class="score-num" id="sc-score">—</div>
+      <div class="score-den" id="sc-reco-mini">En attente des données</div>
+    </div>
+  </div>
+
+  <!-- ANALYSIS FORM -->
+  <div id="analyzerForm">
+
+    <!-- EMPTY STATE -->
+    <div class="empty-state" id="emptyState">
+      <h3>Sélectionnez un dossier</h3>
+      <p>Choisissez un dossier dans le pipeline pour démarrer<br>l'analyse financière complète.</p>
+    </div>
+
+    <!-- FORM CONTENT (hidden until dossier selected) -->
+    <div id="formContent" style="display:none">
+
+      <!-- ROW 1: EQUITY + FEES -->
+      <div class="analysis-grid">
+
+        <!-- MODULE 1: ÉQUITÉ & LIFT -->
+        <div class="mod fade-in">
+          <div class="mod-header">
+            <div class="mod-title">1 — Équité &amp; Lift</div>
+            <div class="mod-verdict neutral" id="mv-equity">EN ATTENTE</div>
+          </div>
+          <div class="mod-body">
+            <div class="field-row">
+              <div class="field">
+                <label>Valeur marchande actuelle ($)<span class="tip" title="Valeur du projet selon évaluation ou comparables">?</span></label>
+                <input type="number" id="valeurMarchande" placeholder="0" oninput="calc()">
+              </div>
+              <div class="field">
+                <label>Dette existante sur actif ($)<span class="tip" title="Hypothèques et dettes garanties sur le projet">?</span></label>
+                <input type="number" id="detteExistante" placeholder="0" oninput="calc()">
+              </div>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label>Prêt Capital Norvex ($)</label>
+                <input type="number" id="montantPret" placeholder="0" oninput="calc()">
+              </div>
+              <div class="field">
+                <label>Valeur après complétion ($)<span class="tip" title="Valeur projetée du projet une fois réalisé">?</span></label>
+                <input type="number" id="valeurApresCom" placeholder="0" oninput="calc()">
+              </div>
+            </div>
+            <div class="calc-result" id="cr-equity">
+              <div class="cr-row">
+                <span class="cr-lbl">Équité sur papier (Paper Equity)</span>
+                <span class="cr-val gold" id="cr-paperEquity">—</span>
+              </div>
+              <div class="cr-row">
+                <span class="cr-lbl">Lift (plus-value créée)</span>
+                <span class="cr-val" id="cr-lift">—</span>
+              </div>
+              <div class="cr-row">
+                <span class="cr-lbl">Lift Ratio (lift / prêt)</span>
+                <span class="cr-val" id="cr-liftRatio">—</span>
+              </div>
+            </div>
+            <div class="metric-bar-wrap">
+              <div class="metric-bar-label">
+                <span class="mbl-name">Lift Ratio — seuil minimum : 1.5×</span>
+                <span class="mbl-val" id="mb-liftRatio-val">—</span>
+              </div>
+              <div class="metric-bar"><div class="metric-fill neutral" id="mb-liftRatio" style="width:0%"></div><div class="metric-threshold" style="left:50%"></div></div>
+              <div style="display:flex;justify-content:space-between;margin-top:.3rem">
+                <span style="font-size:.48rem;color:var(--muted)">0.0×</span>
+                <span style="font-size:.48rem;color:var(--warn2)">1.5×</span>
+                <span style="font-size:.48rem;color:var(--ok2)">3.0×+</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MODULE 2: HONORAIRES & FRAIS -->
+        <div class="mod fade-in">
+          <div class="mod-header">
+            <div class="mod-title">2 — Honoraires &amp; Frais</div>
+            <div class="mod-verdict neutral" id="mv-fees">EN ATTENTE</div>
+          </div>
+          <div class="mod-body">
+            <div class="field-row">
+              <div class="field">
+                <label>Frais d'origination ($)</label>
+                <input type="number" id="fraisOrigination" placeholder="0" oninput="calc()">
+              </div>
+              <div class="field">
+                <label>Frais courtier ($)</label>
+                <input type="number" id="fraisCourtier" placeholder="0" oninput="calc()">
+              </div>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label>Frais légaux ($)</label>
+                <input type="number" id="fraisLegal" placeholder="0" oninput="calc()">
+              </div>
+              <div class="field">
+                <label>Frais d'administration ($)</label>
+                <input type="number" id="fraisAdmin" placeholder="0" oninput="calc()">
+              </div>
+            </div>
+            <div class="field-row single">
+              <div class="field">
+                <label>Autres frais ($)</label>
+                <input type="number" id="fraisAutres" placeholder="0" oninput="calc()">
+              </div>
+            </div>
+            <div class="calc-result">
+              <div class="cr-row">
+                <span class="cr-lbl">Total honoraires</span>
+                <span class="cr-val gold" id="cr-feesTotal">—</span>
+              </div>
+              <div class="cr-row">
+                <span class="cr-lbl">% du prêt Capital Norvex</span>
+                <span class="cr-val" id="cr-feesPct">—</span>
+              </div>
+            </div>
+            <div class="metric-bar-wrap">
+              <div class="metric-bar-label">
+                <span class="mbl-name">Honoraires en % du prêt — seuil max : 5%</span>
+                <span class="mbl-val" id="mb-fees-val">—</span>
+              </div>
+              <div class="metric-bar"><div class="metric-fill neutral" id="mb-fees" style="width:0%"></div><div class="metric-threshold" style="left:50%"></div></div>
+              <div style="display:flex;justify-content:space-between;margin-top:.3rem">
+                <span style="font-size:.48rem;color:var(--ok2)">0%</span>
+                <span style="font-size:.48rem;color:var(--warn2)">5%</span>
+                <span style="font-size:.48rem;color:var(--crit2)">10%+</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /analysis-grid row 1 -->
+
+      <!-- ROW 2: UNITS + HOLDBACK -->
+      <div class="analysis-grid">
+
+        <!-- MODULE 3: COÛT PAR PORTE -->
+        <div class="mod fade-in">
+          <div class="mod-header">
+            <div class="mod-title">3 — Coût par Porte</div>
+            <div class="mod-verdict neutral" id="mv-units">EN ATTENTE</div>
+          </div>
+          <div class="mod-body">
+            <div class="field-row">
+              <div class="field">
+                <label>Type de projet</label>
+                <select id="typeProjet" onchange="calc()">
+                  <option value="residentiel">Résidentiel</option>
+                  <option value="commercial">Commercial / Mixte</option>
+                  <option value="industriel">Industriel</option>
+                  <option value="terrain">Terrain / Lotissement</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>Province</label>
+                <select id="province" onchange="updateBenchmark()">
+                  <option value="QC">Québec</option>
+                  <option value="ON">Ontario</option>
+                  <option value="AB">Alberta</option>
+                  <option value="BC">Colombie-Britannique</option>
+                  <option value="autre">Autre</option>
+                </select>
+              </div>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label>Nombre d'unités / portes</label>
+                <input type="number" id="nombreUnites" placeholder="0" min="1" oninput="calc()">
+              </div>
+              <div class="field">
+                <label>Coût total du projet ($)<span class="tip" title="Construction + terrain + tous les coûts">?</span></label>
+                <input type="number" id="coutTotalProjet" placeholder="0" oninput="calc()">
+              </div>
+            </div>
+            <div class="field-row single">
+              <div class="field">
+                <label>Benchmark marché ($/porte) <span class="tip" title="Modifiable — pré-rempli selon province et type">?</span></label>
+                <input type="number" id="benchmarkMarche" placeholder="0" oninput="calc()">
+              </div>
+            </div>
+            <div class="calc-result">
+              <div class="cr-row">
+                <span class="cr-lbl">Coût par porte</span>
+                <span class="cr-val gold" id="cr-coutParPorte">—</span>
+              </div>
+              <div class="cr-row">
+                <span class="cr-lbl">Benchmark Province</span>
+                <span class="cr-val" id="cr-benchmark">—</span>
+              </div>
+              <div class="cr-row">
+                <span class="cr-lbl">Écart vs marché</span>
+                <span class="cr-val" id="cr-ecart">—</span>
+              </div>
+            </div>
+            <div class="metric-bar-wrap">
+              <div class="metric-bar-label">
+                <span class="mbl-name">Écart coût/porte vs marché — seuil max : +20%</span>
+                <span class="mbl-val" id="mb-units-val">—</span>
+              </div>
+              <div class="metric-bar"><div class="metric-fill neutral" id="mb-units" style="width:0%"></div></div>
+              <div style="display:flex;justify-content:space-between;margin-top:.3rem">
+                <span style="font-size:.48rem;color:var(--ok2)">-20%</span>
+                <span style="font-size:.48rem;color:var(--ok2)">Marché</span>
+                <span style="font-size:.48rem;color:var(--warn2)">+20%</span>
+                <span style="font-size:.48rem;color:var(--crit2)">+40%+</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MODULE 4: SÛRETÉ & HOLDBACK -->
+        <div class="mod fade-in">
+          <div class="mod-header">
+            <div class="mod-title">4 — Sûreté &amp; Holdback</div>
+            <div class="mod-verdict neutral" id="mv-holdback">EN ATTENTE</div>
+          </div>
+          <div class="mod-body">
+            <div class="field-row single">
+              <div class="field auto">
+                <label>Holdback requis (5% du prêt)</label>
+                <input type="number" id="holdbackRequis" placeholder="0" readonly>
+              </div>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label>Holdback mis en place ($)<span class="tip" title="Montant effectivement retenu ou mis en fiducie">?</span></label>
+                <input type="number" id="holdbackMisEnPlace" placeholder="0" oninput="calc()">
+              </div>
+              <div class="field">
+                <label>Rang hypothécaire</label>
+                <select id="rangHypo" onchange="calc()">
+                  <option value="1">1er rang</option>
+                  <option value="2">2e rang</option>
+                  <option value="3">3e rang</option>
+                </select>
+              </div>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label>Valeur garantie totale ($)<span class="tip" title="Valeur totale des biens donnés en garantie">?</span></label>
+                <input type="number" id="valeurGarantie" placeholder="0" oninput="calc()">
+              </div>
+              <div class="field">
+                <label>LTV calculé<span class="tip" title="Loan-to-Value = Prêt / Valeur garantie">?</span></label>
+                <input type="text" id="ltvCalc" placeholder="—" readonly style="background:#e8f4ee;border-color:var(--ok-br);color:var(--ok);cursor:not-allowed">
+              </div>
+            </div>
+            <div class="calc-result">
+              <div class="cr-row">
+                <span class="cr-lbl">Holdback requis (5%)</span>
+                <span class="cr-val gold" id="cr-holdbackRequis">—</span>
+              </div>
+              <div class="cr-row">
+                <span class="cr-lbl">Holdback effectif</span>
+                <span class="cr-val" id="cr-holdbackEffectif">—</span>
+              </div>
+              <div class="cr-row">
+                <span class="cr-lbl">Couverture holdback</span>
+                <span class="cr-val" id="cr-holdbackCov">—</span>
+              </div>
+              <div class="cr-row">
+                <span class="cr-lbl">LTV (Prêt/Garantie)</span>
+                <span class="cr-val" id="cr-ltv">—</span>
+              </div>
+            </div>
+            <div class="metric-bar-wrap">
+              <div class="metric-bar-label">
+                <span class="mbl-name">Couverture holdback — objectif : 100%</span>
+                <span class="mbl-val" id="mb-holdback-val">—</span>
+              </div>
+              <div class="metric-bar"><div class="metric-fill neutral" id="mb-holdback" style="width:0%"></div></div>
+              <div style="display:flex;justify-content:space-between;margin-top:.3rem">
+                <span style="font-size:.48rem;color:var(--crit2)">0%</span>
+                <span style="font-size:.48rem;color:var(--warn2)">80%</span>
+                <span style="font-size:.48rem;color:var(--ok2)">100%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /analysis-grid row 2 -->
+
+      <!-- ROW 3: SOFT COSTS (full width) -->
+      <div class="analysis-grid wide">
+
+        <!-- MODULE 5: COÛTS ACCESSOIRES -->
+        <div class="mod fade-in">
+          <div class="mod-header">
+            <div class="mod-title">5 — Coûts Accessoires (Soft Costs)</div>
+            <div class="mod-verdict neutral" id="mv-soft">EN ATTENTE</div>
+          </div>
+          <div class="mod-body">
+            <div class="field-row triple">
+              <div class="field">
+                <label>Architecture &amp; Design ($)</label>
+                <input type="number" id="scArchitecture" placeholder="0" oninput="calc()">
+              </div>
+              <div class="field">
+                <label>Ingénierie ($)</label>
+                <input type="number" id="scIngenierie" placeholder="0" oninput="calc()">
+              </div>
+              <div class="field">
+                <label>Permis &amp; approbations ($)</label>
+                <input type="number" id="scPermis" placeholder="0" oninput="calc()">
+              </div>
+            </div>
+            <div class="field-row triple">
+              <div class="field">
+                <label>Marketing &amp; ventes ($)</label>
+                <input type="number" id="scMarketing" placeholder="0" oninput="calc()">
+              </div>
+              <div class="field">
+                <label>Frais de financement ($)</label>
+                <input type="number" id="scFinancement" placeholder="0" oninput="calc()">
+              </div>
+              <div class="field">
+                <label>Autres coûts accessoires ($)</label>
+                <input type="number" id="scAutres" placeholder="0" oninput="calc()">
+              </div>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label>Coûts durs (construction) ($)<span class="tip" title="Coûts de construction bruts, excluant terrain et soft costs">?</span></label>
+                <input type="number" id="coutsDurs" placeholder="0" oninput="calc()">
+              </div>
+              <div class="field auto">
+                <label>Total coûts accessoires</label>
+                <input type="number" id="softCostsTotal" placeholder="0" readonly>
+              </div>
+            </div>
+            <div class="calc-result">
+              <div class="cr-row">
+                <span class="cr-lbl">Total coûts accessoires</span>
+                <span class="cr-val gold" id="cr-softTotal">—</span>
+              </div>
+              <div class="cr-row">
+                <span class="cr-lbl">Coûts durs</span>
+                <span class="cr-val" id="cr-hardCosts">—</span>
+              </div>
+              <div class="cr-row">
+                <span class="cr-lbl">Ratio soft / durs</span>
+                <span class="cr-val" id="cr-softRatio">—</span>
+              </div>
+            </div>
+            <div class="metric-bar-wrap">
+              <div class="metric-bar-label">
+                <span class="mbl-name">Coûts accessoires en % des coûts durs — seuil max : 20%</span>
+                <span class="mbl-val" id="mb-soft-val">—</span>
+              </div>
+              <div class="metric-bar"><div class="metric-fill neutral" id="mb-soft" style="width:0%"></div><div class="metric-threshold" style="left:50%"></div></div>
+              <div style="display:flex;justify-content:space-between;margin-top:.3rem">
+                <span style="font-size:.48rem;color:var(--ok2)">0%</span>
+                <span style="font-size:.48rem;color:var(--warn2)">20%</span>
+                <span style="font-size:.48rem;color:var(--crit2)">40%+</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /analysis-grid row 3 -->
+
+      <!-- NOTES -->
+      <div class="mod fade-in" style="margin-bottom:1.5rem">
+        <div class="mod-header">
+          <div class="mod-title">Notes &amp; Observations</div>
+        </div>
+        <div class="mod-body">
+          <div class="notes-wrap">
+            <textarea id="notesAnalyse" placeholder="Notes internes, observations, conditions particulières, éléments à surveiller..."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- FINAL RECOMMENDATION -->
+      <div class="reco-block fade-in" id="recoBlock">
+        <div class="reco-left">
+          <div class="reco-tag">Norvex Intelligence™ · Recommandation finale</div>
+          <div class="reco-main pending" id="recoMain">En attente des données</div>
+          <div class="reco-sub" id="recoSub">Complétez les 5 modules d'analyse pour obtenir la recommandation finale du système Norvex Intelligence™.</div>
+          <div class="reco-verdict-pills" id="recoPills" style="margin-top:1rem"></div>
+        </div>
+        <div class="reco-right">
+          <div class="reco-score-circle pending" id="recoCircle">
+            <div class="rsc-num" id="recoCircleNum">—</div>
+            <div class="rsc-label">/ 100</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACTIONS -->
+      <div class="actions">
+        <button class="btn btn-primary" id="saveBtn" onclick="saveAnalysis()" disabled>
+          <span>💾</span> Sauvegarder l'analyse
+        </button>
+        <button class="btn btn-secondary" onclick="resetForm()">
+          ↺ Réinitialiser
+        </button>
+        <button class="btn btn-secondary" onclick="window.print()">
+          ⎙ Imprimer
+        </button>
+        <div class="save-status" id="saveStatus">
+          <span>✓</span> Sauvegardé dans Firestore
+        </div>
+      </div>
+
+      <!-- HISTORY -->
+      <div class="history-section fade-in">
+        <div class="hist-title">Historique des analyses</div>
+        <div id="historyContent">
+          <p style="font-size:.72rem;color:var(--muted);font-style:italic">Aucune analyse sauvegardée pour ce dossier.</p>
+        </div>
+      </div>
+
+    </div><!-- /formContent -->
+  </div><!-- /analyzerForm -->
+</div><!-- /app -->
+
+<!-- FIREBASE -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script>
+// ═══════════════════════════════════════
+// AUTH
+// ═══════════════════════════════════════
+function doLogin(){
+  const v=document.getElementById('loginInput').value;
+  // Same password as pipeline
+  if(v==='Norvex2026!'||v==='norvex2026!'||v==='Capital2026!'||v==='capital2026!'){
+    localStorage.setItem('cnx_admin','1');
+    document.getElementById('loginScreen').style.display='none';
+  } else {
+    document.getElementById('loginErr').style.display='block';
+    document.getElementById('loginInput').value='';
+    document.getElementById('loginInput').focus();
+  }
+}
+if(localStorage.getItem('cnx_admin')==='1') document.getElementById('loginScreen').style.display='none';
+
+// ═══════════════════════════════════════
+// FIREBASE
+// ═══════════════════════════════════════
+const _fbConfig={
+  apiKey:atob("QUl6YVN5QjUxMWR3MWcxaEFSb0lsbzVRM3djMk9NTThQOHlKUnA4"),
+  authDomain:"capital-norvex.firebaseapp.com",
+  projectId:"capital-norvex",
+  storageBucket:"capital-norvex.firebasestorage.app",
+  messagingSenderId:"547910657658",
+  appId:"1:547910657658:web:9ae5ebf5fac9c0461ffdc3"
+};
+firebase.initializeApp(_fbConfig);
+const _db=firebase.firestore();
+
+// ═══════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════
+let dossiers=[];
+let currentDossier=null;
+let historyUnsub=null;
+
+// ═══════════════════════════════════════
+// LOAD DOSSIERS
+// ═══════════════════════════════════════
+const spinner=document.getElementById('loadSpinner');
+spinner.classList.add('show');
+
+_db.collection('dossiers').orderBy('created_at','desc').onSnapshot(snap=>{
+  spinner.classList.remove('show');
+  dossiers=[];
+  snap.forEach(doc=>{const d=doc.data();if(d&&d.id)dossiers.push({...d,_fbId:doc.id});});
+  buildDossierSelect();
+},err=>{
+  spinner.classList.remove('show');
+  console.warn('Firestore:',err);
+});
+
+function buildDossierSelect(){
+  const sel=document.getElementById('dossierSelect');
+  const prev=sel.value;
+  sel.innerHTML='<option value="">— Sélectionner un dossier —</option>';
+  dossiers.forEach(d=>{
+    const opt=document.createElement('option');
+    opt.value=d.id||d._fbId;
+    opt.textContent=`${d.nom||d.emprunteur||'Sans nom'} — ${fmtCAD(d.montant||d.montantDemande||0)} (${stageLabel(d.stage)})`;
+    sel.appendChild(opt);
+  });
+  if(prev){sel.value=prev;}
+}
+
+function stageLabel(s){
+  const m={nouvelle:'Nouvelle',analyse:'Analyse',loi:'LOI',docs:'Docs',final:'Finale',notaire:'Notaire',decaisse:'Décaissé'};
+  return m[s]||s||'—';
+}
+
+// ═══════════════════════════════════════
+// DOSSIER SELECTION
+// ═══════════════════════════════════════
+function onDossierChange(){
+  const sel=document.getElementById('dossierSelect');
+  const id=sel.value;
+  if(!id){
+    currentDossier=null;
+    document.getElementById('formContent').style.display='none';
+    document.getElementById('emptyState').style.display='block';
+    document.getElementById('selectorInfo').style.display='none';
+    document.getElementById('selectorPlaceholder').style.display='block';
+    if(historyUnsub){historyUnsub();historyUnsub=null;}
+    return;
+  }
+  currentDossier=dossiers.find(d=>(d.id||d._fbId)===id)||{id,_fbId:id};
+  document.getElementById('emptyState').style.display='none';
+  document.getElementById('formContent').style.display='block';
+  document.getElementById('selectorInfo').style.display='flex';
+  document.getElementById('selectorPlaceholder').style.display='none';
+
+  // Fill selector info
+  const d=currentDossier;
+  document.getElementById('si-nom').textContent=d.nom||d.emprunteur||'—';
+  document.getElementById('si-montant').textContent=fmtCAD(d.montant||d.montantDemande||0);
+  document.getElementById('si-type').textContent=d.type||d.typeProjet||'—';
+  document.getElementById('si-stage').textContent=stageLabel(d.stage);
+
+  // Auto-fill prêt Norvex
+  const montant=d.montant||d.montantDemande||d.montantPret||0;
+  if(montant) setField('montantPret', montant);
+
+  // Auto-fill type projet
+  if(d.type||d.typeProjet){
+    const tp=document.getElementById('typeProjet');
+    const t=(d.type||d.typeProjet||'').toLowerCase();
+    if(t.includes('comm')||t.includes('mix')) tp.value='commercial';
+    else if(t.includes('ind')) tp.value='industriel';
+    else if(t.includes('terr')||t.includes('lot')) tp.value='terrain';
+    else tp.value='residentiel';
+  }
+
+  // Try to load existing analysis from Firestore
+  loadExistingAnalysis(id);
+  // Load history
+  loadHistory(id);
+  // Update benchmark
+  updateBenchmark();
+  calc();
+  document.getElementById('saveBtn').disabled=false;
+}
+
+function setField(id, val){
+  const el=document.getElementById(id);
+  if(el&&val) el.value=val;
+}
+
+// Load saved analysis
+function loadExistingAnalysis(dossierId){
+  _db.collection('dossiers').doc(dossierId)
+    .collection('costAnalyzer').doc('current')
+    .get().then(doc=>{
+      if(doc.exists){
+        const data=doc.data();
+        const inp=data.inputs||{};
+        // Populate all inputs
+        const fields=['valeurMarchande','detteExistante','montantPret','valeurApresCom',
+          'fraisOrigination','fraisCourtier','fraisLegal','fraisAdmin','fraisAutres',
+          'nombreUnites','coutTotalProjet','benchmarkMarche',
+          'holdbackMisEnPlace','valeurGarantie',
+          'scArchitecture','scIngenierie','scPermis','scMarketing','scFinancement','scAutres','coutsDurs',
+          'notesAnalyse'];
+        fields.forEach(f=>{if(inp[f]!==undefined&&inp[f]!==null){
+          const el=document.getElementById(f);
+          if(el)el.value=inp[f];
+        }});
+        if(inp.typeProjet){const el=document.getElementById('typeProjet');if(el)el.value=inp.typeProjet;}
+        if(inp.province){const el=document.getElementById('province');if(el)el.value=inp.province;}
+        if(inp.rangHypo){const el=document.getElementById('rangHypo');if(el)el.value=inp.rangHypo;}
+        updateBenchmark();
+        calc();
+        showSaveStatus('Analyse existante chargée');
+      }
+    }).catch(()=>{});
+}
+
+// ═══════════════════════════════════════
+// BENCHMARKS PAR PROVINCE & TYPE
+// ═══════════════════════════════════════
+const BENCHMARKS={
+  QC:{residentiel:280000,commercial:350000,industriel:220000,terrain:85000},
+  ON:{residentiel:380000,commercial:480000,industriel:300000,terrain:140000},
+  AB:{residentiel:310000,commercial:390000,industriel:250000,terrain:110000},
+  BC:{residentiel:450000,commercial:560000,industriel:320000,terrain:160000},
+  autre:{residentiel:300000,commercial:380000,industriel:240000,terrain:100000},
+};
+
+function updateBenchmark(){
+  const prov=document.getElementById('province').value;
+  const type=document.getElementById('typeProjet').value;
+  const bm=BENCHMARKS[prov]?.[type]||300000;
+  const bmEl=document.getElementById('benchmarkMarche');
+  if(!bmEl.dataset.userModified) bmEl.value=bm;
+  calc();
+}
+
+// Allow user to modify benchmark
+document.getElementById('benchmarkMarche').addEventListener('input',function(){
+  this.dataset.userModified='1';
+  calc();
+});
+document.getElementById('province').addEventListener('change',function(){
+  const bmEl=document.getElementById('benchmarkMarche');
+  delete bmEl.dataset.userModified;
+  updateBenchmark();
+});
+
+// ═══════════════════════════════════════
+// CALCULATION ENGINE
+// ═══════════════════════════════════════
+let lastResults={};
+
+function n(id){return parseFloat(document.getElementById(id)?.value)||0;}
+
+function calc(){
+  const results={};
+
+  // ── 1. ÉQUITÉ & LIFT ──
+  const valMarche=n('valeurMarchande');
+  const dette=n('detteExistante');
+  const pret=n('montantPret');
+  const valApres=n('valeurApresCom');
+
+  const paperEquity=valMarche-dette-pret;
+  const lift=valApres>0 ? valApres-valMarche : 0;
+  const liftRatio=pret>0&&lift>0 ? lift/pret : 0;
+  results.paperEquity=paperEquity;
+  results.lift=lift;
+  results.liftRatio=liftRatio;
+
+  // Verdict équité
+  let vEquity='neutral';
+  if(liftRatio>0){
+    if(liftRatio>=2.0) vEquity='ok';
+    else if(liftRatio>=1.2) vEquity='warn';
+    else vEquity='crit';
+  }
+  results.vEquity=vEquity;
+
+  // Update UI
+  setText('cr-paperEquity', paperEquity!==0 ? fmtCAD(paperEquity) : '—', paperEquity>=0?'gold':'crit');
+  setText('cr-lift', lift>0 ? fmtCAD(lift) : '—', 'gold');
+  setText('cr-liftRatio', liftRatio>0 ? liftRatio.toFixed(2)+'×' : '—', verdictClass(vEquity));
+  const lrPct=Math.min(liftRatio/3,1)*100;
+  setBar('mb-liftRatio', lrPct, vEquity);
+  setBarLabel('mb-liftRatio-val', liftRatio>0?liftRatio.toFixed(2)+'×':'—');
+  setVerdict('mv-equity', vEquity, {ok:'OK — Bonne équité',warn:'À SURVEILLER',crit:'CRITIQUE — Lift insuffisant',neutral:'EN ATTENTE'});
+  setVerdict('sv-equity', vEquity, {ok:'🟢 OK',warn:'🟡 SURVEILLER',crit:'🔴 CRITIQUE',neutral:'— EN ATTENTE'});
+  setText('sv-equity-val', liftRatio>0 ? `Ratio ${liftRatio.toFixed(2)}×` : '—', '');
+
+  // ── 2. HONORAIRES ──
+  const orig=n('fraisOrigination');
+  const cour=n('fraisCourtier');
+  const legal=n('fraisLegal');
+  const admin=n('fraisAdmin');
+  const autres=n('fraisAutres');
+  const feesTotal=orig+cour+legal+admin+autres;
+  const feesPct=pret>0&&feesTotal>0 ? (feesTotal/pret)*100 : 0;
+  results.feesTotal=feesTotal;
+  results.feesPct=feesPct;
+
+  let vFees='neutral';
+  if(feesTotal>0||pret>0){
+    if(feesPct<=4) vFees='ok';
+    else if(feesPct<=6) vFees='warn';
+    else vFees='crit';
+  }
+  results.vFees=vFees;
+
+  setText('cr-feesTotal', feesTotal>0?fmtCAD(feesTotal):'—', 'gold');
+  setText('cr-feesPct', feesPct>0?feesPct.toFixed(2)+'%':'—', verdictClass(vFees));
+  const fpPct=Math.min(feesPct/10,1)*100;
+  setBar('mb-fees', fpPct, vFees);
+  setBarLabel('mb-fees-val', feesPct>0?feesPct.toFixed(2)+'%':'—');
+  setVerdict('mv-fees', vFees, {ok:'OK — Frais raisonnables',warn:'À SURVEILLER',crit:'CRITIQUE — Frais excessifs',neutral:'EN ATTENTE'});
+  setVerdict('sv-fees', vFees, {ok:'🟢 OK',warn:'🟡 SURVEILLER',crit:'🔴 CRITIQUE',neutral:'— EN ATTENTE'});
+  setText('sv-fees-val', feesPct>0 ? feesPct.toFixed(1)+'% du prêt' : '—', '');
+
+  // ── 3. COÛT PAR PORTE ──
+  const nbUnites=n('nombreUnites');
+  const coutTotal=n('coutTotalProjet');
+  const benchmark=n('benchmarkMarche');
+  const coutParPorte=nbUnites>0&&coutTotal>0 ? coutTotal/nbUnites : 0;
+  const ecart=benchmark>0&&coutParPorte>0 ? ((coutParPorte-benchmark)/benchmark)*100 : null;
+  results.coutParPorte=coutParPorte;
+  results.ecart=ecart;
+
+  let vUnits='neutral';
+  if(coutParPorte>0&&benchmark>0){
+    if(ecart<=10) vUnits='ok';
+    else if(ecart<=25) vUnits='warn';
+    else vUnits='crit';
+  }
+  results.vUnits=vUnits;
+
+  setText('cr-coutParPorte', coutParPorte>0?fmtCAD(coutParPorte):'—', 'gold');
+  setText('cr-benchmark', benchmark>0?fmtCAD(benchmark)+' / porte':'—', '');
+  const ecartTxt=ecart!==null ? (ecart>=0?'+':'')+ecart.toFixed(1)+'%' : '—';
+  setText('cr-ecart', ecartTxt, ecart!==null ? verdictClass(vUnits) : '');
+  if(ecart!==null){
+    const uPct=Math.min((ecart+20)/60,1)*100; // -20% to +40% range mapped to 0-100%
+    setBar('mb-units', Math.max(uPct,0), vUnits);
+  } else {
+    setBar('mb-units', 0, 'neutral');
+  }
+  setBarLabel('mb-units-val', ecartTxt);
+  setVerdict('mv-units', vUnits, {ok:'OK — Coût conforme marché',warn:'À SURVEILLER — Coût élevé',crit:'CRITIQUE — Hors marché',neutral:'EN ATTENTE'});
+  setVerdict('sv-units', vUnits, {ok:'🟢 OK',warn:'🟡 SURVEILLER',crit:'🔴 CRITIQUE',neutral:'— EN ATTENTE'});
+  setText('sv-units-val', coutParPorte>0 ? fmtCAD(coutParPorte)+'/porte' : '—', '');
+
+  // ── 4. HOLDBACK & SÛRETÉ ──
+  const holdbackRequis=pret*0.05;
+  const holdbackEffectif=n('holdbackMisEnPlace');
+  const valGarantie=n('valeurGarantie');
+  const holdbackCov=holdbackRequis>0 ? (holdbackEffectif/holdbackRequis)*100 : 0;
+  const ltv=valGarantie>0&&pret>0 ? (pret/valGarantie)*100 : 0;
+  results.holdbackRequis=holdbackRequis;
+  results.holdbackCov=holdbackCov;
+  results.ltv=ltv;
+
+  // Auto-fill holdback requis field
+  const hrEl=document.getElementById('holdbackRequis');
+  if(hrEl) hrEl.value=holdbackRequis>0?Math.round(holdbackRequis):'';
+  // Auto-fill LTV field
+  const ltvEl=document.getElementById('ltvCalc');
+  if(ltvEl) ltvEl.value=ltv>0?ltv.toFixed(1)+'%':'—';
+
+  let vHoldback='neutral';
+  if(pret>0){
+    if(holdbackCov>=100) vHoldback='ok';
+    else if(holdbackCov>=80) vHoldback='warn';
+    else if(holdbackEffectif>0) vHoldback='crit';
+    else vHoldback='neutral';
+  }
+  results.vHoldback=vHoldback;
+
+  setText('cr-holdbackRequis', holdbackRequis>0?fmtCAD(holdbackRequis):'—', 'gold');
+  setText('cr-holdbackEffectif', holdbackEffectif>0?fmtCAD(holdbackEffectif):'—', holdbackEffectif>=holdbackRequis?'ok':'warn');
+  setText('cr-holdbackCov', holdbackCov>0?holdbackCov.toFixed(0)+'%':'—', verdictClass(vHoldback));
+  setText('cr-ltv', ltv>0?ltv.toFixed(1)+'%'+(ltv<=75?' ✓':ltv<=85?' ⚠':' ✗'):'—', ltv>0&&ltv<=75?'ok':ltv>0&&ltv<=85?'warn':ltv>0?'crit':'');
+  setBar('mb-holdback', Math.min(holdbackCov,100), vHoldback);
+  setBarLabel('mb-holdback-val', holdbackCov>0?holdbackCov.toFixed(0)+'%':'—');
+  setVerdict('mv-holdback', vHoldback, {ok:'OK — Holdback conforme',warn:'À SURVEILLER — Déficit partiel',crit:'CRITIQUE — Holdback insuffisant',neutral:'EN ATTENTE'});
+  setVerdict('sv-holdback', vHoldback, {ok:'🟢 OK',warn:'🟡 SURVEILLER',crit:'🔴 CRITIQUE',neutral:'— EN ATTENTE'});
+  setText('sv-holdback-val', holdbackCov>0?holdbackCov.toFixed(0)+'% couvert':'—', '');
+
+  // ── 5. SOFT COSTS ──
+  const scArchi=n('scArchitecture');
+  const scIng=n('scIngenierie');
+  const scPerm=n('scPermis');
+  const scMkt=n('scMarketing');
+  const scFin=n('scFinancement');
+  const scAut=n('scAutres');
+  const softTotal=scArchi+scIng+scPerm+scMkt+scFin+scAut;
+  const hardCosts=n('coutsDurs');
+  const softRatio=hardCosts>0&&softTotal>0 ? (softTotal/hardCosts)*100 : 0;
+  results.softTotal=softTotal;
+  results.hardCosts=hardCosts;
+  results.softRatio=softRatio;
+
+  // Auto-fill soft total
+  const stEl=document.getElementById('softCostsTotal');
+  if(stEl) stEl.value=softTotal>0?Math.round(softTotal):'';
+
+  let vSoft='neutral';
+  if(softTotal>0&&hardCosts>0){
+    if(softRatio<=15) vSoft='ok';
+    else if(softRatio<=25) vSoft='warn';
+    else vSoft='crit';
+  }
+  results.vSoft=vSoft;
+
+  setText('cr-softTotal', softTotal>0?fmtCAD(softTotal):'—', 'gold');
+  setText('cr-hardCosts', hardCosts>0?fmtCAD(hardCosts):'—', '');
+  setText('cr-softRatio', softRatio>0?softRatio.toFixed(1)+'%':'—', verdictClass(vSoft));
+  const spPct=Math.min(softRatio/40,1)*100;
+  setBar('mb-soft', spPct, vSoft);
+  setBarLabel('mb-soft-val', softRatio>0?softRatio.toFixed(1)+'%':'—');
+  setVerdict('mv-soft', vSoft, {ok:'OK — Coûts accessoires maîtrisés',warn:'À SURVEILLER',crit:'CRITIQUE — Coûts accessoires excessifs',neutral:'EN ATTENTE'});
+  setVerdict('sv-soft', vSoft, {ok:'🟢 OK',warn:'🟡 SURVEILLER',crit:'🔴 CRITIQUE',neutral:'— EN ATTENTE'});
+  setText('sv-soft-val', softRatio>0?softRatio.toFixed(0)+'% des durs':'—', '');
+
+  // ── SCORE GLOBAL & RECOMMANDATION FINALE ──
+  const verdicts=[vEquity,vFees,vUnits,vHoldback,vSoft];
+  const weights=[0.35,0.20,0.20,0.15,0.10];
+  const scoreMap={ok:100,warn:60,crit:0,neutral:null};
+
+  let totalWeight=0;
+  let totalScore=0;
+  verdicts.forEach((v,i)=>{
+    const s=scoreMap[v];
+    if(s!==null){
+      totalScore+=s*weights[i];
+      totalWeight+=weights[i];
+    }
+  });
+
+  const nbCrit=verdicts.filter(v=>v==='crit').length;
+  const nbWarn=verdicts.filter(v=>v==='warn').length;
+  const nbNeutral=verdicts.filter(v=>v==='neutral').length;
+
+  // Champs obligatoires pour toute analyse valide
+  const champsMandatoires = valMarche>0 && pret>0 && coutTotal>0 && nbUnites>0;
+  // Analyse complète = tous les 5 modules ont des données
+  const analyseComplete = nbNeutral===0;
+  // Analyse partielle = champs obligatoires remplis, certains modules encore vides
+  const analysePartielle = champsMandatoires && nbNeutral>0 && nbNeutral<5;
+  const hasData = champsMandatoires && totalWeight>0;
+
+  // Identifier les champs manquants
+  const champsManquants=[];
+  if(valMarche===0) champsManquants.push('Valeur marchande');
+  if(pret===0) champsManquants.push('Montant du prêt Norvex');
+  if(coutTotal===0) champsManquants.push('Coût total du projet');
+  if(nbUnites===0) champsManquants.push('Nombre d\'unités');
+
+  let reco='pending';
+  let recoScore=null;
+  let recoMain='En attente des données';
+  let recoSub='Complétez les 5 modules d\'analyse pour obtenir la recommandation finale du système Norvex Intelligence™.';
+
+  if(!champsMandatoires && nbNeutral<5){
+    // Données partielles mais champs obligatoires manquants
+    reco='pending';
+    recoMain='⚠️ DONNÉES INSUFFISANTES';
+    recoSub='Champs obligatoires manquants : '+champsManquants.join(', ')+'. Aucun score fiable ne peut être généré sans une ventilation de coûts complète.';
+  } else if(hasData){
+    recoScore=Math.round(totalScore/totalWeight);
+    if(nbCrit>=2){
+      reco='rejet';
+      recoMain='❌ REJET';
+      recoSub=`${nbCrit} indicateur(s) CRITIQUE détecté(s). Ce dossier présente des risques financiers majeurs qui ne peuvent pas être atténués par une restructuration mineure. Rejet recommandé.`+(analysePartielle?' ⚠ Analyse partielle — certains modules sont incomplets.':'');
+    } else if(nbCrit===1||nbWarn>=2){
+      reco='restructure';
+      recoMain='⚠️ RESTRUCTURATION RECOMMANDÉE';
+      recoSub=`${nbCrit} indicateur(s) critique et ${nbWarn} indicateur(s) à surveiller. Une restructuration des conditions est nécessaire avant d'aller de l'avant.`+(analysePartielle?' ⚠ Analyse partielle — complétez tous les modules pour un score définitif.':'');
+    } else if(analyseComplete){
+      reco='proceder';
+      recoMain='✅ PROCÉDER';
+      recoSub=`Score global de ${recoScore}/100 — analyse complète sur 5 modules. Le dossier passe les critères Norvex Intelligence™. Procédez avec due diligence standard.`;
+    } else {
+      // Champs obligatoires OK mais modules incomplets → score partiel, pas de GO définitif
+      reco='restructure';
+      recoMain='📋 ANALYSE INCOMPLÈTE';
+      recoSub=`Score partiel de ${recoScore}/100 basé sur ${5-nbNeutral} module(s) sur 5. Complétez tous les modules de la ventilation de coûts pour obtenir la recommandation finale Norvex Intelligence™.`;
+    }
+  }
+
+  results.reco=reco;
+  results.score=recoScore;
+
+  // Update score strip final cell
+  setText('sc-score', recoScore!==null?recoScore:hasData?'...':'—', '');
+  setText('sc-reco-mini', reco!=='pending' ? recoMain.replace(/[✅❌⚠️]/g,'').trim() : 'En attente', '');
+
+  // Update reco block
+  const recoMainEl=document.getElementById('recoMain');
+  recoMainEl.className='reco-main '+reco;
+  recoMainEl.textContent=recoMain;
+  document.getElementById('recoSub').textContent=recoSub;
+
+  const circle=document.getElementById('recoCircle');
+  circle.className='reco-score-circle '+reco;
+  document.getElementById('recoCircleNum').textContent=recoScore!==null?recoScore:'—';
+
+  // Pills
+  const pills=document.getElementById('recoPills');
+  const pillLabels=['Équité','Honoraires','Coût/Porte','Holdback','Soft Costs'];
+  pills.innerHTML=verdicts.map((v,i)=>
+    `<span class="rvp ${v}">${pillLabels[i]}: ${v==='ok'?'🟢 OK':v==='warn'?'🟡 SURVEILLER':v==='crit'?'🔴 CRITIQUE':'— N/A'}</span>`
+  ).join('');
+
+  lastResults=results;
+}
+
+// ═══════════════════════════════════════
+// SAVE TO FIRESTORE
+// ═══════════════════════════════════════
+function saveAnalysis(){
+  if(!currentDossier) return;
+  const dossierId=currentDossier.id||currentDossier._fbId;
+  if(!dossierId) return;
+
+  const inputs={
+    valeurMarchande:n('valeurMarchande'),detteExistante:n('detteExistante'),
+    montantPret:n('montantPret'),valeurApresCom:n('valeurApresCom'),
+    fraisOrigination:n('fraisOrigination'),fraisCourtier:n('fraisCourtier'),
+    fraisLegal:n('fraisLegal'),fraisAdmin:n('fraisAdmin'),fraisAutres:n('fraisAutres'),
+    typeProjet:document.getElementById('typeProjet').value,
+    province:document.getElementById('province').value,
+    nombreUnites:n('nombreUnites'),coutTotalProjet:n('coutTotalProjet'),
+    benchmarkMarche:n('benchmarkMarche'),
+    holdbackMisEnPlace:n('holdbackMisEnPlace'),
+    rangHypo:document.getElementById('rangHypo').value,
+    valeurGarantie:n('valeurGarantie'),
+    scArchitecture:n('scArchitecture'),scIngenierie:n('scIngenierie'),
+    scPermis:n('scPermis'),scMarketing:n('scMarketing'),
+    scFinancement:n('scFinancement'),scAutres:n('scAutres'),
+    coutsDurs:n('coutsDurs'),
+    notesAnalyse:document.getElementById('notesAnalyse').value,
+  };
+
+  const results={
+    paperEquity:lastResults.paperEquity||0,
+    lift:lastResults.lift||0,
+    liftRatio:lastResults.liftRatio||0,
+    verdictEquite:lastResults.vEquity||'neutral',
+    feesTotal:lastResults.feesTotal||0,
+    feesPct:lastResults.feesPct||0,
+    verdictFees:lastResults.vFees||'neutral',
+    coutParPorte:lastResults.coutParPorte||0,
+    ecartBenchmark:lastResults.ecart||0,
+    verdictUnits:lastResults.vUnits||'neutral',
+    holdbackRequis:lastResults.holdbackRequis||0,
+    holdbackCov:lastResults.holdbackCov||0,
+    verdictHoldback:lastResults.vHoldback||'neutral',
+    softTotal:lastResults.softTotal||0,
+    hardCosts:lastResults.hardCosts||0,
+    softRatio:lastResults.softRatio||0,
+    verdictSoftCosts:lastResults.vSoft||'neutral',
+    scoreGlobal:lastResults.score||0,
+    recommandationFinale:lastResults.reco||'pending',
+    ltv:lastResults.ltv||0,
+  };
+
+  const ts=firebase.firestore.FieldValue.serverTimestamp();
+  const data={
+    inputs,results,
+    analystedBy:'Yves Barrette',
+    dossierNom:currentDossier.nom||currentDossier.emprunteur||'—',
+    dossierId,
+    version:1,
+    updatedAt:ts,
+  };
+
+  const batch=_db.batch();
+  // Save as current
+  const curRef=_db.collection('dossiers').doc(dossierId).collection('costAnalyzer').doc('current');
+  batch.set(curRef,{...data,createdAt:ts},{merge:true});
+  // Save to history
+  const histRef=_db.collection('dossiers').doc(dossierId).collection('costAnalyzer').doc();
+  batch.set(histRef,{...data,createdAt:ts,_isHistory:true});
+
+  batch.commit().then(()=>{
+    showSaveStatus('Sauvegardé dans Firestore');
+    loadHistory(dossierId);
+    // Also update parent dossier with last analyzer snapshot
+    _db.collection('dossiers').doc(dossierId).update({
+      lastCostAnalyzer:{
+        score:results.scoreGlobal,
+        reco:results.recommandationFinale,
+        updatedAt:new Date().toISOString()
+      }
+    }).catch(()=>{});
+  }).catch(err=>{
+    console.error('Save error:',err);
+    alert('Erreur de sauvegarde: '+err.message);
+  });
+}
+
+function showSaveStatus(msg){
+  const el=document.getElementById('saveStatus');
+  el.querySelector('span').textContent='✓';
+  el.innerHTML=`<span>✓</span> ${msg}`;
+  el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'),3000);
+}
+
+// ═══════════════════════════════════════
+// LOAD HISTORY
+// ═══════════════════════════════════════
+function loadHistory(dossierId){
+  if(historyUnsub) historyUnsub();
+  historyUnsub=_db.collection('dossiers').doc(dossierId)
+    .collection('costAnalyzer')
+    .where('_isHistory','==',true)
+    .orderBy('createdAt','desc')
+    .limit(10)
+    .onSnapshot(snap=>{
+      const rows=[];
+      snap.forEach(doc=>{
+        const d=doc.data();
+        rows.push(d);
+      });
+      renderHistory(rows);
+    },()=>{});
+}
+
+function renderHistory(rows){
+  const el=document.getElementById('historyContent');
+  if(!rows.length){
+    el.innerHTML='<p style="font-size:.72rem;color:var(--muted);font-style:italic">Aucune analyse sauvegardée pour ce dossier.</p>';
+    return;
+  }
+  const recoIcons={proceder:'✅ PROCÉDER',restructure:'⚠️ RESTRUCTURATION',rejet:'❌ REJET',pending:'—'};
+  el.innerHTML=`<table class="hist-table">
+    <thead><tr>
+      <th>Date</th><th>Score</th><th>Recommandation</th>
+      <th>Équité</th><th>Frais</th><th>$/Porte</th><th>Holdback</th><th>Soft</th>
+    </tr></thead>
+    <tbody>${rows.map(r=>{
+      const res=r.results||{};
+      const ts=r.createdAt?.toDate?.();
+      const dateStr=ts?ts.toLocaleString('fr-CA',{dateStyle:'short',timeStyle:'short'}):'—';
+      return `<tr>
+        <td class="mono">${dateStr}</td>
+        <td class="mono">${res.scoreGlobal||'—'}/100</td>
+        <td>${recoIcons[res.recommandationFinale]||'—'}</td>
+        <td>${verdictBadge(res.verdictEquite)}</td>
+        <td>${verdictBadge(res.verdictFees)}</td>
+        <td>${verdictBadge(res.verdictUnits)}</td>
+        <td>${verdictBadge(res.verdictHoldback)}</td>
+        <td>${verdictBadge(res.verdictSoftCosts)}</td>
+      </tr>`;
+    }).join('')}</tbody>
+  </table>`;
+}
+
+function verdictBadge(v){
+  const m={ok:'🟢',warn:'🟡',crit:'🔴',neutral:'—'};
+  return m[v]||'—';
+}
+
+// ═══════════════════════════════════════
+// RESET
+// ═══════════════════════════════════════
+function resetForm(){
+  if(!confirm('Réinitialiser tous les champs?')) return;
+  const fields=['valeurMarchande','detteExistante','valeurApresCom',
+    'fraisOrigination','fraisCourtier','fraisLegal','fraisAdmin','fraisAutres',
+    'nombreUnites','coutTotalProjet',
+    'holdbackMisEnPlace','valeurGarantie',
+    'scArchitecture','scIngenierie','scPermis','scMarketing','scFinancement','scAutres','coutsDurs',
+    'notesAnalyse'];
+  fields.forEach(f=>{const el=document.getElementById(f);if(el)el.value='';});
+  delete document.getElementById('benchmarkMarche').dataset.userModified;
+  // Re-fill prêt from dossier
+  if(currentDossier){
+    const m=currentDossier.montant||currentDossier.montantDemande||0;
+    if(m) document.getElementById('montantPret').value=m;
+  }
+  updateBenchmark();
+  calc();
+}
+
+// ═══════════════════════════════════════
+// UI HELPERS
+// ═══════════════════════════════════════
+function setText(id, text, cls){
+  const el=document.getElementById(id);
+  if(!el) return;
+  el.textContent=text;
+  if(cls!==undefined) el.className='cr-val '+(cls||'');
+}
+
+function setBar(id, pct, verdict){
+  const el=document.getElementById(id);
+  if(!el) return;
+  el.style.width=Math.min(Math.max(pct,0),100)+'%';
+  el.className='metric-fill '+(verdict||'neutral');
+}
+
+function setBarLabel(id, text){
+  const el=document.getElementById(id);
+  if(el) el.textContent=text;
+}
+
+function setVerdict(id, verdict, labels){
+  const el=document.getElementById(id);
+  if(!el) return;
+  el.className=(id.startsWith('mv-')?'mod-verdict ':'sc-verdict ')+verdict;
+  el.textContent=labels[verdict]||verdict;
+}
+
+function verdictClass(v){
+  return {ok:'ok',warn:'warn',crit:'crit',neutral:''}[v]||'';
+}
+
+function fmtCAD(n){
+  if(!n&&n!==0) return '—';
+  return new Intl.NumberFormat('fr-CA',{style:'currency',currency:'CAD',maximumFractionDigits:0}).format(n);
+}
+
+// ═══════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════
+calc();
+</script>
+</body>
+</html>

@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>Béatrice — Tableau de bord exécutif Yves · Capital Norvex</title>
+  <!-- PWA Admin (Suzanne+Yves installable) - 2026-05-20 -->
+  <link rel="manifest" href="/manifest-admin.json">
+  <meta name="theme-color" content="#0a0a0a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Norvex Admin">
+  <link rel="apple-touch-icon" href="/icon-192.png">
+<link rel="icon" href="/icon-512.png">
+<script>
+  // Défense cache 2026-05-19 : unregister anciens service workers + drop caches
+  // sur pages admin pour garantir que le JS le plus récent est toujours servi.
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then(regs => {
+      regs.forEach(reg => {
+        if (reg.scope && (reg.scope.includes('-admin') || reg.scope === location.origin + '/')) {
+          // Pas d'unregister total — on garde le SW global mais on force update
+          reg.update();
+        }
+      });
+    }).catch(() => {});
+  }
+  if ('caches' in window) {
+    caches.keys().then(names => {
+      names.forEach(n => {
+        if (n.startsWith('capitalnorvex-v1') || n === 'capitalnorvex-v1') caches.delete(n);
+      });
+    }).catch(() => {});
+  }
+</script>
+<style>
+  :root {
+    --bg: #FBF7EB;
+    --card: #ffffff;
+    --ink: #0A0A0A;
+    --gold: #C8B070;
+    --gold-dark: #9A8554;
+    --border: #e6dfc9;
+    --text: #1a1a1a;
+    --muted: #666;
+    --green: #2d8a3e;
+    --red: #c33;
+    --blue: #1d4ed8;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: Georgia, "Times New Roman", serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.55;
+  }
+  header {
+    background: linear-gradient(135deg, #0A0A0A, #1a1a1a);
+    color: white;
+    padding: 22px 36px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 3px solid var(--gold);
+  }
+  header h1 {
+    margin: 0;
+    font-family: Georgia, serif;
+    font-size: 22px;
+    letter-spacing: 1px;
+  }
+  header h1 .pill {
+    color: var(--gold);
+    font-size: 10.5px;
+    letter-spacing: 2.5px;
+    display: block;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-family: -apple-system, sans-serif;
+    margin-top: 2px;
+  }
+  header .actions { display: flex; gap: 10px; align-items: center; }
+  header button {
+    background: var(--gold);
+    color: var(--ink);
+    border: none;
+    padding: 8px 14px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 4px;
+    font-family: -apple-system, sans-serif;
+    font-size: 13px;
+  }
+  header button:hover { background: #d4be7e; }
+  header .count {
+    background: rgba(255,255,255,0.1);
+    padding: 6px 12px;
+    border-radius: 14px;
+    color: var(--gold);
+    font-family: -apple-system, sans-serif;
+    font-size: 12px;
+    letter-spacing: 1px;
+  }
+  main { max-width: 980px; margin: 24px auto; padding: 0 24px 80px; }
+  .login-screen {
+    text-align: center;
+    padding: 80px 20px;
+    max-width: 440px;
+    margin: 60px auto;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+  .login-screen h2 { font-family: Georgia, serif; color: var(--ink); margin-top: 0; }
+  .login-screen input {
+    width: 100%; padding: 12px;
+    border: 1px solid var(--border); border-radius: 4px;
+    font-size: 15px; font-family: -apple-system, sans-serif;
+    margin: 14px 0;
+  }
+  .login-screen button {
+    width: 100%; padding: 14px;
+    background: var(--ink); color: var(--gold);
+    border: none; cursor: pointer; font-weight: 600;
+    font-family: -apple-system, sans-serif;
+    font-size: 14px; letter-spacing: 1.5px;
+    border-radius: 4px;
+  }
+  .login-screen button:hover { background: #1a1a1a; }
+  .info-banner {
+    background: #FCF8EE;
+    border-left: 3px solid var(--gold);
+    padding: 14px 18px;
+    margin-bottom: 24px;
+    font-size: 14px;
+    color: var(--muted);
+  }
+  .info-banner strong { color: var(--ink); }
+  .draft-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 22px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .draft-header {
+    padding: 16px 22px;
+    background: linear-gradient(180deg, #fdfcf6 0%, #fcfaf3 100%);
+    border-bottom: 1px solid var(--border);
+  }
+  .draft-meta-line {
+    display: flex; justify-content: space-between; align-items: baseline;
+    flex-wrap: wrap; gap: 8px;
+  }
+  .draft-from {
+    font-size: 13px; color: var(--muted);
+    font-family: -apple-system, sans-serif;
+  }
+  .draft-from strong { color: var(--ink); }
+  .draft-version {
+    background: var(--gold);
+    color: var(--ink);
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    letter-spacing: 1px;
+    font-weight: 600;
+    font-family: -apple-system, sans-serif;
+  }
+  .draft-subject {
+    margin: 8px 0 0;
+    font-size: 17px;
+    font-family: Georgia, serif;
+    color: var(--ink);
+  }
+  .draft-cat {
+    display: inline-block;
+    margin-top: 6px;
+    background: #f0ead4;
+    color: var(--gold-dark);
+    padding: 2px 10px;
+    border-radius: 10px;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-family: -apple-system, sans-serif;
+    font-weight: 600;
+  }
+  .draft-preview {
+    padding: 22px 28px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    max-height: 580px;
+    overflow-y: auto;
+    font-size: 14px;
+  }
+  .draft-preview iframe {
+    width: 100%;
+    border: none;
+    min-height: 380px;
+    background: white;
+  }
+  .section-block {
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-block:last-child { border-bottom: none; }
+  .section-label {
+    font-size: 10.5px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    margin-bottom: 12px;
+    font-family: -apple-system, sans-serif;
+    font-weight: 600;
+  }
+  .quick-buttons {
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+  .quick-btn {
+    background: white;
+    border: 1px solid var(--gold);
+    color: var(--ink);
+    padding: 8px 14px;
+    border-radius: 18px;
+    cursor: pointer;
+    font-family: -apple-system, sans-serif;
+    font-size: 13px;
+    transition: all .15s;
+  }
+  .quick-btn:hover { background: var(--gold); color: var(--ink); }
+  .instruction-area textarea {
+    width: 100%;
+    min-height: 90px;
+    padding: 12px 14px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 14.5px;
+    font-family: Georgia, serif;
+    resize: vertical;
+    background: white;
+  }
+  .instruction-area textarea:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(200,176,112,0.15);
+  }
+  .refine-btn {
+    margin-top: 10px;
+    background: var(--ink);
+    color: var(--gold);
+    border: none;
+    padding: 12px 24px;
+    cursor: pointer;
+    font-family: -apple-system, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    border-radius: 4px;
+    text-transform: uppercase;
+  }
+  .refine-btn:hover { background: #1a1a1a; }
+  .refine-btn:disabled { opacity: 0.5; cursor: wait; }
+  .manual-edit textarea {
+    width: 100%;
+    min-height: 240px;
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 12.5px;
+    background: #fafaf5;
+  }
+  .manual-edit-toggle {
+    background: none;
+    border: 1px dashed var(--gold-dark);
+    color: var(--gold-dark);
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: -apple-system, sans-serif;
+    font-size: 13px;
+  }
+  .manual-edit { display: block; margin-top: 12px; }
+  .manual-edit.open { display: block; }
+  .save-manual-btn {
+    margin-top: 8px;
+    background: var(--blue);
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    cursor: pointer;
+    font-family: -apple-system, sans-serif;
+    font-size: 13px;
+    border-radius: 4px;
+  }
+  .decision-bar {
+    display: flex; gap: 12px;
+    padding: 18px 24px;
+    background: linear-gradient(180deg, #fdfcf6, #fcfaf3);
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .approve-btn {
+    background: var(--green);
+    color: white;
+    border: none;
+    padding: 14px 28px;
+    cursor: pointer;
+    font-family: -apple-system, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    border-radius: 4px;
+    text-transform: uppercase;
+  }
+  .approve-btn:hover { background: #237030; }
+  .reject-btn {
+    background: white;
+    color: var(--red);
+    border: 1px solid var(--red);
+    padding: 14px 24px;
+    cursor: pointer;
+    font-family: -apple-system, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 4px;
+  }
+  .reject-btn:hover { background: var(--red); color: white; }
+  .versions-history {
+    padding: 14px 22px;
+    background: #fafaf5;
+    font-size: 12.5px;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    font-family: -apple-system, sans-serif;
+  }
+  .versions-history details summary {
+    cursor: pointer;
+    color: var(--gold-dark);
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-size: 11px;
+  }
+  .versions-history li {
+    margin: 6px 0;
+    list-style: none;
+    padding-left: 16px;
+    border-left: 2px solid var(--border);
+  }
+  .empty {
+    text-align: center; padding: 60px 20px; color: var(--muted);
+    background: var(--card); border: 1px dashed var(--border); border-radius: 8px;
+  }
+  .empty h3 { font-family: Georgia, serif; color: var(--ink); margin-top: 0; }
+  .toast {
+    position: fixed; bottom: 30px; right: 30px;
+    padding: 14px 22px; border-radius: 6px;
+    background: var(--ink); color: var(--gold);
+    font-family: -apple-system, sans-serif; font-size: 14px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+    z-index: 9999;
+    animation: slideIn .25s ease;
+  }
+  .toast.error { background: var(--red); color: white; }
+  .toast.success { background: var(--green); color: white; }
+  @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+  .spinner {
+    display: inline-block;
+    width: 14px; height: 14px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: var(--gold);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── Command Bar (Yves initie un courriel via Béatrice) ── */
+  .command-bar {
+    background: linear-gradient(135deg, #fffaf0, #fffbe5);
+    border: 2px solid var(--gold);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin: 16px 0;
+    box-shadow: 0 2px 12px rgba(200,176,112,0.18);
+  }
+  .command-bar-header {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+  .cmd-label {
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--gold-dark);
+    letter-spacing: 0.5px;
+  }
+  .cmd-help {
+    font-size: 12px;
+    color: var(--muted);
+    flex: 1;
+  }
+  .command-bar-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .cmd-input, .cmd-select {
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: white;
+    font-size: 13px;
+    font-family: inherit;
+  }
+  .cmd-input { flex: 1; min-width: 220px; }
+  .cmd-select { cursor: pointer; }
+  .cmd-textarea {
+    width: 100%;
+    min-height: 70px;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: Georgia, serif;
+    resize: vertical;
+    background: white;
+    box-sizing: border-box;
+    margin-bottom: 8px;
+  }
+  .cmd-textarea:focus, .cmd-input:focus, .cmd-select:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(200,176,112,0.18);
+  }
+  .cmd-btn-primary {
+    background: var(--ink);
+    color: var(--gold);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  .cmd-btn-primary:hover { background: #1a1a1a; }
+  .cmd-btn-primary:disabled { opacity: 0.5; cursor: wait; }
+  .cmd-btn-secondary {
+    background: white;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    padding: 10px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+  }
+  .cmd-btn-secondary:hover { background: #f0f0f3; }
+</style>
+</head>
+<body>
+
+<div id="loginScreen" class="login-screen" style="display:none">
+  <h2>Béatrice — Accès exécutif</h2>
+  <p style="color:var(--muted);font-size:14px">Tableau de bord assistante exécutive d'Yves Barrette<br>Capital Norvex Inc.</p>
+  <input type="password" id="secretInput" placeholder="Mot de passe administrateur" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" onkeydown="if(event.key==='Enter'){doLogin();}">
+  <button type="button" id="loginBtn" onclick="doLogin()">Accéder</button>
+  <p style="font-size:11px;color:#999;margin-top:14px;text-align:center">Si Safari propose un mot de passe sauvegardé, ignore-le et tape <code style="background:#f0f0f0;padding:2px 6px;border-radius:3px;font-family:monospace">Norvex2026!</code></p>
+</div>
+
+<div id="appContainer" style="display:none">
+  <header>
+    <h1>
+      Béatrice
+      <span class="pill">Tableau de bord exécutif · Yves Barrette</span>
+    </h1>
+    <div class="actions">
+      <span class="count" id="countBadge">— drafts</span>
+      <span id="last-refresh" style="font-size:12px;color:#888;margin-right:8px;">Dernière mise à jour : —</span>
+      <button onclick="loadDrafts()">↻ Rafraîchir</button>
+      <button onclick="logout()" style="background:transparent;color:var(--gold);border:1px solid var(--gold)">Déconnexion</button>
+    </div>
+  </header>
+
+  <main>
+    <div class="info-banner">
+      <strong>Béatrice est ton ghostwriter</strong> — elle pulse <code>yves@capitalnorvex.com</code> aux 10 minutes, drafte des réponses dans ta voix (Directeur-Fondateur),
+      tu approuves chaque envoi. Camille gère le juridique séparément. <br>
+      <strong>Pour raffiner</strong> : tape une instruction en langage naturel (« refais plus court, ajoute X… »), Béatrice régénère.
+      <strong>Pour modifier directement</strong> : utilise l'édition manuelle.
+    </div>
+
+    <!-- Stats activité 24h -->
+    <div id="statsCard" style="background:#fff;border:1px solid #e5e5e7;border-radius:12px;padding:16px 20px;margin:16px 0;">
+      <div style="font-weight:700;font-size:14px;color:#1a1a1a;margin-bottom:12px;letter-spacing:.5px;">
+        ACTIVITÉ DERNIÈRES 24H
+      </div>
+      <div style="display:flex;gap:24px;flex-wrap:wrap;font-variant-numeric:tabular-nums lining-nums;">
+        <div><div id="statTotal" style="font-size:24px;font-weight:700;color:#1a1a1a">—</div><div style="font-size:12px;color:#666">Emails traités</div></div>
+        <div><div id="statDrafts" style="font-size:24px;font-weight:700;color:#9A8554">—</div><div style="font-size:12px;color:#666">Drafts créés</div></div>
+        <div><div id="statAutoReplies" style="font-size:24px;font-weight:700;color:#888">—</div><div style="font-size:12px;color:#666">Auto-replies ignorés ⓘ</div></div>
+        <div><div id="statDedup" style="font-size:24px;font-weight:700;color:#888">—</div><div style="font-size:12px;color:#666">Doublons skip</div></div>
+        <div><div id="statNoReply" style="font-size:24px;font-weight:700;color:#888">—</div><div style="font-size:12px;color:#666">No-reply skip</div></div>
+        <div><div id="statLastRun" style="font-size:14px;font-weight:600;color:#444">—</div><div style="font-size:12px;color:#666">Dernier run</div></div>
+      </div>
+      <div style="font-size:11px;color:#999;margin-top:10px">
+        ⓘ Les out-of-office et accusés de réception automatiques sont détectés et ignorés (aucune réponse à un robot).
+      </div>
+    </div>
+
+    <!-- Toggle Mode Mobile -->
+    <div id="mobileModeCard" style="background:#fff;border:1px solid #e5e5e7;border-radius:12px;padding:18px 20px;margin:16px 0;display:flex;align-items:center;gap:18px;justify-content:space-between;flex-wrap:wrap;">
+      <div style="flex:1;min-width:240px">
+        <div style="font-weight:700;font-size:15px;color:#1a1a1a;margin-bottom:4px">
+          📱 Mode Mobile (sur la route)
+        </div>
+        <div style="font-size:13px;color:#666;line-height:1.5">
+          Quand activé, Béatrice t'envoie un <strong>SMS</strong> au 514-531-2705 avec 3 boutons (Approuver / Rejeter / Modifier) au lieu d'attendre dans ce dashboard.
+          Idéal en RDV ou en route — tu approuves d'un tap sur ton iPhone.
+        </div>
+        <div id="mobileModeStatus" style="font-size:12px;color:#999;margin-top:6px"></div>
+      </div>
+      <label style="display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none;">
+        <span id="mobileModeLabel" style="font-size:13px;color:#1a1a1a;font-weight:600;white-space:nowrap">💻 Bureau</span>
+        <input type="checkbox" id="mobileModeToggle" onchange="toggleMobileMode(this.checked)" style="width:48px;height:24px;cursor:pointer;accent-color:#C9A227;">
+      </label>
+    </div>
+
+    <!-- ── COMMAND BAR — Yves initie un courriel via Béatrice ── -->
+    <div class="command-bar">
+      <div class="command-bar-header">
+        <span class="cmd-label">⚡ Commande directe à Béatrice</span>
+        <span class="cmd-help">Yves écrit ici pour INITIER un courriel (sans attendre un email entrant). Béatrice rédige dans ta voix, tu approuves.</span>
+      </div>
+      <div class="command-bar-row">
+        <input type="email" id="cmd-recipient" placeholder="destinataire@email.com (optionnel)" class="cmd-input">
+        <select id="cmd-lang" class="cmd-select" title="Langue">
+          <option value="">Auto</option>
+          <option value="fr">FR</option>
+          <option value="en">EN</option>
+        </select>
+      </div>
+      <textarea id="cmd-instruction" class="cmd-textarea" placeholder="Ex : Écris à Patrick Rougeau (patrick@desjardins.com) pour le remercier de l'appel d'hier et lui proposer un suivi la semaine prochaine."></textarea>
+      <div class="command-bar-row" style="justify-content:flex-end;gap:8px">
+        <button class="cmd-btn-secondary" onclick="document.getElementById('cmd-instruction').value=''">Effacer</button>
+        <button class="cmd-btn-primary" id="cmd-create-btn" onclick="createDraftFromCommand()">✉️ Créer le draft</button>
+      </div>
+    </div>
+
+    <div id="draftsContainer"></div>
+  </main>
+</div>
+
+<script>
+  const STORAGE_KEY = "beatrice_admin_secret";
+
+  function getSecret() {
+    // Fix 2026-05-19 : SOURCE UNIQUE = STORAGE_KEY (beatrice_admin_secret).
+    // Les vieux SSO keys (norvex_secret, beatrice_secret) causaient des conflits
+    // quand le mot de passe universel a changé. On les ignore désormais.
+    return localStorage.getItem(STORAGE_KEY) || "";
+  }
+
+  function showToast(msg, type) {
+    const old = document.querySelector(".toast"); if (old) old.remove();
+    const el = document.createElement("div");
+    el.className = "toast " + (type || "");
+    el.textContent = msg;
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 4000);
+  }
+
+  function escapeHtml(s) {
+    if (!s) return "";
+    return String(s).replace(/[&<>"']/g, (c) => ({
+      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;",
+    }[c]));
+  }
+
+  function doLogin() {
+    console.log('[beatrice-admin] doLogin() fired');
+    const inp = document.getElementById("secretInput");
+    if (!inp) { console.error('[beatrice-admin] secretInput introuvable'); return; }
+    const v = (inp.value || "").trim();
+    if (!v) { showToast("Mot de passe requis", "error"); return; }
+    try {
+      // Fix 2026-05-19 : écrase TOUS les vieux keys (norvex_secret, beatrice_secret)
+      // pour éviter qu'un ancien secret périmé bloque l'auth via getSecret().
+      localStorage.setItem("norvex_secret", v);
+      localStorage.setItem("beatrice_secret", v);
+      localStorage.setItem(STORAGE_KEY, v);
+    } catch (e) {
+      console.error('[beatrice-admin] localStorage.setItem failed:', e);
+      showToast("Erreur stockage navigateur — essaie en navigation privée", "error");
+      return;
+    }
+    showApp();
+  }
+  // Garantie : addEventListener supplémentaire au cas où onclick inline serait bloqué
+  document.addEventListener('DOMContentLoaded', function() {
+    const btn = document.getElementById('loginBtn');
+    if (btn) {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        doLogin();
+      });
+    }
+  });
+  // Expose doLogin globalement pour debug console
+  window.doLogin = doLogin;
+
+  function logout() {
+    localStorage.removeItem(STORAGE_KEY);
+    location.reload();
+  }
+
+  // ── COMMAND BAR — Yves initie un courriel via Béatrice ────────
+  async function createDraftFromCommand() {
+    const instruction = document.getElementById("cmd-instruction").value.trim();
+    if (!instruction || instruction.length < 5) {
+      showToast("Tape une instruction d'au moins 5 caractères", "error");
+      return;
+    }
+    const recipient = document.getElementById("cmd-recipient").value.trim();
+    const language = document.getElementById("cmd-lang").value;
+    const btn = document.getElementById("cmd-create-btn");
+    const originalText = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span>Béatrice rédige…';
+    try {
+      const payload = { instruction };
+      if (recipient) payload.recipient = recipient;
+      if (language) payload.language = language;
+      const res = await fetch("/api/beatrice-create-draft", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "X-Internal-Secret": getSecret() },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.ok) throw new Error(data.error || `HTTP ${res.status}`);
+      showToast("✅ Draft créé — disponible ci-dessous", "success");
+      document.getElementById("cmd-instruction").value = "";
+      document.getElementById("cmd-recipient").value = "";
+      await loadDrafts();
+    } catch (e) {
+      showToast("❌ " + e.message, "error");
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = originalText;
+    }
+  }
+
+  function showApp() {
+    document.getElementById("loginScreen").style.display = "none";
+    document.getElementById("appContainer").style.display = "block";
+    loadDrafts();
+    loadMobileMode();
+    loadStats();
+    setInterval(loadStats, 60_000); // refresh stats toutes les 60s
+  }
+
+  // ── STATS 24H ──
+  async function loadStats() {
+    try {
+      const r = await fetch("/api/beatrice-stats", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Internal-Secret": getSecret(),
+        },
+        body: "{}",
+      });
+      const d = await r.json();
+      if (!r.ok || !d.ok) return;
+      const s = d.stats || {};
+      document.getElementById("statTotal").textContent = s.totalProcessed || 0;
+      document.getElementById("statDrafts").textContent = s.draftsCreated || 0;
+      document.getElementById("statAutoReplies").textContent = s.autoRepliesSkipped || 0;
+      document.getElementById("statDedup").textContent = s.dedupSkipped || 0;
+      document.getElementById("statNoReply").textContent = (s.noReplySkipped || 0) + (s.personalSkipped || 0);
+      const last = s.lastRunAt ? new Date(s.lastRunAt) : null;
+      document.getElementById("statLastRun").textContent = last
+        ? last.toLocaleTimeString("fr-CA", {hour:"2-digit",minute:"2-digit"})
+        : "—";
+    } catch (e) {
+      // silencieux — stats facultatives
+    }
+  }
+
+  // ── MODE MOBILE ──
+  async function loadMobileMode() {
+    const toggle = document.getElementById("mobileModeToggle");
+    const label = document.getElementById("mobileModeLabel");
+    const status = document.getElementById("mobileModeStatus");
+    if (!toggle) return;
+    try {
+      const r = await fetch("/api/beatrice-toggle-mobile-mode", {
+        method: "GET",
+        headers: { "X-Internal-Secret": getSecret() },
+      });
+      const data = await r.json();
+      if (!data.ok) throw new Error(data.error || "erreur");
+      toggle.checked = !!data.mobile_mode;
+      _updateMobileLabel(data.mobile_mode);
+      if (data.updatedAt) {
+        const d = new Date(data.updatedAt);
+        status.textContent = "Dernière modification : " + d.toLocaleString("fr-CA");
+      }
+    } catch (e) {
+      status.textContent = "Erreur chargement : " + e.message;
+      status.style.color = "#c33";
+    }
+  }
+  function _updateMobileLabel(active) {
+    const label = document.getElementById("mobileModeLabel");
+    if (!label) return;
+    if (active) {
+      label.innerHTML = '📱 Mobile (SMS) <span style="color:#2d8a3e">●</span>';
+    } else {
+      label.textContent = "💻 Bureau";
+    }
+  }
+  async function toggleMobileMode(checked) {
+    const status = document.getElementById("mobileModeStatus");
+    const toggle = document.getElementById("mobileModeToggle");
+    try {
+      const r = await fetch("/api/beatrice-toggle-mobile-mode", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "X-Internal-Secret": getSecret() },
+        body: JSON.stringify({ mobile_mode: !!checked }),
+      });
+      const data = await r.json();
+      if (!data.ok) throw new Error(data.error || "erreur");
+      _updateMobileLabel(data.mobile_mode);
+      status.textContent = data.message || "";
+      status.style.color = data.mobile_mode ? "#2d8a3e" : "#999";
+      showToast(data.message, "success");
+    } catch (e) {
+      showToast("Erreur : " + e.message, "error");
+      toggle.checked = !checked;  // revert UI
+    }
+  }
+
+  async function loadDrafts() {
+    const secret = getSecret();
+    if (!secret) { return showLogin(); }
+    try {
+      const res = await fetch("/api/beatrice-list-drafts?t=" + Date.now(), {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "X-Internal-Secret": secret },
+        body: JSON.stringify({ status: "pending_yves_approval", limit: 50 }),
+        cache: "no-store",
+      });
+      if (res.status === 401) {
+        // Fix 2026-05-19 : nettoie TOUS les vieux keys, pas juste STORAGE_KEY
+        localStorage.removeItem(STORAGE_KEY);
+        localStorage.removeItem("norvex_secret");
+        localStorage.removeItem("beatrice_secret");
+        showToast("Session expirée — réentre ton mot de passe", "error");
+        return showLogin();
+      }
+      const data = await res.json();
+      if (!data.ok) throw new Error(data.error || "Erreur inconnue");
+      renderDrafts(data.drafts || []);
+      document.getElementById("countBadge").textContent =
+        (data.drafts || []).length + " drafts en attente";
+      const lr = document.getElementById("last-refresh");
+      if (lr) lr.textContent = "Dernière mise à jour : " + new Date().toLocaleTimeString("fr-CA");
+      showToast("Données rafraîchies (" + (data.drafts || []).length + " drafts)", "success");
+    } catch (e) {
+      showToast("Erreur chargement : " + e.message, "error");
+    }
+  }
+
+  function showLogin() {
+    document.getElementById("loginScreen").style.display = "block";
+    document.getElementById("appContainer").style.display = "none";
+  }
+
+  function renderDrafts(drafts) {
+    const c = document.getElementById("draftsContainer");
+    if (!drafts.length) {
+      c.innerHTML = `<div class="empty">
+        <h3>Aucun draft en attente</h3>
+        <p>Béatrice te notifie quand un nouveau courriel arrive sur yves@.<br>
+        Le cron tourne aux 10 minutes.</p>
+      </div>`;
+      return;
+    }
+    c.innerHTML = drafts.map(renderDraftCard).join("");
+  }
+
+  function renderDraftCard(d) {
+    const versions = d.versions || [];
+    const versionLabel = versions.length > 0 ? `v${versions.length} (${versions.length} itérations)` : "v1 (initial)";
+    const cat = (d.triageSnapshot && d.triageSnapshot.category) || "—";
+    const lang = (d.triageSnapshot && d.triageSnapshot.language) || "fr";
+    const preview = d.signedHtml || d.bodyHtml || "(vide)";
+    const previewBlob = "data:text/html;charset=utf-8;base64," + btoa(unescape(encodeURIComponent(preview)));
+    const versionsHtml = versions.length > 0 ? `
+      <div class="versions-history">
+        <details>
+          <summary>Historique des versions (${versions.length})</summary>
+          <ul>
+            ${versions.map((v) => `
+              <li><strong>v${v.version}</strong> — ${new Date(v.createdAt).toLocaleString("fr-CA")}<br>
+              <em style="color:#888">Instruction : ${escapeHtml(v.instruction || "(initial)")}</em></li>
+            `).join("")}
+          </ul>
+        </details>
+      </div>` : "";
+
+    return `
+    <div class="draft-card" data-draft-id="${escapeHtml(d.id)}">
+      <div class="draft-header">
+        <div class="draft-meta-line">
+          <div class="draft-from">
+            <strong>De :</strong> ${escapeHtml(d.toRecipient || "—")}
+            &nbsp;·&nbsp;
+            <strong>Langue :</strong> ${lang.toUpperCase()}
+          </div>
+          <span class="draft-version">${versionLabel}</span>
+        </div>
+        <h3 class="draft-subject">${escapeHtml(d.subject || "(sans objet)")}</h3>
+        <span class="draft-cat">${escapeHtml(cat)}</span>
+      </div>
+
+      <div class="draft-preview">
+        <iframe srcdoc="${escapeHtml(preview)}"></iframe>
+      </div>
+
+      <div class="section-block">
+        <div class="section-label">⚡ Boutons rapides</div>
+        <div class="quick-buttons">
+          <button class="quick-btn" onclick="injectInstr('${escapeHtml(d.id)}', 'Refais plus court (4-5 phrases max)')">Plus court</button>
+          <button class="quick-btn" onclick="injectInstr('${escapeHtml(d.id)}', 'Refais avec un ton plus chaleureux et personnel')">Plus chaleureux</button>
+          <button class="quick-btn" onclick="injectInstr('${escapeHtml(d.id)}', 'Refais avec un ton plus formel et institutionnel')">Plus formel</button>
+          <button class="quick-btn" onclick="injectInstr('${escapeHtml(d.id)}', 'Inverse le ton actuel : si trop chaleureux, plus formel ; si trop formel, plus chaleureux')">Inverser le ton</button>
+          <button class="quick-btn" onclick="askReference('${escapeHtml(d.id)}')">+ Ajouter référence…</button>
+          <button class="quick-btn" onclick="injectInstr('${escapeHtml(d.id)}', 'Ajoute mon numéro de téléphone direct : 438-533-PRÊT (7738), heures ouvrables.')">📞 + Téléphone</button>
+          <button class="quick-btn" onclick="injectInstr('${escapeHtml(d.id)}', 'Ajoute le lien public pour réserver un Teams : https://capitalnorvex.com/rdv-public.html — précise que je validerai personnellement la demande et enverrai une invitation confirmée par courriel.')">💻 + Lien Teams</button>
+          <button class="quick-btn" onclick="injectInstr('${escapeHtml(d.id)}', 'Propose les 2 options de RDV : (1) par téléphone direct au 438-533-PRÊT (7738), heures ouvrables, OU (2) via le formulaire Teams en ligne https://capitalnorvex.com/rdv-public.html que je validerai personnellement avant d\\'envoyer une invitation confirmée par courriel.')">📅 + Tél &amp; Teams</button>
+          <button class="quick-btn" onclick="injectInstr('${escapeHtml(d.id)}', 'Ajoute une invitation à compléter le Score Norvex sur capitalnorvex.com/capital-norvex-score')">Inviter Score Norvex</button>
+        </div>
+      </div>
+
+      <div class="section-block instruction-area">
+        <div class="section-label">💬 Instruction libre — Yves parle à Béatrice</div>
+        <textarea id="instr-${escapeHtml(d.id)}" placeholder="Ex : Refais plus court, ajoute une référence à notre rencontre du 15 avril, et propose un appel jeudi PM"></textarea>
+        <button class="refine-btn" id="refineBtn-${escapeHtml(d.id)}" onclick="refineDraft('${escapeHtml(d.id)}')">🔄 Refaire le draft</button>
+      </div>
+
+      <div class="section-block">
+        <div class="section-label" style="margin-top:8px">✏️ Corrections manuelles avant approbation (édite directement le HTML, aucun appel IA)</div>
+        <div class="manual-edit" id="manual-${escapeHtml(d.id)}">
+          <textarea id="manualHtml-${escapeHtml(d.id)}">${escapeHtml(d.bodyHtml || "")}</textarea>
+          <button class="save-manual-btn" onclick="saveManualEdit('${escapeHtml(d.id)}')">💾 Sauvegarder mes corrections</button>
+          <span style="margin-left:10px;color:var(--muted);font-size:12px;font-style:italic">Mes modifications ne sont PAS envoyées tant que je n'ai pas cliqué « Approuver et envoyer ».</span>
+        </div>
+      </div>
+
+      <div class="decision-bar">
+        <button class="approve-btn" onclick="approveDraft('${escapeHtml(d.id)}')">✅ Approuver et envoyer</button>
+        <button class="reject-btn" onclick="rejectDraft('${escapeHtml(d.id)}')">🗑 Rejeter</button>
+        <span style="margin-left:auto;color:var(--muted);font-size:12.5px;font-family:-apple-system,sans-serif">
+          Créé : ${d.createdAt ? new Date(d.createdAt).toLocaleString("fr-CA") : "—"}
+        </span>
+      </div>
+
+      ${versionsHtml}
+    </div>`;
+  }
+
+  function injectInstr(id, text) {
+    const ta = document.getElementById("instr-" + id);
+    const current = ta.value.trim();
+    ta.value = current ? current + " ; " + text : text;
+    ta.focus();
+  }
+
+  function askReference(id) {
+    const ref = prompt("Référence à ajouter (ex : « notre rencontre du 15 avril chez Stikeman ») :");
+    if (ref && ref.trim()) injectInstr(id, "Ajoute une référence à : " + ref.trim());
+  }
+
+  function toggleManualEdit(id) {
+    const el = document.getElementById("manual-" + id);
+    el.classList.toggle("open");
+  }
+
+  async function refineDraft(id) {
+    const ta = document.getElementById("instr-" + id);
+    const instruction = ta.value.trim();
+    if (!instruction) { showToast("Tape une instruction d'abord", "error"); return; }
+    const btn = document.getElementById("refineBtn-" + id);
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span>Béatrice révise…';
+    try {
+      const res = await fetch("/api/beatrice-refine-draft", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "X-Internal-Secret": getSecret() },
+        body: JSON.stringify({ draftId: id, instruction }),
+      });
+      const data = await res.json();
+      if (!data.ok) throw new Error(data.error || "Erreur refine");
+      showToast("Draft régénéré (v" + data.version + ")", "success");
+      ta.value = "";
+      await loadDrafts();
+    } catch (e) {
+      showToast("Erreur : " + e.message, "error");
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = "🔄 Refaire le draft";
+    }
+  }
+
+  async function saveManualEdit(id) {
+    const ta = document.getElementById("manualHtml-" + id);
+    const html = ta.value;
+    if (!html.trim()) { showToast("HTML vide", "error"); return; }
+    try {
+      const res = await fetch("/api/beatrice-update-draft", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "X-Internal-Secret": getSecret() },
+        body: JSON.stringify({ draftId: id, bodyHtml: html, signedHtml: html }),
+      });
+      const data = await res.json();
+      if (!data.ok) throw new Error(data.error || "Erreur update");
+      showToast("Modifications sauvegardées", "success");
+      await loadDrafts();
+    } catch (e) {
+      showToast("Erreur : " + e.message, "error");
+    }
+  }
+
+  async function approveDraft(id) {
+    if (!confirm("Approuver et ENVOYER ce draft maintenant ?\n\nL'envoi est immédiat depuis yves@capitalnorvex.com.")) return;
+    try {
+      // Pour le bouton dashboard on utilise le pattern Sophie : POST avec secret
+      // (le HMAC token est pour les liens email externes seulement)
+      const res = await fetch("/api/beatrice-approve", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "X-Internal-Secret": getSecret() },
+        body: JSON.stringify({ draftId: id }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data.ok) throw new Error(data.error || "Erreur approve");
+      showToast("Envoyé ✅", "success");
+      await loadDrafts();
+    } catch (e) {
+      showToast("Erreur envoi : " + e.message, "error");
+    }
+  }
+
+  async function rejectDraft(id) {
+    const reason = prompt("Raison du rejet (optionnel) :", "");
+    if (reason === null) return;
+    try {
+      const res = await fetch("/api/beatrice-reject", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "X-Internal-Secret": getSecret() },
+        body: JSON.stringify({ draftId: id, reason }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data.ok) throw new Error(data.error || "Erreur reject");
+      showToast("Draft rejeté", "success");
+      await loadDrafts();
+    } catch (e) {
+      showToast("Erreur : " + e.message, "error");
+    }
+  }
+
+  // Init
+  if (getSecret()) {
+    showApp();
+  } else {
+    showLogin();
+  }
+
+  // Auto-refresh toutes les 30s
+  setInterval(() => {
+    if (getSecret() && document.getElementById("appContainer").style.display !== "none") {
+      loadDrafts();
+    }
+  }, 30000);
+</script>
+
+</body>
+</html>

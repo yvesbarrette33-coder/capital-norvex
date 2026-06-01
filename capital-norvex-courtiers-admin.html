@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Capital Norvex — Candidatures Courtiers (Admin)</title>
+  <!-- PWA Admin (Suzanne+Yves installable) - 2026-05-20 -->
+  <link rel="manifest" href="/manifest-admin.json">
+  <meta name="theme-color" content="#0a0a0a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Norvex Admin">
+  <link rel="apple-touch-icon" href="/icon-192.png">
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FBF7EB;
+    --cream-warm: #FCF8EE;
+    --ink: #0A0A0A;
+    --gold: #C8B070;
+    --gold-dark: #9A8554;
+    --stone: #d6cdb8;
+    --muted: #6a6a6a;
+    --green: #4a7c4a;
+    --green-bg: #eef3ee;
+    --red: #b03030;
+    --red-bg: #fdecec;
+    --blue: #36577a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', -apple-system, system-ui, sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  /* Topbar */
+  .topbar {
+    background: var(--ink);
+    padding: 22px 24px;
+    text-align: center;
+    border-bottom: 3px solid var(--gold);
+  }
+  .topbar img {
+    max-width: 120px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+  .topbar-context {
+    color: var(--gold);
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-top: 14px;
+    font-style: italic;
+  }
+
+  /* Layout */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 32px 24px 80px;
+  }
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+    gap: 18px;
+  }
+  .page-title h1 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+    font-size: 28px;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  .page-title h1 em { color: var(--gold); font-style: italic; }
+  .page-title p {
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 6px;
+  }
+  .summary-cards {
+    display: flex;
+    gap: 12px;
+  }
+  .sc {
+    background: #fff;
+    border: 1px solid var(--stone);
+    border-left: 3px solid var(--gold);
+    padding: 12px 18px;
+    min-width: 110px;
+  }
+  .sc-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+  }
+  .sc-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    color: var(--ink);
+    margin-top: 2px;
+  }
+
+  /* Tabs */
+  .tabs {
+    display: flex;
+    gap: 4px;
+    border-bottom: 1px solid var(--stone);
+    margin-bottom: 24px;
+  }
+  .tab {
+    background: transparent;
+    border: none;
+    padding: 12px 20px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    margin-bottom: -1px;
+  }
+  .tab:hover { color: var(--ink); }
+  .tab.is-active {
+    color: var(--ink);
+    border-bottom-color: var(--gold);
+    font-weight: 500;
+  }
+  .tab-count {
+    display: inline-block;
+    background: var(--cream-warm);
+    border: 1px solid var(--stone);
+    color: var(--muted);
+    border-radius: 999px;
+    font-size: 11px;
+    padding: 1px 8px;
+    margin-left: 6px;
+    font-weight: 400;
+  }
+  .tab.is-active .tab-count {
+    background: var(--ink);
+    color: var(--gold);
+    border-color: var(--ink);
+  }
+
+  /* Application cards */
+  .apps-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .app-card {
+    background: #fff;
+    border: 1px solid var(--stone);
+    padding: 22px 24px;
+    transition: box-shadow 0.2s;
+  }
+  .app-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+  .app-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .app-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    color: var(--ink);
+  }
+  .app-agency {
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 2px;
+  }
+  .app-meta {
+    color: var(--muted);
+    font-size: 11.5px;
+    margin-top: 6px;
+    letter-spacing: 0.3px;
+  }
+  .app-status {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border: 1px solid var(--stone);
+    align-self: flex-start;
+  }
+  .app-status.s-pending_review { color: var(--blue); border-color: var(--blue); }
+  .app-status.s-approved { color: var(--green); border-color: var(--green); background: var(--green-bg); }
+  .app-status.s-declined { color: var(--red); border-color: var(--red); background: var(--red-bg); }
+
+  .app-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 14px 22px;
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid var(--cream-warm);
+  }
+  .app-field { font-size: 13px; }
+  .app-field-label {
+    font-size: 9.5px;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    margin-bottom: 3px;
+  }
+  .app-field-value { color: var(--ink); }
+  .app-field-value a { color: var(--gold-dark); text-decoration: none; }
+  .app-field-value a:hover { text-decoration: underline; }
+
+  .motivation {
+    margin-top: 18px;
+    padding: 14px 18px;
+    background: var(--cream-warm);
+    border-left: 2px solid var(--gold);
+    font-size: 13px;
+    color: #3a3a3a;
+    white-space: pre-wrap;
+    line-height: 1.65;
+  }
+  .motivation-label {
+    font-size: 9.5px;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    margin-bottom: 6px;
+  }
+
+  .actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 18px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    padding: 10px 18px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: 1px solid var(--stone);
+    background: #fff;
+    color: var(--ink);
+    transition: all 0.2s;
+  }
+  .btn:hover { border-color: var(--ink); }
+  .btn-primary {
+    background: var(--ink);
+    color: var(--gold);
+    border-color: var(--gold);
+  }
+  .btn-primary:hover { background: var(--gold); color: var(--ink); }
+  .btn-decline {
+    background: #fff;
+    color: var(--red);
+    border-color: var(--red);
+  }
+  .btn-decline:hover { background: var(--red); color: #fff; }
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  .reviewed-info {
+    margin-top: 14px;
+    padding: 10px 14px;
+    background: var(--cream-warm);
+    font-size: 12px;
+    color: var(--muted);
+    border-left: 2px solid var(--stone);
+  }
+  .reviewed-info strong { color: var(--ink); }
+
+  .empty {
+    text-align: center;
+    padding: 60px 24px;
+    color: var(--muted);
+    font-style: italic;
+  }
+  .loading {
+    text-align: center;
+    padding: 40px 24px;
+    color: var(--muted);
+  }
+
+  /* Auth screen */
+  .auth-screen {
+    max-width: 420px;
+    margin: 80px auto;
+    background: #fff;
+    border: 1px solid var(--stone);
+    border-left: 3px solid var(--gold);
+    padding: 36px;
+  }
+  .auth-screen h2 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+    font-size: 22px;
+    margin-bottom: 14px;
+  }
+  .auth-screen p {
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 18px;
+  }
+  .auth-screen input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--stone);
+    font-family: inherit;
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+  .auth-screen input:focus { outline: none; border-color: var(--gold); }
+  .auth-error {
+    color: var(--red);
+    font-size: 12px;
+    margin-top: 8px;
+    display: none;
+  }
+  .auth-error.is-visible { display: block; }
+
+  /* Modal */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: 24px;
+  }
+  .modal-overlay.is-open { display: flex; }
+  .modal {
+    background: var(--cream);
+    max-width: 520px;
+    width: 100%;
+    border: 1px solid var(--gold);
+    padding: 28px;
+  }
+  .modal h3 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+    font-size: 20px;
+    margin-bottom: 12px;
+  }
+  .modal textarea, .modal input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--stone);
+    font-family: inherit;
+    font-size: 13.5px;
+    margin-top: 10px;
+    margin-bottom: 4px;
+    resize: vertical;
+    min-height: 80px;
+  }
+  .modal-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 18px;
+    justify-content: flex-end;
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar" style="position:relative;">
+  <img src="assets/logo-norvex-officiel.png" alt="Capital Norvex">
+  <div class="topbar-context">Norvex Brain · Console interne</div>
+  <button id="logout-btn" hidden style="position:absolute;top:18px;right:18px;background:transparent;border:1px solid var(--gold);color:var(--gold);padding:6px 14px;font-size:10px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;font-family:'Inter',sans-serif;">Déconnecter</button>
+</div>
+
+<!-- AUTH SCREEN -->
+<div id="auth-screen" class="auth-screen">
+  <h2>Authentification interne</h2>
+  <p>Cette console est protégée. Saisissez la clé interne pour accéder aux candidatures courtiers.</p>
+  <form id="auth-form">
+    <input type="password" id="auth-secret" placeholder="Clé interne" autocomplete="off" required>
+    <button type="submit" class="btn btn-primary" style="width:100%;">Accéder</button>
+    <div class="auth-error" id="auth-error">Clé invalide. Réessayez.</div>
+  </form>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="admin-panel" class="container" hidden>
+  <div class="page-header">
+    <div class="page-title">
+      <h1>Candidatures <em>courtiers</em></h1>
+      <p>Examen et approbation des courtiers partenaires postulants au programme exclusif.</p>
+    </div>
+    <div class="summary-cards">
+      <div class="sc"><div class="sc-label">En attente</div><div class="sc-value" id="count-pending">—</div></div>
+      <div class="sc"><div class="sc-label">Approuvées</div><div class="sc-value" id="count-approved">—</div></div>
+      <div class="sc"><div class="sc-label">Refusées</div><div class="sc-value" id="count-declined">—</div></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;margin-top:8px;">
+      <button onclick="loadApplications()" style="background:transparent;border:1px solid var(--gold);color:var(--gold);padding:6px 14px;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;font-family:'Inter',sans-serif;">↻ Rafraîchir</button>
+      <span id="courtiers-last-refresh" style="font-size:11px;color:#888;">—</span>
+    </div>
+  </div>
+
+  <div class="tabs" role="tablist">
+    <button class="tab is-active" data-status="pending_review" role="tab">En attente <span class="tab-count" id="tc-pending">0</span></button>
+    <button class="tab" data-status="approved" role="tab">Approuvées <span class="tab-count" id="tc-approved">0</span></button>
+    <button class="tab" data-status="declined" role="tab">Refusées <span class="tab-count" id="tc-declined">0</span></button>
+  </div>
+
+  <div id="apps-container"><div class="loading">Chargement…</div></div>
+</div>
+
+<!-- Modal Approve -->
+<div class="modal-overlay" id="modal-approve">
+  <div class="modal">
+    <h3>Approuver la candidature ?</h3>
+    <p style="color:var(--muted);font-size:13px;">
+      Un numéro courtier <strong>CN-AAAA-NNN</strong> sera attribué automatiquement.
+      Le courtier recevra un courriel d'approbation avec son numéro, la grille de
+      commissions et les règles du programme.
+    </p>
+    <label style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold-dark);margin-top:14px;display:block;">Notes internes (optionnel)</label>
+    <textarea id="approve-notes" placeholder="Notes personnelles sur ce dossier..."></textarea>
+    <div class="modal-actions">
+      <button class="btn" data-modal-close="approve">Annuler</button>
+      <button class="btn btn-primary" id="approve-confirm">Approuver et envoyer</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Decline -->
+<div class="modal-overlay" id="modal-decline">
+  <div class="modal">
+    <h3>Refuser la candidature ?</h3>
+    <p style="color:var(--muted);font-size:13px;">
+      Le courtier recevra un courriel poli de refus. La raison ci-dessous est <strong>communiquée au courtier</strong> (laissez vide pour un refus standard).
+    </p>
+    <label style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold-dark);margin-top:14px;display:block;">Raison (visible par le courtier)</label>
+    <textarea id="decline-reason" placeholder="Optionnel — peut rester vide."></textarea>
+    <label style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold-dark);margin-top:14px;display:block;">Notes internes (optionnel, NON visible)</label>
+    <textarea id="decline-notes" placeholder="Notes personnelles..."></textarea>
+    <div class="modal-actions">
+      <button class="btn" data-modal-close="decline">Annuler</button>
+      <button class="btn btn-decline" id="decline-confirm">Refuser et envoyer</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  // ── Auth ───────────────────────────────────────────────────────────
+  var SECRET_KEY = 'cn_admin_secret';
+  var secret = localStorage.getItem(SECRET_KEY);
+
+  var authScreen  = document.getElementById('auth-screen');
+  var adminPanel  = document.getElementById('admin-panel');
+  var authForm    = document.getElementById('auth-form');
+  var authInput   = document.getElementById('auth-secret');
+  var authError   = document.getElementById('auth-error');
+
+  if (secret) {
+    showAdmin();
+  } else {
+    showAuth();
+  }
+
+  authForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    var s = authInput.value.trim();
+    if (!s) return;
+    // Test the secret with a lightweight call
+    fetch('/api/admin-broker-applications?limit=1', {
+      headers: { 'X-Internal-Secret': s }
+    })
+    .then(function(r){
+      if (r.ok) {
+        secret = s;
+        localStorage.setItem(SECRET_KEY, s);
+        showAdmin();
+      } else {
+        authError.classList.add('is-visible');
+        authInput.select();
+      }
+    })
+    .catch(function(){
+      authError.classList.add('is-visible');
+    });
+  });
+
+  var logoutBtn = document.getElementById('logout-btn');
+
+  function showAuth(){
+    authScreen.style.display = 'block';
+    adminPanel.hidden = true;
+    if (logoutBtn) logoutBtn.hidden = true;
+  }
+  function showAdmin(){
+    authScreen.style.display = 'none';
+    adminPanel.hidden = false;
+    if (logoutBtn) logoutBtn.hidden = false;
+    loadApplications();
+  }
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', function(){
+      if (confirm('Déconnecter cette console et oublier la clé ?')) {
+        localStorage.removeItem(SECRET_KEY);
+        secret = null;
+        showAuth();
+      }
+    });
+  }
+  function logoutOnUnauth(){
+    localStorage.removeItem(SECRET_KEY);
+    secret = null;
+    showAuth();
+  }
+
+  // ── Tabs ───────────────────────────────────────────────────────────
+  var currentStatus = 'pending_review';
+  var allApps = [];
+  var tabs = document.querySelectorAll('.tab');
+  for (var i = 0; i < tabs.length; i++) {
+    (function(t){
+      t.addEventListener('click', function(){
+        for (var j = 0; j < tabs.length; j++) tabs[j].classList.remove('is-active');
+        t.classList.add('is-active');
+        currentStatus = t.dataset.status;
+        renderList();
+      });
+    })(tabs[i]);
+  }
+
+  // ── Load ───────────────────────────────────────────────────────────
+  function loadApplications(){
+    var container = document.getElementById('apps-container');
+    container.innerHTML = '<div class="loading">Chargement…</div>';
+    fetch('/api/admin-broker-applications?limit=200&t=' + Date.now(), {
+      headers: { 'X-Internal-Secret': secret },
+      cache: 'no-store'
+    })
+    .then(function(r){
+      if (r.status === 401){ logoutOnUnauth(); throw new Error('unauth'); }
+      return r.json();
+    })
+    .then(function(data){
+      allApps = data.applications || [];
+      var counts = data.counts || { pending_review: 0, approved: 0, declined: 0 };
+      document.getElementById('count-pending').textContent = counts.pending_review;
+      document.getElementById('count-approved').textContent = counts.approved;
+      document.getElementById('count-declined').textContent = counts.declined;
+      document.getElementById('tc-pending').textContent = counts.pending_review;
+      document.getElementById('tc-approved').textContent = counts.approved;
+      document.getElementById('tc-declined').textContent = counts.declined;
+      renderList();
+      var lr = document.getElementById('courtiers-last-refresh');
+      if (lr) lr.textContent = 'Maj : ' + new Date().toLocaleTimeString('fr-CA');
+    })
+    .catch(function(e){
+      if (e.message !== 'unauth') {
+        container.innerHTML = '<div class="empty">Erreur de chargement.</div>';
+      }
+    });
+  }
+
+  // ── Render ─────────────────────────────────────────────────────────
+  function escapeHtml(s){
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+  function fmtDate(iso){
+    if (!iso) return '—';
+    try {
+      var d = new Date(iso);
+      return d.toLocaleString('fr-CA', {
+        timeZone: 'America/Toronto',
+        year: 'numeric', month: 'short', day: 'numeric',
+        hour: '2-digit', minute: '2-digit'
+      });
+    } catch { return iso; }
+  }
+  function statusLabel(s){
+    return s === 'pending_review' ? 'En attente'
+         : s === 'approved' ? 'Approuvée'
+         : s === 'declined' ? 'Refusée'
+         : s;
+  }
+
+  function renderList(){
+    var container = document.getElementById('apps-container');
+    var filtered = allApps.filter(function(a){ return a.status === currentStatus; });
+    if (filtered.length === 0) {
+      container.innerHTML = '<div class="empty">Aucune candidature dans cette catégorie.</div>';
+      return;
+    }
+    var html = '<div class="apps-list">';
+    filtered.forEach(function(a){
+      html += renderCard(a);
+    });
+    html += '</div>';
+    container.innerHTML = html;
+    // Bind action buttons
+    var btns = container.querySelectorAll('[data-action]');
+    for (var i = 0; i < btns.length; i++) {
+      (function(b){
+        b.addEventListener('click', function(){
+          openModal(b.dataset.action, b.dataset.appId);
+        });
+      })(btns[i]);
+    }
+  }
+
+  function renderCard(a){
+    var specialties = (a.specialties || []).join(', ') || '—';
+    var canAct = a.status === 'pending_review';
+    var actionsHtml = canAct
+      ? '<div class="actions">' +
+          '<button class="btn btn-primary" data-action="approve" data-app-id="' + a.id + '">✓ Approuver</button>' +
+          '<button class="btn btn-decline" data-action="decline" data-app-id="' + a.id + '">✗ Refuser</button>' +
+        '</div>'
+      : '';
+    var reviewedHtml = (a.reviewedAt)
+      ? '<div class="reviewed-info">' +
+          '<strong>Examiné</strong> le ' + escapeHtml(fmtDate(a.reviewedAt)) +
+          (a.reviewedBy ? ' par ' + escapeHtml(a.reviewedBy) : '') +
+          (a.reviewNotes ? '<br><em>Notes : ' + escapeHtml(a.reviewNotes) + '</em>' : '') +
+        '</div>'
+      : '';
+    var brokerNumHtml = a.brokerId
+      ? '<div class="app-field"><div class="app-field-label">Broker ID</div><div class="app-field-value" style="font-size:11.5px;font-family:Menlo,monospace;">' + escapeHtml(a.brokerId) + '</div></div>'
+      : '';
+
+    return '' +
+      '<div class="app-card">' +
+        '<div class="app-head">' +
+          '<div>' +
+            '<div class="app-name">' + escapeHtml(a.fullName) + '</div>' +
+            '<div class="app-agency">' + escapeHtml(a.agency) + ' &middot; ' + escapeHtml(a.province) + '</div>' +
+            '<div class="app-meta">Soumise ' + escapeHtml(fmtDate(a.submittedAt)) + ' &middot; <span style="font-family:Menlo,monospace;font-size:11px;">' + escapeHtml(a.id) + '</span></div>' +
+          '</div>' +
+          '<div class="app-status s-' + escapeHtml(a.status) + '">' + statusLabel(a.status) + '</div>' +
+        '</div>' +
+        '<div class="app-grid">' +
+          '<div class="app-field"><div class="app-field-label">Courriel</div><div class="app-field-value"><a href="mailto:' + escapeHtml(a.email) + '">' + escapeHtml(a.email) + '</a></div></div>' +
+          '<div class="app-field"><div class="app-field-label">Téléphone</div><div class="app-field-value">' + escapeHtml(a.phone) + '</div></div>' +
+          '<div class="app-field"><div class="app-field-label">N° licence</div><div class="app-field-value">' + escapeHtml(a.licenseNo) + '</div></div>' +
+          '<div class="app-field"><div class="app-field-label">Années en privé</div><div class="app-field-value">' + escapeHtml(a.yearsExperience) + '</div></div>' +
+          '<div class="app-field"><div class="app-field-label">Volume annuel</div><div class="app-field-value"><strong>' + escapeHtml(a.annualVolume) + '</strong></div></div>' +
+          '<div class="app-field"><div class="app-field-label">Dossiers/an</div><div class="app-field-value">' + escapeHtml(a.filesPerYear) + '</div></div>' +
+          '<div class="app-field" style="grid-column: 1 / -1;"><div class="app-field-label">Spécialités</div><div class="app-field-value">' + escapeHtml(specialties) + '</div></div>' +
+          (a.linkedin ? '<div class="app-field" style="grid-column: 1 / -1;"><div class="app-field-label">LinkedIn / site</div><div class="app-field-value"><a href="' + escapeHtml(a.linkedin) + '" target="_blank" rel="noopener">' + escapeHtml(a.linkedin) + '</a></div></div>' : '') +
+          brokerNumHtml +
+        '</div>' +
+        '<div class="motivation">' +
+          '<div class="motivation-label">Motivation</div>' +
+          escapeHtml(a.motivation) +
+        '</div>' +
+        actionsHtml +
+        reviewedHtml +
+      '</div>';
+  }
+
+  // ── Modals ─────────────────────────────────────────────────────────
+  var modalApprove = document.getElementById('modal-approve');
+  var modalDecline = document.getElementById('modal-decline');
+  var currentAppId = null;
+  var currentAction = null;
+
+  function openModal(action, appId){
+    currentAction = action;
+    currentAppId = appId;
+    if (action === 'approve') {
+      document.getElementById('approve-notes').value = '';
+      modalApprove.classList.add('is-open');
+    } else {
+      document.getElementById('decline-reason').value = '';
+      document.getElementById('decline-notes').value = '';
+      modalDecline.classList.add('is-open');
+    }
+  }
+  function closeModals(){
+    modalApprove.classList.remove('is-open');
+    modalDecline.classList.remove('is-open');
+    currentAppId = null;
+    currentAction = null;
+  }
+  document.querySelectorAll('[data-modal-close]').forEach(function(b){
+    b.addEventListener('click', closeModals);
+  });
+  [modalApprove, modalDecline].forEach(function(m){
+    m.addEventListener('click', function(e){
+      if (e.target === m) closeModals();
+    });
+  });
+
+  document.getElementById('approve-confirm').addEventListener('click', function(){
+    var notes = document.getElementById('approve-notes').value.trim();
+    submitDecision('approve', { notes: notes });
+  });
+  document.getElementById('decline-confirm').addEventListener('click', function(){
+    var reason = document.getElementById('decline-reason').value.trim();
+    var notes = document.getElementById('decline-notes').value.trim();
+    submitDecision('decline', { reason: reason, notes: notes });
+  });
+
+  function submitDecision(action, extras){
+    if (!currentAppId) return;
+    var btn = action === 'approve'
+      ? document.getElementById('approve-confirm')
+      : document.getElementById('decline-confirm');
+    btn.disabled = true;
+    btn.textContent = 'Envoi en cours…';
+    fetch('/api/admin-broker-decision', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Internal-Secret': secret
+      },
+      body: JSON.stringify(Object.assign({
+        applicationId: currentAppId,
+        action: action
+      }, extras))
+    })
+    .then(function(r){
+      if (r.status === 401){ logoutOnUnauth(); throw new Error('unauth'); }
+      return r.json();
+    })
+    .then(function(data){
+      if (data.ok){
+        var msg = action === 'approve'
+          ? 'Candidature approuvée. N° courtier ' + (data.brokerNumber || '?') + ' attribué. Email envoyé.'
+          : 'Candidature refusée. Email envoyé.';
+        if (!data.emailSent) msg += '\n⚠ Email NON envoyé : ' + (data.emailError || 'erreur inconnue');
+        alert(msg);
+        closeModals();
+        loadApplications();
+      } else {
+        alert('Erreur : ' + (data.error || 'inconnue'));
+      }
+    })
+    .catch(function(e){
+      if (e.message !== 'unauth') alert('Erreur réseau : ' + e.message);
+    })
+    .finally(function(){
+      btn.disabled = false;
+      btn.textContent = action === 'approve' ? 'Approuver et envoyer' : 'Refuser et envoyer';
+    });
+  }
+})();
+</script>
+
+</body>
+</html>

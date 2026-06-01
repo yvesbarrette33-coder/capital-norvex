@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "capitalnorvex",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["serve", "-p", "3000", "/Users/yvesbarrette/Desktop/capitalnorvex-site"],
+      "port": 3000
+    },
+    {
+      "name": "preview-templates",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "3100", "--directory", "/tmp/capital_norvex_previews"],
+      "port": 3100
+    }
+  ]
+}

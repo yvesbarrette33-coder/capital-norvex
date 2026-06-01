@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hugo — NORVEX CHANTIER™ · Dashboard</title>
+  <!-- PWA Admin (Suzanne+Yves installable) - 2026-05-20 -->
+  <link rel="manifest" href="/manifest-admin.json">
+  <meta name="theme-color" content="#0a0a0a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Norvex Admin">
+  <link rel="apple-touch-icon" href="/icon-192.png">
+<link rel="icon" href="/icon-512.png">
+<style>
+  :root {
+    --bg: #f7f7f9;
+    --card: #ffffff;
+    --border: #e5e5e7;
+    --text: #1a1a1a;
+    --muted: #777;
+    --gold: #C9A227;
+    --gold-dark: #a48618;
+    --green: #2d8a3e;
+    --red: #c33;
+    --orange: #d6a800;
+    --blue: #1d4ed8;
+    --ink: #0a0a0a;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "DM Sans", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+  }
+  header {
+    background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+    color: white;
+    padding: 20px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 3px solid var(--gold);
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  header h1 {
+    margin: 0;
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 22px;
+  }
+  header h1 .pill {
+    color: var(--gold);
+    font-size: 11px;
+    letter-spacing: 2px;
+    display: block;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-family: -apple-system, sans-serif;
+  }
+  header .stats {
+    display: flex;
+    gap: 24px;
+    font-size: 13px;
+  }
+  header .stats .num {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--gold);
+    display: block;
+  }
+  .container { padding: 24px 32px; max-width: 1400px; margin: 0 auto; }
+
+  /* Command bar — lancer une analyse */
+  .cmd-bar {
+    background: linear-gradient(135deg, #fffaf0, #fffbe5);
+    border: 2px solid var(--gold);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 12px rgba(201,162,39,0.15);
+  }
+  .cmd-bar h2 {
+    margin: 0 0 12px 0;
+    font-size: 14px;
+    color: var(--gold-dark);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .cmd-bar p {
+    margin: 0 0 12px 0;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .cmd-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .cmd-row input {
+    flex: 1;
+    min-width: 240px;
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 14px;
+  }
+  .cmd-row button {
+    background: var(--ink);
+    color: var(--gold);
+    border: none;
+    padding: 10px 22px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  .cmd-row button:hover { background: #1a1a1a; }
+  .cmd-row button:disabled { opacity: 0.5; cursor: wait; }
+  .spinner {
+    display: inline-block;
+    width: 12px; height: 12px;
+    border: 2px solid rgba(201,162,39,0.3);
+    border-top-color: var(--gold);
+    border-radius: 50%;
+    animation: spin .8s linear infinite;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Toolbar */
+  .toolbar {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+  .toolbar select, .toolbar button {
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: white;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  .toolbar button { background: var(--text); color: white; border: none; }
+
+  /* Layout 2 colonnes */
+  .layout {
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    gap: 24px;
+    height: calc(100vh - 360px);
+    min-height: 500px;
+  }
+  .report-list {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow-y: auto;
+    padding: 8px;
+  }
+  .report-item {
+    padding: 14px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    border-left: 4px solid transparent;
+    margin-bottom: 4px;
+    transition: background .15s;
+  }
+  .report-item:hover { background: #f0f0f3; }
+  .report-item.active { background: #f0f4f7; border-left-color: var(--gold); }
+  .report-item .title {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
+  .report-item .meta {
+    font-size: 11px;
+    color: var(--muted);
+    display: flex;
+    gap: 8px;
+  }
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 99px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+  }
+  .badge-ok { background: #d9f5e1; color: #1c5d2c; }
+  .badge-watch { background: #fff3d9; color: #8a5a00; }
+  .badge-critical { background: #fcd7d7; color: #8c1f1f; }
+  .badge-gap { background: #e0e7ff; color: #1e3a8a; }
+
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--muted);
+  }
+  .empty-state h3 { margin: 0 0 8px 0; color: var(--text); }
+
+  /* Detail */
+  .report-detail {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow-y: auto;
+    padding: 24px;
+  }
+  .report-detail h2 {
+    margin: 0 0 16px 0;
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 22px;
+    color: var(--gold-dark);
+  }
+  .verdict-box {
+    padding: 16px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border-left: 5px solid var(--gold);
+  }
+  .verdict-box.ok { background: #f0faf2; border-left-color: var(--green); }
+  .verdict-box.watch { background: #fffbeb; border-left-color: var(--orange); }
+  .verdict-box.critical { background: #fdf0f0; border-left-color: var(--red); }
+  .verdict-box.gap { background: #f0f4ff; border-left-color: var(--blue); }
+  .verdict-box .label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .verdict-box .verdict {
+    font-size: 24px;
+    font-weight: 700;
+    font-family: "Playfair Display", Georgia, serif;
+  }
+  .verdict-box .action {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 4px;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+
+  .modules-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .mod-card {
+    background: #fafbfc;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+  }
+  .mod-card h4 {
+    margin: 0 0 6px 0;
+    font-size: 12px;
+    color: var(--gold-dark);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .mod-card .verdict-mini {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .mod-card .finding {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  .section-h {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    margin: 20px 0 8px 0;
+  }
+
+  .alertes-list { margin: 0; padding: 0; list-style: none; }
+  .alertes-list li {
+    padding: 10px 14px;
+    border-radius: 6px;
+    margin-bottom: 6px;
+    border-left: 3px solid var(--orange);
+    background: #fffbeb;
+    font-size: 13px;
+  }
+  .alertes-list li.critical { border-left-color: var(--red); background: #fdf0f0; }
+  .alertes-list li.info { border-left-color: var(--blue); background: #f0f4ff; }
+
+  .next-steps { padding-left: 20px; font-size: 13px; line-height: 1.7; }
+
+  /* Login */
+  .login-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+  .login-card {
+    background: white;
+    padding: 36px;
+    border-radius: 12px;
+    width: 360px;
+    text-align: center;
+  }
+  .login-card h2 {
+    margin: 0 0 24px 0;
+    font-family: "Playfair Display", serif;
+    color: var(--gold);
+  }
+  .login-card input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 16px;
+    margin-bottom: 12px;
+    box-sizing: border-box;
+  }
+  .login-card button {
+    width: 100%;
+    padding: 12px;
+    background: var(--ink);
+    color: var(--gold);
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .login-error { color: var(--red); font-size: 13px; margin-top: 8px; }
+
+  .toast {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    background: var(--text);
+    color: white;
+    padding: 14px 22px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0,0,0,.2);
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all .3s;
+    z-index: 100;
+    max-width: 400px;
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+  .toast.error { background: var(--red); }
+  .toast.success { background: var(--green); }
+
+  @media (max-width: 980px) {
+    .layout { grid-template-columns: 1fr; height: auto; }
+    .modules-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-overlay" class="login-overlay">
+  <div class="login-card">
+    <h2>Hugo — NORVEX CHANTIER™</h2>
+    <p style="color:var(--muted);font-size:13px">Dashboard analyses construction</p>
+    <input id="login-password" type="password" placeholder="Mot de passe" autofocus>
+    <button onclick="doLogin()">Connexion</button>
+    <div id="login-error" class="login-error"></div>
+  </div>
+</div>
+
+<header>
+  <h1>
+    <span class="pill">Hugo — NORVEX CHANTIER™</span>
+    Dashboard analyses construction
+  </h1>
+  <div class="stats">
+    <div><span class="num" id="stat-total">0</span>Rapports</div>
+    <div><span class="num" id="stat-critical">0</span>Critiques</div>
+    <div><span class="num" id="stat-watch">0</span>À surveiller</div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- Command bar -->
+  <div class="cmd-bar">
+    <h2>⚡ Lancer une analyse Hugo</h2>
+    <p>Saisis l'<strong>ID Firestore d'un dossier</strong> (collection `dossiers`). Hugo appelle en parallèle les 3 modules construction (Intel + Track + Cost), synthétise et pousse dans Norvex Brain. Yves est notifié si verdict critique.</p>
+    <div class="cmd-row">
+      <input type="text" id="cmd-dossier-id" placeholder="DOSSIER-2026-001 ou ID Firestore" autocomplete="off">
+      <button id="cmd-run-btn" onclick="runAnalysis()">🚀 Lancer Hugo</button>
+    </div>
+  </div>
+
+  <!-- Toolbar -->
+  <div class="toolbar">
+    <label style="font-size:13px;color:var(--muted)">Filtre :</label>
+    <select id="filter-verdict" onchange="loadReports()">
+      <option value="all" selected>Tous les verdicts</option>
+      <option value="Critique">Critique</option>
+      <option value="À surveiller">À surveiller</option>
+      <option value="OK">OK</option>
+      <option value="DATA_GAP">Data gap</option>
+    </select>
+    <button onclick="loadReports()">🔄 Rafraîchir</button>
+    <span style="margin-left:auto;font-size:12px;color:var(--muted)">
+      Dernière mise à jour : <span id="last-refresh">—</span>
+    </span>
+  </div>
+
+  <!-- Layout liste / détail -->
+  <div class="layout">
+    <div id="report-list" class="report-list">
+      <div class="empty-state">Chargement…</div>
+    </div>
+
+    <div id="report-detail" class="report-detail">
+      <div class="empty-state">
+        <h3>Aucun rapport sélectionné</h3>
+        <p>Sélectionne un rapport à gauche pour voir le détail, ou lance une nouvelle analyse via la barre de commande au-dessus.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+let SECRET = localStorage.getItem("norvex_secret") || localStorage.getItem("hugo_secret");
+let CURRENT_REPORTS = [];
+let CURRENT_REPORT_ID = null;
+
+function showToast(msg, type) {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.className = "toast show " + (type || "");
+  setTimeout(() => t.classList.remove("show"), 3500);
+}
+
+async function doLogin() {
+  const pwd = document.getElementById("login-password").value.trim();
+  if (!pwd) return;
+  try {
+    // Test la clé contre un appel inoffensif
+    const r = await fetch("/api/agent-list-outreach", {
+      method: "POST",
+      headers: { "X-Internal-Secret": pwd, "Content-Type": "application/json" },
+      body: JSON.stringify({ test: true })
+    });
+    if (r.status === 401) {
+      document.getElementById("login-error").textContent = "Mot de passe incorrect";
+      return;
+    }
+    SECRET = pwd;
+    localStorage.setItem("hugo_secret", pwd);
+    document.getElementById("login-overlay").style.display = "none";
+    loadReports();
+  } catch (e) {
+    document.getElementById("login-error").textContent = "Erreur : " + e.message;
+  }
+}
+
+document.getElementById("login-password").addEventListener("keydown", e => {
+  if (e.key === "Enter") doLogin();
+});
+
+if (SECRET) {
+  document.getElementById("login-overlay").style.display = "none";
+  loadReports();
+}
+
+// ── Charger les rapports Hugo ──────────────────────────────────────
+async function loadReports() {
+  if (!SECRET) return;
+  try {
+    const filter = document.getElementById("filter-verdict").value;
+    const r = await fetch("/api/hugo-list-reports", {
+      method: "POST",
+      headers: { "X-Internal-Secret": SECRET, "Content-Type": "application/json" },
+      body: JSON.stringify({ verdictFilter: filter, limit: 100 })
+    });
+    if (r.status === 401) {
+      localStorage.removeItem("hugo_secret");
+      location.reload();
+      return;
+    }
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    const data = await r.json();
+    CURRENT_REPORTS = data.reports || [];
+    renderList();
+    renderStats();
+    document.getElementById("last-refresh").textContent =
+      new Date().toLocaleTimeString("fr-CA");
+  } catch (e) {
+    showToast("Chargement échoué : " + e.message, "error");
+  }
+}
+
+function renderStats() {
+  document.getElementById("stat-total").textContent = CURRENT_REPORTS.length;
+  document.getElementById("stat-critical").textContent =
+    CURRENT_REPORTS.filter(r => r.verdictGlobal === "Critique").length;
+  document.getElementById("stat-watch").textContent =
+    CURRENT_REPORTS.filter(r => r.verdictGlobal === "À surveiller").length;
+}
+
+function renderList() {
+  const el = document.getElementById("report-list");
+  if (CURRENT_REPORTS.length === 0) {
+    el.innerHTML = `<div class="empty-state">
+      <h3>Aucun rapport</h3>
+      <p>Lance une analyse Hugo via la barre de commande au-dessus.</p>
+    </div>`;
+    return;
+  }
+  el.innerHTML = CURRENT_REPORTS.map(r => {
+    const badge = badgeForVerdict(r.verdictGlobal);
+    const date = r.createdAt ? new Date(r.createdAt).toLocaleString("fr-CA",
+      { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" }) : "?";
+    const active = r.id === CURRENT_REPORT_ID ? "active" : "";
+    return `<div class="report-item ${active}" onclick="selectReport('${r.id}')">
+      <div class="title">📋 ${escapeHtml(r.dossierId || "?")}</div>
+      <div class="meta">
+        ${badge}
+        <span style="margin-left:auto">${date}</span>
+      </div>
+    </div>`;
+  }).join("");
+}
+
+function badgeForVerdict(v) {
+  const cls = v === "OK" ? "badge-ok"
+    : v === "À surveiller" ? "badge-watch"
+    : v === "Critique" ? "badge-critical"
+    : "badge-gap";
+  return `<span class="badge ${cls}">${escapeHtml(v || "?")}</span>`;
+}
+
+function selectReport(id) {
+  CURRENT_REPORT_ID = id;
+  const r = CURRENT_REPORTS.find(x => x.id === id);
+  if (!r) return;
+  renderList();
+  renderDetail(r);
+}
+
+function renderDetail(r) {
+  const v = r.verdictGlobal || "?";
+  const cls = v === "OK" ? "ok"
+    : v === "À surveiller" ? "watch"
+    : v === "Critique" ? "critical"
+    : "gap";
+
+  const mods = r.modulesSummary || {};
+  const modCard = (key, label) => {
+    const m = mods[key] || {};
+    return `<div class="mod-card">
+      <h4>${label}</h4>
+      <div class="verdict-mini">${escapeHtml(m.verdict || "—")}</div>
+      <div class="finding">${escapeHtml(m.key_finding || "—")}</div>
+    </div>`;
+  };
+
+  const alertes = r.alertesConsolidees || [];
+  const alertesHtml = alertes.length === 0 ? '<p style="color:var(--muted);font-size:13px">Aucune alerte.</p>' :
+    `<ul class="alertes-list">${alertes.map(a =>
+      `<li class="${a.niveau || ''}"><strong>${escapeHtml((a.module || '').toUpperCase())} :</strong> ${escapeHtml(a.message || '')}<br><em style="font-size:12px;color:var(--muted)">→ ${escapeHtml(a.action_requise || '')}</em></li>`
+    ).join("")}</ul>`;
+
+  const fmtMoney = (n) => {
+    if (!n && n !== 0) return "—";
+    if (n >= 1e6) return "$" + (n/1e6).toFixed(2) + "M";
+    if (n >= 1e3) return "$" + Math.round(n).toLocaleString("fr-CA");
+    return "$" + n.toFixed(2);
+  };
+
+  document.getElementById("report-detail").innerHTML = `
+    <h2>📋 ${escapeHtml(r.dossierId)}</h2>
+
+    <div class="verdict-box ${cls}">
+      <div class="label">Verdict global</div>
+      <div class="verdict">${escapeHtml(v)}</div>
+      <div class="action">→ ${escapeHtml(r.actionRecommandee || "—")}</div>
+    </div>
+
+    <div class="section-h">Synthèse exécutive</div>
+    <p style="line-height:1.7">${escapeHtml(r.synthesis || "(aucune)")}</p>
+
+    <div class="section-h">Modules construction</div>
+    <div class="modules-grid">
+      ${modCard("intel", "🏛️ Norvex Intel")}
+      ${modCard("track", "🏗️ Norvex Track")}
+      ${modCard("cost", "💰 Cost Analyzer")}
+    </div>
+
+    <div class="section-h">Alertes consolidées (${alertes.length})</div>
+    ${alertesHtml}
+
+    <div class="section-h">Recommandation Yves</div>
+    <p style="line-height:1.7;background:#fffbeb;padding:14px;border-radius:8px;border-left:3px solid var(--gold)">${escapeHtml(r.recommandationYves || r.synthesis || "—")}</p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px;font-size:13px">
+      <div style="padding:10px;background:#fafbfc;border-radius:6px">
+        <strong>Confiance globale</strong><br>
+        ${escapeHtml(r.confianceGlobale || "—")}
+      </div>
+      <div style="padding:10px;background:#fafbfc;border-radius:6px">
+        <strong>Valeur prêtée recommandée</strong><br>
+        ${fmtMoney(r.valeurPreteeRecommandee)}
+      </div>
+      <div style="padding:10px;background:#fafbfc;border-radius:6px">
+        <strong>Déboursement autorisé</strong><br>
+        ${r.deboursementAutorise === true ? "✅ Oui"
+          : r.deboursementAutorise === false ? "🛑 Non"
+          : "—"}
+      </div>
+      <div style="padding:10px;background:#fafbfc;border-radius:6px">
+        <strong>Analysé le</strong><br>
+        ${r.createdAt ? new Date(r.createdAt).toLocaleString("fr-CA") : "—"}
+      </div>
+    </div>
+  `;
+}
+
+// ── Lancer une analyse Hugo ────────────────────────────────────────
+async function runAnalysis() {
+  const dossierId = document.getElementById("cmd-dossier-id").value.trim();
+  if (!dossierId) {
+    showToast("Saisis un dossierId", "error");
+    return;
+  }
+  const btn = document.getElementById("cmd-run-btn");
+  const orig = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Démarrage…';
+  try {
+    const r = await fetch("/api/hugo-run-analysis", {
+      method: "POST",
+      headers: { "X-Internal-Secret": SECRET, "Content-Type": "application/json" },
+      body: JSON.stringify({ dossierId })
+    });
+    const data = await r.json();
+    if (!r.ok || data.error) throw new Error(data.error || `HTTP ${r.status}`);
+
+    // Mode background : poll jobId jusqu'à done/error/timeout
+    if (data.mode === "background" && data.jobId) {
+      const docsLine = data.documents_loaded?.count
+        ? ` (${data.documents_loaded.count} PDFs)` : "";
+      btn.innerHTML = '<span class="spinner"></span>Background…';
+      showToast(`📤 Analyse lancée en arrière-plan${docsLine} — patience (1-3 min)`, "");
+      document.getElementById("cmd-dossier-id").value = "";
+      await pollJob(data.jobId, btn, orig);
+      return;
+    }
+
+    // Mode sync (pas de docs / petits docs)
+    showToast(`✅ Analyse complète — ${data.verdictGlobal || "OK"}`, "success");
+    document.getElementById("cmd-dossier-id").value = "";
+    await loadReports();
+    if (data.reportId) selectReport(data.reportId);
+  } catch (e) {
+    showToast("❌ " + e.message, "error");
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = orig;
+  }
+}
+
+// ── Polling background job — toutes les 4s, max 5 min ─────────────
+async function pollJob(jobId, btn, btnOrig) {
+  const maxAttempts = 75; // 75 × 4s = 5 min
+  let attempt = 0;
+  let lastStatus = "pending";
+
+  while (attempt < maxAttempts) {
+    attempt++;
+    await new Promise(r => setTimeout(r, 4000));
+    try {
+      const r = await fetch(`/api/hugo-job-status?jobId=${encodeURIComponent(jobId)}`, {
+        headers: { "X-Internal-Secret": SECRET }
+      , cache: "no-store"});
+      const data = await r.json();
+      const status = data.status || "pending";
+
+      if (status !== lastStatus) {
+        lastStatus = status;
+        if (status === "running") {
+          btn.innerHTML = '<span class="spinner"></span>Analyse en cours…';
+          showToast("⚙️ Hugo travaille (Intel + Track + Cost en parallèle)…", "");
+        }
+      }
+
+      if (status === "done") {
+        const verdict = data.verdictGlobal || "OK";
+        showToast(`✅ Hugo terminé — ${verdict}`, "success");
+        btn.disabled = false;
+        btn.innerHTML = btnOrig;
+        await loadReports();
+        if (data.reportId) selectReport(data.reportId);
+        return;
+      }
+
+      if (status === "error") {
+        const err = (data.error || "Erreur background").slice(0, 120);
+        showToast(`❌ Hugo erreur — ${err}`, "error");
+        btn.disabled = false;
+        btn.innerHTML = btnOrig;
+        return;
+      }
+    } catch (e) {
+      console.warn("[hugo-poll] attempt error:", e.message);
+    }
+  }
+
+  // Timeout 5 min — le job continue côté serveur, mais on arrête de polling
+  showToast(`⏱️ Timeout polling 5 min — vérifie hugoJobs/${jobId}`, "error");
+  btn.disabled = false;
+  btn.innerHTML = btnOrig;
+}
+
+// Helpers
+function escapeHtml(s) {
+  return String(s == null ? "" : s).replace(/[&<>"']/g, c =>
+    ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c])
+  );
+}
+
+// Auto-refresh 60s
+setInterval(() => { if (SECRET) loadReports(); }, 60000);
+</script>
+</body>
+</html>

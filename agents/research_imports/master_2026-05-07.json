@@ -1,0 +1,24 @@
+{
+  "_meta": {
+    "description": "MASTER consolidé - toutes les cibles Capital Norvex Inc. issues des recherches du 6 et 7 mai 2026.",
+    "version": 1,
+    "created": "2026-05-07",
+    "researcher": "Claude (Cowork)",
+    "totals": { "brokers": 117, "promoters": 101, "family_offices": 32, "grand_total": 250 },
+    "brokers_by_region": { "QC": 93, "ON": 24 },
+    "promoters_by_region": { "QC": 58, "ON": 43 },
+    "filtres_appliques": {
+      "tier_zero_filter": "OUI (Daoust, Boivin, Saputo, Jolina, Italcan, Drouin/Finstar, Peter Quinn)",
+      "deduplication": "OUI globale par (name+firme/companyName/organization)"
+    },
+    "note": "Fichier reçu via dictée Yves 2026-05-06. Le contenu complet brokers[] / promoters[] / familyOffices[] sera importé via script dédié. Les données complètes sont conservées dans la transcription de cette session (jsonl)."
+  },
+  "import_status": "pending",
+  "next_steps": [
+    "Créer script Python dans agents/import_master.py pour parser et splitter par audience",
+    "Importer brokers vers collection Firestore brokers_research",
+    "Importer promoters vers collection Firestore promoters_research",
+    "Importer family_offices vers nouvelle collection family_offices_research",
+    "AUCUN envoi tant que Yves n'a pas validé"
+  ]
+}

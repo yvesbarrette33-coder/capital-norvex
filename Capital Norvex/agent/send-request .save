@@ -1,0 +1,5 @@
+#!/bin/bash
+curl -X POST "https://famous-centaur-1bb508.netlify.app/.netlify/functions/trackAlerts" \
+-H "Content-Type: application/json" \
+-H "X-Internal-Secret: NorvexSecret2026!" \
+-d '{"alertType":"critique","message":"Probleme critique detecte"}'

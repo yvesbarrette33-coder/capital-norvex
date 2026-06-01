@@ -1,0 +1,177 @@
+[build]
+  command = "npm install"
+  publish = "."
+  functions = "netlify/functions"
+
+# Firebase client keys sont publics — sécurité via Firestore rules
+[secrets_scanning]
+  omit_from_scans = ["capital-norvex-brain.html", "capital-norvex-pipeline.html", "capital-norvex-track.html", "capital-norvex-cost-analyzer.html", "capital-norvex-score.html", "capital-norvex-intel.html"]
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# Submit endpoint — stores payload in Blobs, then kicks off background work
+# Needs more time to write large PDF payloads to Netlify Blobs
+[functions."submit-analysis"]
+  timeout = 26
+
+# Result polling endpoint — quick read from Blobs
+[functions."get-result"]
+  timeout = 15
+
+# Background function — up to 15 minutes (no timeout config needed, Netlify handles it)
+# File name must end in -background per Netlify spec
+
+# True streaming proxy — pipes Claude SSE directly to browser
+[functions."claude-stream"]
+  timeout = 26
+
+# Norvex Intel — analyse IA évaluation immobilière (mode auto : Sonnet 30-50s)
+[functions."norvex-intel"]
+  timeout = 26
+
+# Diligence REQ scraper — Chromium headless (Sparticuz) automatise ASP.NET MVC du REQ
+[functions."diligence-req-scrape"]
+  timeout = 60
+  external_node_modules = ["@sparticuz/chromium", "puppeteer-core", "puppeteer-extra", "puppeteer-extra-plugin-stealth"]
+  included_files = [
+    "node_modules/@sparticuz/chromium/bin/**",
+    "node_modules/puppeteer-extra-plugin-stealth/**",
+    "node_modules/puppeteer-extra-plugin/**",
+    "node_modules/puppeteer-extra-plugin-user-preferences/**",
+    "node_modules/puppeteer-extra-plugin-user-data-dir/**"
+  ]
+
+# Client document upload — stores binary in Netlify Blobs, adds to queue
+[functions."upload-doc"]
+  timeout = 26
+
+# Agent file retrieval — returns blob by key (secured with INTERNAL_SECRET)
+[functions."get-upload-doc"]
+  timeout = 26
+
+# Token creation — stores upload token in Netlify Blobs (no Firebase)
+[functions."create-upload-token"]
+  timeout = 10
+
+# Token info — returns token metadata for upload.html (public)
+[functions."get-token-info"]
+  timeout = 10
+
+# Agent queue — list pending uploads (secured with INTERNAL_SECRET)
+[functions."list-pending"]
+  timeout = 15
+
+# Agent queue — mark upload as processed (secured with INTERNAL_SECRET)
+[functions."mark-processed"]
+  timeout = 10
+
+# ─── NORAH V2 — Tools ElevenLabs (téléphonie IA) ──────────────────────────
+# Timeouts courts: ElevenLabs coupe après 5s en pratique
+[functions."norah-verify-identity"]
+  timeout = 8
+
+[functions."norah-validate-code"]
+  timeout = 8
+
+[functions."norah-get-dossier-status"]
+  timeout = 8
+
+[functions."norah-list-documents"]
+  timeout = 8
+
+[functions."norah-get-next-steps"]
+  timeout = 8
+
+[functions."norah-get-assigned-agent"]
+  timeout = 8
+
+[functions."norah-schedule-callback"]
+  timeout = 10
+
+[functions."norah-log-call"]
+  timeout = 10
+
+[functions."norah-send-link"]
+  timeout = 8
+
+[functions."norah-alert-yves"]
+  timeout = 10
+
+[functions."norah-dashboard-data"]
+  timeout = 10
+
+# Digest quotidien — Scheduled Function (cron 22:00 UTC = 18h America/Toronto en EDT)
+[functions."norah-digest-daily"]
+  timeout = 26
+
+# Brief matinal Norvex Brain — Scheduled Function (cron 11:00 UTC = 7h00 EDT / 6h00 EST)
+[functions."brain-daily-brief"]
+  timeout = 26
+
+# Empêche le cache navigateur sur le portail upload (sinon ancien JS reste collé)
+[[headers]]
+  for = "/upload.html"
+  [headers.values]
+    Cache-Control = "no-store, must-revalidate"
+
+[[headers]]
+  for = "/upload"
+  [headers.values]
+    Cache-Control = "no-store, must-revalidate"
+
+# ─── REDIRECT /rdv → /rdv-partenaire.html ─────────────────────────────────
+# Bug fixé 2026-05-05 : tous les emails Capital outreach pointent vers /rdv
+# (avec utm), mais la page s'appelle rdv-partenaire.html. Redirect 301 pour
+# que les liens des courriels DÉJÀ ENVOYÉS (jour 1 + futurs) fonctionnent
+# sans avoir à modifier les emails déjà partis.
+[[redirects]]
+  from = "/rdv"
+  to = "/rdv-partenaire.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/rdv/*"
+  to = "/rdv-partenaire.html:splat"
+  status = 301
+  force = true
+
+# Capsule vidéo brandée Capital Norvex (au lieu de youtu.be direct dans les
+# courriels). Décision Yves 2026-05-08 : les destinataires institutionnels
+# cliquent peu sur des liens YouTube dans cold emails (phishing perçu).
+# Lien dans video_block() = https://capitalnorvex.com/capsule?v=ID
+[[redirects]]
+  from = "/capsule"
+  to = "/capsule.html"
+  status = 200
+
+# Hugo orchestrators — modules construction (timeout long pour Claude)
+[functions."cost-analyze-dossier"]
+  timeout = 26
+
+[functions."track-analyze-dossier"]
+  timeout = 26
+
+[functions."intel-analyze-dossier"]
+  timeout = 26
+
+[functions."hugo-run-analysis"]
+  timeout = 26
+
+[functions."hugo-list-reports"]
+  timeout = 10
+
+[functions."brain-push-from-hugo"]
+  timeout = 15
+
+# Signatures email (Béatrice + Camille) : embed du logo M doré + signature
+# manuscrite Yves en base64 inline. Bug fix 2026-05-08.
+[functions."beatrice-create-draft"]
+  included_files = ["netlify/functions/assets/**"]
+
+[functions."beatrice-refine-draft"]
+  included_files = ["netlify/functions/assets/**"]
+
+[functions."camille-create-draft"]
+  included_files = ["netlify/functions/assets/**"]

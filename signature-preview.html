@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Pinyon+Script&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    gap: 60px;
+    padding: 40px;
+  }
+  .option {
+    text-align: center;
+  }
+  .label {
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    color: #999;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+  .sig-box {
+    border: 1px dashed #ddd;
+    padding: 20px 40px;
+    display: inline-block;
+    min-width: 400px;
+  }
+
+  /* Option 1 */
+  .sig1 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 68px;
+    color: #111;
+    line-height: 1.1;
+  }
+
+  /* Option 2 */
+  .sig2 {
+    font-family: 'Pinyon Script', cursive;
+    font-size: 72px;
+    color: #111;
+    line-height: 1.1;
+  }
+
+  /* Option 3 - SVG drawn */
+  .sig3 svg {
+    width: 400px;
+    height: 120px;
+  }
+
+  .underline {
+    display: block;
+    margin-top: -8px;
+    height: 2px;
+    background: linear-gradient(to right, transparent, #111 20%, #111 80%, transparent);
+    width: 80%;
+    margin-left: 10%;
+  }
+</style>
+</head>
+<body>
+
+  <div class="option">
+    <div class="label">Option 1 — Great Vibes</div>
+    <div class="sig-box">
+      <div class="sig1">Yves Barrette</div>
+      <span class="underline"></span>
+    </div>
+  </div>
+
+  <div class="option">
+    <div class="label">Option 2 — Pinyon Script</div>
+    <div class="sig-box">
+      <div class="sig2">Yves Barrette</div>
+      <span class="underline"></span>
+    </div>
+  </div>
+
+  <div class="option">
+    <div class="label">Option 3 — Initiales stylisées</div>
+    <div class="sig-box">
+      <svg viewBox="0 0 400 120" xmlns="http://www.w3.org/2000/svg">
+        <text x="20" y="85"
+          font-family="'Great Vibes', cursive"
+          font-size="75"
+          fill="#111"
+          letter-spacing="2">Y. Barrette</text>
+        <line x1="20" y1="100" x2="380" y2="100" stroke="#111" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="350" y1="95" x2="380" y2="100" stroke="#111" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </div>
+
+</body>
+</html>

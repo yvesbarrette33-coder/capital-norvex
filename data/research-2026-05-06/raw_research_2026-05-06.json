@@ -1,0 +1,2524 @@
+{
+  "_meta": {
+    "description": "Données brutes pre-dédup et pre-filtrage",
+    "created": "2026-05-06"
+  },
+  "courtiers_nationaux": [
+    {
+      "name": "Pierre Lacroix",
+      "firmName": "CBRE Canada",
+      "title": "Broker / Co-Founding Member",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "bureau",
+        "commercial"
+      ],
+      "public_email": "",
+      "public_phone": "(514) 849-6000",
+      "linkedin_url": "",
+      "profile_url": "https://www.cbre.ca/people/pierre-lacroix",
+      "source_url": "https://www.cbre.ca/people/pierre-lacroix",
+      "notes": "Founding member CBRE Montreal, 35 ans expérience, leadership office leasing"
+    },
+    {
+      "name": "Michèle Boutet",
+      "firmName": "CBRE Canada",
+      "title": "Broker / Co-Founding Member",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "bureau",
+        "commercial"
+      ],
+      "public_email": "",
+      "public_phone": "(514) 849-6000",
+      "linkedin_url": "",
+      "profile_url": "https://www.cbre.ca/people/michele-boutet",
+      "source_url": "https://www.cbre.ca/people/michele-boutet",
+      "notes": "Founding member, 30+ ans, office leasing tenant rep"
+    },
+    {
+      "name": "Jeremy Kenemy",
+      "firmName": "CBRE Canada",
+      "title": "Senior Vice President",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "bureau",
+        "commercial"
+      ],
+      "public_email": "",
+      "public_phone": "(514) 849-6000",
+      "linkedin_url": "https://www.linkedin.com/in/jeremykenemy/",
+      "profile_url": "https://www.cbre.ca/people/jeremy-kenemy",
+      "source_url": "https://www.cbre.ca/people/jeremy-kenemy",
+      "notes": "Senior advisor Life Sciences, depuis 2002"
+    },
+    {
+      "name": "Bryan Greenberg",
+      "firmName": "CBRE Canada",
+      "title": "Commercial Real Estate Broker",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "retail",
+        "commercial"
+      ],
+      "public_email": "",
+      "public_phone": "(514) 849-6000",
+      "linkedin_url": "",
+      "profile_url": "https://www.cbre.ca/people/bryan-greenberg",
+      "source_url": "https://www.cbre.ca/people/bryan-greenberg",
+      "notes": "Retail leasing tenant rep, deal Place-d'Armes 26.5M$"
+    },
+    {
+      "name": "David Cervantes",
+      "firmName": "CBRE Canada",
+      "title": "Senior Vice President",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "bureau",
+        "industriel"
+      ],
+      "public_email": "",
+      "public_phone": "(514) 849-6000",
+      "linkedin_url": "",
+      "profile_url": "https://www.cbre.ca/people/david-cervantes",
+      "source_url": "https://www.cbre.ca/people/david-cervantes",
+      "notes": "Multidisciplinary lead: investor leasing, occupier rep, data centres, 20+ ans"
+    },
+    {
+      "name": "Jacob Hayon",
+      "firmName": "JLL",
+      "title": "Executive Vice President",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "terrain",
+        "investissement"
+      ],
+      "public_email": "",
+      "public_phone": "",
+      "linkedin_url": "",
+      "profile_url": "",
+      "source_url": "https://cbre.ca/en/people-and-offices/montreal/teams/pcg-montreal/pcg-montreal",
+      "notes": "Spécialiste acquisition/disposition revenue properties, ex-CBRE 13 ans"
+    },
+    {
+      "name": "Kevin Marshall",
+      "firmName": "Colliers International",
+      "title": "Managing Director Montreal",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "bureau",
+        "industriel"
+      ],
+      "public_email": "",
+      "public_phone": "(514) 866-1223",
+      "linkedin_url": "",
+      "profile_url": "https://www.collierscanada.com/en-ca/canada/cities/montreal",
+      "source_url": "https://www.collierscanada.com/en-ca/experts",
+      "notes": "MD Montreal depuis août 2025, équipe leadership national"
+    },
+    {
+      "name": "Jean-Marc Dubé",
+      "firmName": "Colliers International",
+      "title": "Senior Vice President / Group Practice Lead",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "industriel",
+        "terrain",
+        "construction"
+      ],
+      "public_email": "",
+      "public_phone": "(514) 866-1223",
+      "linkedin_url": "",
+      "profile_url": "https://www.collierscanada.com/en-ca/experts/marc-dube",
+      "source_url": "https://www.collierscanada.com/en-ca/experts/marc-dube",
+      "notes": "Industrial division lead, 4.5M+ pi² brokered en 3 ans, MIT, SIOR"
+    },
+    {
+      "name": "Arnold Fox",
+      "firmName": "Colliers International",
+      "title": "Executive Vice President",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "industriel",
+        "construction",
+        "commercial"
+      ],
+      "public_email": "",
+      "public_phone": "(514) 866-1223",
+      "linkedin_url": "https://www.linkedin.com/in/foxarnold/",
+      "profile_url": "https://www.collierscanada.com/en-ca/experts/arnold-fox",
+      "source_url": "https://www.collierscanada.com/en-ca/experts/arnold-fox",
+      "notes": "25+ ans industrial, vente investissement"
+    },
+    {
+      "name": "Étienne Marcoux",
+      "firmName": "Colliers International",
+      "title": "Senior Vice President",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "industriel",
+        "commercial"
+      ],
+      "public_email": "",
+      "public_phone": "(514) 866-1223",
+      "linkedin_url": "https://www.linkedin.com/in/etiennemarcoux/",
+      "profile_url": "https://www.collierscanada.com/en-ca/experts/etienne-marcoux",
+      "source_url": "https://www.collierscanada.com/en-ca/experts/etienne-marcoux",
+      "notes": "15+ ans, équipe 164 transactions / 300M+ depuis 2018"
+    },
+    {
+      "name": "Lloyd Cooper",
+      "firmName": "Cushman & Wakefield",
+      "title": "Executive Vice-Chairman",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "bureau",
+        "industriel",
+        "retail"
+      ],
+      "public_email": "",
+      "public_phone": "(514) 841-5011",
+      "linkedin_url": "",
+      "profile_url": "https://www.cushmanwakefield.com/en/canada/people/lloyd-cooper",
+      "source_url": "https://www.cushmanwakefield.com/en/canada/people/lloyd-cooper",
+      "notes": "QC platform leader, #1 salesperson C&W Canada (2011, 13, 15, 20, 24)"
+    },
+    {
+      "name": "Guy Massé",
+      "firmName": "Cushman & Wakefield",
+      "title": "Executive Vice President",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "bureau",
+        "commercial"
+      ],
+      "public_email": "",
+      "public_phone": "(514) 841-5011",
+      "linkedin_url": "",
+      "profile_url": "https://www.cushmanwakefield.com/en/canada/people/guy-masse",
+      "source_url": "https://www.cushmanwakefield.com/en/canada/people/guy-masse",
+      "notes": "29+ ans, tenant rep, mandats nationaux"
+    },
+    {
+      "name": "Erik Langburt",
+      "firmName": "Cushman & Wakefield",
+      "title": "Executive Vice President",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "bureau",
+        "commercial"
+      ],
+      "public_email": "",
+      "public_phone": "(514) 841-5011",
+      "linkedin_url": "",
+      "profile_url": "http://www.cushmanwakefield.ca/en/people/erik-langburt",
+      "source_url": "http://www.cushmanwakefield.ca/en/people/erik-langburt",
+      "notes": "Major clients leasing, co-lead WeWork avec Cooper"
+    },
+    {
+      "name": "Brent Robinson",
+      "firmName": "Cushman & Wakefield",
+      "title": "Executive Managing Director & Managing Principal",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "bureau",
+        "industriel",
+        "retail"
+      ],
+      "public_email": "",
+      "public_phone": "(514) 841-5011",
+      "linkedin_url": "https://www.linkedin.com/in/brent-robinson-4531161a/",
+      "profile_url": "https://www.cushmanwakefield.com/en/canada/people/brent-robinson",
+      "source_url": "https://www.cushmanwakefield.com/en/canada/people/brent-robinson",
+      "notes": "QC market leader depuis 2021, 55+ pros sous sa direction"
+    },
+    {
+      "name": "Sean Greenspoon",
+      "firmName": "Cushman & Wakefield",
+      "title": "Associate",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "bureau",
+        "retail",
+        "industriel"
+      ],
+      "public_email": "",
+      "public_phone": "(514) 841-5011",
+      "linkedin_url": "",
+      "profile_url": "https://www.cushmanwakefield.com/en/canada/people/sean-greenspoon",
+      "source_url": "https://www.cushmanwakefield.com/en/canada/people/sean-greenspoon",
+      "notes": "Joined 2017, landlord rep"
+    },
+    {
+      "name": "Daniel Goodman",
+      "firmName": "Cushman & Wakefield",
+      "title": "Associate",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "bureau"
+      ],
+      "public_email": "",
+      "public_phone": "(514) 841-5011",
+      "linkedin_url": "",
+      "profile_url": "https://www.cushmanwakefield.com/en/canada/people/daniel-goodman",
+      "source_url": "https://www.cushmanwakefield.com/en/canada/people/daniel-goodman",
+      "notes": "Joined 2022, ingénieur background, awards 2020-2021"
+    },
+    {
+      "name": "Meggie Bergevin",
+      "firmName": "Cushman & Wakefield",
+      "title": "Associate Vice President",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "bureau",
+        "industriel"
+      ],
+      "public_email": "",
+      "public_phone": "(514) 841-3802",
+      "linkedin_url": "https://www.linkedin.com/in/meggie-bergevin-43b4b8119/",
+      "profile_url": "https://www.cushmanwakefield.com/en/canada/offices/montreal",
+      "source_url": "https://www.linkedin.com/in/meggie-bergevin-43b4b8119/",
+      "notes": "Joined C&W 2018, role grandissant"
+    },
+    {
+      "name": "Kevin Dopp",
+      "firmName": "Avison Young",
+      "title": "Vice President",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "bureau",
+        "industriel",
+        "commercial"
+      ],
+      "public_email": "",
+      "public_phone": "(514) 392-1330",
+      "linkedin_url": "",
+      "profile_url": "https://www.avisonyoung.com/professionals/-/ayp/view/kevin-dopp/in/montreal",
+      "source_url": "https://www.avisonyoung.com/professionals/-/ayp/view/kevin-dopp/in/montreal",
+      "notes": "Office/industrial tenant rep, landlord rep"
+    },
+    {
+      "name": "Mark Sinnett",
+      "firmName": "Avison Young",
+      "title": "Principal / Capital Markets Lead",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "multilogement",
+        "bureau"
+      ],
+      "public_email": "",
+      "public_phone": "(514) 392-1330",
+      "linkedin_url": "",
+      "profile_url": "https://www.avisonyoung.com/professionals/-/ayp/view/mark-sinnett/in/montreal",
+      "source_url": "https://www.avisonyoung.com/professionals/-/ayp/view/mark-sinnett/in/montreal",
+      "notes": "Lead QC Capital Markets depuis mars 2023, 20+ ans CBRE/JLL"
+    },
+    {
+      "name": "Sebastien Gatti",
+      "firmName": "Avison Young",
+      "title": "Executive Vice President / Capital Markets",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "multilogement",
+        "bureau",
+        "investissement"
+      ],
+      "public_email": "",
+      "public_phone": "(514) 392-1330",
+      "linkedin_url": "",
+      "profile_url": "https://www.avisonyoung.com/professionals/-/ayp/view/sebastien-gatti/in/montreal",
+      "source_url": "https://www.avisonyoung.com/professionals/-/ayp/view/sebastien-gatti/in/montreal",
+      "notes": "Multifamily/office investment, 3.0B$ closed, 17000+ unités"
+    },
+    {
+      "name": "Guillaume Monast",
+      "firmName": "Avison Young",
+      "title": "Senior Associate / Capital Markets",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "multilogement",
+        "bureau",
+        "commercial"
+      ],
+      "public_email": "",
+      "public_phone": "(514) 392-1330",
+      "linkedin_url": "",
+      "profile_url": "https://www.avisonyoung.com/professionals/-/ayp/view/guillaume-monast/in/montreal",
+      "source_url": "https://www.avisonyoung.com/professionals/-/ayp/view/guillaume-monast/in/montreal",
+      "notes": "Multifamily/office, 6500+ unités vendues / 1.4B$"
+    },
+    {
+      "name": "Yann Charles",
+      "firmName": "Avison Young",
+      "title": "Principal / Capital Markets",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "retail",
+        "industriel",
+        "investissement"
+      ],
+      "public_email": "",
+      "public_phone": "(514) 392-1330",
+      "linkedin_url": "",
+      "profile_url": "https://www.avisonyoung.com/professionals/-/ayp/view/yann-charles/in/montreal",
+      "source_url": "https://www.avisonyoung.com/professionals/-/ayp/view/yann-charles/in/montreal",
+      "notes": "Retail/industrial investment, 1.5B$+ / 3M+ pi² depuis 2016"
+    },
+    {
+      "name": "Marie-Claire Laflamme-Sanders",
+      "firmName": "Avison Young",
+      "title": "Principal / Senior Vice President / Practice Lead",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "multilogement",
+        "bureau",
+        "retail"
+      ],
+      "public_email": "",
+      "public_phone": "(514) 392-1330",
+      "linkedin_url": "",
+      "profile_url": "https://www.avisonyoung.com/professionals/-/ayp/view/marie-claire-laflamme-sanders/in/montreal",
+      "source_url": "https://www.avisonyoung.com/professionals/-/ayp/view/marie-claire-laflamme-sanders/in/montreal",
+      "notes": "4B$+ investment transactions, 9 ans JLL"
+    },
+    {
+      "name": "Kieran Rankin",
+      "firmName": "Avison Young",
+      "title": "Vice President",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "bureau"
+      ],
+      "public_email": "",
+      "public_phone": "(514) 392-1330",
+      "linkedin_url": "https://www.linkedin.com/in/kieran-rankin-mba-02b34a47/",
+      "profile_url": "https://www.avisonyoung.com/professionals/-/ayp/view/kieran-rankin/in/montreal",
+      "source_url": "https://www.avisonyoung.com/professionals/-/ayp/view/kieran-rankin/in/montreal",
+      "notes": "MBA, top young commercial broker MTL"
+    },
+    {
+      "name": "David Major-Lapierre",
+      "firmName": "Avison Young",
+      "title": "Principal",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "bureau",
+        "multilogement"
+      ],
+      "public_email": "",
+      "public_phone": "(514) 392-1330",
+      "linkedin_url": "",
+      "profile_url": "https://www.avisonyoung.com/professionals/-/ayp/view/david-major-lapierre/in/montreal",
+      "source_url": "https://www.avisonyoung.com/professionals/-/ayp/view/david-major-lapierre/in/montreal",
+      "notes": "Joined 2011, Principal 2024, Above and Beyond Award 2017"
+    },
+    {
+      "name": "Olivier Dufault-Gagnon",
+      "firmName": "Avison Young",
+      "title": "Capital Markets",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "multilogement",
+        "bureau"
+      ],
+      "public_email": "",
+      "public_phone": "(514) 392-1330",
+      "linkedin_url": "",
+      "profile_url": "https://www.avisonyoung.com/professionals/-/ayp/view/olivier-dufault-gagnon/in/montreal",
+      "source_url": "https://www.avisonyoung.com/professionals/-/ayp/view/olivier-dufault-gagnon/in/montreal",
+      "notes": "Capital markets Grand Montréal et Québec"
+    },
+    {
+      "name": "Jean Laurin",
+      "firmName": "Avison Young",
+      "title": "President Quebec / Managing Director",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "bureau",
+        "multilogement"
+      ],
+      "public_email": "",
+      "public_phone": "(514) 392-1330",
+      "linkedin_url": "",
+      "profile_url": "https://www.avisonyoung.ca/professionals/-/ayp/view/jean-laurin/in/montreal",
+      "source_url": "https://www.avisonyoung.ca/professionals/-/ayp/view/jean-laurin/in/montreal",
+      "notes": "President QC, business development, croissance stratégique"
+    },
+    {
+      "name": "Adamo Mariani",
+      "firmName": "Marcus & Millichap",
+      "title": "Vice President Investments",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "multilogement",
+        "construction",
+        "investissement"
+      ],
+      "public_email": "",
+      "public_phone": "",
+      "linkedin_url": "",
+      "profile_url": "https://www.marcusmillichap.com/advisors/adamo-mariani",
+      "source_url": "https://www.marcusmillichap.com/advisors/adamo-mariani",
+      "notes": "Co-founder Crown Real Estate Group 2011, broker depuis 2003, pre-construction condo"
+    },
+    {
+      "name": "Jesse Di Gennaro",
+      "firmName": "Marcus & Millichap",
+      "title": "Vice President Investments",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "multilogement",
+        "terrain",
+        "investissement"
+      ],
+      "public_email": "",
+      "public_phone": "",
+      "linkedin_url": "",
+      "profile_url": "https://marcusmillichap.ca/team-member/jesse-di-gennaro/",
+      "source_url": "https://marcusmillichap.ca/team-member/jesse-di-gennaro/",
+      "notes": "Broker depuis 2003, commercial 2018, land development"
+    },
+    {
+      "name": "Philippe Moisan",
+      "firmName": "Marcus & Millichap",
+      "title": "Associate Investments",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "multilogement",
+        "investissement",
+        "commercial"
+      ],
+      "public_email": "",
+      "public_phone": "",
+      "linkedin_url": "https://www.linkedin.com/in/philippe-moisan-665288140/",
+      "profile_url": "https://marcusmillichap.ca/team-member/philippe-moisan/",
+      "source_url": "https://marcusmillichap.ca/team-member/philippe-moisan/",
+      "notes": "Comptable, ex-financial analyst, expertise property optimization"
+    },
+    {
+      "name": "Sacha Berdugo",
+      "firmName": "Marcus & Millichap",
+      "title": "Senior Associate",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "retail",
+        "commercial"
+      ],
+      "public_email": "",
+      "public_phone": "",
+      "linkedin_url": "",
+      "profile_url": "https://marcusmillichap.ca/team-member/sacha-e-berdugo/",
+      "source_url": "https://marcusmillichap.ca/team-member/sacha-e-berdugo/",
+      "notes": "Retail leasing, joined 2021"
+    },
+    {
+      "name": "Warren Grzywacz",
+      "firmName": "Marcus & Millichap",
+      "title": "Associate Investments",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "multilogement",
+        "investissement",
+        "commercial"
+      ],
+      "public_email": "",
+      "public_phone": "",
+      "linkedin_url": "",
+      "profile_url": "https://marcusmillichap.ca/",
+      "source_url": "https://marcusmillichap.ca/",
+      "notes": "Groupe Mariani Di Gennaro"
+    },
+    {
+      "name": "Paul-Éric Poitras",
+      "firmName": "NAI Terramont Commercial",
+      "title": "President",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "bureau",
+        "industriel"
+      ],
+      "public_email": "",
+      "public_phone": "(514) 866-3333",
+      "linkedin_url": "",
+      "profile_url": "https://www.naiterramont.ca/en_us/toute-lequipe-nai-terramont-commercial/",
+      "source_url": "https://www.naiterramont.ca/en_us/toute-lequipe-nai-terramont-commercial/",
+      "notes": "President NAI Terramont, 5e plus grande firme MTL (22 courtiers)"
+    },
+    {
+      "name": "Michelle Moller",
+      "firmName": "NAI Terramont Commercial",
+      "title": "Managing Partner / VP Corporate Real Estate",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "bureau",
+        "industriel"
+      ],
+      "public_email": "",
+      "public_phone": "(514) 866-3333",
+      "linkedin_url": "",
+      "profile_url": "https://www.naiterramont.ca/en_us/toute-lequipe-nai-terramont-commercial/",
+      "source_url": "https://www.naiglobal.com/agents/michelle-moller/",
+      "notes": "Ex-principal Terramont, Managing Partner"
+    },
+    {
+      "name": "Jérôme Le Blanc-Ducharme",
+      "firmName": "NAI Terramont Commercial",
+      "title": "Vice President",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "bureau",
+        "industriel"
+      ],
+      "public_email": "",
+      "public_phone": "(514) 866-3333",
+      "linkedin_url": "",
+      "profile_url": "https://www.naiterramont.ca/en_us/toute-lequipe-nai-terramont-commercial/",
+      "source_url": "https://www.naiterramont.ca/en_us/toute-lequipe-nai-terramont-commercial/",
+      "notes": "Vice President, courtier commercial"
+    },
+    {
+      "name": "Richard Sauvé",
+      "firmName": "NAI Terramont Commercial",
+      "title": "Senior Vice President",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "bureau",
+        "industriel"
+      ],
+      "public_email": "",
+      "public_phone": "(514) 866-3333",
+      "linkedin_url": "",
+      "profile_url": "https://www.naiterramont.ca/en_us/toute-lequipe-nai-terramont-commercial/",
+      "source_url": "https://www.centris.ca/en/real-estate-broker~richard-sauve~nai-terramont-commercial/a3647",
+      "notes": "CCIM et SIOR, Senior VP commercial broker"
+    },
+    {
+      "name": "Laurent Lauzon",
+      "firmName": "NAI Terramont Commercial",
+      "title": "Senior Vice President",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "bureau",
+        "industriel"
+      ],
+      "public_email": "",
+      "public_phone": "(514) 866-3333",
+      "linkedin_url": "",
+      "profile_url": "https://www.naiterramont.ca/en_us/toute-lequipe-nai-terramont-commercial/",
+      "source_url": "https://www.centris.ca/en/real-estate-broker~laurent-lauzon~nai-terramont-commercial/b5908",
+      "notes": "Joined 1993 (Élan), merger NAI 2005"
+    },
+    {
+      "name": "Serge Marcotte",
+      "firmName": "NAI Terramont Commercial",
+      "title": "Senior Vice President",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "bureau",
+        "industriel"
+      ],
+      "public_email": "",
+      "public_phone": "(514) 866-3333",
+      "linkedin_url": "",
+      "profile_url": "https://www.naiterramont.ca/en_us/toute-lequipe-nai-terramont-commercial/",
+      "source_url": "https://www.centris.ca/en/real-estate-broker~serge-marcotte~nai-terramont-commercial/b7754",
+      "notes": "30+ ans commercial et résidentiel"
+    },
+    {
+      "name": "Jonathan Cohen",
+      "firmName": "NAI Terramont Commercial",
+      "title": "Real Estate Broker",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "bureau",
+        "industriel"
+      ],
+      "public_email": "",
+      "public_phone": "(514) 866-3333",
+      "linkedin_url": "https://www.linkedin.com/in/jonathan-cohen-867b3116a/",
+      "profile_url": "https://www.naiterramont.ca/en_us/toute-lequipe-nai-terramont-commercial/",
+      "source_url": "https://www.zoominfo.com/p/Jonathan-Cohen/2538360358",
+      "notes": "Commercial broker actif Montréal"
+    },
+    {
+      "name": "Karl Bernard",
+      "firmName": "NAI Terramont Commercial",
+      "title": "Vice President",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "bureau",
+        "industriel"
+      ],
+      "public_email": "",
+      "public_phone": "(514) 866-3333",
+      "linkedin_url": "",
+      "profile_url": "https://www.naiterramont.ca/en_us/toute-lequipe-nai-terramont-commercial/",
+      "source_url": "https://www.naiterramont.ca/en_us/toute-lequipe-nai-terramont-commercial/",
+      "notes": "VP commercial broker NAI Terramont"
+    },
+    {
+      "name": "Martin Fournier",
+      "firmName": "NAI Terramont Commercial",
+      "title": "Real Estate Broker",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "bureau",
+        "industriel"
+      ],
+      "public_email": "",
+      "public_phone": "(514) 866-3333",
+      "linkedin_url": "",
+      "profile_url": "https://www.naiterramont.ca/en_us/toute-lequipe-nai-terramont-commercial/",
+      "source_url": "https://www.naiglobal.com/agents/martin-fournier/",
+      "notes": "Commercial broker NAI Terramont"
+    }
+  ],
+  "courtiers_locaux": [
+    {
+      "name": "Patrice Ménard",
+      "firmName": "PMML (Patrice Ménard Multi-Logements)",
+      "title": "Co-fondateur, Président & Courtier Commercial",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "multilogement",
+        "commercial",
+        "terrain"
+      ],
+      "public_email": "info@pmml.ca",
+      "public_phone": "514-360-3603",
+      "linkedin_url": "https://www.linkedin.com/in/patricemenardpmml/",
+      "profile_url": "https://pmml.ca/en/",
+      "source_url": "https://pmml.ca/en/",
+      "notes": "1700+ bâtiments sous mandat, 160+ pros, leader provincial multilogement 20+ ans"
+    },
+    {
+      "name": "Daniel Bergeron",
+      "firmName": "DB Multilogement (TRILLION)",
+      "title": "Courtier Commercial Multilogement",
+      "region": "QC",
+      "city": "Laval",
+      "specialty": [
+        "multilogement",
+        "commercial"
+      ],
+      "public_email": "info@dbmultilogement.com",
+      "public_phone": "514-743-9638",
+      "linkedin_url": "",
+      "profile_url": "https://dbmultilogement.com/en/",
+      "source_url": "https://dbmultilogement.com/en/about/",
+      "notes": "Spécialisé immeubles 6+ unités, 15+ ans"
+    },
+    {
+      "name": "Denis Gagné Nadeau",
+      "firmName": "Multilogements",
+      "title": "Courtier Hypothécaire Commercial Multilogement",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "multilogement",
+        "commercial",
+        "financement"
+      ],
+      "public_email": "denis@multilogements.ca",
+      "public_phone": "1-800-780-3145",
+      "linkedin_url": "",
+      "profile_url": "https://multilogements.ca/en/",
+      "source_url": "https://multilogements.ca/en/our-brokers/denis-gagne-nadeau/",
+      "notes": "8+ ans construction, accès 20+ institutions financières"
+    },
+    {
+      "name": "Jean-François Morin",
+      "firmName": "Équipe Jean-François Morin",
+      "title": "Courtier Commercial & Multilogement",
+      "region": "QC",
+      "city": "Lévis",
+      "specialty": [
+        "multilogement",
+        "commercial",
+        "résidentiel",
+        "industriel"
+      ],
+      "public_email": "info@jeanfrancoismorin.ca",
+      "public_phone": "418-801-8011",
+      "linkedin_url": "https://ca.linkedin.com/company/equipe-jean-francois-morin",
+      "profile_url": "https://jeanfrancoismorin.ca/",
+      "source_url": "https://jeanfrancoismorin.ca/equipe-jean-francois-morin/jean-francois-morin/",
+      "notes": "Actif depuis 2011, Lévis-Québec, multilogement"
+    },
+    {
+      "name": "Yanick Sarrazin",
+      "firmName": "RE/MAX (YE/SARRAZIN)",
+      "title": "Courtier Certifié AEO",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "résidentiel",
+        "multilogement"
+      ],
+      "public_email": "",
+      "public_phone": "",
+      "linkedin_url": "",
+      "profile_url": "https://yanicksarrazin.com/en/",
+      "source_url": "https://yanicksarrazin.com/en/",
+      "notes": "Plateau-Rosemont spécialisé, 5e RE/MAX QC 2023"
+    },
+    {
+      "name": "Guillaume Dallaire-Clavet",
+      "firmName": "RE/MAX Fortin Delage / GDC Immobilier",
+      "title": "Courtier Commercial Certifié",
+      "region": "QC",
+      "city": "Québec",
+      "specialty": [
+        "commercial",
+        "multilogement",
+        "industriel",
+        "terrain"
+      ],
+      "public_email": "",
+      "public_phone": "",
+      "linkedin_url": "",
+      "profile_url": "https://www.gdcimmobilier.com/",
+      "source_url": "https://www.gdcimmobilier.com/",
+      "notes": "Capitale-Nationale, ex-PMML, 20+ ans commercial"
+    },
+    {
+      "name": "François Robitaille",
+      "firmName": "RE/MAX du Cartier",
+      "title": "Courtier Résidentiel & Commercial",
+      "region": "QC",
+      "city": "Laval",
+      "specialty": [
+        "commercial",
+        "résidentiel",
+        "multilogement"
+      ],
+      "public_email": "francois.robitaille@remax-quebec.com",
+      "public_phone": "514-816-4756",
+      "linkedin_url": "",
+      "profile_url": "https://francoisrobitaille.com/",
+      "source_url": "https://remaxducartier.com/en/brokers/francois-robitaille",
+      "notes": "Laval-Duvernay, RE/MAX du Cartier 600+ courtiers"
+    },
+    {
+      "name": "Pierre Brunet",
+      "firmName": "Sotheby's International Realty Quebec",
+      "title": "Courtier Résidentiel & Commercial Certifié",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "résidentiel",
+        "multilogement"
+      ],
+      "public_email": "pbrunet@sothebysrealty.ca",
+      "public_phone": "514-248-8032",
+      "linkedin_url": "https://www.linkedin.com/in/pierre-brunet-4b7b0319/",
+      "profile_url": "https://sothebysrealty.ca/en/real-estate-agent/pierre-brunet/",
+      "source_url": "https://sothebysrealty.ca/en/real-estate-agent/pierre-brunet/",
+      "notes": "20+ ans, 25+ unités condo converties 2010-2017, directeur CIGM"
+    },
+    {
+      "name": "Stéphane Bisson",
+      "firmName": "Keller Williams Distinction",
+      "title": "Courtier Certifié AEO, MBA, FRI",
+      "region": "QC",
+      "city": "Gatineau",
+      "specialty": [
+        "commercial",
+        "industriel",
+        "multilogement",
+        "terrain"
+      ],
+      "public_email": "",
+      "public_phone": "",
+      "linkedin_url": "",
+      "profile_url": "https://stephanebisson.com/en",
+      "source_url": "https://stephanebisson.com/en/team-stephane-bisson-real-estate-brokers",
+      "notes": "30+ ans, KW Commercial, Outaouais"
+    },
+    {
+      "name": "Claire Gauthier",
+      "firmName": "Royal LePage Vallée de l'Outaouais",
+      "title": "Courtier Résidentiel & Commercial",
+      "region": "QC",
+      "city": "Gatineau",
+      "specialty": [
+        "commercial",
+        "résidentiel"
+      ],
+      "public_email": "clairegauthier@me.com",
+      "public_phone": "613-292-8267",
+      "linkedin_url": "",
+      "profile_url": "https://clairegauthier.ca/",
+      "source_url": "https://www.royallepage.ca/en/agent/quebec/gatineau-aylmer/claire-gauthier/91992/",
+      "notes": "16 ans Royal LePage, top team Outaouais 2020"
+    },
+    {
+      "name": "Jérôme Caron",
+      "firmName": "JME Courtiers / RE/MAX de Francheville",
+      "title": "Courtier Résidentiel & Commercial",
+      "region": "QC",
+      "city": "Trois-Rivières",
+      "specialty": [
+        "commercial",
+        "résidentiel",
+        "multilogement"
+      ],
+      "public_email": "jerome.caron@remax-quebec.com",
+      "public_phone": "819-373-7140",
+      "linkedin_url": "",
+      "profile_url": "https://jmecourtiers.com/en/",
+      "source_url": "https://jmecourtiers.com/en/",
+      "notes": "14+ ans courtier, JME depuis 2023, Mauricie"
+    },
+    {
+      "name": "Marie-Eve St-Cyr Lacroix",
+      "firmName": "JME Courtiers / RE/MAX de Francheville",
+      "title": "Courtière Résidentielle & Commerciale",
+      "region": "QC",
+      "city": "Trois-Rivières",
+      "specialty": [
+        "commercial",
+        "résidentiel",
+        "multilogement"
+      ],
+      "public_email": "",
+      "public_phone": "819-373-7140",
+      "linkedin_url": "",
+      "profile_url": "https://jmecourtiers.com/en/",
+      "source_url": "https://jmecourtiers.com/en/",
+      "notes": "15+ ans, partenaire Jérôme Caron, Trois-Rivières"
+    },
+    {
+      "name": "Maxime Lefebvre",
+      "firmName": "RE/MAX de Francheville",
+      "title": "Courtier Immobilier",
+      "region": "QC",
+      "city": "Trois-Rivières",
+      "specialty": [
+        "commercial",
+        "résidentiel"
+      ],
+      "public_email": "",
+      "public_phone": "819-373-7140",
+      "linkedin_url": "",
+      "profile_url": "https://remaxdefrancheville.com/en/",
+      "source_url": "https://www.remax-quebec.com/en/real-estate-brokers/maxime.lefebvre",
+      "notes": "RE/MAX Francheville, leader Mauricie & Centre-QC"
+    },
+    {
+      "name": "Steve Gaudet",
+      "firmName": "Century 21 Expert",
+      "title": "Courtier Résidentiel & Commercial",
+      "region": "QC",
+      "city": "Sherbrooke",
+      "specialty": [
+        "commercial",
+        "résidentiel"
+      ],
+      "public_email": "steve.gaudet@century21.ca",
+      "public_phone": "",
+      "linkedin_url": "",
+      "profile_url": "https://www.stevegaudet.ca/",
+      "source_url": "https://www.stevegaudet.ca/",
+      "notes": "Sherbrooke-Magog-Coaticook-East Angus"
+    },
+    {
+      "name": "Pierre-Olivier Chiasson",
+      "firmName": "RE/MAX D'Abord",
+      "title": "Courtier Résidentiel & Commercial",
+      "region": "QC",
+      "city": "Sherbrooke",
+      "specialty": [
+        "commercial",
+        "résidentiel",
+        "multilogement"
+      ],
+      "public_email": "",
+      "public_phone": "819-822-2222",
+      "linkedin_url": "",
+      "profile_url": "https://chiassondefrancesco.ca/",
+      "source_url": "https://chiassondefrancesco.ca/",
+      "notes": "Depuis 2013 Sherbrooke, commercial depuis 2021"
+    },
+    {
+      "name": "Marco De Francesco",
+      "firmName": "RE/MAX D'Abord",
+      "title": "Courtier Résidentiel & Commercial",
+      "region": "QC",
+      "city": "Sherbrooke",
+      "specialty": [
+        "commercial",
+        "résidentiel",
+        "multilogement"
+      ],
+      "public_email": "",
+      "public_phone": "819-822-2222",
+      "linkedin_url": "",
+      "profile_url": "https://chiassondefrancesco.ca/",
+      "source_url": "https://chiassondefrancesco.ca/",
+      "notes": "Partenaire Chiasson, couverture Magog-Lac-Mégantic"
+    },
+    {
+      "name": "Tristan Savard",
+      "firmName": "Royal LePage Évolution",
+      "title": "Courtier Résidentiel & Commercial",
+      "region": "QC",
+      "city": "Sherbrooke",
+      "specialty": [
+        "commercial",
+        "résidentiel",
+        "multilogement"
+      ],
+      "public_email": "info@savardtran.ca",
+      "public_phone": "819-300-7387",
+      "linkedin_url": "https://www.linkedin.com/in/%C3%A9quipe-savard-tran-097439210/",
+      "profile_url": "https://www.savardtran.ca/",
+      "source_url": "https://www.savardtran.ca/",
+      "notes": "Top 1% courtiers QC, duplex-triplex-multilogement, Estrie"
+    },
+    {
+      "name": "Martin Savard",
+      "firmName": "Royal LePage Évolution",
+      "title": "Courtier Résidentiel & Commercial",
+      "region": "QC",
+      "city": "Sherbrooke",
+      "specialty": [
+        "commercial",
+        "résidentiel",
+        "multilogement"
+      ],
+      "public_email": "info@savardtran.ca",
+      "public_phone": "819-300-7387",
+      "linkedin_url": "",
+      "profile_url": "https://www.savardtran.ca/",
+      "source_url": "https://www.savardtran.ca/",
+      "notes": "Équipe Savard & Tran, Estrie multilogement"
+    },
+    {
+      "name": "Rodrigue Côté",
+      "firmName": "Groupe RCCI",
+      "title": "Courtier Commercial & Industriel Certifié AEO",
+      "region": "QC",
+      "city": "Sherbrooke",
+      "specialty": [
+        "commercial",
+        "industriel",
+        "terrain"
+      ],
+      "public_email": "",
+      "public_phone": "819-563-9119",
+      "linkedin_url": "",
+      "profile_url": "https://legroupercci.com/fr/",
+      "source_url": "https://legroupercci.com/fr/",
+      "notes": "30+ ans, fondateur, Sherbrooke-Drummondville-Estrie"
+    },
+    {
+      "name": "Ghislain Cloutier",
+      "firmName": "Prisme Immobilier",
+      "title": "Courtier Résidentiel & Commercial Certifié AEO",
+      "region": "QC",
+      "city": "Sherbrooke",
+      "specialty": [
+        "commercial",
+        "résidentiel"
+      ],
+      "public_email": "",
+      "public_phone": "819-821-0000",
+      "linkedin_url": "",
+      "profile_url": "https://prismeimmobilier.com/",
+      "source_url": "https://prismeimmobilier.com/",
+      "notes": "Sherbrooke-Magog-Orford"
+    },
+    {
+      "name": "Caroline Nadeau",
+      "firmName": "Prisme Immobilier",
+      "title": "Courtière Résidentielle & Commerciale Certifiée AEO",
+      "region": "QC",
+      "city": "Sherbrooke",
+      "specialty": [
+        "commercial",
+        "résidentiel"
+      ],
+      "public_email": "",
+      "public_phone": "819-821-0000",
+      "linkedin_url": "",
+      "profile_url": "https://prismeimmobilier.com/",
+      "source_url": "https://prismeimmobilier.com/",
+      "notes": "Sherbrooke-Magog-Orford, partenaire Cloutier"
+    },
+    {
+      "name": "Domenic Vincenti",
+      "firmName": "Intella Inc.",
+      "title": "Courtier Commercial",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "industriel",
+        "multilogement",
+        "terrain"
+      ],
+      "public_email": "",
+      "public_phone": "",
+      "linkedin_url": "",
+      "profile_url": "https://intellarealestate.com/",
+      "source_url": "https://intellarealestate.com/team/",
+      "notes": "Intella, 100+ ans expérience combinée équipe"
+    },
+    {
+      "name": "Marcel Blouin",
+      "firmName": "Intella Inc.",
+      "title": "Courtier Commercial",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "industriel",
+        "multilogement",
+        "terrain"
+      ],
+      "public_email": "",
+      "public_phone": "",
+      "linkedin_url": "",
+      "profile_url": "https://intellarealestate.com/",
+      "source_url": "https://intellarealestate.com/team/",
+      "notes": "Intella commercial, 5 spécialités"
+    },
+    {
+      "name": "Jeff Candib",
+      "firmName": "Intella Inc.",
+      "title": "Courtier Commercial",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "industriel",
+        "multilogement",
+        "terrain"
+      ],
+      "public_email": "",
+      "public_phone": "",
+      "linkedin_url": "",
+      "profile_url": "https://intellarealestate.com/",
+      "source_url": "https://intellarealestate.com/team/",
+      "notes": "Intella commercial broker"
+    },
+    {
+      "name": "Dario Pala",
+      "firmName": "Intella Inc.",
+      "title": "Courtier Commercial",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "industriel",
+        "multilogement",
+        "terrain"
+      ],
+      "public_email": "",
+      "public_phone": "",
+      "linkedin_url": "",
+      "profile_url": "https://intellarealestate.com/",
+      "source_url": "https://intellarealestate.com/team/",
+      "notes": "Intella commercial broker"
+    },
+    {
+      "name": "Équipe TRIMONT",
+      "firmName": "TRIMONT Commercial",
+      "title": "Courtiers Commerciaux",
+      "region": "QC",
+      "city": "Mont-Royal",
+      "specialty": [
+        "commercial",
+        "industriel",
+        "multilogement",
+        "terrain",
+        "retail"
+      ],
+      "public_email": "info@trimontcanada.com",
+      "public_phone": "514-736-0511",
+      "linkedin_url": "https://ca.linkedin.com/company/trimontcanada",
+      "profile_url": "https://www.trimontquebec.com",
+      "source_url": "https://www.trimontquebec.com",
+      "notes": "20+ ans, industriel-bureau-retail-terrain-multilogement"
+    },
+    {
+      "name": "Équipe KW Commercial Montréal",
+      "firmName": "KW Commercial Montréal (KWC)",
+      "title": "Courtiers Commerciaux",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "industriel",
+        "retail",
+        "bureau"
+      ],
+      "public_email": "",
+      "public_phone": "",
+      "linkedin_url": "",
+      "profile_url": "https://www.kwcmontreal.com/en/",
+      "source_url": "https://www.kwcmontreal.com/en/",
+      "notes": "20+ ans Grand MTL, KW Urbain division"
+    },
+    {
+      "name": "Équipe FBG Commercial",
+      "firmName": "FBG Commercial (Fortin Brothers)",
+      "title": "Courtiers Commerciaux & Investment",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "multilogement",
+        "industriel"
+      ],
+      "public_email": "",
+      "public_phone": "",
+      "linkedin_url": "",
+      "profile_url": "https://www.fbgcommercial.com/",
+      "source_url": "https://www.fbgcommercial.com/about",
+      "notes": "Frères Fortin, off-market deals, multilogement & shopping"
+    },
+    {
+      "name": "Équipe Tardif (Endurance)",
+      "firmName": "Endurance Real Estate Group / eXp Realty",
+      "title": "Courtiers Résidentiels & Commerciaux",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "résidentiel",
+        "multilogement"
+      ],
+      "public_email": "",
+      "public_phone": "514-826-4542",
+      "linkedin_url": "",
+      "profile_url": "https://www.equipetardif.com/en/",
+      "source_url": "https://renxhomes.ca/equipe-tardif-becomes-endurance-real-estate-group-montreal-exp-realty",
+      "notes": "#1 Royal LePage Canada 2025, 600+ transactions/an, eXp depuis 2026"
+    },
+    {
+      "name": "Équipe MPLEX",
+      "firmName": "M-plex Courtiers Immobiliers",
+      "title": "Courtiers Spécialisés Multiplex",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "multilogement",
+        "commercial"
+      ],
+      "public_email": "",
+      "public_phone": "",
+      "linkedin_url": "https://ca.linkedin.com/company/m-plex-courtiers-immobiliers",
+      "profile_url": "https://mplex.ca/",
+      "source_url": "https://mplex.ca/",
+      "notes": "Fondée 2017, 2-8 units multiplex, financement intégré"
+    },
+    {
+      "name": "Équipe CCI Real Estate",
+      "firmName": "CCI Real Estate Group",
+      "title": "Courtiers Commerciaux & Industriels",
+      "region": "QC",
+      "city": "Gatineau",
+      "specialty": [
+        "commercial",
+        "multilogement",
+        "industriel",
+        "terrain"
+      ],
+      "public_email": "",
+      "public_phone": "819-770-2929",
+      "linkedin_url": "https://www.linkedin.com/company/cci-real-estate-group",
+      "profile_url": "https://groupecci.ca/en/",
+      "source_url": "https://groupecci.ca/en/",
+      "notes": "Depuis 1992, fondateurs 1ère firme Ottawa-Gatineau, 65+ ans combiné"
+    }
+  ],
+  "promoteurs_montreal": [
+    {
+      "name": "Vincent Chiara",
+      "companyName": "Groupe Mach",
+      "region": "QC",
+      "city": "Montréal",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "multilogement",
+        "commercial",
+        "bureau",
+        "mixte",
+        "résidentiel"
+      ],
+      "recentProjects": "Quartier des Lumières (2024); Sun Life Building (2023)",
+      "estimatedAnnualVolume": 2500000000,
+      "public_email": "info@groupemach.com",
+      "public_phone": "+1-514-374-6224",
+      "website": "https://www.groupemach.com/en",
+      "linkedin_url": "https://ca.linkedin.com/in/vincent-chiara-64144359",
+      "contact_person": "Vincent Chiara, Founder & President",
+      "source_url": "https://www.groupemach.com/en/vincent-chiara.html",
+      "notes": "Leader canadien, 40M pi², 3000+ unités résidentielles, ambition 10 000 unités, B Corp"
+    },
+    {
+      "name": "",
+      "companyName": "Devimco Immobilier",
+      "region": "QC",
+      "city": "Montréal",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "condo",
+        "multilogement",
+        "mixte",
+        "résidentiel"
+      ],
+      "recentProjects": "Auguste & Louis (2024); Wellington sur le Bassin (2023); District Griffin (2024)",
+      "estimatedAnnualVolume": 1200000000,
+      "public_email": "info@devimco.com",
+      "public_phone": "",
+      "website": "https://devimco.com",
+      "linkedin_url": "https://ca.linkedin.com/company/devimco",
+      "contact_person": "",
+      "source_url": "https://devimco.com/projets-immobiliers-residentiels-achat/",
+      "notes": "30 ans, projets mixtes intégrés, District Griffin 1.2B$, 1 condo sur 2 vendus à Griffintown"
+    },
+    {
+      "name": "Kheng Ly",
+      "companyName": "Brivia Group",
+      "region": "QC",
+      "city": "Montréal",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "condo",
+        "multilogement",
+        "résidentiel"
+      ],
+      "recentProjects": "Square Phillips (2024); QuinzeCent (2024)",
+      "estimatedAnnualVolume": 800000000,
+      "public_email": "info@briviagroup.ca",
+      "public_phone": "514-728-8889",
+      "website": "https://briviagroup.ca/en/",
+      "linkedin_url": "https://ca.linkedin.com/company/groupe-brivia-group",
+      "contact_person": "Kheng Ly, President & CEO",
+      "source_url": "https://briviagroup.ca/en/",
+      "notes": "Fondée 2000. QuinzeCent = 450 units, 48000+ pi² commercial. 20+ projets en développement"
+    },
+    {
+      "name": "",
+      "companyName": "Broccolini",
+      "region": "QC",
+      "city": "Montréal",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "condo",
+        "multilogement",
+        "résidentiel",
+        "social"
+      ],
+      "recentProjects": "Le Sherbrooke (2025, 515 condos, 25 étages); Pointe-Saint-Charles (2024, 800 unités)",
+      "estimatedAnnualVolume": 1500000000,
+      "public_email": "contact@broccolini.com",
+      "public_phone": "",
+      "website": "https://www.broccolini.com/fr",
+      "linkedin_url": "https://ca.linkedin.com/company/broccolini",
+      "contact_person": "",
+      "source_url": "https://www.broccolini.com/fr/residentiel",
+      "notes": "75 ans expérience, partenariat gouvernemental logement abordable"
+    },
+    {
+      "name": "Mathieu Duguay",
+      "companyName": "Cogir Immobilier",
+      "region": "QC",
+      "city": "Brossard",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "multilogement",
+        "résidences seniors",
+        "commercial",
+        "industriel"
+      ],
+      "recentProjects": "Affiniti Saint-Bruno (2025)",
+      "estimatedAnnualVolume": 1500000000,
+      "public_email": "info@cogir.net",
+      "public_phone": "1-866-671-6381",
+      "website": "https://www.cogir.net/",
+      "linkedin_url": "https://ca.linkedin.com/company/cogir-immobilier",
+      "contact_person": "Mathieu Duguay, CEO & CIO",
+      "source_url": "https://realestate.cogir.net/executive-team/",
+      "notes": "Fondée 1995. 74 000 unités NA. 1500 unités/an. Affiniti = 1B$+"
+    },
+    {
+      "name": "",
+      "companyName": "Groupe Sélection",
+      "region": "QC",
+      "city": "Laval",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "multilogement",
+        "résidences seniors",
+        "résidentiel"
+      ],
+      "recentProjects": "Rosemont Les Quartiers (2023)",
+      "estimatedAnnualVolume": 2000000000,
+      "public_email": "contact@groupeselection.com",
+      "public_phone": "",
+      "website": "https://www.groupeselection.com",
+      "linkedin_url": "https://ca.linkedin.com/company/groupeselection",
+      "contact_person": "",
+      "source_url": "https://ca.linkedin.com/company/groupeselection",
+      "notes": "Leader #2 RPA seniors QC, 50+ complexes, actifs 5B$+"
+    },
+    {
+      "name": "",
+      "companyName": "Groupe Maurice",
+      "region": "QC",
+      "city": "Montréal",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "multilogement",
+        "résidences seniors"
+      ],
+      "recentProjects": "Multiple résidences seniors RPA QC",
+      "estimatedAnnualVolume": 2400000000,
+      "public_email": "divulgation@legroupemaurice.com",
+      "public_phone": "1-833-546-4546",
+      "website": "https://www.legroupemaurice.com/en",
+      "linkedin_url": "https://ca.linkedin.com/company/le-groupe-maurice",
+      "contact_person": "",
+      "source_url": "https://www.legroupemaurice.com/en/our-contact-details/",
+      "notes": "Leader #4 RPA seniors. 85% vendu à Ventas REIT pour 2.4B$"
+    },
+    {
+      "name": "",
+      "companyName": "Prével",
+      "region": "QC",
+      "city": "Montréal",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "condo",
+        "multilogement",
+        "résidentiel",
+        "urbain"
+      ],
+      "recentProjects": "Bassins du Havre Griffintown (2023); 21e Arrondissement (2023)",
+      "estimatedAnnualVolume": 800000000,
+      "public_email": "info@prevel.ca",
+      "public_phone": "514-281-9696",
+      "website": "https://www.prevel.ca/fr",
+      "linkedin_url": "https://ca.linkedin.com/company/groupe-pr-vel",
+      "contact_person": "",
+      "source_url": "https://www.prevel.ca/fr/contact",
+      "notes": "45+ ans, projets urbains humains, qualité, 681 rue William"
+    },
+    {
+      "name": "Vianney Bélanger",
+      "companyName": "COPRIM",
+      "region": "QC",
+      "city": "Montréal",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "condo",
+        "multilogement",
+        "mixte",
+        "résidentiel"
+      ],
+      "recentProjects": "Vision Bridge-Bonaventure (2026, 9500 unités)",
+      "estimatedAnnualVolume": 1200000000,
+      "public_email": "",
+      "public_phone": "",
+      "website": "",
+      "linkedin_url": "",
+      "contact_person": "Vianney Bélanger, President",
+      "source_url": "https://www.lapresse.ca/actualites/grand-montreal/2022-04-11/secteur-bridge-bonaventure/des-promoteurs-immobiliers-se-disent-baillonnes-par-montreal.php",
+      "notes": "Consortium Vision Bridge-Bonaventure (Devimco/Broccolini/Mach/Petra)"
+    },
+    {
+      "name": "",
+      "companyName": "Groupe Quorum",
+      "region": "QC",
+      "city": "Montréal",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "multilogement",
+        "résidentiel",
+        "condo"
+      ],
+      "recentProjects": "Highlands LaSalle (2024)",
+      "estimatedAnnualVolume": 600000000,
+      "public_email": "info@quorumcanada.com",
+      "public_phone": "+1-514-612-5888",
+      "website": "https://www.constructionsquorum.com/en/",
+      "linkedin_url": "https://ca.linkedin.com/company/groupequorum",
+      "contact_person": "",
+      "source_url": "https://www.constructionsquorum.com/en/",
+      "notes": "Multigénérationnel, Montréal/Laval"
+    },
+    {
+      "name": "Peter Sergakis",
+      "companyName": "Placements Sergakis Inc.",
+      "region": "QC",
+      "city": "Montréal",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "multilogement",
+        "commercial",
+        "résidentiel"
+      ],
+      "recentProjects": "Sainte-Catherine Ouest (2025, 202 unités, 15 étages)",
+      "estimatedAnnualVolume": 400000000,
+      "public_email": "",
+      "public_phone": "(514) 937-6137",
+      "website": "https://www.sergakis.com/a-propos",
+      "linkedin_url": "https://ca.linkedin.com/company/placements-sergakis-inc-",
+      "contact_person": "Peter Sergakis, Founder",
+      "source_url": "https://www.sergakis.com/a-propos",
+      "notes": "50+ ans, milliers d'unités résidentielles + restaurants/bars"
+    },
+    {
+      "name": "Yann Lapointe",
+      "companyName": "Pur Immobilia",
+      "region": "QC",
+      "city": "Montréal",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "condo",
+        "résidentiel",
+        "urbain"
+      ],
+      "recentProjects": "810 Saint-Antoine Est (2025)",
+      "estimatedAnnualVolume": 400000000,
+      "public_email": "info@purimmobilia.com",
+      "public_phone": "(514) 396-2222",
+      "website": "https://www.purimmobilia.com/en",
+      "linkedin_url": "",
+      "contact_person": "Yann Lapointe & Philippe Bernard, Co-founders",
+      "source_url": "https://www.purimmobilia.com/en/about-us/",
+      "notes": "Fondée 2008, revitalisation urbaine, qualité de vie & durabilité"
+    },
+    {
+      "name": "",
+      "companyName": "Groupe Immobilier Scalia",
+      "region": "QC",
+      "city": "Montréal",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "condo",
+        "multilogement",
+        "mixte",
+        "hôtel"
+      ],
+      "recentProjects": "Condos Brock (2023)",
+      "estimatedAnnualVolume": 500000000,
+      "public_email": "contact@scalia.ca",
+      "public_phone": "",
+      "website": "https://scalia.ca/",
+      "linkedin_url": "https://ca.linkedin.com/company/groupe-immobilier-scalia",
+      "contact_person": "",
+      "source_url": "https://scalia.ca/",
+      "notes": "45+ ans, multi-logements, mixtes, hôtels, industriel - approche 360°"
+    },
+    {
+      "name": "Marco Musto",
+      "companyName": "Construction Musto",
+      "region": "QC",
+      "city": "Montréal",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "condo",
+        "multilogement",
+        "résidentiel"
+      ],
+      "recentProjects": "Bass 3-4 Griffintown (2024); SE7T Phase 3 (2024); Le Vittorio (2023)",
+      "estimatedAnnualVolume": 400000000,
+      "public_email": "contact@constructionsmusto.com",
+      "public_phone": "",
+      "website": "https://www.constructionsmusto.com/",
+      "linkedin_url": "",
+      "contact_person": "Marco & Luigi Musto, Propriétaires",
+      "source_url": "https://www.constructionsmusto.com/",
+      "notes": "Famille 40+ ans. Most active developer Griffintown. SE7T 246 condos luxe. Platinum APCHQ"
+    },
+    {
+      "name": "",
+      "companyName": "Groupe Mathieu",
+      "region": "QC",
+      "city": "Blainville",
+      "subregion": "Rive-Nord (Grand Montréal)",
+      "projectTypes": [
+        "maisons unifamiliales",
+        "townhouses",
+        "condos"
+      ],
+      "recentProjects": "Le Prestige Chambéry Blainville (2023); Place Notre-Dame (2023); Noüvo District Terrebonne (2024)",
+      "estimatedAnnualVolume": 300000000,
+      "public_email": "contact@groupemathieu.com",
+      "public_phone": "",
+      "website": "https://groupemathieu.com/?lang=en",
+      "linkedin_url": "",
+      "contact_person": "",
+      "source_url": "https://groupemathieu.com/projects/?lang=en",
+      "notes": "Construction résidentielle Rive-Nord, projets haut standing"
+    },
+    {
+      "name": "Pietro Rinollini",
+      "companyName": "Constructions Métrocité",
+      "region": "QC",
+      "city": "Laval",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "condos",
+        "multilogement"
+      ],
+      "recentProjects": "Square Jean-Béraud Laval (2024)",
+      "estimatedAnnualVolume": 250000000,
+      "public_email": "info@metrocite.ca",
+      "public_phone": "",
+      "website": "https://www.metrocite.ca/en/about/",
+      "linkedin_url": "https://ca.linkedin.com/company/metrocite",
+      "contact_person": "Pietro Rinollini, Founder",
+      "source_url": "https://www.metrocite.ca/en/about/",
+      "notes": "40+ ans, 1000+ unités construites, Laval spécialisé"
+    },
+    {
+      "name": "",
+      "companyName": "Groupe Immobilier Ménard",
+      "region": "QC",
+      "city": "Laval",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "townhouses",
+        "maisons"
+      ],
+      "recentProjects": "Le Domaine des 4 Vents Laval (2024)",
+      "estimatedAnnualVolume": 150000000,
+      "public_email": "contact@groupemenard.ca",
+      "public_phone": "",
+      "website": "https://www.groupemenard.ca/",
+      "linkedin_url": "",
+      "contact_person": "",
+      "source_url": "https://www.groupemenard.ca/",
+      "notes": "Fondée 1988, townhouses neuves Laval"
+    },
+    {
+      "name": "",
+      "companyName": "Bastium Construction",
+      "region": "QC",
+      "city": "Laval",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "condos",
+        "multilogement"
+      ],
+      "recentProjects": "Le Luca Laval (2022, 87 appartements, 9 étages)",
+      "estimatedAnnualVolume": 100000000,
+      "public_email": "contact@bastiumconstruction.com",
+      "public_phone": "",
+      "website": "https://bastiumconstruction.com/",
+      "linkedin_url": "",
+      "contact_person": "",
+      "source_url": "https://bastiumconstruction.com/realisations/",
+      "notes": "Construction lourd résidentiel/commercial/industriel"
+    },
+    {
+      "name": "",
+      "companyName": "Syscomax",
+      "region": "QC",
+      "city": "Laval",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "multilogement",
+        "commercial",
+        "industriel"
+      ],
+      "recentProjects": "Axial Towers Laval (2020, 230 unités)",
+      "estimatedAnnualVolume": 200000000,
+      "public_email": "info@syscomax.com",
+      "public_phone": "",
+      "website": "https://www.syscomax.com/en/",
+      "linkedin_url": "",
+      "contact_person": "",
+      "source_url": "https://www.syscomax.com/en/current-projects/",
+      "notes": "Depuis 1988, Entreprise construction année 2024 Laval-Laurentides (ACQ)"
+    },
+    {
+      "name": "Ousmane Kagoné",
+      "companyName": "Kagoné Gestion Immobilière",
+      "region": "QC",
+      "city": "Longueuil",
+      "subregion": "Grand Montréal (Rive-Sud)",
+      "projectTypes": [
+        "multilogement",
+        "commercial",
+        "gestion"
+      ],
+      "recentProjects": "Multi-résidentiels et commercial Rive-Sud",
+      "estimatedAnnualVolume": 200000000,
+      "public_email": "contact@kagone.com",
+      "public_phone": "",
+      "website": "https://www.kagone.com/promoteur-immobilier.php",
+      "linkedin_url": "",
+      "contact_person": "Ousmane Kagoné, Président Fondateur",
+      "source_url": "https://www.kagone.com/promoteur-immobilier.php",
+      "notes": "25+ ans, services complets gestion/courtage/consulting"
+    },
+    {
+      "name": "",
+      "companyName": "Groupe Petra",
+      "region": "QC",
+      "city": "Saint-Léonard",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "commercial",
+        "industriel",
+        "bureau"
+      ],
+      "recentProjects": "Portefeuille 10M pi² QC/MTL/TO",
+      "estimatedAnnualVolume": 400000000,
+      "public_email": "info@groupepetra.com",
+      "public_phone": "(514) 321-7515",
+      "website": "https://groupepetra.com/",
+      "linkedin_url": "https://ca.linkedin.com/company/groupepetra",
+      "contact_person": "M. Labonte (mlabonte@groupepetra.com)",
+      "source_url": "https://groupepetra.com/",
+      "notes": "Depuis 1986, commercial/industriel/bureaux MTL/QC/TO"
+    },
+    {
+      "name": "",
+      "companyName": "Carbonleo",
+      "region": "QC",
+      "city": "Mont-Royal",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "commercial",
+        "mixte",
+        "retail"
+      ],
+      "recentProjects": "Royalmount (2024, 824k pi² phase 1, 170+ commerces); Quartier Dix30",
+      "estimatedAnnualVolume": 2000000000,
+      "public_email": "contact@carbonleo.com",
+      "public_phone": "",
+      "website": "https://www.carbonleo.com/",
+      "linkedin_url": "",
+      "contact_person": "",
+      "source_url": "https://www.carbonleo.com/",
+      "notes": "Fondée 2012, Royalmount neutre carbone, Dix30 = 4000 homes à ajouter"
+    },
+    {
+      "name": "",
+      "companyName": "LSR GesDev / Sotramont",
+      "region": "QC",
+      "city": "Montréal",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "multilogement",
+        "résidentiel",
+        "mixte"
+      ],
+      "recentProjects": "Arbora Griffintown (2015, 434 unités, plus grand CLT mondial)",
+      "estimatedAnnualVolume": 300000000,
+      "public_email": "contact@lsr-gesdev.com",
+      "public_phone": "",
+      "website": "https://sotramont.com/en/",
+      "linkedin_url": "",
+      "contact_person": "",
+      "source_url": "https://building.ca/lsr-gesdev-and-sotramont-to-build-arbora-in-griffintown/",
+      "notes": "LSR depuis 1969 (Rive-Sud). Arbora = 597 560 pi², 130M$, partenariat Aldo Bensadoun"
+    },
+    {
+      "name": "Paul Martin",
+      "companyName": "Quintcap",
+      "region": "QC",
+      "city": "Brossard",
+      "subregion": "Grand Montréal (Rive-Sud)",
+      "projectTypes": [
+        "commercial",
+        "industriel",
+        "résidentiel",
+        "bureau"
+      ],
+      "recentProjects": "2510 Lapinière (2023); 1850 rue Panama (2023)",
+      "estimatedAnnualVolume": 600000000,
+      "public_email": "reception@quintcap.com",
+      "public_phone": "450-671-1681",
+      "website": "https://quintcap.com/en/",
+      "linkedin_url": "",
+      "contact_person": "Paul Martin, D. Charette",
+      "source_url": "https://quintcap.com/en/contact/",
+      "notes": "50+ ans Brossard, vaste portefeuille résidentiel/commercial/industriel/bureau"
+    },
+    {
+      "name": "",
+      "companyName": "Groupe HD Immobilier",
+      "region": "QC",
+      "city": "Longueuil",
+      "subregion": "Grand Montréal (Rive-Sud)",
+      "projectTypes": [
+        "multilogement",
+        "résidentiel",
+        "commercial"
+      ],
+      "recentProjects": "Longueuil Roland-Therrien (2026, 525 unités, 200M$)",
+      "estimatedAnnualVolume": 800000000,
+      "public_email": "info@groupehdimmobilier.ca",
+      "public_phone": "",
+      "website": "https://groupehdimmobilier.ca/en",
+      "linkedin_url": "https://ca.linkedin.com/company/groupe-hd-immobilier",
+      "contact_person": "",
+      "source_url": "https://groupehdimmobilier.ca/en",
+      "notes": "Investissement/développement/construction/gestion. 2500+ unités"
+    },
+    {
+      "name": "",
+      "companyName": "Momentum One",
+      "region": "QC",
+      "city": "Brossard",
+      "subregion": "Grand Montréal (Rive-Sud)",
+      "projectTypes": [
+        "multilogement",
+        "résidentiel locatif"
+      ],
+      "recentProjects": "Multilogements Rive-Sud",
+      "estimatedAnnualVolume": 150000000,
+      "public_email": "contact@momentum1.ca",
+      "public_phone": "",
+      "website": "https://momentum1.ca/",
+      "linkedin_url": "",
+      "contact_person": "",
+      "source_url": "https://momentum1.ca/",
+      "notes": "Boutique cabinet immobilier locatif Rive-Sud"
+    },
+    {
+      "name": "",
+      "companyName": "Asgaard",
+      "region": "QC",
+      "city": "Montréal",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "commercial",
+        "industriel",
+        "bureau"
+      ],
+      "recentProjects": "2900 Chemin Baronnie Varennes (2024)",
+      "estimatedAnnualVolume": 500000000,
+      "public_email": "contact@asgaard.ca",
+      "public_phone": "(514) 729-8484",
+      "website": "https://www.asgaard.ca/",
+      "linkedin_url": "https://ca.linkedin.com/company/asgaard",
+      "contact_person": "",
+      "source_url": "https://www.asgaard.ca/",
+      "notes": "Fondée 2004 (Francischiello & Celli), commercial industriel/bureau, MTL/Varennes/QC/Ottawa"
+    },
+    {
+      "name": "Patrice Groleau",
+      "companyName": "McGill Immobilier",
+      "region": "QC",
+      "city": "Montréal",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "condo",
+        "résidentiel"
+      ],
+      "recentProjects": "Maestria centre-ville (2024, plus haut QC); Imperia (2023)",
+      "estimatedAnnualVolume": 600000000,
+      "public_email": "info@mcgillimmobilier.com",
+      "public_phone": "",
+      "website": "https://mcgillimmobilier.com/",
+      "linkedin_url": "https://ca.linkedin.com/company/mcgill-real-estate",
+      "contact_person": "Patrice Groleau & Debby Doktorczyk, Founders",
+      "source_url": "https://mcgillimmobilier.com/en/about/",
+      "notes": "1 sur 4 condos neufs MTL, 10000+ condos représentés"
+    },
+    {
+      "name": "",
+      "companyName": "Construction Voyer",
+      "region": "QC",
+      "city": "Laval",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "multilogement",
+        "résidentiel"
+      ],
+      "recentProjects": "Multilogements Laval/Rive-Nord",
+      "estimatedAnnualVolume": 150000000,
+      "public_email": "info@voyer.ca",
+      "public_phone": "",
+      "website": "https://voyer.ca/en/upcoming-projects/",
+      "linkedin_url": "",
+      "contact_person": "",
+      "source_url": "https://voyer.ca/en/upcoming-projects/",
+      "notes": "Multilogements Laval/Rive-Nord"
+    },
+    {
+      "name": "",
+      "companyName": "Magil Construction",
+      "region": "QC",
+      "city": "Montréal",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "commercial",
+        "industriel",
+        "institutionnel",
+        "résidentiel"
+      ],
+      "recentProjects": "Royalmount Footbridge (2024)",
+      "estimatedAnnualVolume": 1500000000,
+      "public_email": "contact@magil.com",
+      "public_phone": "",
+      "website": "https://www.magil.com/",
+      "linkedin_url": "https://ca.linkedin.com/company/magil-construction-corporation",
+      "contact_person": "",
+      "source_url": "https://www.magil.com/",
+      "notes": "Fondée 1953, MTL/London/Toronto/Vancouver"
+    },
+    {
+      "name": "",
+      "companyName": "Maître Carré",
+      "region": "QC",
+      "city": "Montréal",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "résidentiel",
+        "mixte",
+        "durable"
+      ],
+      "recentProjects": "Projets durables MTL",
+      "estimatedAnnualVolume": 150000000,
+      "public_email": "contact@maitrecarre.ca",
+      "public_phone": "",
+      "website": "https://maitrecarre.ca/",
+      "linkedin_url": "",
+      "contact_person": "",
+      "source_url": "https://maitrecarre.ca/projets/",
+      "notes": "Depuis 2009, BCorp, durable & engagement social"
+    },
+    {
+      "name": "",
+      "companyName": "Habitations Trigone",
+      "region": "QC",
+      "city": "Deux-Montagnes",
+      "subregion": "Grand Montréal (Rive-Nord)",
+      "projectTypes": [
+        "multilogement",
+        "résidentiel"
+      ],
+      "recentProjects": "Domaine d'Accurso Deux-Montagnes (2026, 5 tours 16 étages)",
+      "estimatedAnnualVolume": 200000000,
+      "public_email": "",
+      "public_phone": "",
+      "website": "",
+      "linkedin_url": "",
+      "contact_person": "",
+      "source_url": "https://www.lapresse.ca/affaires/2026-01-27/a-deux-pas-du-rem-de-deux-montagnes/les-promoteurs-de-trigone-comptent-racheter-le-domaine-d-accurso.php",
+      "notes": "Promoteur émergent, projet REM Deux-Montagnes"
+    },
+    {
+      "name": "",
+      "companyName": "Capital Property Developments (CPD)",
+      "region": "QC",
+      "city": "Longueuil",
+      "subregion": "Grand Montréal (Rive-Sud)",
+      "projectTypes": [
+        "multilogement",
+        "résidentiel locatif"
+      ],
+      "recentProjects": "Longueuil Roland-Therrien (2026, 525 unités)",
+      "estimatedAnnualVolume": 300000000,
+      "public_email": "",
+      "public_phone": "",
+      "website": "",
+      "linkedin_url": "",
+      "contact_person": "",
+      "source_url": "https://lecourrierdusud.ca/longueuil-projet-immobilier-commerces-roland-therrien/",
+      "notes": "Consortium Groupe HD/CPD/Kastello"
+    },
+    {
+      "name": "",
+      "companyName": "Kastello",
+      "region": "QC",
+      "city": "Longueuil",
+      "subregion": "Grand Montréal (Rive-Sud)",
+      "projectTypes": [
+        "multilogement",
+        "résidentiel"
+      ],
+      "recentProjects": "Longueuil Roland-Therrien (2026)",
+      "estimatedAnnualVolume": 250000000,
+      "public_email": "",
+      "public_phone": "",
+      "website": "",
+      "linkedin_url": "",
+      "contact_person": "",
+      "source_url": "https://lecourrierdusud.ca/longueuil-projet-immobilier-commerces-roland-therrien/",
+      "notes": "Consortium HD/CPD/Kastello, partenaire Rive-Sud"
+    },
+    {
+      "name": "",
+      "companyName": "Pomerleau",
+      "region": "QC",
+      "city": "Montréal",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "construction",
+        "infrastructure",
+        "civil",
+        "industriel"
+      ],
+      "recentProjects": "Multiples grands projets Canada",
+      "estimatedAnnualVolume": 3000000000,
+      "public_email": "contact@pomerleau.ca",
+      "public_phone": "",
+      "website": "https://pomerleau.ca/en",
+      "linkedin_url": "https://ca.linkedin.com/company/pomerleau-inc",
+      "contact_person": "",
+      "source_url": "https://pomerleau.ca/en",
+      "notes": "Entrepreneur construction majeur Canada. Bâtiment/infrastructure/civil/industriel"
+    },
+    {
+      "name": "",
+      "companyName": "Cromwell",
+      "region": "QC",
+      "city": "Montréal",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "commercial",
+        "résidentiel locatif"
+      ],
+      "recentProjects": "Portefeuille locatif MTL/QC/TO",
+      "estimatedAnnualVolume": 400000000,
+      "public_email": "",
+      "public_phone": "",
+      "website": "",
+      "linkedin_url": "",
+      "contact_person": "",
+      "source_url": "https://www.guidehabitation.ca/fr/9050/cromwell/",
+      "notes": "Depuis 1986, propriétaire/gestionnaire portefeuille locatif"
+    },
+    {
+      "name": "",
+      "companyName": "Acquisitions R. Allard",
+      "region": "QC",
+      "city": "Montréal",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "acquisition foncière",
+        "développement"
+      ],
+      "recentProjects": "Acquisitions terrains Grand MTL",
+      "estimatedAnnualVolume": 150000000,
+      "public_email": "contact@acqra.ca",
+      "public_phone": "",
+      "website": "https://acqra.ca/accueil",
+      "linkedin_url": "",
+      "contact_person": "",
+      "source_url": "https://acqra.ca/accueil",
+      "notes": "Acquisition foncière, recherche partenaires actifs"
+    }
+  ],
+  "promoteurs_regions": [
+    {
+      "name": "William Trudel",
+      "companyName": "Trudel Corporation",
+      "region": "QC",
+      "city": "Québec",
+      "subregion": "Capitale-Nationale",
+      "projectTypes": [
+        "multilogement",
+        "commercial",
+        "mixte",
+        "retail"
+      ],
+      "recentProjects": "Fleur de Lys (2025, 1.5B$, 480+ unités phase 1); projets Trois-Rivières (2024)",
+      "estimatedAnnualVolume": null,
+      "public_email": "",
+      "public_phone": "",
+      "website": "https://trudel.ca/",
+      "linkedin_url": "https://ca.linkedin.com/company/trudel-ca",
+      "contact_person": "William Trudel, Président & CEO",
+      "source_url": "https://trudel.ca/",
+      "notes": "Majoriste Québec, commercial et résidentiel, début 2000s"
+    },
+    {
+      "name": "Michel Dallaire",
+      "companyName": "Groupe Dallaire",
+      "region": "QC",
+      "city": "Québec",
+      "subregion": "Capitale-Nationale",
+      "projectTypes": [
+        "multilogement",
+        "condo",
+        "commercial",
+        "industriel"
+      ],
+      "recentProjects": "Altura (2024, 160 unités, 14-28 étages); Faubourg du Moulin",
+      "estimatedAnnualVolume": null,
+      "public_email": "sac@groupedallaire.ca",
+      "public_phone": "418-781-6300",
+      "website": "https://groupedallaire.ca/",
+      "linkedin_url": "https://ca.linkedin.com/company/groupe-dallaire-inc-",
+      "contact_person": "Michel Dallaire (CEO) & Alain Dallaire (VP Op)",
+      "source_url": "https://groupedallaire.ca/",
+      "notes": "Depuis 1965, plus grand propriétaire foncier région métro QC"
+    },
+    {
+      "name": "Alexandre Tanguay",
+      "companyName": "Groupe Immobilier Tanguay",
+      "region": "QC",
+      "city": "Québec",
+      "subregion": "Capitale-Nationale",
+      "projectTypes": [
+        "commercial",
+        "industriel"
+      ],
+      "recentProjects": "Acquisitions Vieux-Québec (2021+)",
+      "estimatedAnnualVolume": null,
+      "public_email": "",
+      "public_phone": "418-835-5249",
+      "website": "https://groupeimmobiliertanguay.ca/",
+      "linkedin_url": "",
+      "contact_person": "Alexandre Tanguay, Président",
+      "source_url": "https://groupeimmobiliertanguay.ca/",
+      "notes": "Régional Québec, Maison Chevalier 1752, Vieux-Québec"
+    },
+    {
+      "name": "Yves Doyon",
+      "companyName": "Le Groupe Norplex",
+      "region": "QC",
+      "city": "Québec",
+      "subregion": "Capitale-Nationale",
+      "projectTypes": [
+        "condo",
+        "commercial",
+        "bureau"
+      ],
+      "recentProjects": "Europa Project Honoré-Mercier; Lofts du Théâtre Saint-Joseph; Monastère Capucins",
+      "estimatedAnnualVolume": null,
+      "public_email": "",
+      "public_phone": "",
+      "website": "https://norplex.ca/",
+      "linkedin_url": "",
+      "contact_person": "Yves Doyon, Président",
+      "source_url": "https://norplex.ca/",
+      "notes": "Région Québec, luxury condo Vieux-Port/Vieux-Limoilou, 'The Site First'"
+    },
+    {
+      "name": "",
+      "companyName": "Immostar",
+      "region": "QC",
+      "city": "Québec",
+      "subregion": "Capitale-Nationale",
+      "projectTypes": [
+        "multilogement",
+        "commercial",
+        "industriel",
+        "bureau"
+      ],
+      "recentProjects": "Projets multi-résidentiels LEED & WELL (2024)",
+      "estimatedAnnualVolume": null,
+      "public_email": "confidential@immostar.ca",
+      "public_phone": "",
+      "website": "https://immostar.ca/en",
+      "linkedin_url": "",
+      "contact_person": "",
+      "source_url": "https://immostar.ca/en/about",
+      "notes": "Région QC, LEED/WELL/ToD pioneer"
+    },
+    {
+      "name": "",
+      "companyName": "Kevlar Immobilier",
+      "region": "QC",
+      "city": "Québec",
+      "subregion": "Capitale-Nationale",
+      "projectTypes": [
+        "condo",
+        "commercial",
+        "industriel"
+      ],
+      "recentProjects": "Projets résidentiels/commerciaux/industriels haut de gamme (2024)",
+      "estimatedAnnualVolume": null,
+      "public_email": "info@kevlarinc.com",
+      "public_phone": "514-393-8858",
+      "website": "https://groupekevlar.com/en/",
+      "linkedin_url": "https://ca.linkedin.com/company/kevlar-inc",
+      "contact_person": "",
+      "source_url": "https://groupekevlar.com/en/",
+      "notes": "Fondé 1996, multi-secteur, excellence & innovation"
+    },
+    {
+      "name": "Charles Custeau",
+      "companyName": "Groupe Custeau Immobilier",
+      "region": "QC",
+      "city": "Sherbrooke",
+      "subregion": "Estrie",
+      "projectTypes": [
+        "multilogement",
+        "condo",
+        "commercial"
+      ],
+      "recentProjects": "Masson Project Fleurimont (2024, ~800 unités); logements sociaux/abordables (2024)",
+      "estimatedAnnualVolume": null,
+      "public_email": "",
+      "public_phone": "819-564-8866",
+      "website": "https://www.groupecusteau.com/",
+      "linkedin_url": "https://ca.linkedin.com/company/groupe-custeau",
+      "contact_person": "Charles Custeau, Président (avec Philippe & Denis)",
+      "source_url": "https://www.groupecusteau.com/",
+      "notes": "Estrie 40+ ans, construction/gestion/financement, 800u Fleurimont"
+    },
+    {
+      "name": "Philippe Dusseault",
+      "companyName": "Immeubles Must Urbain",
+      "region": "QC",
+      "city": "Sherbrooke",
+      "subregion": "Estrie",
+      "projectTypes": [
+        "multilogement",
+        "condo",
+        "commercial",
+        "bureau"
+      ],
+      "recentProjects": "Revitalisation Wellington South & King East (2024); ~1500 unités downtown (2024)",
+      "estimatedAnnualVolume": null,
+      "public_email": "",
+      "public_phone": "",
+      "website": "https://www.immeublesmusturbain.com/",
+      "linkedin_url": "",
+      "contact_person": "Philippe Dusseault, Président-fondateur",
+      "source_url": "https://www.immeublesmusturbain.com/",
+      "notes": "Estrie fondé 2012, downtown Sherbrooke revitalization"
+    },
+    {
+      "name": "",
+      "companyName": "Construction de l'Estrie",
+      "region": "QC",
+      "city": "Sherbrooke",
+      "subregion": "Estrie",
+      "projectTypes": [
+        "multilogement",
+        "commercial",
+        "résidentiel"
+      ],
+      "recentProjects": "Rénovation & construction commerciale (2024)",
+      "estimatedAnnualVolume": null,
+      "public_email": "",
+      "public_phone": "",
+      "website": "https://constructiondelestrie.com/",
+      "linkedin_url": "",
+      "contact_person": "",
+      "source_url": "https://constructiondelestrie.com/",
+      "notes": "Estrie, entrepreneur général, rénovation & construction neuve"
+    },
+    {
+      "name": "Gilles Desjardins",
+      "companyName": "Groupe Brigil",
+      "region": "QC",
+      "city": "Gatineau",
+      "subregion": "Outaouais",
+      "projectTypes": [
+        "multilogement",
+        "condo",
+        "commercial"
+      ],
+      "recentProjects": "Projets résidentiels Ottawa-Gatineau",
+      "estimatedAnnualVolume": null,
+      "public_email": "",
+      "public_phone": "",
+      "website": "https://brigil.com/",
+      "linkedin_url": "https://ca.linkedin.com/in/gilles-desjardins-brigil",
+      "contact_person": "Gilles Desjardins, Président-fondateur",
+      "source_url": "https://brigil.com/",
+      "notes": "Outaouais fondé 1985, ~14k unités, 4500 rental units"
+    },
+    {
+      "name": "Jean-Pierre Poulin",
+      "companyName": "Devcore Group",
+      "region": "QC",
+      "city": "Gatineau",
+      "subregion": "Outaouais",
+      "projectTypes": [
+        "multilogement",
+        "condo",
+        "commercial"
+      ],
+      "recentProjects": "CINQ23 (2024, résidentiel-commercial); Domaine de la Baie (2024)",
+      "estimatedAnnualVolume": null,
+      "public_email": "",
+      "public_phone": "819-663-7777",
+      "website": "https://devcore.ca/",
+      "linkedin_url": "https://www.linkedin.com/in/jean-pierre-poulin-04a5205a/",
+      "contact_person": "Jean-Pierre Poulin (JP), Fondateur",
+      "source_url": "https://devcore.ca/",
+      "notes": "Outaouais 25+ ans, $500M actifs QC-ON, Mercure Award 2024"
+    },
+    {
+      "name": "Marc St-Gelais",
+      "companyName": "Immeubles MCJR",
+      "region": "QC",
+      "city": "Saguenay",
+      "subregion": "Saguenay-Lac-Saint-Jean",
+      "projectTypes": [
+        "multilogement",
+        "condo"
+      ],
+      "recentProjects": "Place du Progrès (livraison 2026, 114 unités, 40M$); Édifice Laflamme (2024)",
+      "estimatedAnnualVolume": null,
+      "public_email": "",
+      "public_phone": "",
+      "website": "",
+      "linkedin_url": "",
+      "contact_person": "Marc & Sophie St-Gelais",
+      "source_url": "https://informeaffaires.com/regional/immobilier/le-projet-de-logements-de-40-m-de-la-place-du-progres-est-lance",
+      "notes": "Saguenay, 114 unités multilogement (11% abordable), 35% écoénergétique"
+    },
+    {
+      "name": "Jérémi Foucault",
+      "companyName": "Groupe JCO",
+      "region": "QC",
+      "city": "Saguenay",
+      "subregion": "Saguenay-Lac-Saint-Jean",
+      "projectTypes": [
+        "multilogement",
+        "commercial",
+        "mixte"
+      ],
+      "recentProjects": "Le Trefflé (2024, 24u, 6.25M$); rue des Mouettes (2024+, 300+ logements)",
+      "estimatedAnnualVolume": null,
+      "public_email": "",
+      "public_phone": "",
+      "website": "https://groupejco.ca/",
+      "linkedin_url": "",
+      "contact_person": "Jérémi Foucault & Jean-Daniel Tremblay, Associés",
+      "source_url": "https://groupejco.ca/",
+      "notes": "Saguenay ~12 employés, 16M$ projets Chicoutimi-Jonquière 2024"
+    },
+    {
+      "name": "Jean-Michel Tremblay",
+      "companyName": "Projet 7 / Concept Platinum",
+      "region": "QC",
+      "city": "Saguenay",
+      "subregion": "Saguenay-Lac-Saint-Jean",
+      "projectTypes": [
+        "commercial",
+        "multilogement",
+        "mixte"
+      ],
+      "recentProjects": "Complexe 175 Laterrière (2024, 7M$, multiservice)",
+      "estimatedAnnualVolume": null,
+      "public_email": "jeanmichel.tremblay@conceptplatinum.ca",
+      "public_phone": "418-402-1311",
+      "website": "https://projet7.ca/",
+      "linkedin_url": "",
+      "contact_person": "Jean-Michel Tremblay",
+      "source_url": "https://projet7.ca/",
+      "notes": "Saguenay fondé 2018, développement & vente terrain"
+    },
+    {
+      "name": "Michel Savard",
+      "companyName": "Habitations Manicouagan",
+      "region": "QC",
+      "city": "Baie-Comeau",
+      "subregion": "Côte-Nord",
+      "projectTypes": [
+        "multilogement",
+        "condo"
+      ],
+      "recentProjects": "56 unités sociales Baie-Comeau secteur Mingan (2024+)",
+      "estimatedAnnualVolume": null,
+      "public_email": "",
+      "public_phone": "",
+      "website": "",
+      "linkedin_url": "",
+      "contact_person": "Michel Savard, Président",
+      "source_url": "https://macotenord.com/56-nouveaux-logements-sociaux-et-abordables-pour-baie-comeau/",
+      "notes": "Côte-Nord, Housing Accelerator Fund $900M, abordable focus"
+    },
+    {
+      "name": "Dave Coutu-Larouche",
+      "companyName": "Trans-Action Investissement",
+      "region": "QC",
+      "city": "Rouyn-Noranda",
+      "subregion": "Abitibi-Témiscamingue",
+      "projectTypes": [
+        "multilogement",
+        "commercial"
+      ],
+      "recentProjects": "Rue Perreault (printemps 2025, 70M$, 228 unités); Malartic 32 unités (2024+)",
+      "estimatedAnnualVolume": null,
+      "public_email": "",
+      "public_phone": "",
+      "website": "https://www.transactioninvestissement.com/",
+      "linkedin_url": "https://www.linkedin.com/in/dave-coutu-larouche-86916398/",
+      "contact_person": "Dave Coutu-Larouche, PDG",
+      "source_url": "https://www.transactioninvestissement.com/",
+      "notes": "Abitibi ~10 ans, 70M$ Perreault 228u (25% abordable), éco-énergétique"
+    },
+    {
+      "name": "Stéphane Chouinard",
+      "companyName": "C4 Immobilier",
+      "region": "QC",
+      "city": "Rivière-du-Loup",
+      "subregion": "Bas-Saint-Laurent",
+      "projectTypes": [
+        "multilogement",
+        "commercial"
+      ],
+      "recentProjects": "Complexe Fraser (2024, 81 unités, 24M$+); entrée ouest RDL",
+      "estimatedAnnualVolume": null,
+      "public_email": "",
+      "public_phone": "",
+      "website": "",
+      "linkedin_url": "",
+      "contact_person": "Stéphane Chouinard & Guillaume Lavoie",
+      "source_url": "https://infodimanche.com/actualites/actualite/518840/un-projet-de-78-logements-abordables-a-l-entree-ouest-de-riviere-du-loup",
+      "notes": "BSL, Complexe Fraser (50x 3½, 16 studios, 15x 4½+), SHQ+ville"
+    },
+    {
+      "name": "",
+      "companyName": "Groupe Robin",
+      "region": "QC",
+      "city": "Trois-Rivières",
+      "subregion": "Mauricie",
+      "projectTypes": [
+        "multilogement",
+        "condo",
+        "hôtel",
+        "santé"
+      ],
+      "recentProjects": "District 55 Trois-Rivières (juillet 2025, 60 unités); 80 unités résidentielles + 5 hôtels LEED",
+      "estimatedAnnualVolume": null,
+      "public_email": "",
+      "public_phone": "",
+      "website": "https://grouperobin.com/",
+      "linkedin_url": "https://ca.linkedin.com/company/groupe-robin",
+      "contact_person": "",
+      "source_url": "https://grouperobin.com/decouvrez-nos-projets-a-venir-pour-2024-a-trois-rivieres/",
+      "notes": "Multi-régional Trois-Rivières, District 55 LEED certified"
+    },
+    {
+      "name": "Brian Demontigny",
+      "companyName": "Groupe Demontigny Construction",
+      "region": "QC",
+      "city": "Trois-Rivières",
+      "subregion": "Mauricie",
+      "projectTypes": [
+        "multilogement",
+        "commercial",
+        "résidentiel"
+      ],
+      "recentProjects": "Multi-unités nord Trois-Rivières (2024)",
+      "estimatedAnnualVolume": null,
+      "public_email": "",
+      "public_phone": "819-378-6332",
+      "website": "https://groupedemontigny.com/",
+      "linkedin_url": "",
+      "contact_person": "Brian Demontigny (avec Linda Auger)",
+      "source_url": "https://groupedemontigny.com/",
+      "notes": "Mauricie fondé 1985, Novoclimat Sélect"
+    },
+    {
+      "name": "Yannick Lemonde",
+      "companyName": "Habitations Urbania",
+      "region": "QC",
+      "city": "Bécancour",
+      "subregion": "Centre-du-Québec",
+      "projectTypes": [
+        "résidentiel",
+        "condo",
+        "commercial"
+      ],
+      "recentProjects": "100+ projets, filière batterie Bécancour (2024)",
+      "estimatedAnnualVolume": null,
+      "public_email": "",
+      "public_phone": "",
+      "website": "https://www.habitationsurbania.com/",
+      "linkedin_url": "",
+      "contact_person": "Yannick Lemonde, Président",
+      "source_url": "https://www.habitationsurbania.com/",
+      "notes": "Centre-du-QC, 100+ projets, Quality Rating A (GCR)"
+    },
+    {
+      "name": "",
+      "companyName": "IDA Développement (Groupe Chagall)",
+      "region": "QC",
+      "city": "Drummondville",
+      "subregion": "Centre-du-Québec",
+      "projectTypes": [
+        "condo",
+        "multilogement",
+        "commercial"
+      ],
+      "recentProjects": "OTTERA Quartier (2024+, 200+ unités, 31M$); La Source coopérative (2024); Le Symbioze + Carré 29 Octobre",
+      "estimatedAnnualVolume": null,
+      "public_email": "",
+      "public_phone": "",
+      "website": "https://idadev.ca/",
+      "linkedin_url": "",
+      "contact_person": "",
+      "source_url": "https://idadev.ca/en/a-propos/",
+      "notes": "Centre-du-QC, OTTERA Drummondville 31M$, coopérative non-spéculative"
+    }
+  ],
+  "tier_zero_rejected": {
+    "courtiers": [],
+    "promoteurs": []
+  }
+}

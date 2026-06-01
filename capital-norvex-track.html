@@ -1,0 +1,2704 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Norvex Track™ — Capital Norvex</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ink:#0a0d13;--ink2:#131720;--ink3:#1b2231;
+  --gold:#b8975a;--gold2:#d4b07a;--gold-pale:#f0e6d0;
+  --cream:#faf8f4;--stone:#e8e3da;--muted:#7a8294;--muted2:#a0a8b8;
+  --ok:#2d6a4f;--ok2:#52b788;--ok-bg:rgba(82,183,136,.10);--ok-br:rgba(82,183,136,.30);
+  --warn:#b7791f;--warn2:#d4a017;--warn-bg:rgba(212,160,23,.10);--warn-br:rgba(212,160,23,.35);
+  --crit:#c0392b;--crit2:#e74c3c;--crit-bg:rgba(192,57,43,.08);--crit-br:rgba(192,57,43,.30);
+  --blue:#1a5276;--blue2:#2e86c1;--blue-bg:rgba(46,134,193,.10);--blue-br:rgba(46,134,193,.30);
+  --border:rgba(184,151,90,.15);
+}
+html{scroll-behavior:smooth}
+body{background:#eeebe5;color:var(--ink);font-family:'DM Sans',sans-serif;font-weight:300;min-height:100vh}
+
+/* ── LOGIN ── */
+#loginScreen{position:fixed;inset:0;background:#0a0d13;z-index:9999;display:flex;align-items:center;justify-content:center}
+.login-box{background:#131720;border:1px solid rgba(184,151,90,.2);padding:3rem;width:100%;max-width:400px;text-align:center}
+.login-logo{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--gold);margin-bottom:.25rem;letter-spacing:.06em}
+.login-badge{display:inline-flex;align-items:center;gap:.4rem;font-size:.5rem;letter-spacing:.22em;text-transform:uppercase;color:var(--ok2);border:1px solid var(--ok-br);background:var(--ok-bg);padding:.22rem .65rem;margin-bottom:2.2rem}
+.login-label{display:block;font-size:.52rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem;text-align:left}
+.login-input{width:100%;background:#0a0d13;border:1px solid rgba(184,151,90,.2);padding:.8rem 1rem;font-size:.9rem;color:var(--cream);font-family:'DM Sans',sans-serif;outline:none;margin-bottom:1.2rem;transition:border-color .2s}
+.login-input:focus{border-color:var(--gold)}
+.login-btn{width:100%;background:var(--gold);border:none;color:var(--ink);padding:.85rem;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s}
+.login-btn:hover{background:var(--gold2)}
+.login-err{color:var(--crit2);font-size:.72rem;margin-top:.8rem;display:none}
+.login-token-section{margin-top:2rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.06);text-align:left}
+.login-token-lbl{font-size:.5rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem;display:block}
+.login-token-note{font-size:.65rem;color:var(--muted);margin-top:.5rem;line-height:1.5}
+
+/* ── TOPBAR ── */
+.topbar{background:var(--ink);display:flex;align-items:center;justify-content:space-between;padding:.85rem 2rem;position:sticky;top:0;z-index:300;border-bottom:1px solid var(--border)}
+.tb-left{display:flex;align-items:center;gap:1.2rem}
+.tb-logo{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--gold);letter-spacing:.04em;cursor:pointer;text-decoration:none}
+.tb-sep{width:1px;height:20px;background:rgba(255,255,255,.1)}
+.tb-title{font-size:.58rem;letter-spacing:.24em;text-transform:uppercase;color:var(--muted2)}
+.tb-right{display:flex;align-items:center;gap:.8rem}
+.tb-back{font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted2);text-decoration:none;border:1px solid rgba(255,255,255,.12);padding:.38rem .9rem;transition:all .2s;cursor:pointer;background:transparent;font-family:'DM Sans',sans-serif}
+.tb-back:hover{border-color:var(--gold);color:var(--gold)}
+.tb-badge{display:flex;align-items:center;gap:.4rem;font-size:.54rem;letter-spacing:.15em;text-transform:uppercase;padding:.28rem .75rem;border:1px solid}
+.tb-badge.live{background:var(--ok-bg);color:var(--ok2);border-color:var(--ok-br)}
+.tb-badge.client{background:var(--blue-bg);color:var(--blue2);border-color:var(--blue-br)}
+.tb-badge.partenaire{background:var(--warn-bg);color:var(--warn2);border-color:var(--warn-br)}
+.dot{width:6px;height:6px;border-radius:50%;background:currentColor;animation:blink 1.5s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* ── LAYOUT ── */
+.app{max-width:1400px;margin:0 auto;padding:2rem}
+
+/* ── ADMIN LIST VIEW ── */
+.list-header{margin-bottom:2rem}
+.list-tag{font-size:.56rem;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:.6rem;margin-bottom:.4rem}
+.list-tag::before{content:"";display:block;width:1.5rem;height:1px;background:var(--gold)}
+.list-title{font-family:'Playfair Display',serif;font-size:2rem;font-weight:400;color:var(--ink)}
+.list-title em{font-style:italic;color:var(--gold)}
+.list-sub{font-size:.72rem;color:var(--muted);margin-top:.3rem}
+.dossier-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.5rem}
+.dossier-card{background:var(--cream);border:1px solid var(--stone);overflow:hidden;transition:box-shadow .2s,transform .2s;cursor:pointer}
+.dossier-card:hover{box-shadow:0 8px 32px rgba(0,0,0,.12);transform:translateY(-2px)}
+.dc-header{background:var(--ink);padding:1rem 1.4rem;display:flex;align-items:center;justify-content:space-between}
+.dc-id{font-size:.52rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted2);font-family:'DM Mono',monospace}
+.dc-status{font-size:.5rem;letter-spacing:.14em;text-transform:uppercase;padding:.2rem .55rem;border:1px solid}
+.dc-status.actif{border-color:var(--ok-br);color:var(--ok2);background:rgba(82,183,136,.08)}
+.dc-status.no-track{border-color:rgba(255,255,255,.12);color:var(--muted);background:transparent}
+.dc-body{padding:1.4rem}
+.dc-name{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--ink);margin-bottom:.3rem}
+.dc-type{font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:1.2rem}
+.dc-ring-row{display:flex;align-items:center;gap:1.2rem;margin-bottom:1.2rem}
+.dc-ring{position:relative;width:60px;height:60px;flex-shrink:0}
+.dc-ring svg{width:60px;height:60px;transform:rotate(-90deg)}
+.dc-ring-pct{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:.7rem;font-weight:500;color:var(--ink)}
+.dc-stats{display:flex;flex-direction:column;gap:.4rem;flex:1}
+.dc-stat{display:flex;justify-content:space-between;align-items:baseline}
+.dc-stat-lbl{font-size:.5rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.dc-stat-val{font-family:'DM Mono',monospace;font-size:.75rem;color:var(--ink)}
+.dc-footer{display:flex;gap:.6rem;padding-top:1rem;border-top:1px solid var(--stone)}
+.btn-primary{background:var(--gold);border:none;color:var(--ink);padding:.55rem 1.1rem;font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s}
+.btn-primary:hover{background:var(--gold2)}
+.btn-ghost{background:transparent;border:1px solid var(--stone);color:var(--muted);padding:.52rem 1rem;font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+.btn-ok{background:var(--ok-bg);border:1px solid var(--ok-br);color:var(--ok2);padding:.52rem 1rem;font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+.btn-ok:hover{background:rgba(82,183,136,.2)}
+.btn-warn{background:var(--warn-bg);border:1px solid var(--warn-br);color:var(--warn2);padding:.52rem 1rem;font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+.btn-crit{background:var(--crit-bg);border:1px solid var(--crit-br);color:var(--crit2);padding:.52rem 1rem;font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+.btn-blue{background:var(--blue-bg);border:1px solid var(--blue-br);color:var(--blue2);padding:.52rem 1rem;font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+
+/* ── HERO STRIP ── */
+.hero{background:var(--ink);padding:2.5rem 2rem;display:grid;grid-template-columns:1fr auto 1fr;gap:2rem;align-items:center;margin-bottom:1.5rem}
+.hero-left{}
+.hero-tag{font-size:.52rem;letter-spacing:.24em;text-transform:uppercase;color:var(--muted2);margin-bottom:.5rem;display:flex;align-items:center;gap:.6rem}
+.hero-tag::before{content:"";display:block;width:1rem;height:1px;background:var(--gold)}
+.hero-name{font-family:'Playfair Display',serif;font-size:2rem;color:var(--cream);font-weight:400;line-height:1.1;margin-bottom:.5rem}
+.hero-name em{font-style:italic;color:var(--gold)}
+.hero-meta{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:.8rem}
+.hero-chip{font-size:.5rem;letter-spacing:.14em;text-transform:uppercase;padding:.22rem .65rem;border:1px solid rgba(255,255,255,.12);color:var(--muted2)}
+.hero-chip.gold{border-color:var(--border);color:var(--gold)}
+.hero-center{display:flex;flex-direction:column;align-items:center;gap:.6rem}
+.ring-wrap{position:relative;width:160px;height:160px}
+.ring-wrap svg{width:160px;height:160px;transform:rotate(-90deg)}
+.ring-text{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.1rem}
+.ring-pct{font-family:'DM Mono',monospace;font-size:2rem;color:var(--cream);line-height:1}
+.ring-lbl{font-size:.44rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted2)}
+.hero-ring-sub{font-size:.5rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);text-align:center}
+.hero-right{display:flex;flex-direction:column;gap:1rem;align-items:flex-end}
+.hero-metrics{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.06)}
+.hm-cell{background:var(--ink2);padding:.9rem 1.1rem}
+.hm-lbl{font-size:.44rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem}
+.hm-val{font-family:'DM Mono',monospace;font-size:.88rem;color:var(--cream)}
+.hm-val.gold{color:var(--gold)}
+.hm-val.ok{color:var(--ok2)}
+.hm-val.warn{color:var(--warn2)}
+
+/* ── ADMIN TOOLBAR ── */
+.admin-toolbar{background:var(--ink2);border:1px solid var(--border);padding:.9rem 1.4rem;display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap}
+.at-label{font-size:.52rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);flex:1}
+.at-divider{width:1px;height:18px;background:rgba(255,255,255,.08)}
+
+/* ── MODULE ── */
+.mod{background:var(--cream);border:1px solid var(--stone);overflow:hidden;margin-bottom:1.5rem}
+.mod-header{background:var(--ink);padding:1rem 1.4rem;display:flex;align-items:center;justify-content:space-between}
+.mod-title{font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:.6rem}
+.mod-title::before{content:"";display:block;width:1rem;height:1px;background:var(--gold)}
+.mod-actions{display:flex;gap:.6rem;align-items:center}
+.mod-body{padding:0}
+
+/* ── VENTILATION TABLE ── */
+.vt-wrap{overflow-x:auto}
+.vt{width:100%;border-collapse:collapse}
+.vt th{background:var(--ink3);font-size:.46rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted2);padding:.65rem 1rem;text-align:left;font-weight:400;white-space:nowrap;border-bottom:1px solid rgba(255,255,255,.06)}
+.vt th.right{text-align:right}
+.vt td{padding:.65rem 1rem;border-bottom:1px solid var(--stone);vertical-align:middle;font-size:.76rem;color:var(--ink)}
+.vt tr:last-child td{border-bottom:none}
+.vt tr.data-row:hover td{background:#f5f0e8}
+.vt tr.total-row td{background:var(--ink);color:var(--cream);border-bottom:none}
+.vt tr.total-row td.mono{font-family:'DM Mono',monospace;font-size:.82rem}
+.vt tr.total-row td.gold{color:var(--gold)}
+
+/* Category rows */
+.vt tr.cat-row td{
+  background:var(--ink2);
+  color:var(--gold);
+  font-size:.46rem;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  font-weight:500;
+  padding:.55rem 1rem;
+  border-bottom:none;
+  border-top:1px solid rgba(184,151,90,.15);
+}
+.vt tr.cat-row td.cat-budget{
+  font-family:'DM Mono',monospace;
+  font-size:.66rem;
+  text-align:right;
+  color:var(--gold2);
+  letter-spacing:0;
+  text-transform:none;
+}
+.vt tr.cat-row td.cat-pct{
+  font-family:'DM Mono',monospace;
+  font-size:.62rem;
+  color:var(--muted2);
+  letter-spacing:0;
+  text-transform:none;
+}
+.vt-num{font-size:.48rem;color:var(--muted);font-family:'DM Mono',monospace;width:32px}
+.vt-poste{font-weight:400;font-size:.75rem;min-width:180px;max-width:240px}
+.vt-mono{font-family:'DM Mono',monospace;font-size:.75rem;text-align:right}
+.vt-mono.ok{color:var(--ok2)}
+.vt-mono.warn{color:var(--warn2)}
+.vt-mono.gold{color:var(--gold)}
+.vt-mono.muted{color:var(--muted)}
+.progress-wrap{min-width:110px}
+.progress-track{height:4px;background:var(--stone);position:relative;overflow:hidden}
+.progress-fill{height:100%;transition:width .5s cubic-bezier(.4,0,.2,1)}
+.progress-fill.low{background:var(--muted2)}
+.progress-fill.mid{background:var(--warn2)}
+.progress-fill.high{background:var(--ok2)}
+.progress-fill.done{background:var(--gold)}
+.progress-fill.over{background:var(--crit2)}
+.progress-pct{font-size:.56rem;font-family:'DM Mono',monospace;color:var(--ink);margin-bottom:.25rem;display:flex;align-items:center;justify-content:space-between}
+.pct-input{width:52px;background:#f2ede6;border:1px solid var(--stone);padding:.28rem .35rem;font-family:'DM Mono',monospace;font-size:.7rem;text-align:center;color:var(--ink);outline:none;transition:border-color .2s}
+.pct-input:focus{border-color:var(--gold)}
+.budget-input{width:105px;background:#f2ede6;border:1px solid var(--stone);padding:.3rem .45rem;font-family:'DM Mono',monospace;font-size:.72rem;text-align:right;color:var(--ink);outline:none;transition:border-color .2s}
+.budget-input:focus{border-color:var(--gold)}
+.notes-cell{font-size:.62rem;color:var(--muted);font-style:italic;max-width:120px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.notes-input{width:120px;background:#f2ede6;border:1px solid var(--stone);padding:.28rem .45rem;font-size:.66rem;color:var(--ink);outline:none}
+.notes-input:focus{border-color:var(--gold)}
+
+/* Alert row */
+.vt tr.alert-row td{background:rgba(192,57,43,.04)}
+.vt tr.alert-row .vt-poste{color:var(--crit2)}
+
+/* ── DEMANDES ── */
+.demande-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1.2rem;padding:1.4rem}
+.demande-card{border:1px solid var(--stone);background:#fff;overflow:hidden}
+.dem-header{padding:.9rem 1.2rem;display:flex;align-items:flex-start;justify-content:space-between;gap:.8rem;border-bottom:1px solid var(--stone)}
+.dem-amount{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--ink);line-height:1}
+.dem-date{font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:.2rem}
+.dem-badge{font-size:.48rem;letter-spacing:.16em;text-transform:uppercase;padding:.22rem .6rem;border:1px solid;white-space:nowrap;flex-shrink:0}
+.dem-badge.attente{border-color:var(--warn-br);color:var(--warn2);background:var(--warn-bg)}
+.dem-badge.yves{border-color:var(--blue-br);color:var(--blue2);background:var(--blue-bg)}
+.dem-badge.final{border-color:var(--ok-br);color:var(--ok2);background:var(--ok-bg)}
+.dem-badge.rejete{border-color:var(--crit-br);color:var(--crit2);background:var(--crit-bg)}
+.dem-badge.transfere{border-color:var(--border);color:var(--gold);background:rgba(184,151,90,.08)}
+.dem-body{padding:1rem 1.2rem}
+.dem-postes{margin-bottom:.8rem}
+.dem-poste-row{display:flex;justify-content:space-between;align-items:baseline;padding:.18rem 0;border-bottom:1px solid #f5f0e8;font-size:.72rem}
+.dem-poste-row:last-child{border-bottom:none}
+.dem-poste-name{color:var(--muted);flex:1;padding-right:.5rem}
+.dem-poste-amt{font-family:'DM Mono',monospace;color:var(--ink);font-size:.72rem}
+.dem-notes{font-size:.7rem;color:var(--muted);line-height:1.5;font-style:italic;margin-bottom:.8rem}
+.workflow-steps{display:flex;align-items:center;gap:0;margin-bottom:1rem}
+.ws-step{display:flex;flex-direction:column;align-items:center;flex:1;position:relative}
+.ws-step:not(:last-child)::after{content:"";position:absolute;top:10px;left:60%;width:80%;height:1px;background:var(--stone)}
+.ws-circle{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--stone);display:flex;align-items:center;justify-content:center;font-size:.55rem;font-weight:600;background:var(--cream);position:relative;z-index:1;transition:all .3s}
+.ws-circle.done{border-color:var(--ok2);background:var(--ok-bg);color:var(--ok2)}
+.ws-circle.active{border-color:var(--gold);background:rgba(184,151,90,.1);color:var(--gold)}
+.ws-circle.pending{border-color:var(--stone);color:var(--muted)}
+.ws-circle.rejected{border-color:var(--crit2);background:var(--crit-bg);color:var(--crit2)}
+.ws-label{font-size:.44rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:.4rem;text-align:center;line-height:1.3}
+.dem-footer{display:flex;gap:.5rem;padding:.9rem 1.2rem;border-top:1px solid var(--stone);background:#fdf9f3;flex-wrap:wrap}
+.dem-empty{padding:3rem 1.4rem;text-align:center}
+.dem-empty-icon{font-size:2.5rem;margin-bottom:.8rem;opacity:.3}
+.dem-empty-txt{font-size:.78rem;color:var(--muted);line-height:1.6}
+
+/* ── TOKENS PANEL ── */
+.tokens-panel{background:var(--ink2);border:1px solid var(--border);padding:1.4rem;margin-bottom:1.5rem}
+.tp-title{font-size:.54rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;display:flex;align-items:center;gap:.6rem}
+.tp-title::before{content:"";display:block;width:1rem;height:1px;background:var(--gold)}
+.tp-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.tp-card{background:var(--ink);border:1px solid rgba(255,255,255,.06);padding:1rem}
+.tp-card-lbl{font-size:.48rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted2);margin-bottom:.5rem}
+.tp-link{font-family:'DM Mono',monospace;font-size:.62rem;color:var(--muted2);word-break:break-all;margin-bottom:.6rem;line-height:1.5}
+.tp-copy-btn{font-size:.5rem;letter-spacing:.14em;text-transform:uppercase;background:transparent;border:1px solid rgba(255,255,255,.12);color:var(--muted2);padding:.28rem .7rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+.tp-copy-btn:hover{border-color:var(--gold);color:var(--gold)}
+
+/* ── MODALS ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:1000;display:flex;align-items:center;justify-content:center;padding:1.5rem;display:none}
+.modal-overlay.open{display:flex}
+.modal-box{background:var(--cream);max-width:680px;width:100%;max-height:90vh;overflow-y:auto;border:1px solid var(--stone)}
+.modal-header{background:var(--ink);padding:1.2rem 1.6rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:1}
+.modal-title{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:.6rem}
+.modal-title::before{content:"";display:block;width:1rem;height:1px;background:var(--gold)}
+.modal-close{background:transparent;border:none;color:var(--muted2);font-size:1.2rem;cursor:pointer;line-height:1;padding:.2rem;transition:color .2s}
+.modal-close:hover{color:var(--cream)}
+.modal-body{padding:1.6rem}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+.form-row.single{grid-template-columns:1fr}
+.form-row.triple{grid-template-columns:1fr 1fr 1fr}
+.field{display:flex;flex-direction:column;gap:.4rem}
+.field label{font-size:.52rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:400}
+.field input,.field select,.field textarea{background:#f2ede6;border:1px solid var(--stone);color:var(--ink);padding:.65rem .85rem;font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:300;outline:none;width:100%;transition:border-color .2s}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--gold);background:#fdf9f0}
+.field textarea{resize:vertical;min-height:70px;line-height:1.5}
+.modal-footer{padding:1rem 1.6rem;border-top:1px solid var(--stone);display:flex;justify-content:flex-end;gap:.8rem;background:#f5f0e8;position:sticky;bottom:0}
+
+/* ── SETUP POSTES ── */
+.setup-postes{border:1px solid var(--stone);overflow:hidden}
+.sp-cat-header{background:var(--ink2);padding:.55rem 1rem;font-size:.46rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid rgba(184,151,90,.15)}
+.sp-row{display:grid;grid-template-columns:2fr 1fr;gap:.5rem;padding:.5rem 1rem;border-bottom:1px solid var(--stone);align-items:center}
+.sp-row:last-child{border-bottom:none}
+.sp-row.header{background:var(--ink3)}
+.sp-poste-lbl{font-size:.7rem;color:var(--ink)}
+.sp-row.header .sp-poste-lbl{font-size:.44rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted2)}
+
+/* Demande select */
+.dem-poste-select{border:1px solid var(--stone);padding:.5rem;margin-bottom:1rem;max-height:320px;overflow-y:auto;background:#f2ede6}
+.dps-cat{padding:.4rem .6rem .2rem;font-size:.44rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid rgba(184,151,90,.2);margin-top:.3rem}
+.dps-cat:first-child{margin-top:0}
+.dps-row{display:flex;align-items:center;gap:.8rem;padding:.42rem .6rem;border-bottom:1px solid rgba(0,0,0,.05)}
+.dps-row:last-child{border-bottom:none}
+.dps-check{width:14px;height:14px;accent-color:var(--gold);cursor:pointer;flex-shrink:0}
+.dps-name{font-size:.7rem;color:var(--ink);flex:1}
+.dps-budget{font-family:'DM Mono',monospace;font-size:.66rem;color:var(--muted)}
+.dps-amt-input{width:95px;background:#fff;border:1px solid var(--stone);padding:.28rem .45rem;font-family:'DM Mono',monospace;font-size:.7rem;text-align:right;outline:none;transition:border-color .2s}
+.dps-amt-input:focus{border-color:var(--gold)}
+.dem-total-row{display:flex;justify-content:space-between;align-items:baseline;padding:.8rem 0;border-top:2px solid var(--gold);margin-top:.5rem}
+.dem-total-lbl{font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.dem-total-val{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--gold)}
+
+/* ── MISC ── */
+.divider{height:1px;background:var(--stone);margin:1rem 0}
+.tag{font-size:.5rem;letter-spacing:.14em;text-transform:uppercase;padding:.2rem .55rem;border:1px solid;display:inline-flex;align-items:center;gap:.3rem}
+.tag.ok{border-color:var(--ok-br);color:var(--ok2);background:var(--ok-bg)}
+.tag.warn{border-color:var(--warn-br);color:var(--warn2);background:var(--warn-bg)}
+.tag.crit{border-color:var(--crit-br);color:var(--crit2);background:var(--crit-bg)}
+.tag.blue{border-color:var(--blue-br);color:var(--blue2);background:var(--blue-bg)}
+.tag.gold{border-color:var(--border);color:var(--gold);background:rgba(184,151,90,.08)}
+.tag.neutral{border-color:rgba(160,168,184,.3);color:var(--muted)}
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--ink);color:var(--cream);padding:.75rem 1.4rem;font-size:.72rem;border-left:3px solid var(--gold);z-index:9000;display:none;animation:slideIn .3s ease}
+@keyframes slideIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
+.spinner-sm{width:14px;height:14px;border:2px solid rgba(184,151,90,.2);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite;display:inline-block}
+@keyframes spin{to{transform:rotate(360deg)}}
+.hidden{display:none!important}
+.save-indicator{font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ok2);display:flex;align-items:center;gap:.4rem;opacity:0;transition:opacity .3s}
+.save-indicator.visible{opacity:1}
+
+/* ── CLIENT BANNER ── */
+.client-banner{background:var(--blue-bg);border:1px solid var(--blue-br);padding:1rem 1.4rem;margin-bottom:1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.cb-text{font-size:.72rem;color:var(--blue2);line-height:1.5}
+.cb-text strong{font-weight:600}
+
+/* ── FLAGS ── */
+.flag-banner{background:rgba(183,121,31,.08);border:1px solid var(--warn-br);border-left:3px solid var(--warn2);padding:1rem 1.2rem;margin:.6rem 0;display:none}
+.flag-banner.visible{display:block}
+.flag-title{font-size:.52rem;letter-spacing:.18em;text-transform:uppercase;color:var(--warn2);margin-bottom:.6rem;font-weight:500}
+.flag-list{list-style:none;display:flex;flex-direction:column;gap:.3rem}
+.flag-list li{font-size:.72rem;color:var(--ink);line-height:1.45;padding:.25rem 0;border-bottom:1px solid rgba(183,121,31,.12)}
+.flag-list li:last-child{border-bottom:none}
+.flag-justif{display:none;margin-top:.6rem}
+.flag-justif.show{display:block}
+.flag-justif label{color:var(--crit2)!important}
+
+/* ── HEALTH DASHBOARD ── */
+.health-dash{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(184,151,90,.12);border:1px solid var(--border);margin-bottom:1.5rem;overflow:hidden}
+.hd-cell{background:var(--cream);padding:1rem 1.1rem;text-align:center}
+.hd-val{font-family:'Playfair Display',serif;font-size:1.9rem;line-height:1;margin-bottom:.3rem}
+.hd-val.ok{color:var(--ok2)}.hd-val.warn{color:var(--warn2)}.hd-val.crit{color:var(--crit2)}.hd-val.gold{color:var(--gold)}
+.hd-lbl{font-size:.44rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+
+/* ── QUITTANCES ── */
+.quitt-needed{background:rgba(192,57,43,.06);border:1px solid var(--crit-br);border-left:3px solid var(--crit2);padding:.55rem .9rem;margin:.5rem 0;display:flex;align-items:center;justify-content:space-between;gap:.8rem}
+.quitt-ok{background:var(--ok-bg);border:1px solid var(--ok-br);border-left:3px solid var(--ok2);padding:.45rem .9rem;margin:.5rem 0;display:flex;align-items:center;gap:.5rem}
+.quitt-txt{font-size:.66rem;color:var(--crit2);line-height:1.4;flex:1}
+.quitt-ok-txt{font-size:.66rem;color:var(--ok2)}
+.dps-locked{opacity:.5;pointer-events:none}
+.dps-lock-badge{font-size:.5rem;letter-spacing:.12em;text-transform:uppercase;color:var(--crit2);background:var(--crit-bg);border:1px solid var(--crit-br);padding:.18rem .5rem;white-space:nowrap}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr;text-align:center}
+  .hero-left .hero-tag{justify-content:center}
+  .hero-right{align-items:center}
+  .hero-meta{justify-content:center}
+  .tp-grid{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+  .form-row.triple{grid-template-columns:1fr}
+}
+
+/* ── UPLOAD SECTION ── */
+.upload-drop{border:2px dashed var(--stone);padding:2rem;text-align:center;cursor:pointer;transition:border-color .2s;background:var(--cream)}
+.upload-drop:hover,.upload-drop.drag-over{border-color:var(--gold)}
+.upload-drop-icon{font-size:2rem;margin-bottom:.6rem;opacity:.4}
+.upload-drop-txt{font-size:.72rem;color:var(--muted);line-height:1.6}
+.upload-list{padding:1.4rem}
+.upload-item{display:flex;align-items:center;gap:1rem;padding:.7rem 0;border-bottom:1px solid var(--stone)}
+.upload-item:last-child{border-bottom:none}
+.upload-item-icon{font-size:1.4rem;flex-shrink:0}
+.upload-item-info{flex:1;min-width:0}
+.upload-item-name{font-size:.75rem;font-weight:500;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.upload-item-meta{font-size:.58rem;color:var(--muted);margin-top:.15rem}
+.upload-item-type{font-size:.48rem;letter-spacing:.14em;text-transform:uppercase;padding:.18rem .5rem;border:1px solid;flex-shrink:0}
+.upload-item-type.facture{border-color:var(--blue-br);color:var(--blue2);background:var(--blue-bg)}
+.upload-item-type.rapport{border-color:var(--ok-br);color:var(--ok2);background:var(--ok-bg)}
+.upload-item-type.quittance{border-color:var(--border);color:var(--gold);background:rgba(184,151,90,.08)}
+.upload-item-type.autre{border-color:rgba(160,168,184,.3);color:var(--muted)}
+.upload-progress-wrap{display:none;padding:0 1.4rem 1rem}
+.upload-progress-bar{height:3px;background:var(--stone);overflow:hidden;margin-top:.4rem}
+.upload-progress-fill{height:3px;background:var(--gold);width:0;transition:width .3s}
+.upload-progress-txt{font-size:.62rem;color:var(--muted)}
+
+/* ── ANALYZE MODAL ── */
+.analyze-preview-row{display:flex;align-items:center;justify-content:space-between;padding:.5rem .8rem;border-bottom:1px solid var(--stone);gap:.8rem}
+.analyze-preview-row:last-child{border-bottom:none}
+.analyze-preview-row.changed{background:rgba(82,183,136,.05)}
+.apz-name{font-size:.7rem;color:var(--ink);flex:1}
+.apz-old{font-family:'DM Mono',monospace;font-size:.68rem;color:var(--muted)}
+.apz-arrow{color:var(--gold);font-size:.8rem}
+.apz-new{font-family:'DM Mono',monospace;font-size:.68rem;color:var(--ok2);font-weight:500}
+.apz-same{font-family:'DM Mono',monospace;font-size:.68rem;color:var(--muted)}
+
+/* ── PRINT REPORT ── */
+#printReport{display:none}
+.pr-page{font-family:'DM Sans',sans-serif;color:#0a0d13;background:#fff;max-width:800px;margin:0 auto}
+.pr-header{display:flex;align-items:flex-start;justify-content:space-between;padding-bottom:1.5rem;margin-bottom:1.5rem;border-bottom:2px solid #b8975a}
+.pr-logo{font-family:'Playfair Display',serif;font-size:1.6rem;color:#0a0d13;font-weight:400}
+.pr-logo em{color:#b8975a;font-style:italic}
+.pr-badge{font-size:.52rem;letter-spacing:.22em;text-transform:uppercase;color:#b8975a;border:1px solid #b8975a;padding:.25rem .7rem;margin-top:.3rem;display:inline-block}
+.pr-meta{text-align:right;font-size:.65rem;color:#7a8294;line-height:1.9}
+.pr-section{margin-bottom:1.8rem}
+.pr-sec-title{font-size:.52rem;letter-spacing:.24em;text-transform:uppercase;color:#b8975a;padding-bottom:.4rem;border-bottom:1px solid rgba(184,151,90,.3);margin-bottom:.8rem;display:flex;align-items:center;gap:.5rem}
+.pr-sec-title::before{content:"";display:block;width:1.2rem;height:1px;background:#b8975a}
+.pr-summary{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid #e8e3da;margin-bottom:1rem;overflow:hidden}
+.pr-sum-cell{padding:.8rem 1rem;border-right:1px solid #e8e3da}
+.pr-sum-cell:last-child{border-right:none}
+.pr-sum-lbl{font-size:.44rem;letter-spacing:.14em;text-transform:uppercase;color:#7a8294;margin-bottom:.3rem}
+.pr-sum-val{font-family:'DM Mono',monospace;font-size:.9rem;font-weight:500}
+.pr-sum-val.gold{color:#b8975a}.pr-sum-val.ok{color:#2d6a4f}.pr-sum-val.warn{color:#b7791f}
+.pr-table{width:100%;border-collapse:collapse;font-size:.7rem}
+.pr-table th{background:#131720;color:#a0a8b8;font-size:.44rem;letter-spacing:.14em;text-transform:uppercase;padding:.5rem .7rem;text-align:left;font-weight:400}
+.pr-table th.r{text-align:right}
+.pr-table td{padding:.45rem .7rem;border-bottom:1px solid #e8e3da;vertical-align:middle}
+.pr-table tr:last-child td{border-bottom:none}
+.pr-table tr.cat-r td{background:#1b2231;color:#b8975a;font-size:.44rem;letter-spacing:.18em;text-transform:uppercase;padding:.38rem .7rem;border-bottom:none}
+.pr-pct-bar{height:3px;background:#e8e3da;width:70px;display:inline-block;vertical-align:middle;margin-left:.3rem;position:relative;top:-1px}
+.pr-pct-fill{height:3px;display:block}
+.pr-table td.mono{font-family:'DM Mono',monospace;text-align:right;font-size:.68rem}
+.pr-dem-row{display:flex;gap:.8rem;padding:.55rem .7rem;border-bottom:1px solid #e8e3da;align-items:baseline;font-size:.7rem;flex-wrap:wrap}
+.pr-dem-date{font-family:'DM Mono',monospace;font-size:.6rem;color:#7a8294;white-space:nowrap}
+.pr-dem-postes{color:#7a8294;font-size:.65rem;flex:1}
+.pr-dem-amount{font-family:'DM Mono',monospace;font-weight:500;white-space:nowrap}
+.pr-dem-status{font-size:.5rem;letter-spacing:.12em;text-transform:uppercase;padding:.15rem .45rem;border:1px solid;white-space:nowrap}
+.pr-sig{margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid #e8e3da}
+.pr-sig-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:1.2rem}
+.pr-sig-line{border-bottom:1px solid #0a0d13;height:2.2rem;margin-bottom:.4rem}
+.pr-sig-lbl{font-size:.5rem;letter-spacing:.12em;text-transform:uppercase;color:#7a8294}
+.pr-sig-name{font-size:.68rem;color:#0a0d13;margin-top:.25rem}
+.pr-info-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.5rem .8rem;margin-bottom:1rem}
+.pr-info-row{display:flex;gap:.4rem;align-items:baseline;font-size:.72rem}
+.pr-info-lbl{font-size:.48rem;letter-spacing:.14em;text-transform:uppercase;color:#7a8294;min-width:90px;flex-shrink:0}
+.pr-progress-ring{display:flex;align-items:center;gap:1rem;padding:.8rem 1rem;border:1px solid #e8e3da;margin-bottom:1rem;background:rgba(184,151,90,.04)}
+.pr-ring-num{font-family:'DM Mono',monospace;font-size:2.2rem;color:#b8975a;line-height:1;flex-shrink:0}
+.pr-ring-sub{font-size:.5rem;letter-spacing:.14em;text-transform:uppercase;color:#7a8294}
+@media print{
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  #loginScreen,#topbar,#adminListView,#trackView,.modal-overlay,.toast{display:none!important}
+  #printReport{display:block!important}
+  body{background:#fff!important}
+  @page{margin:1.8cm;size:A4 portrait}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════ LOGIN ═══════════════════ -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">Capital Norvex</div>
+    <div class="login-badge"><span class="dot"></span>Norvex Track™</div>
+    <label class="login-label">Mot de passe administrateur</label>
+    <input class="login-input" id="pwInput" type="password" placeholder="••••••••••" autocomplete="current-password">
+    <button class="login-btn" onclick="tryLogin()">Accéder au tableau de bord</button>
+    <div class="login-err" id="loginErr">Mot de passe incorrect</div>
+    <div class="login-token-section">
+      <span class="login-token-lbl">Accès client ou partenaire</span>
+      <input class="login-input" id="tokenInput" type="text" placeholder="Entrez votre code d'accès" style="margin-bottom:.7rem">
+      <button class="login-btn" style="background:var(--ink2);border:1px solid var(--border);color:var(--muted2)" onclick="tryToken()">Accéder avec le code</button>
+      <div class="login-token-note">Votre code d'accès vous a été transmis par Capital Norvex.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ TOPBAR ═══════════════════ -->
+<div id="topbar" class="topbar hidden">
+  <div class="tb-left">
+    <span class="tb-logo">Capital Norvex</span>
+    <div class="tb-sep"></div>
+    <span class="tb-title">Norvex Track™</span>
+  </div>
+  <div class="tb-right">
+    <span class="save-indicator" id="saveIndicator">✓ Sauvegardé</span>
+    <div class="tb-badge live" id="roleBadge"><span class="dot"></span><span id="roleLabel">Admin</span></div>
+    <button class="tb-back" id="backBtn" onclick="goBack()" style="display:none">← Tous les projets</button>
+  </div>
+</div>
+
+<!-- ═══════════════════ ADMIN LIST VIEW ═══════════════════ -->
+<div id="adminListView" class="hidden">
+  <div class="app">
+    <div class="list-header">
+      <div class="list-tag">Norvex Track™</div>
+      <div class="list-title">Suivi de <em>construction</em></div>
+      <div class="list-sub">Sélectionnez un dossier pour accéder au tableau de suivi des débourses</div>
+    </div>
+    <div class="dossier-grid" id="dossierGrid">
+      <div style="grid-column:1/-1;padding:3rem;text-align:center;color:var(--muted);font-size:.78rem">
+        <div class="spinner-sm" style="margin:0 auto 1rem"></div>
+        Chargement des dossiers…
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ TRACK VIEW ═══════════════════ -->
+<div id="trackView" class="hidden">
+
+  <!-- HERO -->
+  <div class="hero" id="hero">
+    <div class="hero-left">
+      <div class="hero-tag">Suivi de construction</div>
+      <div class="hero-name" id="heroName">—</div>
+      <div style="font-family:'DM Mono',monospace;font-size:.58rem;color:var(--muted2);margin-bottom:.6rem" id="heroDossierId"></div>
+      <div class="hero-meta" id="heroMeta"></div>
+    </div>
+    <div class="hero-center">
+      <div class="ring-wrap">
+        <svg viewBox="0 0 120 120">
+          <circle cx="60" cy="60" r="50" fill="none" stroke="rgba(184,151,90,.12)" stroke-width="8"/>
+          <circle cx="60" cy="60" r="50" fill="none" stroke="var(--gold)" stroke-width="8"
+            stroke-dasharray="314.16" stroke-dashoffset="314.16"
+            stroke-linecap="round" id="ringCircle" style="transition:stroke-dashoffset .8s cubic-bezier(.4,0,.2,1)"/>
+        </svg>
+        <div class="ring-text">
+          <div class="ring-pct" id="ringPct">0%</div>
+          <div class="ring-lbl">Réalisé</div>
+        </div>
+      </div>
+      <div class="hero-ring-sub" id="ringSubLabel">—</div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-metrics" id="heroMetrics">
+        <div class="hm-cell"><div class="hm-lbl">Budget total</div><div class="hm-val gold" id="hmBudget">—</div></div>
+        <div class="hm-cell"><div class="hm-lbl">Déboursé approuvé</div><div class="hm-val ok" id="hmDebourse">—</div></div>
+        <div class="hm-cell"><div class="hm-lbl">Retenue cumulée</div><div class="hm-val warn" id="hmRetenue">—</div></div>
+        <div class="hm-cell"><div class="hm-lbl">Solde à débourser</div><div class="hm-val" id="hmSolde">—</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="app" style="padding-top:0">
+
+    <!-- CLIENT BANNER -->
+    <div class="client-banner hidden" id="clientBanner">
+      <div class="cb-text">
+        <strong>Espace client sécurisé</strong> — Vous pouvez consulter l'avancement de votre projet et soumettre des demandes de débourses. Toute demande sera examinée et approuvée par Capital Norvex et votre partenaire financier.
+      </div>
+      <button class="btn-primary" onclick="openDemandeModal()">+ Nouvelle demande</button>
+    </div>
+
+    <!-- ADMIN TOOLBAR -->
+    <div class="admin-toolbar hidden" id="adminToolbar">
+      <span class="at-label" id="atLabel">Mode consultation</span>
+      <button class="btn-primary" id="editToggleBtn" onclick="toggleEditMode()">✎ Activer édition</button>
+      <div class="at-divider"></div>
+      <button class="btn-blue" onclick="openDemandeModal()">+ Nouvelle demande</button>
+      <div class="at-divider"></div>
+      <button class="btn-ghost" onclick="openTokensPanel()">🔗 Liens d'accès</button>
+      <button class="btn-ghost" onclick="openModal('modalAnalyze')">🤖 Analyser rapport</button>
+      <button class="btn-ghost" onclick="printReport()">⎙ Rapport PDF</button>
+    </div>
+
+    <!-- TOKENS PANEL -->
+    <div class="tokens-panel hidden" id="tokensPanel">
+      <div class="tp-title">Liens d'accès sécurisés</div>
+      <div class="tp-grid">
+        <div class="tp-card">
+          <div class="tp-card-lbl">🔵 Lien client</div>
+          <div class="tp-link" id="clientLinkDisplay">—</div>
+          <button class="tp-copy-btn" onclick="copyLink('client')">Copier le lien</button>
+        </div>
+        <div class="tp-card">
+          <div class="tp-card-lbl">🟡 Lien partenaire</div>
+          <div class="tp-link" id="partnerLinkDisplay">—</div>
+          <button class="tp-copy-btn" onclick="copyLink('partner')">Copier le lien</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- HEALTH DASHBOARD -->
+    <div class="health-dash" id="healthDash">
+      <div class="hd-cell"><div class="hd-val ok" id="hdOk">—</div><div class="hd-lbl">Postes dans les limites</div></div>
+      <div class="hd-cell"><div class="hd-val warn" id="hdWarn">—</div><div class="hd-lbl">À surveiller (80 %+)</div></div>
+      <div class="hd-cell"><div class="hd-val crit" id="hdCrit">—</div><div class="hd-lbl">En dépassement</div></div>
+      <div class="hd-cell"><div class="hd-val gold" id="hdQuitt">—</div><div class="hd-lbl">Quittances en attente</div></div>
+    </div>
+
+    <!-- VENTILATION TABLE -->
+    <div class="mod" id="ventilationMod">
+      <div class="mod-header">
+        <span class="mod-title">Ventilation des coûts — 12 catégories · 68 postes</span>
+        <div class="mod-actions">
+          <span class="save-indicator" id="vtSaveIndicator" style="margin-right:.5rem">✓ Sauvegardé</span>
+        </div>
+      </div>
+      <div class="mod-body">
+        <div class="vt-wrap">
+          <table class="vt" id="ventTable">
+            <thead>
+              <tr>
+                <th style="width:32px">#</th>
+                <th>Poste de construction</th>
+                <th class="right">Budget prévu</th>
+                <th style="min-width:120px">Avancement</th>
+                <th class="right">À débourser</th>
+                <th class="right">Approuvé</th>
+                <th class="right">Retenue</th>
+                <th class="right">Solde</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody id="ventBody"></tbody>
+            <tfoot id="ventFoot"></tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- DEMANDES DE DÉBOURSE -->
+    <div class="mod">
+      <div class="mod-header">
+        <span class="mod-title">Demandes de débourses</span>
+        <div class="mod-actions">
+          <span class="tag" id="demandeCountBadge" style="font-size:.46rem">0 en attente</span>
+        </div>
+      </div>
+      <div class="mod-body">
+        <div class="demande-grid" id="demandeGrid">
+          <div class="dem-empty" style="grid-column:1/-1">
+            <div class="dem-empty-icon">📋</div>
+            <div class="dem-empty-txt">Aucune demande de débourse pour ce projet.<br>Les demandes soumises apparaîtront ici.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DOCUMENTS DU DOSSIER -->
+    <div class="mod" id="uploadsMod">
+      <div class="mod-header">
+        <span class="mod-title">Documents du dossier</span>
+        <div class="mod-actions">
+          <span class="tag neutral" id="uploadCountBadge">0 document</span>
+        </div>
+      </div>
+      <div class="mod-body">
+        <div class="upload-progress-wrap" id="uploadProgressWrap">
+          <div class="upload-progress-txt" id="uploadProgressTxt">Téléversement en cours…</div>
+          <div class="upload-progress-bar"><div class="upload-progress-fill" id="uploadProgressFill"></div></div>
+        </div>
+        <div id="uploadsListWrap">
+          <div class="upload-list hidden" id="uploadsList"></div>
+          <div id="uploadsEmpty" style="padding:2rem 1.4rem;text-align:center;color:var(--muted)">
+            <div style="font-size:2rem;opacity:.3;margin-bottom:.5rem">📁</div>
+            <div style="font-size:.72rem">Aucun document déposé pour ce dossier.</div>
+          </div>
+        </div>
+        <div id="uploadClientArea" style="padding:1.4rem;border-top:1px solid var(--stone);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem">
+          <div style="font-size:.72rem;color:var(--muted)">Déposez vos factures, rapports d'inspection et quittances directement ici.</div>
+          <button class="btn-primary" onclick="openUploadModal()">📎 Déposer un document</button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /app -->
+</div><!-- /trackView -->
+
+<!-- ═══════════════════ MODAL SETUP ═══════════════════ -->
+<div class="modal-overlay" id="modalSetup">
+  <div class="modal-box" style="max-width:800px">
+    <div class="modal-header">
+      <span class="modal-title">Configurer le suivi Track™</span>
+      <button class="modal-close" onclick="closeModal('modalSetup')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div class="field">
+          <label>Nom du projet</label>
+          <input id="setupName" type="text" placeholder="Ex. Résidence Dupont — Phase 1">
+        </div>
+        <div class="field">
+          <label>Type de construction</label>
+          <select id="setupType" onchange="buildSetupPostes()">
+            <option value="construction">Résidentiel unifamilial (~64 postes)</option>
+            <option value="multilogement">Multilogement 2–12 unités (~78 postes)</option>
+            <option value="grandimmeuble">Grand immeuble 5 étages et plus (115 postes)</option>
+            <option value="commercial">Commercial / Industriel (~77 postes)</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row triple">
+        <div class="field">
+          <label>Budget total ($)</label>
+          <input id="setupBudget" type="number" placeholder="850000">
+        </div>
+        <div class="field">
+          <label>Retenue (%)</label>
+          <input id="setupHoldback" type="number" value="10" min="0" max="20">
+        </div>
+        <div class="field">
+          <label>Statut</label>
+          <select id="setupStatus">
+            <option value="actif">Actif</option>
+            <option value="suspendu">Suspendu</option>
+            <option value="complete">Complété</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="field">
+          <label>Date de début</label>
+          <input id="setupStart" type="date">
+        </div>
+        <div class="field">
+          <label>Date de fin prévue</label>
+          <input id="setupEnd" type="date">
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div style="font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:.8rem;display:flex;align-items:center;gap:.6rem">
+        <span style="display:block;width:1rem;height:1px;background:var(--gold)"></span>Ventilation budgétaire — 12 catégories · 68 postes
+      </div>
+      <div class="setup-postes" id="setupPostes"></div>
+      <div style="display:flex;justify-content:space-between;align-items:baseline;padding:.8rem 0;border-top:2px solid var(--gold);margin-top:.5rem">
+        <span style="font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)">Total ventilé</span>
+        <span style="font-family:'DM Mono',monospace;font-size:.9rem;color:var(--gold)" id="setupTotal">0 $</span>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost" onclick="closeModal('modalSetup')">Annuler</button>
+      <button class="btn-primary" onclick="saveSetup()">Initialiser le suivi</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ MODAL DEMANDE ═══════════════════ -->
+<div class="modal-overlay" id="modalDemande">
+  <div class="modal-box">
+    <div class="modal-header">
+      <span class="modal-title">Nouvelle demande de débourse</span>
+      <button class="modal-close" onclick="closeModal('modalDemande')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:.6rem">Sélectionnez les postes et entrez les montants demandés</div>
+      <div class="dem-poste-select" id="demPosteList"></div>
+      <div class="dem-total-row">
+        <span class="dem-total-lbl">Total de la demande</span>
+        <span class="dem-total-val" id="demTotalDisplay">0 $</span>
+      </div>
+
+      <!-- FLAG BANNER -->
+      <div class="flag-banner" id="flagBanner">
+        <div class="flag-title">🚩 Anomalies détectées — Justification obligatoire avant soumission</div>
+        <ul class="flag-list" id="flagList"></ul>
+      </div>
+      <div class="flag-justif" id="flagJustif">
+        <div class="field">
+          <label style="color:var(--crit2)">⚠ Justification requise — Expliquez chaque anomalie signalée ci-dessus</label>
+          <textarea id="flagJustifText" placeholder="Ex. Le dépassement du poste est dû à une modification approuvée par l'architecte le 2026-03-15. Référence : modification no 12." style="min-height:80px"></textarea>
+        </div>
+      </div>
+
+      <div class="form-row single" style="margin-top:1rem">
+        <div class="field">
+          <label>Notes / référence (rapport d'inspecteur, no de facture, etc.)</label>
+          <textarea id="demNotes" placeholder="Ex. Rapport d'inspection #3 — Charpente 100% complétée selon architecte. Facture entrepreneur #2024-088."></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost" onclick="closeModal('modalDemande')">Annuler</button>
+      <button class="btn-primary" onclick="submitDemande()">Soumettre la demande</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ MODAL APPROVE ═══════════════════ -->
+<div class="modal-overlay" id="modalApprove">
+  <div class="modal-box" style="max-width:480px">
+    <div class="modal-header">
+      <span class="modal-title" id="approveModalTitle">Approbation</span>
+      <button class="modal-close" onclick="closeModal('modalApprove')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--ink);margin-bottom:.3rem" id="approveAmount">—</div>
+      <div style="font-size:.68rem;color:var(--muted);margin-bottom:1.2rem" id="approveDesc">—</div>
+      <div class="form-row single">
+        <div class="field">
+          <label>Commentaires (optionnel)</label>
+          <textarea id="approveNotes" placeholder="Notes d'approbation…"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost" onclick="closeModal('modalApprove')">Annuler</button>
+      <button class="btn-crit" id="rejectBtn" onclick="rejectDemande()">Refuser</button>
+      <button class="btn-ok" id="approveBtn" onclick="confirmApprove()">Approuver</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ MODAL QUITTANCE ═══════════════════ -->
+<div class="modal-overlay" id="modalQuittance">
+  <div class="modal-box" style="max-width:480px">
+    <div class="modal-header">
+      <span class="modal-title">Déposer une quittance</span>
+      <button class="modal-close" onclick="closeModal('modalQuittance')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="font-size:.72rem;color:var(--muted);margin-bottom:1.2rem;line-height:1.6">
+        La quittance confirme que l'entrepreneur a reçu le paiement et libère tout recours hypothécaire pour ce débourse. <strong>Aucun débourse suivant ne sera autorisé sur les postes concernés tant que la quittance n'est pas déposée.</strong>
+      </div>
+      <div class="form-row single">
+        <div class="field">
+          <label>Référence de la quittance (no de document / notaire)</label>
+          <input id="quittanceRef" type="text" placeholder="Ex. Q-2026-0042 ou Quittance notaire Tremblay #12">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="field">
+          <label>Date de la quittance</label>
+          <input id="quittanceDate" type="date">
+        </div>
+        <div class="field">
+          <label>Notaire / Signataire</label>
+          <input id="quittanceSignataire" type="text" placeholder="Me Tremblay, etc.">
+        </div>
+      </div>
+      <div class="form-row single">
+        <div class="field">
+          <label>Notes (optionnel)</label>
+          <textarea id="quittanceNotes" placeholder="Observations, conditions particulières…"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost" onclick="closeModal('modalQuittance')">Annuler</button>
+      <button class="btn-ok" onclick="saveQuittance()">✓ Confirmer la quittance</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ MODAL UPLOAD ═══════════════════ -->
+<div class="modal-overlay" id="modalUpload">
+  <div class="modal-box" style="max-width:500px">
+    <div class="modal-header">
+      <span class="modal-title">Déposer un document</span>
+      <button class="modal-close" onclick="closeModal('modalUpload')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row single">
+        <div class="field">
+          <label>Type de document</label>
+          <select id="uploadDocType">
+            <option value="facture">Facture entrepreneur</option>
+            <option value="rapport_inspection">Rapport d'inspection</option>
+            <option value="rapport_architecte">Rapport d'architecte / PIIA</option>
+            <option value="quittance">Quittance</option>
+            <option value="devis">Soumission / Devis</option>
+            <option value="autre">Autre document</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row single">
+        <div class="field">
+          <label>Fichier (PDF, JPG, PNG — max 20 Mo)</label>
+          <input type="file" id="uploadFileInput" accept=".pdf,.jpg,.jpeg,.png" style="background:#f2ede6;border:1px solid var(--stone);padding:.65rem .85rem;font-family:'DM Sans',sans-serif;font-size:.82rem;width:100%">
+        </div>
+      </div>
+      <div class="form-row single">
+        <div class="field">
+          <label>Description (optionnel)</label>
+          <input id="uploadDesc" type="text" placeholder="Ex. Facture électricité — Acme Électrique #2026-042">
+        </div>
+      </div>
+      <div id="uploadModalProgress" style="display:none;margin-top:1rem">
+        <div style="font-size:.68rem;color:var(--muted);margin-bottom:.3rem" id="uploadModalProgressTxt">Téléversement en cours…</div>
+        <div style="height:3px;background:var(--stone);overflow:hidden"><div id="uploadModalProgressBar" style="height:3px;background:var(--gold);width:0;transition:width .3s"></div></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost" onclick="closeModal('modalUpload')">Annuler</button>
+      <button class="btn-primary" id="uploadSubmitBtn" onclick="submitUpload()">📎 Déposer</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ MODAL ANALYSER RAPPORT ═══════════════════ -->
+<div class="modal-overlay" id="modalAnalyze">
+  <div class="modal-box" style="max-width:620px">
+    <div class="modal-header">
+      <span class="modal-title">🤖 IA — Analyser rapport architecte</span>
+      <button class="modal-close" onclick="closeModal('modalAnalyze')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="font-size:.72rem;color:var(--muted);line-height:1.6;margin-bottom:1.2rem">
+        Déposez un rapport d'architecte, d'inspecteur ou de visite de chantier. Claude AI lira le document et extraira automatiquement le pourcentage d'avancement pour chaque poste de construction.
+      </div>
+      <div class="form-row single">
+        <div class="field">
+          <label>Rapport PDF (architecte, inspecteur, PIIA, visite chantier)</label>
+          <input type="file" id="analyzeFileInput" accept=".pdf" style="background:#f2ede6;border:1px solid var(--stone);padding:.65rem .85rem;font-family:'DM Sans',sans-serif;font-size:.82rem;width:100%">
+        </div>
+      </div>
+      <div id="analyzeLoading" style="display:none;padding:2.5rem;text-align:center">
+        <div class="spinner-sm" style="margin:0 auto 1rem;width:20px;height:20px;border-width:2px"></div>
+        <div style="font-size:.78rem;color:var(--muted)">Claude AI analyse le rapport…</div>
+        <div style="font-size:.65rem;color:var(--muted2);margin-top:.4rem">Extraction des pourcentages d'avancement par poste</div>
+      </div>
+      <div id="analyzeResult" style="display:none;margin-top:1.2rem">
+        <div style="font-size:.54rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:.8rem;display:flex;align-items:center;gap:.5rem">
+          <span style="display:block;width:1rem;height:1px;background:var(--gold)"></span>Résultats de l'analyse — Confirmez avant d'appliquer
+        </div>
+        <div style="font-size:.68rem;color:var(--muted);margin-bottom:.6rem" id="analyzeResultSummary"></div>
+        <div style="border:1px solid var(--stone);max-height:300px;overflow-y:auto" id="analyzePreview"></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost" onclick="closeModal('modalAnalyze')">Annuler</button>
+      <button class="btn-primary" id="analyzeSubmitBtn" onclick="submitAnalyze()">🔍 Analyser</button>
+      <button class="btn-ok hidden" id="analyzeApplyBtn" onclick="applyAnalyzeResults()">✓ Appliquer ({{n}} postes)</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ PRINT REPORT ═══════════════════ -->
+<div id="printReport"></div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ══════════════════════════════════════════
+//  FIREBASE
+// ══════════════════════════════════════════
+firebase.initializeApp({
+  apiKey:atob("QUl6YVN5QjUxMWR3MWcxaEFSb0lsbzVRM3djMk9NTThQOHlKUnA4"),
+  authDomain:"capital-norvex.firebaseapp.com",
+  projectId:"capital-norvex",
+  storageBucket:"capital-norvex.firebasestorage.app",
+  messagingSenderId:"547910657658",
+  appId:"1:547910657658:web:9ae5ebf5fac9c0461ffdc3"
+});
+const _db = firebase.firestore();
+
+// ══════════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════════
+const ADMIN_PW = 'Norvex2026!';
+const CIRC = 2 * Math.PI * 50;
+
+let role = null;
+let currentDossierId = null;
+let currentTrack = null;
+let allDossiers = [];
+let editMode = false;
+let pendingApprove = null;
+let pendingQuittance = null;
+let trackUnsub = null;
+let saveTimeout = null;
+
+// ══════════════════════════════════════════
+//  68 POSTES — 12 CATÉGORIES
+// ══════════════════════════════════════════
+// ══════════════════════════════════════════
+//  4 GABARITS PROFESSIONNELS
+// ══════════════════════════════════════════
+const TEMPLATES = {
+
+// ─────────────────────────────────────────
+// 1. RÉSIDENTIEL UNIFAMILIAL (~64 postes)
+// ─────────────────────────────────────────
+construction: [
+  {cat:'01 — Terrain & Acquisition',        poste:'Achat du terrain'},
+  {cat:'01 — Terrain & Acquisition',        poste:'Droits de mutation (taxe de bienvenue)'},
+  {cat:'01 — Terrain & Acquisition',        poste:'Frais de notaire — acquisition'},
+  {cat:'01 — Terrain & Acquisition',        poste:'Études de sol & rapport géotechnique'},
+  {cat:'01 — Terrain & Acquisition',        poste:'Arpentage & certificat de localisation'},
+
+  {cat:'02 — Frais professionnels',         poste:'Architecte — conception & plans'},
+  {cat:'02 — Frais professionnels',         poste:'Architecte — surveillance de chantier'},
+  {cat:'02 — Frais professionnels',         poste:'Ingénieur en structure'},
+  {cat:'02 — Frais professionnels',         poste:'Inspecteur en bâtiment (PIIA / RBQ)'},
+  {cat:'02 — Frais professionnels',         poste:'Arpenteur-géomètre — piquetage'},
+
+  {cat:'03 — Frais de gestion & admin',     poste:'Honoraires Capital Norvex — gestion de projet'},
+  {cat:'03 — Frais de gestion & admin',     poste:'Frais juridiques & conformité'},
+  {cat:'03 — Frais de gestion & admin',     poste:'Comptabilité & tenue de livres chantier'},
+  {cat:'03 — Frais de gestion & admin',     poste:'Assurances chantier (responsabilité civile)'},
+  {cat:'03 — Frais de gestion & admin',     poste:'Cautionnement & garanties entrepreneur'},
+
+  {cat:'04 — Permis & réglementaire',       poste:'Permis de construction municipal'},
+  {cat:'04 — Permis & réglementaire',       poste:'Inspections municipales obligatoires'},
+  {cat:'04 — Permis & réglementaire',       poste:'Raccordements ville — eau & égout'},
+  {cat:'04 — Permis & réglementaire',       poste:'Raccordement Hydro-Québec — réseau'},
+
+  {cat:'05 — Travaux préparatoires',        poste:'Démolition & disposition des débris'},
+  {cat:'05 — Travaux préparatoires',        poste:'Décontamination du sol (si requis)'},
+  {cat:'05 — Travaux préparatoires',        poste:'Excavation & terrassement'},
+  {cat:'05 — Travaux préparatoires',        poste:'Remblayage & compactage'},
+  {cat:'05 — Travaux préparatoires',        poste:'Drain français & imperméabilisation des fondations'},
+
+  {cat:'06 — Structure & fondation',        poste:'Fondations en béton & semelles'},
+  {cat:'06 — Structure & fondation',        poste:'Dalle de béton (plancher au sol / garage)'},
+  {cat:'06 — Structure & fondation',        poste:'Charpente bois (structure principale)'},
+  {cat:'06 — Structure & fondation',        poste:'Charpente de toiture'},
+
+  {cat:'07 — Enveloppe extérieure',         poste:'Toiture — membrane & bardeaux'},
+  {cat:'07 — Enveloppe extérieure',         poste:'Revêtement extérieur (brique, parement, crépi)'},
+  {cat:'07 — Enveloppe extérieure',         poste:'Fenêtres & portes extérieures'},
+  {cat:'07 — Enveloppe extérieure',         poste:'Isolation extérieure & pare-vapeur'},
+  {cat:'07 — Enveloppe extérieure',         poste:'Calfeutrage & étanchéité à l\'air'},
+  {cat:'07 — Enveloppe extérieure',         poste:'Portes de garage'},
+  {cat:'07 — Enveloppe extérieure',         poste:'Galerie, terrasse & escaliers extérieurs'},
+
+  {cat:'08 — Mécanique (CVAC & Plomberie)', poste:'Plomberie — travaux bruts & tuyauterie'},
+  {cat:'08 — Mécanique (CVAC & Plomberie)', poste:'Plomberie — finition & appareils sanitaires'},
+  {cat:'08 — Mécanique (CVAC & Plomberie)', poste:'Chauffage — distribution (plancher radiant, plinthes)'},
+  {cat:'08 — Mécanique (CVAC & Plomberie)', poste:'Ventilation & échangeur d\'air (VRC/ERV)'},
+  {cat:'08 — Mécanique (CVAC & Plomberie)', poste:'Climatisation (thermopompe, split)'},
+  {cat:'08 — Mécanique (CVAC & Plomberie)', poste:'Chauffe-eau & réservoir'},
+  {cat:'08 — Mécanique (CVAC & Plomberie)', poste:'Gaz naturel — tuyauterie & raccordement'},
+
+  {cat:'09 — Électricité',                  poste:'Branchement Hydro-Québec & tableau principal'},
+  {cat:'09 — Électricité',                  poste:'Distribution électrique — travaux bruts'},
+  {cat:'09 — Électricité',                  poste:'Éclairage — appareils & finition'},
+  {cat:'09 — Électricité',                  poste:'Domotique, télécom & câblage structuré'},
+  {cat:'09 — Électricité',                  poste:'Système d\'alarme, caméras & interphonie'},
+
+  {cat:'10 — Finitions intérieures',        poste:'Isolation intérieure (murs & plafonds)'},
+  {cat:'10 — Finitions intérieures',        poste:'Gypse & cloisons sèches'},
+  {cat:'10 — Finitions intérieures',        poste:'Peinture & finition intérieure'},
+  {cat:'10 — Finitions intérieures',        poste:'Planchers (bois franc, vinyle de luxe, stratifié)'},
+  {cat:'10 — Finitions intérieures',        poste:'Céramique & carrelage (salle de bain, cuisine)'},
+  {cat:'10 — Finitions intérieures',        poste:'Menuiserie intérieure & garnitures de finition'},
+  {cat:'10 — Finitions intérieures',        poste:'Armoires de cuisine & vanités'},
+  {cat:'10 — Finitions intérieures',        poste:'Comptoirs (quartz, granit, stratifié)'},
+  {cat:'10 — Finitions intérieures',        poste:'Appareils électroménagers'},
+  {cat:'10 — Finitions intérieures',        poste:'Escaliers intérieurs & rampes'},
+  {cat:'10 — Finitions intérieures',        poste:'Nettoyage final de chantier'},
+
+  {cat:'11 — Aménagement extérieur',        poste:'Entrée & stationnement (asphalte / béton)'},
+  {cat:'11 — Aménagement extérieur',        poste:'Trottoirs & allées'},
+  {cat:'11 — Aménagement extérieur',        poste:'Paysagement, pelouse & plantation'},
+  {cat:'11 — Aménagement extérieur',        poste:'Clôtures & murets'},
+  {cat:'11 — Aménagement extérieur',        poste:'Éclairage extérieur'},
+
+  {cat:'12 — Financement & Mise en marché', poste:'Intérêts sur le prêt construction'},
+  {cat:'12 — Financement & Mise en marché', poste:'Frais de courtage hypothécaire'},
+  {cat:'12 — Financement & Mise en marché', poste:'Frais d\'évaluation bancaire'},
+  {cat:'12 — Financement & Mise en marché', poste:'Assurance titre'},
+  {cat:'12 — Financement & Mise en marché', poste:'Photographie, vidéo & home staging'},
+  {cat:'12 — Financement & Mise en marché', poste:'Commissions de courtage (vente)'},
+  {cat:'12 — Financement & Mise en marché', poste:'Frais de notaire — vente'},
+  {cat:'12 — Financement & Mise en marché', poste:'Contingence & imprévus'},
+],
+
+// ─────────────────────────────────────────
+// 2. MULTILOGEMENT 2–12 UNITÉS (~78 postes)
+// ─────────────────────────────────────────
+multilogement: [
+  {cat:'01 — Terrain & Acquisition',        poste:'Achat du terrain'},
+  {cat:'01 — Terrain & Acquisition',        poste:'Droits de mutation (taxe de bienvenue)'},
+  {cat:'01 — Terrain & Acquisition',        poste:'Frais de notaire — acquisition'},
+  {cat:'01 — Terrain & Acquisition',        poste:'Études de sol & rapport géotechnique'},
+  {cat:'01 — Terrain & Acquisition',        poste:'Arpentage & certificat de localisation'},
+
+  {cat:'02 — Frais professionnels',         poste:'Architecte — conception & plans'},
+  {cat:'02 — Frais professionnels',         poste:'Architecte — surveillance de chantier'},
+  {cat:'02 — Frais professionnels',         poste:'Ingénieur en structure'},
+  {cat:'02 — Frais professionnels',         poste:'Ingénieur mécanique & électrique'},
+  {cat:'02 — Frais professionnels',         poste:'Inspecteur en bâtiment (PIIA / RBQ)'},
+  {cat:'02 — Frais professionnels',         poste:'Arpenteur-géomètre — piquetage'},
+
+  {cat:'03 — Frais de gestion & admin',     poste:'Honoraires Capital Norvex — gestion de projet'},
+  {cat:'03 — Frais de gestion & admin',     poste:'Frais juridiques & conformité'},
+  {cat:'03 — Frais de gestion & admin',     poste:'Comptabilité & tenue de livres chantier'},
+  {cat:'03 — Frais de gestion & admin',     poste:'Assurances chantier (responsabilité civile)'},
+  {cat:'03 — Frais de gestion & admin',     poste:'Cautionnement & garanties entrepreneur'},
+  {cat:'03 — Frais de gestion & admin',     poste:'Frais de bureau & administration'},
+
+  {cat:'04 — Permis & réglementaire',       poste:'Permis de construction municipal'},
+  {cat:'04 — Permis & réglementaire',       poste:'Permis de démolition'},
+  {cat:'04 — Permis & réglementaire',       poste:'Inspections municipales obligatoires'},
+  {cat:'04 — Permis & réglementaire',       poste:'Raccordements ville — eau & égout'},
+  {cat:'04 — Permis & réglementaire',       poste:'Raccordement Hydro-Québec — réseau'},
+
+  {cat:'05 — Travaux préparatoires',        poste:'Démolition & disposition des débris'},
+  {cat:'05 — Travaux préparatoires',        poste:'Décontamination du sol (si requis)'},
+  {cat:'05 — Travaux préparatoires',        poste:'Excavation & terrassement'},
+  {cat:'05 — Travaux préparatoires',        poste:'Remblayage & compactage'},
+  {cat:'05 — Travaux préparatoires',        poste:'Drain français & imperméabilisation des fondations'},
+  {cat:'05 — Travaux préparatoires',        poste:'Sous-sol commun — excavation & structure'},
+
+  {cat:'06 — Structure & fondation',        poste:'Fondations en béton & semelles'},
+  {cat:'06 — Structure & fondation',        poste:'Dalle de béton (plancher au sol)'},
+  {cat:'06 — Structure & fondation',        poste:'Charpente bois (structure principale)'},
+  {cat:'06 — Structure & fondation',        poste:'Charpente de toiture'},
+  {cat:'06 — Structure & fondation',        poste:'Structure mixte acier / béton (si applicable)'},
+
+  {cat:'07 — Enveloppe extérieure',         poste:'Toiture — membrane & bardeaux'},
+  {cat:'07 — Enveloppe extérieure',         poste:'Revêtement extérieur (brique, parement, crépi)'},
+  {cat:'07 — Enveloppe extérieure',         poste:'Fenêtres & portes extérieures'},
+  {cat:'07 — Enveloppe extérieure',         poste:'Isolation extérieure & pare-vapeur'},
+  {cat:'07 — Enveloppe extérieure',         poste:'Calfeutrage & étanchéité à l\'air'},
+  {cat:'07 — Enveloppe extérieure',         poste:'Balcons, escaliers extérieurs & galeries'},
+
+  {cat:'08 — Parties communes & sécurité',  poste:'Entrées & portes d\'accès sécurisées'},
+  {cat:'08 — Parties communes & sécurité',  poste:'Interphonie & contrôle d\'accès'},
+  {cat:'08 — Parties communes & sécurité',  poste:'Corridors & escaliers communs — finition'},
+  {cat:'08 — Parties communes & sécurité',  poste:'Coupe-feu entre unités (murs, planchers, portes)'},
+  {cat:'08 — Parties communes & sécurité',  poste:'Système d\'alarme incendie commun (SDAI)'},
+  {cat:'08 — Parties communes & sécurité',  poste:'Ascenseur (si 4 étages et +)'},
+  {cat:'08 — Parties communes & sécurité',  poste:'Buanderie commune — équipements & finition'},
+  {cat:'08 — Parties communes & sécurité',  poste:'Cases de rangement & locaux communs'},
+
+  {cat:'09 — Mécanique (CVAC & Plomberie)', poste:'Plomberie — travaux bruts & colonnes'},
+  {cat:'09 — Mécanique (CVAC & Plomberie)', poste:'Plomberie — finition & appareils sanitaires par unité'},
+  {cat:'09 — Mécanique (CVAC & Plomberie)', poste:'Chauffage — système central ou par unité'},
+  {cat:'09 — Mécanique (CVAC & Plomberie)', poste:'Ventilation — échangeurs d\'air par unité (VRC)'},
+  {cat:'09 — Mécanique (CVAC & Plomberie)', poste:'Ventilation des corridors & parties communes'},
+  {cat:'09 — Mécanique (CVAC & Plomberie)', poste:'Climatisation — unités individuelles'},
+  {cat:'09 — Mécanique (CVAC & Plomberie)', poste:'Chauffe-eau central ou par unité'},
+  {cat:'09 — Mécanique (CVAC & Plomberie)', poste:'Gicleurs incendie (si 4 étages et +)'},
+  {cat:'09 — Mécanique (CVAC & Plomberie)', poste:'Gaz naturel — tuyauterie & raccordement'},
+
+  {cat:'10 — Électricité',                  poste:'Branchement Hydro-Québec & tableau principal'},
+  {cat:'10 — Électricité',                  poste:'Tableaux de distribution par unité'},
+  {cat:'10 — Électricité',                  poste:'Éclairage — parties communes & extérieur'},
+  {cat:'10 — Électricité',                  poste:'Éclairage — finition par unité'},
+  {cat:'10 — Électricité',                  poste:'Câblage télécom & Internet par unité'},
+  {cat:'10 — Électricité',                  poste:'Bornes de recharge VE (stationnement)'},
+  {cat:'10 — Électricité',                  poste:'Système caméras & sécurité extérieure'},
+
+  {cat:'11 — Finitions intérieures — unités',poste:'Isolation intérieure & acoustique entre unités'},
+  {cat:'11 — Finitions intérieures — unités',poste:'Gypse & cloisons sèches'},
+  {cat:'11 — Finitions intérieures — unités',poste:'Peinture & finition intérieure'},
+  {cat:'11 — Finitions intérieures — unités',poste:'Planchers (bois franc, vinyle de luxe)'},
+  {cat:'11 — Finitions intérieures — unités',poste:'Céramique & carrelage (salle de bain, cuisine)'},
+  {cat:'11 — Finitions intérieures — unités',poste:'Menuiserie intérieure & garnitures'},
+  {cat:'11 — Finitions intérieures — unités',poste:'Armoires de cuisine & vanités'},
+  {cat:'11 — Finitions intérieures — unités',poste:'Comptoirs (quartz, granit, stratifié)'},
+  {cat:'11 — Finitions intérieures — unités',poste:'Appareils électroménagers'},
+  {cat:'11 — Finitions intérieures — unités',poste:'Nettoyage final de chantier'},
+
+  {cat:'12 — Aménagement extérieur',        poste:'Stationnements extérieurs (asphalte, marquage)'},
+  {cat:'12 — Aménagement extérieur',        poste:'Abris d\'auto ou stationnement couvert'},
+  {cat:'12 — Aménagement extérieur',        poste:'Trottoirs, allées & accès piétons'},
+  {cat:'12 — Aménagement extérieur',        poste:'Paysagement, pelouse & plantation'},
+  {cat:'12 — Aménagement extérieur',        poste:'Clôtures & murets'},
+  {cat:'12 — Aménagement extérieur',        poste:'Éclairage extérieur'},
+
+  {cat:'13 — Financement & Mise en marché', poste:'Intérêts sur le prêt construction'},
+  {cat:'13 — Financement & Mise en marché', poste:'Frais de courtage hypothécaire'},
+  {cat:'13 — Financement & Mise en marché', poste:'Frais d\'évaluation bancaire'},
+  {cat:'13 — Financement & Mise en marché', poste:'Assurance titre'},
+  {cat:'13 — Financement & Mise en marché', poste:'Photographie, vidéo & mise en marché'},
+  {cat:'13 — Financement & Mise en marché', poste:'Commissions de courtage (vente)'},
+  {cat:'13 — Financement & Mise en marché', poste:'Frais de notaire — vente'},
+  {cat:'13 — Financement & Mise en marché', poste:'Contingence & imprévus'},
+],
+
+// ─────────────────────────────────────────
+// 3. GRAND IMMEUBLE 12+ ÉTAGES (~96 postes)
+// ─────────────────────────────────────────
+grandimmeuble: [
+  {cat:'01 — Terrain & Acquisition',              poste:'Achat du terrain'},
+  {cat:'01 — Terrain & Acquisition',              poste:'Droits de mutation (taxe de bienvenue)'},
+  {cat:'01 — Terrain & Acquisition',              poste:'Frais de notaire — acquisition'},
+  {cat:'01 — Terrain & Acquisition',              poste:'Études de sol & rapport géotechnique approfondi'},
+  {cat:'01 — Terrain & Acquisition',              poste:'Arpentage & certificat de localisation'},
+  {cat:'01 — Terrain & Acquisition',              poste:'Étude d\'impact environnemental (si requis)'},
+
+  {cat:'02 — Frais professionnels',               poste:'Architecte — conception & plans architecturaux'},
+  {cat:'02 — Frais professionnels',               poste:'Architecte — surveillance de chantier'},
+  {cat:'02 — Frais professionnels',               poste:'Ingénieur en structure'},
+  {cat:'02 — Frais professionnels',               poste:'Ingénieur mécanique, électrique & plomberie'},
+  {cat:'02 — Frais professionnels',               poste:'Ingénieur géotechnique & spécialiste de sol'},
+  {cat:'02 — Frais professionnels',               poste:'Coordonnateur BIM (Building Information Modeling)'},
+  {cat:'02 — Frais professionnels',               poste:'Commissionnaire & inspecteur en bâtiment'},
+  {cat:'02 — Frais professionnels',               poste:'Consultant en enveloppe du bâtiment'},
+
+  {cat:'03 — Frais de gestion & admin',           poste:'Honoraires Capital Norvex — gestion de projet'},
+  {cat:'03 — Frais de gestion & admin',           poste:'Gérant de chantier senior'},
+  {cat:'03 — Frais de gestion & admin',           poste:'Frais juridiques & conformité'},
+  {cat:'03 — Frais de gestion & admin',           poste:'Comptabilité & contrôle des coûts'},
+  {cat:'03 — Frais de gestion & admin',           poste:'Assurances chantier (tous risques de chantier)'},
+  {cat:'03 — Frais de gestion & admin',           poste:'Cautionnement & garanties entrepreneur général'},
+  {cat:'03 — Frais de gestion & admin',           poste:'Frais de bureau de chantier & administration'},
+
+  {cat:'04 — Permis & réglementaire',             poste:'Permis de construction — grand projet'},
+  {cat:'04 — Permis & réglementaire',             poste:'Permis de démolition'},
+  {cat:'04 — Permis & réglementaire',             poste:'Inspections municipales & provinciales'},
+  {cat:'04 — Permis & réglementaire',             poste:'Raccordements ville (eau, égout — surdimensionnés)'},
+  {cat:'04 — Permis & réglementaire',             poste:'Raccordement Hydro-Québec (MT/HT — haute puissance)'},
+  {cat:'04 — Permis & réglementaire',             poste:'Approbations réglementaires spéciales (BSDQ, RBQ)'},
+
+  {cat:'05 — Excavation & soutènement profond',   poste:'Démolition & disposition des débris'},
+  {cat:'05 — Excavation & soutènement profond',   poste:'Décontamination du sol (Phase I/II si requis)'},
+  {cat:'05 — Excavation & soutènement profond',   poste:'Excavation profonde (masse & peaufinage)'},
+  {cat:'05 — Excavation & soutènement profond',   poste:'Soutènement des berges (paroi berlinoise, palplanches)'},
+  {cat:'05 — Excavation & soutènement profond',   poste:'Pieux, micropieux ou caissons'},
+  {cat:'05 — Excavation & soutènement profond',   poste:'Tirants d\'ancrage & butons'},
+  {cat:'05 — Excavation & soutènement profond',   poste:'Pompage des eaux souterraines (déwatering)'},
+  {cat:'05 — Excavation & soutènement profond',   poste:'Béton de propreté & préparation du fond de fouille'},
+
+  {cat:'06 — Fondation & stationnement souterrain',poste:'Fondations & radiers en béton armé'},
+  {cat:'06 — Fondation & stationnement souterrain',poste:'Murs de sous-sol & imperméabilisation'},
+  {cat:'06 — Fondation & stationnement souterrain',poste:'Dalle & structure du garage souterrain (P1, P2, P3...)'},
+  {cat:'06 — Fondation & stationnement souterrain',poste:'Rampes d\'accès au stationnement souterrain'},
+  {cat:'06 — Fondation & stationnement souterrain',poste:'Cases de stationnement (marquage, numérotation)'},
+  {cat:'06 — Fondation & stationnement souterrain',poste:'Ventilation mécanique du garage souterrain'},
+  {cat:'06 — Fondation & stationnement souterrain',poste:'Gicleurs du garage souterrain'},
+  {cat:'06 — Fondation & stationnement souterrain',poste:'Éclairage & signalétique du garage'},
+  {cat:'06 — Fondation & stationnement souterrain',poste:'Portes de garage motorisées & contrôle d\'accès'},
+
+  {cat:'07 — Structure béton armé',               poste:'Noyau de béton armé (cage d\'ascenseur & escaliers)'},
+  {cat:'07 — Structure béton armé',               poste:'Dalles de béton par étage (coffrage, armature, coulée)'},
+  {cat:'07 — Structure béton armé',               poste:'Colonnes, poutres & murs porteurs'},
+  {cat:'07 — Structure béton armé',               poste:'Escaliers de secours en béton'},
+  {cat:'07 — Structure béton armé',               poste:'Joints de dilatation structuraux'},
+
+  {cat:'08 — Enveloppe & façade haute performance',poste:'Mur-rideau (curtain wall) / façade vitrée'},
+  {cat:'08 — Enveloppe & façade haute performance',poste:'Revêtement de façade (panneaux composites, béton archi.)'},
+  {cat:'08 — Enveloppe & façade haute performance',poste:'Fenêtres & portes extérieures (unités)'},
+  {cat:'08 — Enveloppe & façade haute performance',poste:'Isolation haute performance & pare-vapeur'},
+  {cat:'08 — Enveloppe & façade haute performance',poste:'Calfeutrage, joints de dilatation & étanchéité'},
+  {cat:'08 — Enveloppe & façade haute performance',poste:'Toiture terrasse — membrane, protection & accès'},
+  {cat:'08 — Enveloppe & façade haute performance',poste:'Équipements de lavage de façade (nacelles, rails)'},
+  {cat:'08 — Enveloppe & façade haute performance',poste:'Balcons & garde-corps par étage'},
+
+  {cat:'09 — Ascenseurs & transport vertical',    poste:'Ascenseurs principaux (cabines, machinerie, hoistway)'},
+  {cat:'09 — Ascenseurs & transport vertical',    poste:'Monte-charge / ascenseur de service'},
+  {cat:'09 — Ascenseurs & transport vertical',    poste:'Escaliers de secours — revêtements & protections incendie'},
+
+  {cat:'10 — Mécanique centralisée (CVAC & Plomberie)',poste:'Salle mécanique principale — équipements CVAC'},
+  {cat:'10 — Mécanique centralisée (CVAC & Plomberie)',poste:'Système de chauffage central (chaudières, distribution)'},
+  {cat:'10 — Mécanique centralisée (CVAC & Plomberie)',poste:'Système de refroidissement (tours, chillers)'},
+  {cat:'10 — Mécanique centralisée (CVAC & Plomberie)',poste:'Réseau de distribution CVAC par étage (UTA, VAV)'},
+  {cat:'10 — Mécanique centralisée (CVAC & Plomberie)',poste:'Ventilation des corridors & espaces communs'},
+  {cat:'10 — Mécanique centralisée (CVAC & Plomberie)',poste:'Plomberie sanitaire — colonnes montantes'},
+  {cat:'10 — Mécanique centralisée (CVAC & Plomberie)',poste:'Système d\'eau chaude sanitaire centralisé'},
+  {cat:'10 — Mécanique centralisée (CVAC & Plomberie)',poste:'Système de gicleurs incendie complet'},
+  {cat:'10 — Mécanique centralisée (CVAC & Plomberie)',poste:'Pomperie incendie, réservoirs & colonnes sèches'},
+  {cat:'10 — Mécanique centralisée (CVAC & Plomberie)',poste:'Gaz naturel — distribution & appareils'},
+
+  {cat:'11 — Électricité haute capacité',         poste:'Raccordement Hydro-Québec (MT/HT selon puissance)'},
+  {cat:'11 — Électricité haute capacité',         poste:'Salle électrique principale (MLBT, transformateurs)'},
+  {cat:'11 — Électricité haute capacité',         poste:'Distribution électrique — colonnes montantes'},
+  {cat:'11 — Électricité haute capacité',         poste:'Génératrice de secours & transfert automatique (ATS)'},
+  {cat:'11 — Électricité haute capacité',         poste:'Système UPS (alimentation sans interruption)'},
+  {cat:'11 — Électricité haute capacité',         poste:'Éclairage de secours & signalisation sortie'},
+  {cat:'11 — Électricité haute capacité',         poste:'Domotique & câblage structuré par unité'},
+  {cat:'11 — Électricité haute capacité',         poste:'Bornes de recharge VE (stationnement souterrain)'},
+  {cat:'11 — Électricité haute capacité',         poste:'Système de gestion du bâtiment (BAS/BMS)'},
+
+  {cat:'12 — Sécurité & incendie',               poste:'Système de détection & alarme incendie (SDAI)'},
+  {cat:'12 — Sécurité & incendie',               poste:'Compartimentage coupe-feu (murs, portes, joints)'},
+  {cat:'12 — Sécurité & incendie',               poste:'Pressurisation des cages d\'escalier'},
+  {cat:'12 — Sécurité & incendie',               poste:'Contrôle d\'accès & vidéosurveillance'},
+  {cat:'12 — Sécurité & incendie',               poste:'Interphonie & communication d\'urgence'},
+
+  {cat:'13 — Finitions intérieures — unités',    poste:'Isolation acoustique entre unités (murs & planchers)'},
+  {cat:'13 — Finitions intérieures — unités',    poste:'Gypse & cloisons sèches'},
+  {cat:'13 — Finitions intérieures — unités',    poste:'Peinture & finition intérieure'},
+  {cat:'13 — Finitions intérieures — unités',    poste:'Planchers (bois franc, vinyle de luxe)'},
+  {cat:'13 — Finitions intérieures — unités',    poste:'Céramique & carrelage (salle de bain, cuisine)'},
+  {cat:'13 — Finitions intérieures — unités',    poste:'Menuiserie intérieure & garnitures'},
+  {cat:'13 — Finitions intérieures — unités',    poste:'Armoires de cuisine & vanités'},
+  {cat:'13 — Finitions intérieures — unités',    poste:'Comptoirs (quartz, granit)'},
+  {cat:'13 — Finitions intérieures — unités',    poste:'Appareils électroménagers'},
+
+  {cat:'14 — Espaces communs & services',        poste:'Lobby d\'entrée — finition & mobilier'},
+  {cat:'14 — Espaces communs & services',        poste:'Corridors & espaces de circulation par étage'},
+  {cat:'14 — Espaces communs & services',        poste:'Salle communautaire, gym ou salle de conférence'},
+  {cat:'14 — Espaces communs & services',        poste:'Buanderie commune — équipements & finition'},
+  {cat:'14 — Espaces communs & services',        poste:'Local à déchets, recyclage & récupération'},
+  {cat:'14 — Espaces communs & services',        poste:'Local courrier, colis & sécurité'},
+  {cat:'14 — Espaces communs & services',        poste:'Toiture terrasse aménagée / toit vert'},
+  {cat:'14 — Espaces communs & services',        poste:'Nettoyage final de chantier'},
+
+  {cat:'15 — Aménagement extérieur',             poste:'Stationnements de surface (asphalte, marquage)'},
+  {cat:'15 — Aménagement extérieur',             poste:'Trottoirs, allées & accès piétons'},
+  {cat:'15 — Aménagement extérieur',             poste:'Paysagement & plantation'},
+  {cat:'15 — Aménagement extérieur',             poste:'Éclairage extérieur & signalétique'},
+  {cat:'15 — Aménagement extérieur',             poste:'Clôtures, murets & mobilier urbain'},
+
+  {cat:'16 — Financement & Mise en marché',      poste:'Intérêts sur le prêt construction'},
+  {cat:'16 — Financement & Mise en marché',      poste:'Frais de courtage hypothécaire & syndicat de prêt'},
+  {cat:'16 — Financement & Mise en marché',      poste:'Frais d\'évaluation (banque & municipale)'},
+  {cat:'16 — Financement & Mise en marché',      poste:'Assurance titre & garantie de construction'},
+  {cat:'16 — Financement & Mise en marché',      poste:'Marketing — maquette, rendu 3D & bureau de vente'},
+  {cat:'16 — Financement & Mise en marché',      poste:'Modèle de démonstration (unité pilote)'},
+  {cat:'16 — Financement & Mise en marché',      poste:'Commissions de courtage (vente des unités)'},
+  {cat:'16 — Financement & Mise en marché',      poste:'Frais de notaire, taxes & fermeture'},
+  {cat:'16 — Financement & Mise en marché',      poste:'Contingence & imprévus'},
+],
+
+// ─────────────────────────────────────────
+// 4. COMMERCIAL / INDUSTRIEL (~77 postes)
+// ─────────────────────────────────────────
+commercial: [
+  {cat:'01 — Terrain & Acquisition',        poste:'Achat du terrain'},
+  {cat:'01 — Terrain & Acquisition',        poste:'Droits de mutation (taxe de bienvenue)'},
+  {cat:'01 — Terrain & Acquisition',        poste:'Frais de notaire — acquisition'},
+  {cat:'01 — Terrain & Acquisition',        poste:'Études de sol & rapport géotechnique'},
+  {cat:'01 — Terrain & Acquisition',        poste:'Arpentage & certificat de localisation'},
+  {cat:'01 — Terrain & Acquisition',        poste:'Étude d\'impact environnemental & zonage'},
+
+  {cat:'02 — Frais professionnels',         poste:'Architecte — conception & plans'},
+  {cat:'02 — Frais professionnels',         poste:'Architecte — surveillance de chantier'},
+  {cat:'02 — Frais professionnels',         poste:'Ingénieur en structure'},
+  {cat:'02 — Frais professionnels',         poste:'Ingénieur mécanique & électrique'},
+  {cat:'02 — Frais professionnels',         poste:'Inspecteur & commissionnement'},
+  {cat:'02 — Frais professionnels',         poste:'Consultant LEED / développement durable (si applicable)'},
+
+  {cat:'03 — Frais de gestion & admin',     poste:'Honoraires Capital Norvex — gestion de projet'},
+  {cat:'03 — Frais de gestion & admin',     poste:'Frais juridiques & conformité'},
+  {cat:'03 — Frais de gestion & admin',     poste:'Comptabilité & contrôle des coûts'},
+  {cat:'03 — Frais de gestion & admin',     poste:'Assurances chantier (tous risques)'},
+  {cat:'03 — Frais de gestion & admin',     poste:'Cautionnement & garanties entrepreneur'},
+  {cat:'03 — Frais de gestion & admin',     poste:'Frais de bureau & administration'},
+
+  {cat:'04 — Permis & réglementaire',       poste:'Permis de construction municipal'},
+  {cat:'04 — Permis & réglementaire',       poste:'Permis d\'utilisation du sol & zonage commercial'},
+  {cat:'04 — Permis & réglementaire',       poste:'Inspections municipales & provinciales'},
+  {cat:'04 — Permis & réglementaire',       poste:'Raccordements ville — eau & égout (industriel)'},
+  {cat:'04 — Permis & réglementaire',       poste:'Raccordement Hydro-Québec (haute puissance)'},
+
+  {cat:'05 — Travaux préparatoires',        poste:'Démolition & désamiantage (si requis)'},
+  {cat:'05 — Travaux préparatoires',        poste:'Décontamination du sol (Phase II si requis)'},
+  {cat:'05 — Travaux préparatoires',        poste:'Excavation & terrassement'},
+  {cat:'05 — Travaux préparatoires',        poste:'Remblayage & compactage'},
+  {cat:'05 — Travaux préparatoires',        poste:'Drain & gestion des eaux pluviales'},
+
+  {cat:'06 — Structure & fondation',        poste:'Fondations en béton (semelles isolées, continues)'},
+  {cat:'06 — Structure & fondation',        poste:'Dalle industrielle en béton (épaissie, armée)'},
+  {cat:'06 — Structure & fondation',        poste:'Structure en acier (colonnes, poutres, fermes de toit)'},
+  {cat:'06 — Structure & fondation',        poste:'Charpente de toiture (acier ou bois lamellé)'},
+  {cat:'06 — Structure & fondation',        poste:'Murs de béton préfabriqués ou maçonnerie'},
+
+  {cat:'07 — Enveloppe extérieure',         poste:'Toiture plate (membrane EPDM / TPO / PVC)'},
+  {cat:'07 — Enveloppe extérieure',         poste:'Revêtement de façade (panneaux, brique, EIFS)'},
+  {cat:'07 — Enveloppe extérieure',         poste:'Portes sectionnelles industrielles'},
+  {cat:'07 — Enveloppe extérieure',         poste:'Quais de chargement & niveleurs de dock'},
+  {cat:'07 — Enveloppe extérieure',         poste:'Fenêtres & vitrines commerciales'},
+  {cat:'07 — Enveloppe extérieure',         poste:'Portes d\'entrée principales (commerciales, automatiques)'},
+  {cat:'07 — Enveloppe extérieure',         poste:'Isolation de l\'enveloppe & pare-vapeur'},
+  {cat:'07 — Enveloppe extérieure',         poste:'Calfeutrage & étanchéité'},
+
+  {cat:'08 — Mécanique (CVAC commercial)',  poste:'Plomberie — travaux bruts & tuyauterie'},
+  {cat:'08 — Mécanique (CVAC commercial)',  poste:'Plomberie — finition & appareils sanitaires'},
+  {cat:'08 — Mécanique (CVAC commercial)',  poste:'Système HVAC (rooftop units, VRF, split)'},
+  {cat:'08 — Mécanique (CVAC commercial)',  poste:'Distribution CVAC intérieure (gaines, diffuseurs)'},
+  {cat:'08 — Mécanique (CVAC commercial)',  poste:'Ventilation mécanique industrielle (si requis)'},
+  {cat:'08 — Mécanique (CVAC commercial)',  poste:'Chauffage — aérothermes & radiants de plafond'},
+  {cat:'08 — Mécanique (CVAC commercial)',  poste:'Gicleurs incendie (ESFR haute densité ou standard)'},
+  {cat:'08 — Mécanique (CVAC commercial)',  poste:'Chauffe-eau & vestiaires (si requis)'},
+  {cat:'08 — Mécanique (CVAC commercial)',  poste:'Système de compression d\'air (si industriel)'},
+  {cat:'08 — Mécanique (CVAC commercial)',  poste:'Gaz naturel — tuyauterie & raccordement'},
+
+  {cat:'09 — Électricité',                  poste:'Raccordement Hydro-Québec (300A+, 600V si requis)'},
+  {cat:'09 — Électricité',                  poste:'Tableau principal & distribution électrique'},
+  {cat:'09 — Électricité',                  poste:'Éclairage industriel (LED haute baie, entrepôt)'},
+  {cat:'09 — Électricité',                  poste:'Éclairage commercial (bureaux, vitrine, extérieur)'},
+  {cat:'09 — Électricité',                  poste:'Système d\'alarme incendie & sécurité'},
+  {cat:'09 — Électricité',                  poste:'Câblage data, télécom & réseaux informatiques'},
+  {cat:'09 — Électricité',                  poste:'Bornes de recharge VE (stationnement)'},
+  {cat:'09 — Électricité',                  poste:'Génératrice de secours (si applicable)'},
+
+  {cat:'10 — Finitions intérieures',        poste:'Isolation intérieure (murs, plafond)'},
+  {cat:'10 — Finitions intérieures',        poste:'Gypse & cloisons sèches (bureaux, vestiaires)'},
+  {cat:'10 — Finitions intérieures',        poste:'Peinture & finition intérieure (bureaux)'},
+  {cat:'10 — Finitions intérieures',        poste:'Plancher industriel (époxy, polished concrete, dalles)'},
+  {cat:'10 — Finitions intérieures',        poste:'Plafonds suspendus (espaces de bureau)'},
+  {cat:'10 — Finitions intérieures',        poste:'Menuiserie intérieure, armoires & mobilier fixe'},
+  {cat:'10 — Finitions intérieures',        poste:'Signalétique intérieure (sécurité, identification)'},
+  {cat:'10 — Finitions intérieures',        poste:'Nettoyage final de chantier'},
+
+  {cat:'11 — Aménagement extérieur',        poste:'Stationnement client & employés (asphalte, marquage)'},
+  {cat:'11 — Aménagement extérieur',        poste:'Trottoirs & allées piétons'},
+  {cat:'11 — Aménagement extérieur',        poste:'Zone de manœuvre camions & cours de service'},
+  {cat:'11 — Aménagement extérieur',        poste:'Paysagement & plantation'},
+  {cat:'11 — Aménagement extérieur',        poste:'Éclairage extérieur (sécurité & stationnement)'},
+  {cat:'11 — Aménagement extérieur',        poste:'Clôtures, barrières & contrôle d\'accès périmètre'},
+  {cat:'11 — Aménagement extérieur',        poste:'Enseigne commerciale & signalétique extérieure'},
+
+  {cat:'12 — Financement & Mise en marché', poste:'Intérêts sur le prêt construction'},
+  {cat:'12 — Financement & Mise en marché', poste:'Frais de courtage hypothécaire commercial'},
+  {cat:'12 — Financement & Mise en marché', poste:'Frais d\'évaluation bancaire'},
+  {cat:'12 — Financement & Mise en marché', poste:'Assurance titre & garantie de construction'},
+  {cat:'12 — Financement & Mise en marché', poste:'Marketing & mise en marché commercial'},
+  {cat:'12 — Financement & Mise en marché', poste:'Commissions de courtage (vente / location)'},
+  {cat:'12 — Financement & Mise en marché', poste:'Frais de notaire, taxes & fermeture'},
+  {cat:'12 — Financement & Mise en marché', poste:'Contingence & imprévus'},
+],
+
+}; // end TEMPLATES
+
+function getActiveTemplate(){
+  const type=document.getElementById('setupType')?.value||'construction';
+  return TEMPLATES[type]||TEMPLATES.construction;
+}
+
+// ══════════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════════
+(function init(){
+  const params = new URLSearchParams(location.search);
+  const token = params.get('token');
+  if(token){ resolveToken(token); }
+  document.getElementById('pwInput').addEventListener('keydown',e=>{if(e.key==='Enter')tryLogin()});
+  document.getElementById('tokenInput').addEventListener('keydown',e=>{if(e.key==='Enter')tryToken()});
+})();
+
+// ══════════════════════════════════════════
+//  AUTH
+// ══════════════════════════════════════════
+function tryLogin(){
+  const v = document.getElementById('pwInput').value;
+  if(v===ADMIN_PW){
+    role='admin';
+    localStorage.setItem('cnx_track_auth','admin');
+    showApp();
+    loadAdminList();
+  } else {
+    const err=document.getElementById('loginErr');
+    err.style.display='block';
+    err.textContent='Mot de passe incorrect';
+  }
+}
+// Auto-login si déjà authentifié
+(function(){if(localStorage.getItem('cnx_track_auth')==='admin'){role='admin';showApp();loadAdminList();}})();
+
+function tryToken(){
+  const t=document.getElementById('tokenInput').value.trim();
+  if(!t){showToast('Entrez un code d\'accès','warn');return;}
+  resolveToken(t);
+}
+
+async function resolveToken(token){
+  showToast('Vérification…','info');
+  try{
+    const qs = await _db.collection('dossiers').where('trackClientToken','==',token).limit(1).get();
+    if(!qs.empty){
+      role='client';
+      const doc=qs.docs[0];
+      currentDossierId=doc.id;
+      showApp();
+      loadTrack(doc.id);
+      return;
+    }
+    const qp = await _db.collection('dossiers').where('trackPartnerToken','==',token).limit(1).get();
+    if(!qp.empty){
+      role='partenaire';
+      const doc=qp.docs[0];
+      currentDossierId=doc.id;
+      showApp();
+      loadTrack(doc.id);
+      return;
+    }
+    showToast('Code d\'accès invalide ou expiré','crit');
+  }catch(e){
+    showToast('Erreur de connexion','crit');
+    console.error(e);
+  }
+}
+
+function showApp(){
+  document.getElementById('loginScreen').style.display='none';
+  document.getElementById('topbar').classList.remove('hidden');
+  const badge=document.getElementById('roleBadge');
+  const lbl=document.getElementById('roleLabel');
+  if(role==='admin'){badge.className='tb-badge live';lbl.textContent='Administrateur';}
+  else if(role==='client'){badge.className='tb-badge client';lbl.textContent='Espace Client';}
+  else{badge.className='tb-badge partenaire';lbl.textContent='Partenaire';}
+}
+
+// ══════════════════════════════════════════
+//  ADMIN LIST
+// ══════════════════════════════════════════
+async function loadAdminList(){
+  document.getElementById('adminListView').classList.remove('hidden');
+  _db.collection('dossiers').orderBy('created_at','desc').onSnapshot(snap=>{
+    allDossiers=[];
+    snap.forEach(doc=>{
+      const d=doc.data();
+      if(d&&d.id) allDossiers.push({...d,_fbId:doc.id});
+    });
+    renderDossierGrid();
+  });
+}
+
+function renderDossierGrid(){
+  const grid=document.getElementById('dossierGrid');
+  if(!allDossiers.length){
+    grid.innerHTML='<div style="grid-column:1/-1;padding:3rem;text-align:center;color:var(--muted);font-size:.78rem">Aucun dossier trouvé</div>';
+    return;
+  }
+  grid.innerHTML=allDossiers.map(d=>{
+    const hasTrack=!!d.trackInitialized;
+    const pct=d.trackPct||0;
+    const budget=d.trackBudget||0;
+    const debourse=d.trackDebourse||0;
+    const C=2*Math.PI*22;
+    const offset=C*(1-pct/100);
+    return`<div class="dossier-card" onclick="selectDossier('${d._fbId||d.id}')">
+      <div class="dc-header">
+        <span class="dc-id">${d.id||d._fbId}</span>
+        <span class="dc-status ${hasTrack?'actif':'no-track'}">${hasTrack?(d.trackStatus||'Actif'):'Non configuré'}</span>
+      </div>
+      <div class="dc-body">
+        <div class="dc-name">${d.nom_complet||d.client||'—'}</div>
+        <div class="dc-type">${d.type_financement||d.type||'—'}</div>
+        ${hasTrack?`
+        <div class="dc-ring-row">
+          <div class="dc-ring">
+            <svg viewBox="0 0 52 52">
+              <circle cx="26" cy="26" r="22" fill="none" stroke="rgba(184,151,90,.15)" stroke-width="5"/>
+              <circle cx="26" cy="26" r="22" fill="none" stroke="${pct>=80?'#52b788':pct>=40?'#d4a017':'#b8975a'}" stroke-width="5"
+                stroke-dasharray="${C.toFixed(2)}" stroke-dashoffset="${offset.toFixed(2)}"
+                stroke-linecap="round" transform="rotate(-90 26 26)"/>
+            </svg>
+            <div class="dc-ring-pct">${pct}%</div>
+          </div>
+          <div class="dc-stats">
+            <div class="dc-stat"><span class="dc-stat-lbl">Budget</span><span class="dc-stat-val">${fmt(budget)}</span></div>
+            <div class="dc-stat"><span class="dc-stat-lbl">Déboursé</span><span class="dc-stat-val">${fmt(debourse)}</span></div>
+          </div>
+        </div>
+        `:`<div style="padding:1rem 0;font-size:.68rem;color:var(--muted);font-style:italic">Suivi Track™ non configuré</div>`}
+        <div class="dc-footer">
+          ${hasTrack
+            ?`<button class="btn-primary" onclick="event.stopPropagation();selectDossier('${d._fbId||d.id}')">Voir le suivi</button>`
+            :`<button class="btn-primary" onclick="event.stopPropagation();openSetup('${d._fbId||d.id}')">Configurer Track™</button>`}
+          <button class="btn-ghost" onclick="event.stopPropagation();openSetup('${d._fbId||d.id}')">⚙ Paramètres</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function selectDossier(id){
+  currentDossierId=id;
+  document.getElementById('adminListView').classList.add('hidden');
+  document.getElementById('trackView').classList.remove('hidden');
+  document.getElementById('backBtn').style.display='';
+  document.getElementById('adminToolbar').classList.remove('hidden');
+  loadTrack(id);
+}
+
+function goBack(){
+  if(trackUnsub){trackUnsub();trackUnsub=null;}
+  document.getElementById('trackView').classList.add('hidden');
+  document.getElementById('adminListView').classList.remove('hidden');
+  document.getElementById('backBtn').style.display='none';
+  document.getElementById('tokensPanel').classList.add('hidden');
+  editMode=false;
+  currentDossierId=null;
+  currentTrack=null;
+}
+
+// ══════════════════════════════════════════
+//  LOAD TRACK
+// ══════════════════════════════════════════
+function loadTrack(dossierId){
+  document.getElementById('trackView').classList.remove('hidden');
+  if(role==='client') document.getElementById('clientBanner').classList.remove('hidden');
+  if(role==='admin') document.getElementById('adminToolbar').classList.remove('hidden');
+  // Upload zone — visible pour client et admin, pas pour partenaire
+  if(role==='partenaire') document.getElementById('uploadClientArea').style.display='none';
+  if(trackUnsub) trackUnsub();
+  trackUnsub=_db.collection('dossiers').doc(dossierId)
+    .collection('track').doc('current')
+    .onSnapshot(snap=>{
+      if(!snap.exists){
+        if(role==='admin'){
+          openSetup(dossierId);
+        } else {
+          showToast('Suivi non disponible pour ce projet','warn');
+        }
+        return;
+      }
+      currentTrack={...snap.data()};
+      renderHero();
+      renderVentilation();
+      renderHealthDashboard();
+      renderDemandes();
+      if(role==='admin') renderTokens();
+      loadUploads();
+    });
+}
+
+// ══════════════════════════════════════════
+//  RENDER HERO
+// ══════════════════════════════════════════
+function renderHero(){
+  if(!currentTrack) return;
+  const t=currentTrack;
+  const pct=computeOverallPct();
+  document.getElementById('heroName').innerHTML=t.projectName||'Projet sans titre';
+  document.getElementById('heroDossierId').textContent=currentDossierId;
+  document.getElementById('ringPct').textContent=pct+'%';
+  const offset=CIRC*(1-pct/100);
+  const circle=document.getElementById('ringCircle');
+  circle.style.strokeDashoffset=offset;
+  if(pct>=80) circle.style.stroke='var(--ok2)';
+  else if(pct>=40) circle.style.stroke='var(--warn2)';
+  else circle.style.stroke='var(--gold)';
+  document.getElementById('ringSubLabel').textContent=t.startDate&&t.endDate?`${t.startDate} → ${t.endDate}`:'';
+  const meta=document.getElementById('heroMeta');
+  const typeLabel={'construction':'Résidentiel unifamilial','multilogement':'Multilogement 2–12 unités','grandimmeuble':'Grand immeuble 5 étages et plus','commercial':'Commercial / Industriel'};
+  meta.innerHTML=`
+    <span class="hero-chip gold">${typeLabel[t.projectType]||t.projectType||'—'}</span>
+    <span class="hero-chip">Retenue ${t.holdbackPct||10}%</span>
+    <span class="hero-chip">${statusLabel(t.status||'actif')}</span>
+  `;
+  const budget=t.totalBudget||0;
+  const debourse=computeTotalApprouve();
+  const retenue=computeTotalRetenue();
+  const solde=budget-debourse;
+  document.getElementById('hmBudget').textContent=fmt(budget);
+  document.getElementById('hmDebourse').textContent=fmt(debourse);
+  document.getElementById('hmRetenue').textContent=fmt(retenue);
+  document.getElementById('hmSolde').textContent=fmt(solde);
+}
+
+// ══════════════════════════════════════════
+//  RENDER VENTILATION (catégories)
+// ══════════════════════════════════════════
+function renderVentilation(){
+  if(!currentTrack||!currentTrack.ventilation) return;
+  const v=currentTrack.ventilation;
+  const holdback=(currentTrack.holdbackPct||10)/100;
+  const canEdit=editMode&&role==='admin';
+
+  let totalBudget=0,totalApprouve=0,totalRetenue=0;
+  let html='';
+  let globalIdx=0;
+
+  // Group by category
+  const cats=[];
+  const catMap={};
+  v.forEach(p=>{
+    const cat=p.cat||'Divers';
+    if(!catMap[cat]){catMap[cat]=[];cats.push(cat);}
+    catMap[cat].push(p);
+  });
+
+  cats.forEach(cat=>{
+    const items=catMap[cat];
+    // Compute category totals
+    const catBudget=items.reduce((s,p)=>s+(p.budgetPrevu||0),0);
+    const catApprouve=items.reduce((s,p)=>s+(p.montantApprouve||0),0);
+    const catPct=catBudget>0?Math.round(items.reduce((s,p)=>s+(p.budgetPrevu||0)*(p.pctComplete||0)/100,0)/catBudget*100):0;
+
+    // Category header row
+    html+=`<tr class="cat-row">
+      <td colspan="2">${cat}</td>
+      <td class="cat-budget">${catBudget>0?fmt(catBudget):'—'}</td>
+      <td class="cat-pct">${catBudget>0?catPct+'% réalisé':''}</td>
+      <td colspan="5"></td>
+    </tr>`;
+
+    items.forEach((p,localIdx)=>{
+      globalIdx++;
+      const budget=p.budgetPrevu||0;
+      const pct=p.pctComplete||0;
+      const aDebourser=Math.round(budget*pct/100);
+      const approuve=p.montantApprouve||0;
+      const ret=Math.round(approuve*holdback);
+      const solde=budget-approuve;
+      const isOver=approuve>budget&&budget>0;
+
+      totalBudget+=budget;totalApprouve+=approuve;totalRetenue+=ret;
+
+      let fillClass='low';
+      if(pct===100) fillClass='done';
+      else if(pct>=75) fillClass='high';
+      else if(pct>=30) fillClass='mid';
+      if(isOver) fillClass='over';
+
+      const budgetCell=canEdit
+        ?`<input class="budget-input" value="${budget}" data-id="${p.id}" onchange="updateBudgetById('${p.id}',this.value)" onblur="scheduleSave()">`
+        :`<span class="vt-mono">${fmt(budget)}</span>`;
+
+      const pctCell=canEdit
+        ?`<div class="progress-pct"><input class="pct-input" value="${pct}" min="0" max="100" type="number" onchange="updatePctById('${p.id}',this.value)" onblur="scheduleSave()"><span style="font-size:.48rem;color:var(--muted)">%</span></div>`
+        :`<div class="progress-pct"><span>${pct}%</span></div>`;
+
+      const notesCell=canEdit
+        ?`<input class="notes-input" value="${p.notes||''}" placeholder="—" onchange="updateNotesById('${p.id}',this.value)" onblur="scheduleSave()">`
+        :`<span class="notes-cell" title="${p.notes||''}">${p.notes||'—'}</span>`;
+
+      html+=`<tr class="data-row${isOver?' alert-row':''}">
+        <td class="vt-num">${String(globalIdx).padStart(2,'0')}</td>
+        <td class="vt-poste">${p.poste}</td>
+        <td>${budgetCell}</td>
+        <td class="progress-wrap">
+          ${pctCell}
+          <div class="progress-track"><div class="progress-fill ${fillClass}" style="width:${Math.min(pct,100)}%"></div></div>
+        </td>
+        <td class="vt-mono ${aDebourser>0?'':'muted'}">${fmt(aDebourser)}</td>
+        <td class="vt-mono ok">${approuve?fmt(approuve):'—'}</td>
+        <td class="vt-mono warn">${ret?fmt(ret):'—'}</td>
+        <td class="vt-mono ${isOver?'crit':''}">${fmt(solde)}</td>
+        <td>${notesCell}</td>
+      </tr>`;
+    });
+  });
+
+  document.getElementById('ventBody').innerHTML=html;
+
+  const pctGlobal=computeOverallPct();
+  document.getElementById('ventFoot').innerHTML=`<tr class="total-row">
+    <td colspan="2" style="font-size:.48rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted2)">TOTAUX — ${globalIdx} postes</td>
+    <td class="mono gold">${fmt(totalBudget)}</td>
+    <td style="font-family:'DM Mono',monospace;font-size:.72rem;color:var(--muted2)">${pctGlobal}% global</td>
+    <td class="mono" style="color:var(--cream)">${fmt(Math.round(totalBudget*pctGlobal/100))}</td>
+    <td class="mono ok">${fmt(totalApprouve)}</td>
+    <td class="mono warn">${fmt(totalRetenue)}</td>
+    <td class="mono gold">${fmt(totalBudget-totalApprouve)}</td>
+    <td></td>
+  </tr>`;
+}
+
+// ══════════════════════════════════════════
+//  RENDER DEMANDES
+// ══════════════════════════════════════════
+function renderDemandes(){
+  if(!currentTrack) return;
+  const demandes=(currentTrack.demandes||[]).slice().reverse();
+  const grid=document.getElementById('demandeGrid');
+  const pending=demandes.filter(d=>d.statut==='en_attente').length;
+  const badge=document.getElementById('demandeCountBadge');
+  badge.textContent=pending>0?`${pending} en attente`:'À jour';
+  badge.className='tag '+(pending>0?'warn':'ok');
+  if(!demandes.length){
+    grid.innerHTML=`<div class="dem-empty" style="grid-column:1/-1">
+      <div class="dem-empty-icon">📋</div>
+      <div class="dem-empty-txt">Aucune demande de débourse pour ce projet.<br>Les demandes soumises apparaîtront ici.</div>
+    </div>`;
+    return;
+  }
+  grid.innerHTML=demandes.map(d=>renderDemandeCard(d)).join('');
+}
+
+function renderDemandeCard(d){
+  const statut=d.statut||'en_attente';
+  const badgeMap={
+    'en_attente':{cls:'attente',txt:'En attente'},
+    'approuve_yves':{cls:'yves',txt:'✓ Capital Norvex'},
+    'approuve_final':{cls:'final',txt:'✓ Approuvé — Transfert autorisé'},
+    'transfere':{cls:'transfere',txt:'✓ Transféré'},
+    'rejete':{cls:'rejete',txt:'✗ Refusé'},
+  };
+  const b=badgeMap[statut]||{cls:'attente',txt:statut};
+  const s1=statut==='rejete'?'rejected':(statut==='en_attente'?'active':'done');
+  const s2=statut==='approuve_yves'?'active':(statut==='approuve_final'||statut==='transfere'?'done':'pending');
+  const s3=statut==='approuve_final'||statut==='transfere'?'done':'pending';
+  const postes=(d.postes||[]).map(p=>{
+    const name=currentTrack?.ventilation?.find(v=>v.id===p.id)?.poste||p.id;
+    return`<div class="dem-poste-row"><span class="dem-poste-name">${name}</span><span class="dem-poste-amt">${fmt(p.montant)}</span></div>`;
+  }).join('');
+  let actionBtns='';
+  if(role==='admin'){
+    if(statut==='en_attente'){
+      actionBtns=`<button class="btn-ok" onclick="openApprove('${d.id}','yves')">✓ Approuver</button>
+                  <button class="btn-crit" onclick="openApprove('${d.id}','reject')">✗ Refuser</button>`;
+    }
+    if(statut==='approuve_final'){
+      actionBtns=`<button class="btn-primary" onclick="markTransfere('${d.id}')">Marquer transféré</button>`;
+    }
+  }
+  if(role==='partenaire' && statut==='approuve_yves'){
+    actionBtns=`<button class="btn-ok" onclick="openApprove('${d.id}','final')">✓ Autoriser le transfert</button>`;
+  }
+  return`<div class="demande-card">
+    <div class="dem-header">
+      <div>
+        <div class="dem-amount">${fmt(d.montantTotal||0)}</div>
+        <div class="dem-date">${formatDate(d.dateCreation)}</div>
+      </div>
+      <span class="dem-badge ${b.cls}">${b.txt}</span>
+    </div>
+    <div class="dem-body">
+      <div class="dem-postes">${postes}</div>
+      ${d.notes?`<div class="dem-notes">"${d.notes}"</div>`:''}
+      <div class="workflow-steps">
+        <div class="ws-step">
+          <div class="ws-circle ${s1==='rejected'?'rejected':s1}">${s1==='done'?'✓':s1==='rejected'?'✗':'1'}</div>
+          <div class="ws-label">Soumise</div>
+        </div>
+        <div class="ws-step">
+          <div class="ws-circle ${s2}">${s2==='done'?'✓':'2'}</div>
+          <div class="ws-label">Capital<br>Norvex</div>
+        </div>
+        <div class="ws-step">
+          <div class="ws-circle ${s3}">${s3==='done'?'✓':'3'}</div>
+          <div class="ws-label">Partenaire</div>
+        </div>
+      </div>
+      ${statut==='rejete'&&d.rejectionNotes?`<div style="font-size:.65rem;color:var(--crit2);background:var(--crit-bg);border:1px solid var(--crit-br);padding:.5rem .7rem;margin-top:.3rem">Motif : ${d.rejectionNotes}</div>`:''}
+      ${d.flags&&d.flags.length>0?`<div style="font-size:.6rem;color:var(--warn2);background:var(--warn-bg);border:1px solid var(--warn-br);padding:.5rem .7rem;margin-top:.4rem"><strong>🚩 ${d.flags.length} anomalie(s) signalée(s)</strong><br><em style="color:var(--muted)">${d.flagJustification||'—'}</em></div>`:''}
+      ${statut==='transfere'&&d.quittanceRequise&&!d.quittance?`
+        <div class="quitt-needed">
+          <span class="quitt-txt">🔒 Quittance requise — Les postes de ce débourse sont bloqués jusqu'à réception de la quittance</span>
+          ${role==='admin'?`<button class="btn-crit" style="white-space:nowrap;font-size:.5rem" onclick="openQuittanceModal('${d.id}')">Déposer quittance</button>`:''}
+        </div>`:''}
+      ${statut==='transfere'&&d.quittance?`
+        <div class="quitt-ok">
+          <span class="quitt-ok-txt">✓ Quittance déposée — Réf. ${d.quittance.ref||'—'} · ${d.quittance.date||'—'}</span>
+        </div>`:''}
+      ${actionBtns?`<div class="dem-footer" style="margin:0 -1.2rem -1rem;padding:.9rem 1.2rem">${actionBtns}</div>`:''}
+    </div>
+  </div>`;
+}
+
+// ══════════════════════════════════════════
+//  RENDER TOKENS
+// ══════════════════════════════════════════
+function renderTokens(){
+  if(!currentTrack) return;
+  const base=location.origin+location.pathname;
+  const ct=currentTrack.clientToken||'—';
+  const pt=currentTrack.partnerToken||'—';
+  document.getElementById('clientLinkDisplay').textContent=ct!=='—'?`${base}?token=${ct}`:ct;
+  document.getElementById('partnerLinkDisplay').textContent=pt!=='—'?`${base}?token=${pt}`:pt;
+}
+
+// ══════════════════════════════════════════
+//  SETUP MODAL
+// ══════════════════════════════════════════
+function buildSetupPostes(){
+  const tpl=getActiveTemplate();
+  const wrap=document.getElementById('setupPostes');
+  let html=`<div class="sp-row header">
+    <div class="sp-poste-lbl">Poste de construction</div>
+    <div class="sp-poste-lbl" style="text-align:right">Budget prévu ($)</div>
+  </div>`;
+  let lastCat='';
+  tpl.forEach((p,i)=>{
+    if(p.cat!==lastCat){
+      html+=`<div class="sp-cat-header">${p.cat}</div>`;
+      lastCat=p.cat;
+    }
+    html+=`<div class="sp-row">
+      <div class="sp-poste-lbl">${p.poste}</div>
+      <input type="number" class="budget-input" id="sp_${i}" placeholder="0" oninput="updateSetupTotal()" style="width:110px;float:right">
+    </div>`;
+  });
+  wrap.innerHTML=html;
+  // Re-fill existing values if track loaded
+  if(currentTrack?.ventilation){
+    tpl.forEach((p,i)=>{
+      const existing=currentTrack.ventilation.find(v=>v.poste===p.poste);
+      const el=document.getElementById('sp_'+i);
+      if(el&&existing) el.value=existing.budgetPrevu||0;
+    });
+  }
+  updateSetupTotal();
+  // Update label
+  const lbl=document.querySelector('#modalSetup .mod-title, #modalSetup [style*="letter-spacing"]');
+  const countEl=document.querySelector('#modalSetup [style*="68 postes"], #modalSetup [style*="postes"]');
+  document.getElementById('setupTotal').textContent=fmt(0);
+  updateSetupTotal();
+}
+
+function updateSetupTotal(){
+  const tpl=getActiveTemplate();
+  let total=0;
+  tpl.forEach((_,i)=>{total+=parseFloat(document.getElementById('sp_'+i)?.value||0);});
+  document.getElementById('setupTotal').textContent=fmt(total);
+}
+
+function openSetup(dossierId){
+  currentDossierId=dossierId;
+  if(currentTrack){
+    document.getElementById('setupName').value=currentTrack.projectName||'';
+    document.getElementById('setupType').value=currentTrack.projectType||'construction';
+    document.getElementById('setupBudget').value=currentTrack.totalBudget||'';
+    document.getElementById('setupHoldback').value=currentTrack.holdbackPct||10;
+    document.getElementById('setupStatus').value=currentTrack.status||'actif';
+    document.getElementById('setupStart').value=currentTrack.startDate||'';
+    document.getElementById('setupEnd').value=currentTrack.endDate||'';
+  }
+  buildSetupPostes();
+  openModal('modalSetup');
+}
+
+async function saveSetup(){
+  const name=document.getElementById('setupName').value.trim();
+  if(!name){showToast('Entrez un nom de projet','warn');return;}
+  const tpl=getActiveTemplate();
+  const ventilation=tpl.map((p,i)=>{
+    const existing=currentTrack?.ventilation?.find(v=>v.poste===p.poste);
+    return {
+      id: existing?.id || 'p'+String(i+1).padStart(2,'0'),
+      cat: p.cat,
+      poste: p.poste,
+      budgetPrevu: parseFloat(document.getElementById('sp_'+i)?.value||0),
+      pctComplete: existing?.pctComplete||0,
+      montantApprouve: existing?.montantApprouve||0,
+      notes: existing?.notes||'',
+    };
+  });
+  const totalBudget=ventilation.reduce((s,p)=>s+p.budgetPrevu,0)||parseFloat(document.getElementById('setupBudget').value||0);
+  const ct=currentTrack?.clientToken||genToken('ct');
+  const pt=currentTrack?.partnerToken||genToken('pt');
+  const data={
+    projectName:name,
+    projectType:document.getElementById('setupType').value,
+    totalBudget,
+    holdbackPct:parseFloat(document.getElementById('setupHoldback').value||10),
+    status:document.getElementById('setupStatus').value,
+    startDate:document.getElementById('setupStart').value,
+    endDate:document.getElementById('setupEnd').value,
+    ventilation,
+    demandes:currentTrack?.demandes||[],
+    clientToken:ct,
+    partnerToken:pt,
+    updatedAt:firebase.firestore.FieldValue.serverTimestamp(),
+    initialized:true,
+  };
+  try{
+    await _db.collection('dossiers').doc(currentDossierId).collection('track').doc('current').set(data,{merge:true});
+    await _db.collection('dossiers').doc(currentDossierId).update({
+      trackInitialized:true,
+      trackBudget:totalBudget,
+      trackPct:computeOverallPctFromData(ventilation),
+      trackDebourse:ventilation.reduce((s,p)=>s+(p.montantApprouve||0),0),
+      trackStatus:data.status,
+      trackClientToken:ct,
+      trackPartnerToken:pt,
+    });
+    closeModal('modalSetup');
+    showToast('Suivi Track™ configuré ✓','ok');
+  }catch(e){showToast('Erreur sauvegarde','crit');console.error(e);}
+}
+
+// ══════════════════════════════════════════
+//  EDIT MODE
+// ══════════════════════════════════════════
+function toggleEditMode(){
+  editMode=!editMode;
+  const btn=document.getElementById('editToggleBtn');
+  const lbl=document.getElementById('atLabel');
+  if(editMode){
+    btn.textContent='✓ Désactiver édition';
+    btn.style.background='var(--ok-bg)';
+    btn.style.border='1px solid var(--ok-br)';
+    btn.style.color='var(--ok2)';
+    lbl.textContent='Mode édition actif — Modifiez les budgets, pourcentages et notes';
+  } else {
+    btn.textContent='✎ Activer édition';
+    btn.style.background='';btn.style.border='';btn.style.color='';
+    lbl.textContent='Mode consultation';
+  }
+  renderVentilation();
+}
+
+function findByIdOrIdx(id){
+  if(!currentTrack?.ventilation) return null;
+  return currentTrack.ventilation.find(p=>p.id===id);
+}
+
+function updatePctById(id,val){
+  const p=findByIdOrIdx(id);if(!p) return;
+  p.pctComplete=Math.min(100,Math.max(0,parseFloat(val)||0));
+  renderHero();scheduleSave();
+}
+function updateBudgetById(id,val){
+  const p=findByIdOrIdx(id);if(!p) return;
+  p.budgetPrevu=parseFloat(val)||0;
+  renderHero();scheduleSave();
+}
+function updateNotesById(id,val){
+  const p=findByIdOrIdx(id);if(!p) return;
+  p.notes=val;
+  scheduleSave();
+}
+
+function scheduleSave(){
+  clearTimeout(saveTimeout);
+  saveTimeout=setTimeout(saveTrack,1500);
+}
+
+async function saveTrack(){
+  if(!currentDossierId||!currentTrack) return;
+  try{
+    const pct=computeOverallPct();
+    const debourse=computeTotalApprouve();
+    await _db.collection('dossiers').doc(currentDossierId).collection('track').doc('current').update({
+      ventilation:currentTrack.ventilation,
+      updatedAt:firebase.firestore.FieldValue.serverTimestamp(),
+    });
+    await _db.collection('dossiers').doc(currentDossierId).update({
+      trackPct:pct,
+      trackDebourse:debourse,
+      trackBudget:currentTrack.totalBudget,
+    });
+    const ind=document.getElementById('vtSaveIndicator');
+    ind.classList.add('visible');
+    setTimeout(()=>ind.classList.remove('visible'),2000);
+  }catch(e){showToast('Erreur sauvegarde','crit');console.error(e);}
+}
+
+// ══════════════════════════════════════════
+//  DEMANDE MODAL
+// ══════════════════════════════════════════
+function openDemandeModal(){
+  if(!currentTrack?.ventilation){showToast('Chargez un projet d\'abord','warn');return;}
+  const list=document.getElementById('demPosteList');
+
+  // Group by category
+  const cats=[];const catMap={};
+  currentTrack.ventilation.forEach(p=>{
+    const cat=p.cat||'Divers';
+    if(!catMap[cat]){catMap[cat]=[];cats.push(cat);}
+    catMap[cat].push(p);
+  });
+
+  const lockedPostes=getPostesWithPendingQuittance();
+  let html='';
+  cats.forEach(cat=>{
+    html+=`<div class="dps-cat">${cat}</div>`;
+    catMap[cat].forEach(p=>{
+      const locked=lockedPostes.has(p.id);
+      html+=`<div class="dps-row${locked?' dps-locked':''}">
+        <input type="checkbox" class="dps-check" id="dpc_${p.id}" onchange="updateDemTotal()" ${locked?'disabled':''}>
+        <label for="dpc_${p.id}" class="dps-name" style="cursor:${locked?'default':'pointer'}">${p.poste}</label>
+        <span class="dps-budget">${fmt(p.budgetPrevu)}</span>
+        ${locked?'<span class="dps-lock-badge">🔒 Quittance manquante</span>':'<input type="number" class="dps-amt-input" id="dpa_'+p.id+'" placeholder="0 $" onchange="updateDemTotal()" disabled>'}
+      </div>`;
+    });
+  });
+  list.innerHTML=html;
+
+  document.querySelectorAll('.dps-check').forEach(cb=>{
+    cb.addEventListener('change',function(){
+      const id=this.id.replace('dpc_','');
+      document.getElementById('dpa_'+id).disabled=!this.checked;
+      if(this.checked) document.getElementById('dpa_'+id).focus();
+    });
+  });
+  document.getElementById('demNotes').value='';
+  document.getElementById('demTotalDisplay').textContent='0 $';
+  // Reset flags
+  document.getElementById('flagBanner').classList.remove('visible');
+  document.getElementById('flagJustif').classList.remove('show');
+  document.getElementById('flagList').innerHTML='';
+  if(document.getElementById('flagJustifText')) document.getElementById('flagJustifText').value='';
+  openModal('modalDemande');
+}
+
+function updateDemTotal(){
+  let total=0;
+  const selected=[];
+  document.querySelectorAll('.dps-check:checked').forEach(cb=>{
+    const id=cb.id.replace('dpc_','');
+    const amt=parseFloat(document.getElementById('dpa_'+id)?.value||0);
+    total+=amt;
+    if(amt>0) selected.push({id,montant:amt});
+  });
+  document.getElementById('demTotalDisplay').textContent=fmt(total);
+  // Flag detection
+  const flags=detectFlagsForPostes(selected);
+  const banner=document.getElementById('flagBanner');
+  const justif=document.getElementById('flagJustif');
+  const list=document.getElementById('flagList');
+  if(flags.length>0){
+    list.innerHTML=flags.map(f=>`<li>${f}</li>`).join('');
+    banner.classList.add('visible');
+    justif.classList.add('show');
+  } else {
+    banner.classList.remove('visible');
+    justif.classList.remove('show');
+  }
+}
+
+async function submitDemande(){
+  const postes=[];let total=0;
+  document.querySelectorAll('.dps-check:checked').forEach(cb=>{
+    const id=cb.id.replace('dpc_','');
+    const amt=parseFloat(document.getElementById('dpa_'+id)?.value||0);
+    if(amt>0){postes.push({id,montant:amt});total+=amt;}
+  });
+  if(!postes.length){showToast('Sélectionnez au moins un poste','warn');return;}
+  // Check flags — justification obligatoire
+  const flags=detectFlagsForPostes(postes);
+  if(flags.length>0){
+    const justif=document.getElementById('flagJustifText')?.value.trim();
+    if(!justif){showToast('Justification obligatoire pour les anomalies signalées','warn');document.getElementById('flagJustifText')?.focus();return;}
+  }
+  const notes=document.getElementById('demNotes').value.trim();
+  const flagJustification=flags.length>0?document.getElementById('flagJustifText')?.value.trim():'';
+  const demande={
+    id:'dem_'+Date.now(),
+    dateCreation:new Date().toISOString(),
+    postes,montantTotal:total,notes,
+    flags: flags.length>0?flags:[],
+    flagJustification,
+    statut:'en_attente',
+    quittanceRequise:false,quittance:null,
+    approbationYves:null,approbationPartenaire:null,rejectionNotes:'',
+  };
+  const demandes=[...(currentTrack.demandes||[]),demande];
+  try{
+    await _db.collection('dossiers').doc(currentDossierId).collection('track').doc('current').update({
+      demandes,updatedAt:firebase.firestore.FieldValue.serverTimestamp(),
+    });
+    // Notification email → agent Python
+    notifyTrack('nouvelle_demande',{montant:total,nbPostes:postes.length});
+    closeModal('modalDemande');
+    showToast('Demande soumise ✓ — Capital Norvex sera notifié','ok');
+  }catch(e){showToast('Erreur soumission','crit');console.error(e);}
+}
+
+// ══════════════════════════════════════════
+//  APPROVE / REJECT
+// ══════════════════════════════════════════
+function openApprove(demandeId,action){
+  pendingApprove={demandeId,action};
+  const dem=(currentTrack.demandes||[]).find(d=>d.id===demandeId);
+  if(!dem) return;
+  const titles={yves:'Approbation Capital Norvex',final:'Autorisation finale — Partenaire',reject:'Refuser la demande'};
+  document.getElementById('approveModalTitle').textContent=titles[action]||'Approbation';
+  document.getElementById('approveAmount').textContent=fmt(dem.montantTotal||0);
+  document.getElementById('approveDesc').textContent=`${dem.postes?.length||0} poste(s) — Soumis le ${formatDate(dem.dateCreation)}`;
+  document.getElementById('approveNotes').value='';
+  const approveBtn=document.getElementById('approveBtn');
+  const rejectBtn=document.getElementById('rejectBtn');
+  if(action==='reject'){approveBtn.style.display='none';rejectBtn.textContent='Confirmer le refus';}
+  else{approveBtn.style.display='';rejectBtn.style.display='none';}
+  openModal('modalApprove');
+}
+
+async function confirmApprove(){
+  if(!pendingApprove) return;
+  const {demandeId,action}=pendingApprove;
+  const notes=document.getElementById('approveNotes').value.trim();
+  const demandes=(currentTrack.demandes||[]).map(d=>{
+    if(d.id!==demandeId) return d;
+    if(action==='yves') return{...d,statut:'approuve_yves',approbationYves:{date:new Date().toISOString(),notes}};
+    if(action==='final') return{...d,statut:'approuve_final',approbationPartenaire:{date:new Date().toISOString(),notes}};
+    return d;
+  });
+  let ventilation=currentTrack.ventilation;
+  if(action==='final'){
+    const dem=demandes.find(d=>d.id===demandeId);
+    if(dem){
+      ventilation=ventilation.map(p=>{
+        const pp=dem.postes.find(dp=>dp.id===p.id);
+        if(!pp) return p;
+        return{...p,montantApprouve:(p.montantApprouve||0)+pp.montant};
+      });
+    }
+  }
+  try{
+    await _db.collection('dossiers').doc(currentDossierId).collection('track').doc('current').update({
+      demandes,ventilation,updatedAt:firebase.firestore.FieldValue.serverTimestamp(),
+    });
+    await _db.collection('dossiers').doc(currentDossierId).update({
+      trackDebourse:ventilation.reduce((s,p)=>s+(p.montantApprouve||0),0),
+    });
+    // Notification selon l'action
+    const dem0=(currentTrack.demandes||[]).find(d=>d.id===demandeId);
+    if(action==='yves') notifyTrack('approuve_yves',{montant:dem0?.montantTotal||0});
+    if(action==='final') notifyTrack('approuve_final',{montant:dem0?.montantTotal||0});
+    closeModal('modalApprove');
+    showToast('Approuvé ✓','ok');
+    pendingApprove=null;
+  }catch(e){showToast('Erreur','crit');console.error(e);}
+}
+
+async function rejectDemande(){
+  if(!pendingApprove) return;
+  const {demandeId}=pendingApprove;
+  const notes=document.getElementById('approveNotes').value.trim();
+  const demandes=(currentTrack.demandes||[]).map(d=>{
+    if(d.id!==demandeId) return d;
+    return{...d,statut:'rejete',rejectionNotes:notes};
+  });
+  try{
+    await _db.collection('dossiers').doc(currentDossierId).collection('track').doc('current').update({
+      demandes,updatedAt:firebase.firestore.FieldValue.serverTimestamp()
+    });
+    closeModal('modalApprove');
+    showToast('Demande refusée','warn');
+    pendingApprove=null;
+  }catch(e){showToast('Erreur','crit');console.error(e);}
+}
+
+async function markTransfere(demandeId){
+  const demandes=(currentTrack.demandes||[]).map(d=>d.id===demandeId?{...d,statut:'transfere',quittanceRequise:true,quittance:null}:d);
+  try{
+    await _db.collection('dossiers').doc(currentDossierId).collection('track').doc('current').update({
+      demandes,updatedAt:firebase.firestore.FieldValue.serverTimestamp()
+    });
+    showToast('Transféré ✓ — Quittance requise avant prochain débourse','warn');
+  }catch(e){showToast('Erreur','crit');console.error(e);}
+}
+
+// ══════════════════════════════════════════
+//  FLAG DETECTION
+// ══════════════════════════════════════════
+function detectFlagsForPostes(selectedPostes){
+  const flags=[];
+  if(!currentTrack?.ventilation||!selectedPostes.length) return flags;
+  selectedPostes.forEach(({id,montant})=>{
+    const p=currentTrack.ventilation.find(v=>v.id===id);
+    if(!p) return;
+    const budget=p.budgetPrevu||0;
+    const alreadyApproved=p.montantApprouve||0;
+    const pct=p.pctComplete||0;
+    // Flag 1 : demande > 40% du budget en un seul coup
+    if(budget>0&&montant>budget*0.40){
+      flags.push(`🚩 <strong>${p.poste}</strong> — Cette demande représente <strong>${Math.round(montant/budget*100)}%</strong> du budget total de ce poste en une seule transaction`);
+    }
+    // Flag 2 : poste à 80%+ (zone critique)
+    if(pct>=80&&pct<100){
+      flags.push(`⚠️ <strong>${p.poste}</strong> — Poste à <strong>${pct}%</strong> de réalisation — approche du plafond budgétaire`);
+    }
+    // Flag 3 : dépassement de budget
+    if(budget>0&&(alreadyApproved+montant)>budget){
+      const dep=alreadyApproved+montant-budget;
+      flags.push(`🔴 <strong>${p.poste}</strong> — Dépassement de budget de <strong>${fmt(dep)}</strong> (${Math.round(dep/budget*100)}% au-dessus du prévu)`);
+    }
+    // Flag 4 : finitions demandées avant structure complète
+    if(p.cat&&(p.cat.toLowerCase().includes('finitions')||p.cat.toLowerCase().includes('financement'))){
+      const structPostes=currentTrack.ventilation.filter(v=>v.cat&&(v.cat.toLowerCase().includes('structure')||v.cat.toLowerCase().includes('enveloppe')||v.cat.toLowerCase().includes('excavation')||v.cat.toLowerCase().includes('fondation')));
+      if(structPostes.length>0){
+        const avg=structPostes.reduce((s,v)=>s+(v.pctComplete||0),0)/structPostes.length;
+        if(avg<50){
+          flags.push(`🔶 <strong>${p.poste}</strong> — Poste de finition demandé alors que les travaux structuraux sont en moyenne à <strong>${Math.round(avg)}%</strong>`);
+        }
+      }
+    }
+  });
+  // Dédoublonnage
+  return [...new Set(flags)];
+}
+
+function getPostesWithPendingQuittance(){
+  const locked=new Set();
+  (currentTrack?.demandes||[]).forEach(d=>{
+    if(d.statut==='transfere'&&d.quittanceRequise&&!d.quittance){
+      (d.postes||[]).forEach(p=>locked.add(p.id));
+    }
+  });
+  return locked;
+}
+
+// ══════════════════════════════════════════
+//  HEALTH DASHBOARD
+// ══════════════════════════════════════════
+function renderHealthDashboard(){
+  if(!currentTrack?.ventilation) return;
+  const v=currentTrack.ventilation;
+  let ok=0,warn=0,crit=0;
+  v.forEach(p=>{
+    const budget=p.budgetPrevu||0;
+    const approuve=p.montantApprouve||0;
+    const pct=p.pctComplete||0;
+    if(budget>0&&approuve>budget) crit++;
+    else if(pct>=80) warn++;
+    else ok++;
+  });
+  const quittAttente=(currentTrack.demandes||[]).filter(d=>d.statut==='transfere'&&d.quittanceRequise&&!d.quittance).length;
+  document.getElementById('hdOk').textContent=ok;
+  document.getElementById('hdWarn').textContent=warn;
+  document.getElementById('hdCrit').textContent=crit;
+  document.getElementById('hdQuitt').textContent=quittAttente;
+}
+
+// ══════════════════════════════════════════
+//  QUITTANCE
+// ══════════════════════════════════════════
+function openQuittanceModal(demandeId){
+  pendingQuittance={demandeId};
+  document.getElementById('quittanceRef').value='';
+  document.getElementById('quittanceDate').value=new Date().toISOString().split('T')[0];
+  document.getElementById('quittanceSignataire').value='';
+  document.getElementById('quittanceNotes').value='';
+  openModal('modalQuittance');
+}
+
+async function saveQuittance(){
+  if(!pendingQuittance) return;
+  const ref=document.getElementById('quittanceRef').value.trim();
+  if(!ref){showToast('Entrez la référence de la quittance','warn');return;}
+  const q={
+    ref,
+    date:document.getElementById('quittanceDate').value,
+    signataire:document.getElementById('quittanceSignataire').value.trim(),
+    notes:document.getElementById('quittanceNotes').value.trim(),
+    deposePar:role,
+    deposeAt:new Date().toISOString(),
+  };
+  const demandes=(currentTrack.demandes||[]).map(d=>
+    d.id===pendingQuittance.demandeId?{...d,quittance:q}:d
+  );
+  try{
+    await _db.collection('dossiers').doc(currentDossierId).collection('track').doc('current').update({
+      demandes,updatedAt:firebase.firestore.FieldValue.serverTimestamp()
+    });
+    closeModal('modalQuittance');
+    showToast('Quittance déposée ✓ — Postes débloqués','ok');
+    pendingQuittance=null;
+  }catch(e){showToast('Erreur','crit');console.error(e);}
+}
+
+// ══════════════════════════════════════════
+//  TOKENS PANEL
+// ══════════════════════════════════════════
+function openTokensPanel(){
+  const panel=document.getElementById('tokensPanel');
+  panel.classList.toggle('hidden');
+  if(!panel.classList.contains('hidden')) renderTokens();
+}
+
+function copyLink(type){
+  const el=document.getElementById(type==='client'?'clientLinkDisplay':'partnerLinkDisplay');
+  navigator.clipboard.writeText(el.textContent).then(()=>showToast('Lien copié ✓','ok'));
+}
+
+// ══════════════════════════════════════════
+//  UTILS
+// ══════════════════════════════════════════
+function computeOverallPct(){
+  return computeOverallPctFromData(currentTrack?.ventilation||[]);
+}
+function computeOverallPctFromData(vent){
+  if(!vent||!vent.length) return 0;
+  const totalBudget=vent.reduce((s,p)=>s+(p.budgetPrevu||0),0);
+  if(!totalBudget) return 0;
+  const done=vent.reduce((s,p)=>s+(p.budgetPrevu||0)*(p.pctComplete||0)/100,0);
+  return Math.round(done/totalBudget*100);
+}
+function computeTotalApprouve(){
+  return (currentTrack?.ventilation||[]).reduce((s,p)=>s+(p.montantApprouve||0),0);
+}
+function computeTotalRetenue(){
+  const h=(currentTrack?.holdbackPct||10)/100;
+  return Math.round(computeTotalApprouve()*h);
+}
+function fmt(n){
+  if(!n&&n!==0) return '—';
+  return new Intl.NumberFormat('fr-CA',{style:'currency',currency:'CAD',minimumFractionDigits:0,maximumFractionDigits:0}).format(n);
+}
+function formatDate(ds){
+  if(!ds) return '—';
+  try{const d=new Date(ds);return d.toLocaleDateString('fr-CA',{year:'numeric',month:'long',day:'numeric'});}
+  catch{return ds;}
+}
+function statusLabel(s){
+  return{actif:'En cours',suspendu:'Suspendu',complete:'Complété'}[s]||s;
+}
+function genToken(prefix){
+  return prefix+'_'+Math.random().toString(36).slice(2,10)+Math.random().toString(36).slice(2,6);
+}
+function openModal(id){document.getElementById(id).classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+function showToast(msg,type='ok'){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.style.display='block';
+  t.style.borderLeftColor=type==='ok'?'var(--gold)':type==='warn'?'var(--warn2)':type==='crit'?'var(--crit2)':'var(--blue2)';
+  clearTimeout(t._to);
+  t._to=setTimeout(()=>{t.style.display='none';},3000);
+}
+// ══════════════════════════════════════════
+//  NOTIFICATIONS TRACK (écrit dans Firestore → agent Python envoie l'email)
+// ══════════════════════════════════════════
+async function notifyTrack(type,extra={}){
+  if(!currentDossierId||!currentTrack) return;
+  try{
+    await _db.collection('trackAlerts').add({
+      type,
+      dossierId:currentDossierId,
+      dossierName:currentTrack.projectName||currentDossierId,
+      ...extra,
+      role,
+      timestamp:firebase.firestore.FieldValue.serverTimestamp(),
+      status:'pending',
+    });
+  }catch(e){console.warn('trackAlert write failed:',e);}
+}
+
+// ══════════════════════════════════════════
+//  UPLOAD DOCUMENTS
+// ══════════════════════════════════════════
+let _uploads=[];
+
+function openUploadModal(){
+  document.getElementById('uploadFileInput').value='';
+  document.getElementById('uploadDesc').value='';
+  document.getElementById('uploadModalProgress').style.display='none';
+  document.getElementById('uploadModalProgressBar').style.width='0';
+  document.getElementById('uploadSubmitBtn').disabled=false;
+  openModal('modalUpload');
+}
+
+async function submitUpload(){
+  const file=document.getElementById('uploadFileInput').files[0];
+  if(!file){showToast('Sélectionnez un fichier','warn');return;}
+  if(file.size>20*1024*1024){showToast('Fichier trop volumineux (max 20 Mo)','warn');return;}
+  const docType=document.getElementById('uploadDocType').value;
+  const desc=document.getElementById('uploadDesc').value.trim();
+  const safeName=file.name.replace(/[^a-zA-Z0-9._\-]/g,'_');
+  const displayName=desc||file.name;
+  // Show progress
+  document.getElementById('uploadModalProgress').style.display='block';
+  document.getElementById('uploadModalProgressTxt').textContent='Téléversement en cours…';
+  document.getElementById('uploadSubmitBtn').disabled=true;
+  // Animate progress
+  let pct=0;const pctEl=document.getElementById('uploadModalProgressBar');
+  const ticker=setInterval(()=>{if(pct<85){pct+=Math.random()*12;pctEl.style.width=Math.min(85,pct)+'%';}},200);
+  try{
+    // Token = trackClientToken (admin can also upload)
+    const token=currentTrack.clientToken||currentTrack.partnerToken||'';
+    const url=`/.netlify/functions/track-upload-doc?token=${encodeURIComponent(token)}&dossierId=${encodeURIComponent(currentDossierId)}&name=${encodeURIComponent(safeName)}&type=${encodeURIComponent(docType)}&desc=${encodeURIComponent(displayName)}`;
+    const resp=await fetch(url,{method:'POST',body:file});
+    clearInterval(ticker);pctEl.style.width='100%';
+    if(!resp.ok){
+      const err=await resp.json().catch(()=>({error:'Erreur réseau'}));
+      throw new Error(err.error||'Erreur téléversement');
+    }
+    const data=await resp.json();
+    // Log in Firestore
+    await _db.collection('dossiers').doc(currentDossierId).collection('trackUploads').add({
+      blobKey:data.blobKey||'',
+      filename:safeName,
+      displayName,
+      docType,
+      fileSize:file.size,
+      uploadedAt:firebase.firestore.FieldValue.serverTimestamp(),
+      uploadedBy:role,
+    });
+    closeModal('modalUpload');
+    showToast('Document déposé ✓','ok');
+    loadUploads();
+  }catch(e){
+    clearInterval(ticker);
+    document.getElementById('uploadModalProgressTxt').textContent='Erreur : '+e.message;
+    pctEl.style.background='var(--crit2)';
+    document.getElementById('uploadSubmitBtn').disabled=false;
+    showToast('Erreur : '+e.message,'crit');
+  }
+}
+
+async function loadUploads(){
+  if(!currentDossierId) return;
+  try{
+    const snap=await _db.collection('dossiers').doc(currentDossierId).collection('trackUploads').orderBy('uploadedAt','desc').get();
+    _uploads=snap.docs.map(d=>({id:d.id,...d.data()}));
+    renderUploads();
+  }catch(e){console.warn('Uploads load failed:',e);}
+}
+
+function renderUploads(){
+  const list=document.getElementById('uploadsList');
+  const empty=document.getElementById('uploadsEmpty');
+  const badge=document.getElementById('uploadCountBadge');
+  badge.textContent=`${_uploads.length} document${_uploads.length!==1?'s':''}`;
+  if(!_uploads.length){
+    list.classList.add('hidden');
+    empty.style.display='';
+    return;
+  }
+  empty.style.display='none';
+  list.classList.remove('hidden');
+  const typeIcon={facture:'🧾',rapport_inspection:'🔍',rapport_architecte:'📐',quittance:'✅',devis:'📋',autre:'📄'};
+  const typeCls={facture:'facture',rapport_inspection:'rapport',rapport_architecte:'rapport',quittance:'quittance',devis:'facture',autre:'autre'};
+  list.innerHTML=_uploads.map(u=>{
+    const icon=typeIcon[u.docType]||'📄';
+    const cls=typeCls[u.docType]||'autre';
+    const typeLabel={facture:'Facture',rapport_inspection:'Inspection',rapport_architecte:'Architecte',quittance:'Quittance',devis:'Devis',autre:'Document'}[u.docType]||u.docType;
+    const size=u.fileSize?`${(u.fileSize/1024).toFixed(0)} Ko`:'';
+    const date=u.uploadedAt?.toDate?u.uploadedAt.toDate().toLocaleDateString('fr-CA',{year:'numeric',month:'short',day:'numeric'}):'—';
+    return`<div class="upload-item">
+      <div class="upload-item-icon">${icon}</div>
+      <div class="upload-item-info">
+        <div class="upload-item-name">${u.displayName||u.filename}</div>
+        <div class="upload-item-meta">${date}${size?' · '+size:''} · Par ${u.uploadedBy||'—'}</div>
+      </div>
+      <span class="upload-item-type ${cls}">${typeLabel}</span>
+    </div>`;
+  }).join('');
+}
+
+// ══════════════════════════════════════════
+//  AGENT AI — ANALYSER RAPPORT ARCHITECTE
+// ══════════════════════════════════════════
+let _analyzeResults=null;
+
+async function submitAnalyze(){
+  const file=document.getElementById('analyzeFileInput').files[0];
+  if(!file){showToast('Sélectionnez un rapport PDF','warn');return;}
+  if(file.size>15*1024*1024){showToast('Fichier trop volumineux (max 15 Mo)','warn');return;}
+  document.getElementById('analyzeLoading').style.display='block';
+  document.getElementById('analyzeResult').style.display='none';
+  document.getElementById('analyzeSubmitBtn').disabled=true;
+  document.getElementById('analyzeApplyBtn').classList.add('hidden');
+  try{
+    const b64=await fileToBase64(file);
+    const ventilation=currentTrack.ventilation||[];
+    const resp=await fetch('/.netlify/functions/analyze-track',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({pdfBase64:b64,ventilation:ventilation.map(p=>({id:p.id,poste:p.poste,cat:p.cat,pctActuel:p.pctComplete||0}))}),
+    });
+    if(!resp.ok){const e=await resp.json().catch(()=>({error:'Erreur'}));throw new Error(e.error||'Erreur analyse');}
+    const data=await resp.json();
+    _analyzeResults=data.updates||[];
+    renderAnalyzePreview(ventilation);
+    document.getElementById('analyzeLoading').style.display='none';
+    document.getElementById('analyzeResult').style.display='block';
+    const changed=_analyzeResults.filter(u=>u.pctNouveau!==u.pctActuel).length;
+    document.getElementById('analyzeResultSummary').textContent=`${_analyzeResults.length} postes analysés — ${changed} mise(s) à jour suggérée(s) par l'IA.`;
+    const applyBtn=document.getElementById('analyzeApplyBtn');
+    applyBtn.textContent=`✓ Appliquer (${changed} poste${changed!==1?'s':''})`;
+    applyBtn.classList.toggle('hidden',changed===0);
+    document.getElementById('analyzeSubmitBtn').disabled=false;
+  }catch(e){
+    document.getElementById('analyzeLoading').style.display='none';
+    showToast('Erreur : '+e.message,'crit');
+    document.getElementById('analyzeSubmitBtn').disabled=false;
+  }
+}
+
+function renderAnalyzePreview(ventilation){
+  const preview=document.getElementById('analyzePreview');
+  if(!_analyzeResults?.length){preview.innerHTML='<div style="padding:1rem;color:var(--muted);font-size:.7rem">Aucun résultat</div>';return;}
+  preview.innerHTML=_analyzeResults.map(u=>{
+    const v=ventilation.find(p=>p.id===u.id);
+    const changed=u.pctNouveau!==u.pctActuel;
+    return`<div class="analyze-preview-row ${changed?'changed':''}">
+      <span class="apz-name">${v?.poste||u.id}</span>
+      ${changed?`<span class="apz-old">${u.pctActuel}%</span><span class="apz-arrow">→</span><span class="apz-new">${u.pctNouveau}%</span>`:`<span class="apz-same">${u.pctActuel}% (inchangé)</span>`}
+    </div>`;
+  }).join('');
+}
+
+async function applyAnalyzeResults(){
+  if(!_analyzeResults?.length) return;
+  const ventilation=(currentTrack.ventilation||[]).map(p=>{
+    const update=_analyzeResults.find(u=>u.id===p.id);
+    if(!update||update.pctNouveau===update.pctActuel) return p;
+    return{...p,pctComplete:update.pctNouveau,notes:(p.notes||'')+' [IA '+new Date().toLocaleDateString('fr-CA')+']'};
+  });
+  try{
+    const pct=computeOverallPctFromData(ventilation);
+    await _db.collection('dossiers').doc(currentDossierId).collection('track').doc('current').update({
+      ventilation,updatedAt:firebase.firestore.FieldValue.serverTimestamp(),
+    });
+    await _db.collection('dossiers').doc(currentDossierId).update({trackPct:pct});
+    currentTrack.ventilation=ventilation;
+    renderVentilation();renderHero();renderHealthDashboard();
+    closeModal('modalAnalyze');
+    showToast('Pourcentages mis à jour par l\'IA ✓','ok');
+    _analyzeResults=null;
+  }catch(e){showToast('Erreur sauvegarde','crit');console.error(e);}
+}
+
+function fileToBase64(file){
+  return new Promise((resolve,reject)=>{
+    const reader=new FileReader();
+    reader.onload=()=>resolve(reader.result.split(',')[1]);
+    reader.onerror=reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+// ══════════════════════════════════════════
+//  PRINT REPORT
+// ══════════════════════════════════════════
+function printReport(){
+  if(!currentTrack){showToast('Chargez un projet d\'abord','warn');return;}
+  const vent=currentTrack.ventilation||[];
+  const demandes=(currentTrack.demandes||[]).slice().reverse();
+  const totalBudget=vent.reduce((s,p)=>s+(p.budgetPrevu||0),0);
+  const totalAppr=vent.reduce((s,p)=>s+(p.montantApprouve||0),0);
+  const retenue=Math.round(totalAppr*((currentTrack.holdbackPct||10)/100));
+  const solde=totalBudget-totalAppr;
+  const pct=computeOverallPct();
+  const typeLabels={construction:'Résidentiel unifamilial',multilogement:'Multilogement 2–12 unités',grandimmeuble:'Grand immeuble 5 étages+',commercial:'Commercial / Industriel'};
+  // Build ventilation rows
+  let vtRows='',lastCat='',rowNum=0;
+  vent.forEach(p=>{
+    if(p.cat!==lastCat){
+      vtRows+=`<tr class="cat-r"><td colspan="7">${p.cat}</td></tr>`;
+      lastCat=p.cat;
+    }
+    rowNum++;
+    const pctFill=Math.min(100,p.pctComplete||0);
+    const pctColor=pctFill>=100?'#b8975a':pctFill>=80?'#e74c3c':pctFill>=50?'#d4a017':'#52b788';
+    const soldePoste=(p.budgetPrevu||0)-(p.montantApprouve||0);
+    vtRows+=`<tr>
+      <td style="color:#7a8294;font-size:.58rem;font-family:'DM Mono',monospace">${rowNum}</td>
+      <td>${p.poste}</td>
+      <td class="mono">${fmt(p.budgetPrevu)}</td>
+      <td>
+        <span style="font-family:'DM Mono',monospace;font-size:.62rem">${pctFill}%</span>
+        <span class="pr-pct-bar"><span class="pr-pct-fill" style="width:${pctFill}%;background:${pctColor}"></span></span>
+      </td>
+      <td class="mono">${fmt(p.montantApprouve||0)}</td>
+      <td class="mono" style="color:${soldePoste<0?'#c0392b':'#0a0d13'}">${soldePoste<0?'⚠ ':''} ${fmt(Math.abs(soldePoste))}</td>
+      <td style="font-size:.6rem;color:#7a8294;font-style:italic;max-width:100px">${p.notes||''}</td>
+    </tr>`;
+  });
+  // Build demandes rows
+  const sMap={en_attente:'En attente',approuve_yves:'✓ Cap. Norvex',approuve_final:'✓ Approuvé',transfere:'Transféré',rejete:'Refusé'};
+  const sColor={en_attente:'#b7791f',approuve_yves:'#2e86c1',approuve_final:'#2d6a4f',transfere:'#b8975a',rejete:'#c0392b'};
+  let demRows='';
+  if(!demandes.length){
+    demRows=`<div style="padding:.8rem;color:#7a8294;font-size:.7rem;font-style:italic">Aucune demande de débourse enregistrée.</div>`;
+  } else {
+    demandes.forEach(d=>{
+      const sl=sMap[d.statut]||d.statut;
+      const sc=sColor[d.statut]||'#7a8294';
+      const pNoms=(d.postes||[]).map(p=>{const v=vent.find(v=>v.id===p.id);return`${v?.poste||p.id} (${fmt(p.montant)})`;}).join(' · ');
+      demRows+=`<div class="pr-dem-row">
+        <span class="pr-dem-date">${formatDate(d.dateCreation)}</span>
+        <span class="pr-dem-postes">${pNoms}</span>
+        <span class="pr-dem-amount">${fmt(d.montantTotal)}</span>
+        <span class="pr-dem-status" style="border-color:${sc};color:${sc}">${sl}</span>
+      </div>`;
+    });
+  }
+  // Flags
+  const withFlags=demandes.filter(d=>d.flags&&d.flags.length>0);
+  let flagHtml='';
+  if(withFlags.length){
+    flagHtml=`<div class="pr-section">
+      <div class="pr-sec-title">Anomalies signalées (${withFlags.length})</div>
+      ${withFlags.map(d=>`<div style="padding:.55rem .7rem;margin-bottom:.4rem;border-left:3px solid #b7791f;background:rgba(183,121,31,.04);font-size:.68rem">
+        <strong>${formatDate(d.dateCreation)} — ${fmt(d.montantTotal)}</strong><br>
+        ${(d.flags||[]).map(f=>f.replace(/<[^>]+>/g,'')).join('<br>')}
+        ${d.flagJustification?`<br><em style="color:#7a8294">Justification : ${d.flagJustification}</em>`:''}
+      </div>`).join('')}
+    </div>`;
+  }
+  document.getElementById('printReport').innerHTML=`<div class="pr-page">
+    <div class="pr-header">
+      <div>
+        <div class="pr-logo">Capital <em>Norvex</em></div>
+        <div class="pr-badge">Norvex Track™ — Rapport de suivi de construction</div>
+        <div style="font-size:.6rem;color:#7a8294;margin-top:.4rem">Document confidentiel — Réservé au financement et au dossier notarial</div>
+      </div>
+      <div class="pr-meta">
+        Rapport produit le ${new Date().toLocaleDateString('fr-CA',{year:'numeric',month:'long',day:'numeric'})}<br>
+        Dossier no : <strong>${currentDossierId||'—'}</strong><br>
+        Système Norvex Track™ · Capital Norvex Inc.
+      </div>
+    </div>
+    <div class="pr-section">
+      <div class="pr-sec-title">Identification du projet</div>
+      <div class="pr-info-grid">
+        <div class="pr-info-row"><span class="pr-info-lbl">Projet</span><strong>${currentTrack.projectName||'—'}</strong></div>
+        <div class="pr-info-row"><span class="pr-info-lbl">Type</span>${typeLabels[currentTrack.projectType]||currentTrack.projectType||'—'}</div>
+        <div class="pr-info-row"><span class="pr-info-lbl">Début travaux</span>${currentTrack.startDate||'—'}</div>
+        <div class="pr-info-row"><span class="pr-info-lbl">Fin prévue</span>${currentTrack.endDate||'—'}</div>
+        <div class="pr-info-row"><span class="pr-info-lbl">Statut</span>${statusLabel(currentTrack.status||'actif')}</div>
+        <div class="pr-info-row"><span class="pr-info-lbl">Taux retenue</span>${currentTrack.holdbackPct||10}%</div>
+      </div>
+      <div class="pr-progress-ring">
+        <div class="pr-ring-num">${pct}%</div>
+        <div>
+          <div style="font-size:.78rem;font-weight:500;margin-bottom:.2rem">Avancement global pondéré par budget</div>
+          <div class="pr-ring-sub">Calculé sur ${vent.length} postes · ${demandes.length} demande(s) de débourse enregistrée(s)</div>
+        </div>
+      </div>
+    </div>
+    <div class="pr-section">
+      <div class="pr-sec-title">Sommaire financier</div>
+      <div class="pr-summary">
+        <div class="pr-sum-cell"><div class="pr-sum-lbl">Budget total approuvé</div><div class="pr-sum-val gold">${fmt(totalBudget)}</div></div>
+        <div class="pr-sum-cell"><div class="pr-sum-lbl">Total déboursé approuvé</div><div class="pr-sum-val ok">${fmt(totalAppr)}</div></div>
+        <div class="pr-sum-cell"><div class="pr-sum-lbl">Retenue cumulée (${currentTrack.holdbackPct||10}%)</div><div class="pr-sum-val warn">${fmt(retenue)}</div></div>
+        <div class="pr-sum-cell"><div class="pr-sum-lbl">Solde à débourser</div><div class="pr-sum-val">${fmt(solde)}</div></div>
+      </div>
+    </div>
+    <div class="pr-section">
+      <div class="pr-sec-title">Ventilation des coûts — ${vent.length} postes · ${vent.reduce((s,p)=>{const cats=new Set();p.cat&&cats.add(p.cat);return cats.size;},0)} catégories</div>
+      <table class="pr-table">
+        <thead><tr>
+          <th style="width:22px">#</th><th>Poste de construction</th>
+          <th class="r">Budget prévu</th><th>Avancement</th>
+          <th class="r">Montant approuvé</th><th class="r">Solde poste</th><th>Notes</th>
+        </tr></thead>
+        <tbody>${vtRows}</tbody>
+        <tfoot><tr>
+          <td colspan="2" style="font-family:'DM Mono',monospace;font-size:.64rem;font-weight:500;padding:.5rem .7rem;background:#0a0d13;color:#faf8f4">TOTAL</td>
+          <td style="font-family:'DM Mono',monospace;text-align:right;font-size:.68rem;background:#0a0d13;color:#b8975a;padding:.5rem .7rem">${fmt(totalBudget)}</td>
+          <td style="background:#0a0d13"></td>
+          <td style="font-family:'DM Mono',monospace;text-align:right;font-size:.68rem;background:#0a0d13;color:#52b788;padding:.5rem .7rem">${fmt(totalAppr)}</td>
+          <td style="font-family:'DM Mono',monospace;text-align:right;font-size:.68rem;background:#0a0d13;color:#faf8f4;padding:.5rem .7rem">${fmt(totalBudget-totalAppr)}</td>
+          <td style="background:#0a0d13"></td>
+        </tr></tfoot>
+      </table>
+    </div>
+    <div class="pr-section">
+      <div class="pr-sec-title">Historique des demandes de débourses (${demandes.length})</div>
+      ${demRows}
+    </div>
+    ${flagHtml}
+    <div class="pr-sig">
+      <div style="font-size:.65rem;color:#7a8294;line-height:1.6;margin-bottom:1.5rem">
+        Le présent rapport certifie l'état d'avancement du projet tel que documenté dans le système Norvex Track™. Les montants déboursés ont fait l'objet d'une approbation à trois niveaux (Capital Norvex / Partenaire financier / Transfert). Ce document est destiné à l'institution financière prêteuse et/ou au notaire instrumentant.
+      </div>
+      <div class="pr-sig-grid">
+        <div><div class="pr-sig-line"></div><div class="pr-sig-lbl">Approuvé par</div><div class="pr-sig-name">Capital Norvex Inc.</div></div>
+        <div><div class="pr-sig-line"></div><div class="pr-sig-lbl">Partenaire financier</div><div class="pr-sig-name">&nbsp;</div></div>
+        <div><div class="pr-sig-line"></div><div class="pr-sig-lbl">Architecte / Inspecteur</div><div class="pr-sig-name">&nbsp;</div></div>
+      </div>
+    </div>
+  </div>`;
+  setTimeout(()=>window.print(),100);
+}
+
+['modalSetup','modalDemande','modalApprove','modalQuittance','modalUpload','modalAnalyze'].forEach(id=>{
+  document.getElementById(id).addEventListener('click',function(e){
+    if(e.target===this) closeModal(id);
+  });
+});
+</script>
+</body>
+</html>

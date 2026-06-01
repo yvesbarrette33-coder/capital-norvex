@@ -1,0 +1,41 @@
+╔══════════════════════════════════════════════════════════════╗
+║         CAPITAL NORVEX — PACKAGE DE DOCUMENTS               ║
+║         Préparé par Claude.ai pour Claude Code              ║
+╚══════════════════════════════════════════════════════════════╝
+
+CONTENU DE CE DOSSIER
+──────────────────────
+  INSTALLER.py      → À rouler UNE SEULE FOIS avec Claude Code
+  LIRE_MOI.txt      → Ce fichier
+  scripts/          → Les 3 scripts Python des documents
+  logos/            → Les logos Capital Norvex (PNG)
+
+COMMENT INSTALLER
+──────────────────
+  1. Ouvre Claude Code sur ton Mac
+  2. Navigue jusqu'à ce dossier
+  3. Dis à Claude Code : "Roule INSTALLER.py"
+  4. C'est tout! Les PDFs apparaissent sur ton Bureau.
+
+CE QUI SE CRÉE SUR TON BUREAU
+───────────────────────────────
+  Desktop/
+  └── Capital Norvex/
+      ├── GENERER_TOUT.py          ← Pour régénérer tous les PDFs
+      ├── scripts/                 ← Scripts adaptés à ton Mac
+      ├── logos/                   ← Logos Capital Norvex
+      └── Documents PDF/
+          ├── Convention de prêt Construction.pdf
+          ├── Lettre d'engagement Construction.pdf
+          ├── Lettre d'engagement Terrain.pdf
+          ├── Lettre d'engagement Acquisition.pdf
+          └── Sommaire Exécutif Partenaire.pdf
+
+MODIFIER UN DOCUMENT
+──────────────────────
+  → Dis à Claude Code ce que tu veux changer
+  → Il modifie le script directement
+  → Le PDF se met à jour sur ton Bureau
+  → Zéro téléchargement!
+
+Capital structuré. Ambition maîtrisée. 🏆

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Capital Norvex — Comparateur de design</title>
+<style>
+  body{margin:0;padding:0;font-family:'DM Sans','Helvetica Neue',sans-serif;background:#faf6ee;color:#0a0d13;min-height:100vh}
+  .wrap{max-width:1100px;margin:0 auto;padding:48px 32px}
+  h1{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:400;margin:0 0 8px 0;letter-spacing:.5px}
+  .sub{color:#6b6b6b;font-size:1rem;margin-bottom:36px;line-height:1.6}
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-bottom:32px}
+  .card{display:block;text-decoration:none;background:#fff;border:1px solid #e8e3da;padding:24px;transition:all .25s;color:#0a0d13;position:relative;overflow:hidden}
+  .card:hover{border-color:#b8975a;box-shadow:0 14px 36px rgba(184,151,90,.18);transform:translateY(-4px)}
+  .card::before{content:"";position:absolute;top:0;left:0;height:4px;width:0;background:#b8975a;transition:width .35s}
+  .card:hover::before{width:100%}
+  .card-num{font-family:'Playfair Display',serif;font-style:italic;font-size:.85rem;color:#b8975a;letter-spacing:.3em;margin-bottom:8px}
+  .card-title{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:400;margin:0 0 8px 0}
+  .card-desc{color:#5b6478;font-size:.9rem;line-height:1.6;margin-bottom:16px}
+  .swatches{display:flex;gap:6px;margin-bottom:14px}
+  .swatch{width:44px;height:44px;border:1px solid rgba(0,0,0,.08)}
+  .open{display:inline-block;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;background:#0a0d13;color:#b8975a;padding:.6rem 1.2rem;font-weight:500}
+  .original{background:linear-gradient(135deg,#fbfaf6 0%,#f3eee2 100%);border:1px dashed #b8975a;text-align:center;padding:18px}
+  .original a{color:#0a0d13;font-weight:500;text-decoration:underline;text-decoration-color:#b8975a;text-underline-offset:4px}
+  .footer{font-size:.78rem;color:#7a8294;text-align:center;margin-top:24px;line-height:1.7}
+  .footer strong{color:#0a0d13}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🎨 Comparateur de design — Capital Norvex</h1>
+  <p class="sub">4 directions visuelles distinctes. <strong>Clique sur une carte ci-dessous</strong> pour voir la version complète. Reviens ici avec le bouton « Précédent » de Safari pour comparer une autre.</p>
+
+  <div class="grid">
+
+    <a href="/index-design-v1.html" class="card">
+      <div class="card-num">VERSION I</div>
+      <div class="card-title">Crème + Noir hybride</div>
+      <div class="card-desc">Mix : Plateforme & Norvex Intel & Fondateur restent noirs (rehaussés avec coins or, drop cap, numérotation romaine). Clientèles passe en crème. Chiffres en crème + chiffres or géants.</div>
+      <div class="swatches">
+        <div class="swatch" style="background:#0a0d13"></div>
+        <div class="swatch" style="background:#fbf7ec"></div>
+        <div class="swatch" style="background:#b8975a"></div>
+        <div class="swatch" style="background:#f7f2e6"></div>
+      </div>
+      <span class="open">Ouvrir Version I →</span>
+    </a>
+
+    <a href="/index-design-v2.html" class="card">
+      <div class="card-num">VERSION II</div>
+      <div class="card-title">Chocolat & Or éclatant</div>
+      <div class="card-desc">Brun chocolat foncé (#2e1f0f) + or doré éclatant (#d4a04e) + ivoire chaud. Look terre brûlée chaleureux, très contrasté avec l'or. Effet « old money chaud ».</div>
+      <div class="swatches">
+        <div class="swatch" style="background:#2e1f0f"></div>
+        <div class="swatch" style="background:#fdf6e6"></div>
+        <div class="swatch" style="background:#d4a04e"></div>
+        <div class="swatch" style="background:#3d2a18"></div>
+      </div>
+      <span class="open">Ouvrir Version II →</span>
+    </a>
+
+    <a href="/index-design-v3.html" class="card">
+      <div class="card-num">VERSION III</div>
+      <div class="card-title">Forêt boréale saturée</div>
+      <div class="card-desc">Vert sapin profond saturé (#0e3b1e) remplace le noir. Or doré éclatant (#d4a64a). ADN canadien fort, te démarque de TOUS tes concurrents. Audacieux mais signature.</div>
+      <div class="swatches">
+        <div class="swatch" style="background:#0e3b1e"></div>
+        <div class="swatch" style="background:#f0f5ec"></div>
+        <div class="swatch" style="background:#d4a64a"></div>
+        <div class="swatch" style="background:#155028"></div>
+      </div>
+      <span class="open">Ouvrir Version III →</span>
+    </a>
+
+    <a href="/index-design-v4.html" class="card">
+      <div class="card-num">VERSION IV</div>
+      <div class="card-title">Bleu nuit royal saturé</div>
+      <div class="card-desc">Bleu marine royal très saturé (#0a2456) + or éclatant (#e0b048) + crème bleu pâle. Look Goldman Sachs × Morgan Stanley. <strong>Mon coup de cœur</strong> — l'or ressort beaucoup, contraste maximal.</div>
+      <div class="swatches">
+        <div class="swatch" style="background:#0a2456"></div>
+        <div class="swatch" style="background:#eef2fa"></div>
+        <div class="swatch" style="background:#e0b048"></div>
+        <div class="swatch" style="background:#0f3478"></div>
+      </div>
+      <span class="open">Ouvrir Version IV →</span>
+    </a>
+
+  </div>
+
+  <div class="original">
+    <div style="font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:#7a8294;margin-bottom:6px">RÉFÉRENCE</div>
+    <a href="/index.html">📌 Voir la version actuelle (production) — pour comparaison</a>
+  </div>
+
+  <div class="footer">
+    <strong>Note :</strong> Aucune de ces 4 versions ne touche à <code>index.html</code>. La prod reste 100&nbsp;% intacte.<br>
+    Une fois ton choix fait, je déploie cette version SEULEMENT après ton « go » explicite.
+  </div>
+</div>
+</body>
+</html>

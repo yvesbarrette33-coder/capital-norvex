@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html lang="fr-CA">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Capital Norvex — Espace Courtier</title>
+<meta name="description" content="Votre espace courtier partenaire Capital Norvex. Suivez vos dossiers, soumettez de nouveaux clients, recevez vos LOI. 24/7.">
+
+<!-- PWA -->
+<link rel="manifest" href="/manifest-courtier.json">
+<meta name="theme-color" content="#0a0a0a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Norvex Courtier">
+<link rel="apple-touch-icon" href="/icon-192.png">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --cream: #FBF7EB;
+    --cream-warm: #FCF8EE;
+    --ink: #0A0A0A;
+    --ink-soft: #1a1a1a;
+    --gold: #C8B070;
+    --gold-dark: #9A8554;
+    --gold-light: #E8DCB6;
+    --stone: #d6cdb8;
+    --muted: #6a6a6a;
+    --muted2: #8a8a8a;
+    --green: #4a7c4a;
+    --green-bg: #ebf6e9;
+    --red: #b03030;
+    --red-bg: #fdecec;
+    --blue: #2c5d8f;
+    --blue-bg: #e7f0f9;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: 'Inter', -apple-system, system-ui, sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* Header */
+  .app-header {
+    background: var(--ink);
+    border-bottom: 3px solid var(--gold);
+    padding: 14px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .app-header-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .app-header-logo {
+    height: 36px;
+    width: auto;
+  }
+  .app-header-title {
+    color: var(--gold);
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 17px;
+    letter-spacing: 1.5px;
+    line-height: 1;
+  }
+  .app-header-title em {
+    display: block;
+    font-style: italic;
+    font-size: 11px;
+    letter-spacing: 2px;
+    opacity: 0.75;
+    margin-top: 3px;
+    color: var(--gold-light);
+  }
+  .app-header-user {
+    color: var(--gold);
+    font-size: 12px;
+    text-align: right;
+  }
+  .app-header-user-name {
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+  .app-header-user-code {
+    font-family: 'SF Mono', Menlo, monospace;
+    font-size: 10px;
+    opacity: 0.75;
+    letter-spacing: 1px;
+    margin-top: 2px;
+  }
+
+  /* Nav bottom (mobile-first) */
+  .app-nav {
+    background: #fff;
+    border-top: 1px solid var(--stone);
+    display: flex;
+    justify-content: space-around;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 99;
+    box-shadow: 0 -2px 12px rgba(0,0,0,0.04);
+  }
+  .app-nav-item {
+    flex: 1;
+    text-align: center;
+    padding: 10px 4px 14px;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 10.5px;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-family: inherit;
+    transition: color 0.15s;
+  }
+  .app-nav-item-icon {
+    display: block;
+    font-size: 20px;
+    margin-bottom: 3px;
+  }
+  .app-nav-item.is-active {
+    color: var(--gold-dark);
+    font-weight: 600;
+  }
+  .app-nav-item:hover {
+    color: var(--ink);
+  }
+
+  /* Main content */
+  .app-main {
+    padding: 24px 20px 100px;
+    min-height: calc(100vh - 60px);
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  /* Login view */
+  .login-card {
+    background: #fff;
+    border-left: 3px solid var(--gold);
+    padding: 32px 28px;
+    margin: 28px auto;
+    max-width: 460px;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+  }
+  .login-eyebrow {
+    color: var(--gold-dark);
+    font-size: 10.5px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .login-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 26px;
+    font-weight: 400;
+    line-height: 1.25;
+    margin-bottom: 8px;
+  }
+  .login-sub {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 22px;
+  }
+  .field {
+    margin-bottom: 18px;
+  }
+  label {
+    display: block;
+    font-size: 12.5px;
+    color: var(--muted);
+    margin-bottom: 6px;
+    letter-spacing: 0.3px;
+  }
+  input[type="text"], input[type="email"], input[type="tel"], input[type="number"], textarea, select {
+    width: 100%;
+    background: #fff;
+    border: 1px solid var(--stone);
+    color: var(--ink);
+    padding: 12px 14px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14.5px;
+    line-height: 1.5;
+    transition: border-color 0.15s ease;
+    border-radius: 0;
+    -webkit-appearance: none;
+  }
+  input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: var(--gold);
+  }
+  textarea { min-height: 120px; resize: vertical; }
+  .btn-primary {
+    background: var(--ink);
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    padding: 14px 28px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13.5px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+    width: 100%;
+    font-weight: 500;
+  }
+  .btn-primary:hover:not(:disabled) {
+    background: var(--gold);
+    color: var(--ink);
+  }
+  .btn-primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  .btn-secondary {
+    background: transparent;
+    color: var(--gold-dark);
+    border: 1px solid var(--stone);
+    padding: 10px 18px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12.5px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-weight: 500;
+  }
+  .btn-secondary:hover {
+    border-color: var(--gold);
+    color: var(--ink);
+  }
+
+  /* Toast / notice */
+  .notice {
+    padding: 14px 18px;
+    margin: 14px 0;
+    border-left: 3px solid var(--gold);
+    background: var(--cream-warm);
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+  .notice.is-success {
+    border-color: var(--green);
+    background: var(--green-bg);
+    color: var(--green);
+  }
+  .notice.is-error {
+    border-color: var(--red);
+    background: var(--red-bg);
+    color: var(--red);
+  }
+  .notice.is-info {
+    border-color: var(--blue);
+    background: var(--blue-bg);
+    color: var(--blue);
+  }
+
+  /* Page hero (dashboard / submit / profile) */
+  .page-hero {
+    margin-bottom: 24px;
+  }
+  .page-eyebrow {
+    color: var(--gold-dark);
+    font-size: 10.5px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .page-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+  .page-sub {
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  /* KPI bar */
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 22px;
+  }
+  .kpi {
+    background: #fff;
+    border: 1px solid var(--stone);
+    padding: 14px 12px;
+    text-align: center;
+  }
+  .kpi-value {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 22px;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .kpi-label {
+    font-size: 10px;
+    letter-spacing: 1.2px;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* Dossier card */
+  .dossier-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .dossier-card {
+    background: #fff;
+    border: 1px solid var(--stone);
+    border-left: 3px solid var(--gold);
+    padding: 16px 18px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .dossier-card:hover {
+    box-shadow: 0 2px 14px rgba(0,0,0,0.06);
+    transform: translateY(-1px);
+  }
+  .dossier-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+  }
+  .dossier-card-name {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 17px;
+    color: var(--ink);
+    line-height: 1.3;
+    margin-bottom: 2px;
+  }
+  .dossier-card-meta {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+  }
+  .dossier-card-amount {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 18px;
+    color: var(--ink);
+    text-align: right;
+    line-height: 1;
+  }
+  .dossier-card-commission {
+    font-size: 10.5px;
+    color: var(--gold-dark);
+    text-align: right;
+    margin-top: 3px;
+    letter-spacing: 0.5px;
+  }
+  .status-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    font-size: 10.5px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: 1px solid;
+    font-weight: 500;
+  }
+  .status-badge.s-pending { color: var(--muted); border-color: var(--stone); background: var(--cream-warm); }
+  .status-badge.s-analyzing { color: var(--blue); border-color: var(--blue); background: var(--blue-bg); }
+  .status-badge.s-loi-sent { color: var(--gold-dark); border-color: var(--gold); background: var(--cream-warm); }
+  .status-badge.s-approved { color: var(--green); border-color: var(--green); background: var(--green-bg); }
+  .status-badge.s-funded { color: var(--green); border-color: var(--green); background: var(--green); color: #fff; }
+  .status-badge.s-rejected { color: var(--red); border-color: var(--red); background: var(--red-bg); }
+
+  /* Empty state */
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--muted);
+  }
+  .empty-state-icon {
+    font-size: 48px;
+    opacity: 0.3;
+    margin-bottom: 12px;
+  }
+  .empty-state-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 20px;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .empty-state-sub {
+    font-size: 13.5px;
+    margin-bottom: 22px;
+  }
+
+  /* Submit form */
+  .submit-form {
+    background: #fff;
+    border-left: 3px solid var(--gold);
+    padding: 28px 24px;
+    box-shadow: 0 2px 14px rgba(0,0,0,0.04);
+  }
+  .field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  @media (max-width: 540px) {
+    .field-row { grid-template-columns: 1fr; }
+  }
+  .req { color: var(--gold-dark); margin-left: 2px; }
+
+  /* Pills (radio/check) */
+  .pill-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 4px;
+  }
+  .pill {
+    background: #fff;
+    border: 1px solid var(--stone);
+    padding: 9px 14px;
+    font-size: 12.5px;
+    cursor: pointer;
+    transition: all 0.15s;
+    color: var(--ink);
+    user-select: none;
+  }
+  .pill:hover { border-color: var(--gold); }
+  .pill input { display: none; }
+  .pill.is-active {
+    background: var(--ink);
+    color: var(--gold);
+    border-color: var(--gold);
+  }
+
+  /* Profile section */
+  .profile-section {
+    background: #fff;
+    border: 1px solid var(--stone);
+    padding: 22px 20px;
+    margin-bottom: 14px;
+  }
+  .profile-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--cream-warm);
+    font-size: 13.5px;
+  }
+  .profile-row:last-child { border-bottom: none; }
+  .profile-row-label {
+    color: var(--muted);
+    letter-spacing: 0.3px;
+  }
+  .profile-row-value {
+    color: var(--ink);
+    font-weight: 500;
+    text-align: right;
+  }
+  .profile-code {
+    font-family: 'SF Mono', Menlo, monospace;
+    background: var(--cream-warm);
+    padding: 2px 8px;
+    border: 1px solid var(--gold);
+    color: var(--gold-dark);
+    letter-spacing: 1px;
+  }
+
+  /* Engagement block (always visible) */
+  .engagement-bar {
+    background: var(--cream-warm);
+    border-left: 3px solid var(--gold);
+    padding: 14px 18px;
+    margin: 16px 0 24px;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+  .engagement-bar strong { color: var(--ink); }
+
+  /* Loading spinner */
+  .spinner {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--gold-light);
+    border-top-color: var(--gold);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    vertical-align: middle;
+    margin-right: 8px;
+  }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* Install prompt banner */
+  .install-banner {
+    background: var(--ink);
+    color: var(--gold);
+    padding: 12px 18px;
+    text-align: center;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    display: none;
+  }
+  .install-banner.is-visible { display: block; }
+  .install-banner button {
+    background: var(--gold);
+    color: var(--ink);
+    border: none;
+    padding: 5px 14px;
+    margin-left: 10px;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .install-banner .close-x {
+    background: transparent;
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    margin-left: 8px;
+    padding: 3px 8px;
+    font-size: 11px;
+  }
+
+  /* Hide elements based on state */
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<!-- Install PWA banner -->
+<div class="install-banner" id="install-banner">
+  Installez l'app sur votre appareil pour un accès rapide.
+  <button id="install-btn">Installer</button>
+  <button class="close-x" id="install-dismiss">×</button>
+</div>
+
+<!-- App header (visible toujours sauf login) -->
+<header class="app-header" id="app-header" style="display:none;">
+  <div class="app-header-brand">
+    <img src="/assets/logo-norvex-officiel.png" alt="Capital Norvex" class="app-header-logo">
+    <div class="app-header-title">
+      ESPACE COURTIER
+      <em>Capital Norvex</em>
+    </div>
+  </div>
+  <div class="app-header-user">
+    <div class="app-header-user-name" id="header-user-name">—</div>
+    <div class="app-header-user-code" id="header-user-code">CN-XXXX-XXX</div>
+  </div>
+</header>
+
+<!-- Main content -->
+<main class="app-main" id="app-main">
+
+  <!-- LOGIN VIEW -->
+  <section id="view-login" class="view">
+    <div style="text-align:center; margin-top:30px; margin-bottom:24px;">
+      <img src="/assets/logo-norvex-officiel.png" alt="Capital Norvex" style="height:60px; margin-bottom:18px;">
+      <div class="page-eyebrow">Espace Courtier</div>
+      <h1 class="page-title" style="font-size:30px;">Bienvenue dans votre espace</h1>
+      <p class="page-sub">Suivez vos dossiers, soumettez de nouveaux clients, recevez vos LOI.</p>
+    </div>
+
+    <div class="login-card">
+      <div class="login-eyebrow">Connexion sécurisée</div>
+      <h2 class="login-title">Lien magique par courriel</h2>
+      <p class="login-sub">Entrez l'adresse courriel de votre compte courtier accrédité. Nous vous enverrons un lien sécurisé pour ouvrir votre espace.</p>
+
+      <div class="field">
+        <label for="login-email">Adresse courriel</label>
+        <input type="email" id="login-email" autocomplete="email" placeholder="vous@example.com">
+      </div>
+
+      <button class="btn-primary" id="login-submit">Envoyer le lien</button>
+      <div id="login-status" style="margin-top:14px;"></div>
+
+      <div class="notice" style="margin-top:24px; font-size:12px;">
+        Pas encore accrédité ? <a href="/courtier-candidature.html" style="color:var(--gold-dark); text-decoration:none; font-weight:600;">Soumettez votre demande d'accréditation</a> (30 secondes).
+      </div>
+    </div>
+
+    <div class="engagement-bar" style="margin-top:30px;">
+      <strong>Vous restez au centre de votre relation client.</strong> Vous êtes en copie de chaque communication avec votre client. Nous demandons toujours votre accord avant d'appeler ou de rencontrer votre client. C'est votre relation, votre commission.
+    </div>
+  </section>
+
+  <!-- DASHBOARD VIEW -->
+  <section id="view-dashboard" class="view hidden">
+    <div class="page-hero">
+      <div class="page-eyebrow">Tableau de bord</div>
+      <h1 class="page-title">Mes dossiers</h1>
+      <p class="page-sub">Suivi en temps réel de tous les dossiers que vous nous avez référés.</p>
+    </div>
+
+    <div class="kpi-row">
+      <div class="kpi">
+        <div class="kpi-value" id="kpi-active">0</div>
+        <div class="kpi-label">En cours</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-value" id="kpi-approved">0</div>
+        <div class="kpi-label">Approuvés</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-value" id="kpi-funded">0</div>
+        <div class="kpi-label">Décaissés</div>
+      </div>
+    </div>
+
+    <div id="dossier-list-container">
+      <!-- Liste dynamique injectée ici par JS -->
+    </div>
+  </section>
+
+  <!-- SUBMIT VIEW -->
+  <section id="view-submit" class="view hidden">
+    <div class="page-hero">
+      <div class="page-eyebrow">Nouveau dossier</div>
+      <h1 class="page-title">Soumettre un client</h1>
+      <p class="page-sub">Votre code courtier est automatiquement associé à ce dossier. Vous êtes en copie de chaque échange avec votre client, et votre permission est requise avant tout appel ou rencontre direct(e).</p>
+    </div>
+
+    <form id="submit-form" class="submit-form" novalidate>
+
+      <div style="margin-bottom:18px;">
+        <div class="page-eyebrow" style="margin-bottom:8px;">Étape 1 — Votre client</div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="client-name">Nom complet du client <span class="req">*</span></label>
+          <input type="text" id="client-name" name="clientName" required>
+        </div>
+        <div class="field">
+          <label for="client-email">Courriel du client</label>
+          <input type="email" id="client-email" name="clientEmail">
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="client-phone">Téléphone du client</label>
+          <input type="tel" id="client-phone" name="clientPhone">
+        </div>
+        <div class="field">
+          <label for="client-company">Société (le cas échéant)</label>
+          <input type="text" id="client-company" name="clientCompany">
+        </div>
+      </div>
+
+      <div style="margin:22px 0 14px;">
+        <div class="page-eyebrow" style="margin-bottom:8px;">Étape 2 — Le projet</div>
+      </div>
+
+      <div class="field">
+        <label>Type de financement <span class="req">*</span></label>
+        <div class="pill-group" data-pill-group="loanType">
+          <label class="pill"><input type="radio" name="loanType" value="acquisition" required> Acquisition</label>
+          <label class="pill"><input type="radio" name="loanType" value="construction"> Construction</label>
+          <label class="pill"><input type="radio" name="loanType" value="refinancement"> Refinancement</label>
+          <label class="pill"><input type="radio" name="loanType" value="terrain"> Terrain</label>
+          <label class="pill"><input type="radio" name="loanType" value="multi-residentielle"> Multi-résidentiel</label>
+          <label class="pill"><input type="radio" name="loanType" value="commercial"> Commercial</label>
+          <label class="pill"><input type="radio" name="loanType" value="autre"> Autre</label>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="loan-amount">Montant souhaité <span class="req">*</span></label>
+          <input type="text" id="loan-amount" name="loanAmount" required placeholder="ex. 5 000 000 $" inputmode="numeric">
+        </div>
+        <div class="field">
+          <label>Province <span class="req">*</span></label>
+          <div class="pill-group" data-pill-group="province">
+            <label class="pill"><input type="radio" name="province" value="QC" required> Québec</label>
+            <label class="pill"><input type="radio" name="province" value="ON"> Ontario</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="project-description">Description du projet <span class="req">*</span></label>
+        <textarea id="project-description" name="projectDescription" required placeholder="Type de propriété, situation, particularités du dossier, délais souhaités..."></textarea>
+      </div>
+
+      <div class="field">
+        <label for="project-address">Adresse de la propriété</label>
+        <input type="text" id="project-address" name="projectAddress" placeholder="ex. 1234 rue Principale, Montréal QC">
+      </div>
+
+      <div style="margin:22px 0 14px;">
+        <div class="page-eyebrow" style="margin-bottom:8px;">Étape 3 — Documents (optionnel à cette étape)</div>
+        <p style="font-size:12.5px;color:var(--muted);margin-bottom:12px;">
+          Vous pourrez téléverser les documents du client juste après la soumission, depuis la fiche du dossier.
+        </p>
+      </div>
+
+      <button type="submit" class="btn-primary" id="submit-form-btn">Soumettre ce dossier</button>
+      <div id="submit-status" style="margin-top:14px;"></div>
+    </form>
+  </section>
+
+  <!-- DOSSIER DETAIL VIEW -->
+  <section id="view-detail" class="view hidden">
+    <button class="btn-secondary" id="back-to-dashboard" style="margin-bottom:18px;">← Retour aux dossiers</button>
+    <div id="detail-content">
+      <!-- Détail injecté dynamiquement -->
+    </div>
+  </section>
+
+  <!-- PROFILE VIEW -->
+  <section id="view-profile" class="view hidden">
+    <div class="page-hero">
+      <div class="page-eyebrow">Mon profil</div>
+      <h1 class="page-title">Mon compte courtier</h1>
+      <p class="page-sub">Vos informations d'accréditation et votre convention courtier.</p>
+    </div>
+
+    <div class="profile-section">
+      <div class="page-eyebrow" style="margin-bottom:14px;">Identité</div>
+      <div class="profile-row">
+        <span class="profile-row-label">Nom</span>
+        <span class="profile-row-value" id="profile-name">—</span>
+      </div>
+      <div class="profile-row">
+        <span class="profile-row-label">Courriel</span>
+        <span class="profile-row-value" id="profile-email">—</span>
+      </div>
+      <div class="profile-row">
+        <span class="profile-row-label">Téléphone</span>
+        <span class="profile-row-value" id="profile-phone">—</span>
+      </div>
+      <div class="profile-row">
+        <span class="profile-row-label">Cabinet / Agence</span>
+        <span class="profile-row-value" id="profile-agency">—</span>
+      </div>
+      <div class="profile-row">
+        <span class="profile-row-label">Province</span>
+        <span class="profile-row-value" id="profile-province">—</span>
+      </div>
+    </div>
+
+    <div class="profile-section">
+      <div class="page-eyebrow" style="margin-bottom:14px;">Accréditation Capital Norvex</div>
+      <div class="profile-row">
+        <span class="profile-row-label">Code courtier</span>
+        <span class="profile-row-value"><span class="profile-code" id="profile-code">CN-XXXX-XXX</span></span>
+      </div>
+      <div class="profile-row">
+        <span class="profile-row-label">Date d'accréditation</span>
+        <span class="profile-row-value" id="profile-accredited-date">—</span>
+      </div>
+      <div class="profile-row">
+        <span class="profile-row-label">Convention courtier</span>
+        <span class="profile-row-value"><a href="#" id="profile-convention-link" style="color:var(--gold-dark); text-decoration:none; font-weight:600;">Voir / télécharger</a></span>
+      </div>
+    </div>
+
+    <div class="engagement-bar">
+      <strong>Notre engagement envers vous :</strong> vous êtes en copie de chaque communication avec votre client (LOI, mises à jour, rendez-vous). Avant tout appel téléphonique ou rencontre Teams direct avec votre client, nous vous demandons votre accord préalable. À chaque rencontre — typiquement avant signature finale — vous êtes présent. C'est votre client, votre relation, votre commission.
+    </div>
+
+    <button class="btn-secondary" id="logout-btn" style="margin-top:14px; width:auto;">Me déconnecter</button>
+  </section>
+
+</main>
+
+<!-- Bottom nav (visible après login) -->
+<nav class="app-nav" id="app-nav" style="display:none;">
+  <button class="app-nav-item is-active" data-view="dashboard">
+    <span class="app-nav-item-icon">📋</span>
+    Dossiers
+  </button>
+  <button class="app-nav-item" data-view="submit">
+    <span class="app-nav-item-icon">➕</span>
+    Soumettre
+  </button>
+  <button class="app-nav-item" data-view="profile">
+    <span class="app-nav-item-icon">👤</span>
+    Profil
+  </button>
+</nav>
+
+<script>
+/* =========================================================================
+   ESPACE COURTIER — PWA Capital Norvex
+   Architecture: single-page app vanilla JS, vues toggle, auth magic link
+   ========================================================================= */
+(function(){
+  'use strict';
+
+  // ============== STATE ==============
+  const STATE = {
+    token: null,          // JWT/session token après auth
+    broker: null,         // Profil courtier {name, email, code, agency, province, ...}
+    dossiers: [],         // Liste des dossiers du courtier
+    currentView: 'login',
+    currentDossier: null,
+  };
+
+  const STORAGE_KEY = 'cn_courtier_session';
+
+  // ============== UTILS ==============
+  function $(id) { return document.getElementById(id); }
+  function $$(sel) { return document.querySelectorAll(sel); }
+
+  function showView(view) {
+    $$('.view').forEach(v => v.classList.add('hidden'));
+    const target = $('view-' + view);
+    if (target) target.classList.remove('hidden');
+    STATE.currentView = view;
+
+    // Header + nav visibilité
+    const isAuth = !!STATE.token;
+    $('app-header').style.display = isAuth ? 'flex' : 'none';
+    $('app-nav').style.display = isAuth ? 'flex' : 'none';
+
+    // Nav active state
+    $$('.app-nav-item').forEach(btn => {
+      btn.classList.toggle('is-active', btn.dataset.view === view);
+    });
+
+    window.scrollTo(0, 0);
+  }
+
+  function setStatus(elId, msg, type) {
+    const el = $(elId);
+    if (!el) return;
+    if (!msg) { el.innerHTML = ''; return; }
+    el.innerHTML = '<div class="notice is-' + (type || 'info') + '">' + msg + '</div>';
+  }
+
+  function fmtMoney(n) {
+    if (!n) return '—';
+    return new Intl.NumberFormat('fr-CA', { style: 'currency', currency: 'CAD', maximumFractionDigits: 0 }).format(n);
+  }
+
+  function fmtDate(iso) {
+    if (!iso) return '—';
+    try {
+      return new Date(iso).toLocaleDateString('fr-CA', { year: 'numeric', month: 'short', day: 'numeric' });
+    } catch(e) { return '—'; }
+  }
+
+  function loadSession() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return null;
+      const data = JSON.parse(raw);
+      if (!data.token || !data.expiresAt) return null;
+      if (new Date(data.expiresAt) < new Date()) {
+        localStorage.removeItem(STORAGE_KEY);
+        return null;
+      }
+      return data;
+    } catch(e) { return null; }
+  }
+
+  function saveSession(token, broker, expiresInDays) {
+    const days = expiresInDays || 7;
+    const expiresAt = new Date(Date.now() + days * 24 * 3600 * 1000).toISOString();
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ token, broker, expiresAt }));
+  }
+
+  function clearSession() {
+    localStorage.removeItem(STORAGE_KEY);
+    STATE.token = null;
+    STATE.broker = null;
+    STATE.dossiers = [];
+  }
+
+  // ============== API CALLS ==============
+  async function apiCall(endpoint, options) {
+    const opts = options || {};
+    const headers = Object.assign({ 'Content-Type': 'application/json' }, opts.headers || {});
+    if (STATE.token) headers['Authorization'] = 'Bearer ' + STATE.token;
+    const res = await fetch('/api/' + endpoint, {
+      method: opts.method || 'GET',
+      headers,
+      body: opts.body ? JSON.stringify(opts.body) : undefined,
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      const err = new Error(data.error || ('HTTP ' + res.status));
+      err.status = res.status;
+      err.data = data;
+      throw err;
+    }
+    return data;
+  }
+
+  // ============== LOGIN ==============
+  async function handleLoginSubmit() {
+    const email = $('login-email').value.trim().toLowerCase();
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setStatus('login-status', 'Veuillez entrer une adresse courriel valide.', 'error');
+      return;
+    }
+    const btn = $('login-submit');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span>Envoi en cours...';
+    setStatus('login-status', '', null);
+
+    try {
+      await apiCall('espace-courtier-magic-link', {
+        method: 'POST',
+        body: { email },
+      });
+      setStatus('login-status',
+        'Lien envoyé ! Vérifiez votre boîte courriel (' + email + ') et cliquez sur le lien pour vous connecter. Le lien expire dans 15 minutes.',
+        'success');
+      $('login-email').value = '';
+    } catch (err) {
+      const msg = err.status === 404
+        ? 'Aucun compte courtier accrédité ne correspond à cette adresse. <a href="/courtier-candidature.html" style="color:var(--gold-dark); text-decoration:none; font-weight:600;">Soumettre une demande d\'accréditation →</a>'
+        : (err.message || 'Une erreur est survenue. Réessayez ou écrivez-nous à info@capitalnorvex.com.');
+      setStatus('login-status', msg, 'error');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Envoyer le lien';
+    }
+  }
+
+  // ============== VERIFY MAGIC LINK ==============
+  async function verifyMagicLinkFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get('mt'); // mt = magic token
+    if (!token) return false;
+
+    try {
+      const result = await apiCall('espace-courtier-verify-token', {
+        method: 'POST',
+        body: { token },
+      });
+      if (result.sessionToken && result.broker) {
+        STATE.token = result.sessionToken;
+        STATE.broker = result.broker;
+        saveSession(result.sessionToken, result.broker, 7);
+        // Clear l'URL pour ne pas garder le token visible
+        window.history.replaceState({}, document.title, window.location.pathname);
+        return true;
+      }
+    } catch (err) {
+      console.error('Magic link verification failed', err);
+      // Token expiré ou invalide → on reste sur login, affiche message
+      setTimeout(() => {
+        setStatus('login-status',
+          'Ce lien est expiré ou invalide. Demandez-en un nouveau ci-dessous.',
+          'error');
+      }, 100);
+    }
+    return false;
+  }
+
+  // ============== POPULATE HEADER + PROFILE ==============
+  function populateHeader() {
+    if (!STATE.broker) return;
+    $('header-user-name').textContent = STATE.broker.name || '—';
+    $('header-user-code').textContent = STATE.broker.code || 'CN-XXXX-XXX';
+
+    // Profile fields
+    $('profile-name').textContent = STATE.broker.name || '—';
+    $('profile-email').textContent = STATE.broker.email || '—';
+    $('profile-phone').textContent = STATE.broker.phone || '—';
+    $('profile-agency').textContent = STATE.broker.agency || '—';
+    $('profile-province').textContent = STATE.broker.province || '—';
+    $('profile-code').textContent = STATE.broker.code || 'CN-XXXX-XXX';
+    $('profile-accredited-date').textContent = fmtDate(STATE.broker.accreditedAt);
+    // Convention courtier : câbler vers PDF signé si dispo, sinon masquer apparence cliquable
+    var convEl = $('profile-convention-link');
+    if(convEl){
+      if(STATE.broker.conventionUrl){
+        convEl.href = STATE.broker.conventionUrl;
+        convEl.target = '_blank';
+        convEl.rel = 'noopener noreferrer';
+        convEl.style.cursor = 'pointer';
+        convEl.style.pointerEvents = 'auto';
+        convEl.style.opacity = '1';
+        convEl.textContent = 'Voir / télécharger';
+      } else {
+        convEl.removeAttribute('href');
+        convEl.style.cursor = 'default';
+        convEl.style.pointerEvents = 'none';
+        convEl.style.opacity = '0.55';
+        convEl.style.color = 'var(--muted, #94a3b8)';
+        convEl.textContent = 'Non disponible';
+      }
+    }
+  }
+
+  // ============== LOAD DOSSIERS ==============
+  async function loadDossiers() {
+    if (!STATE.token) return;
+    try {
+      const res = await apiCall('espace-courtier-my-files');
+      STATE.dossiers = res.dossiers || [];
+      renderDossiers();
+    } catch (err) {
+      console.error('Load dossiers failed', err);
+      $('dossier-list-container').innerHTML = '<div class="notice is-error">Impossible de charger vos dossiers. Réessayez plus tard.</div>';
+    }
+  }
+
+  function renderDossiers() {
+    const list = STATE.dossiers || [];
+
+    // KPIs
+    const active = list.filter(d => ['submitted', 'analyzing', 'loi_sent', 'approved'].includes(d.stage)).length;
+    const approved = list.filter(d => d.stage === 'approved' || d.stage === 'funded').length;
+    const funded = list.filter(d => d.stage === 'funded').length;
+    $('kpi-active').textContent = active;
+    $('kpi-approved').textContent = approved;
+    $('kpi-funded').textContent = funded;
+
+    const container = $('dossier-list-container');
+    if (list.length === 0) {
+      container.innerHTML =
+        '<div class="empty-state">' +
+        '<div class="empty-state-icon">📋</div>' +
+        '<div class="empty-state-title">Aucun dossier pour l\'instant</div>' +
+        '<div class="empty-state-sub">Soumettez votre premier client en quelques clics.</div>' +
+        '<button class="btn-primary" style="width:auto; padding:14px 28px;" onclick="document.querySelector(\'[data-view=submit]\').click()">Soumettre un dossier</button>' +
+        '</div>';
+      return;
+    }
+
+    const html = list.map(d => {
+      const statusLabel = {
+        'submitted': 'Soumis',
+        'analyzing': 'Analyse en cours',
+        'loi_sent': 'LOI envoyée',
+        'approved': 'Approuvé',
+        'funded': 'Décaissé',
+        'rejected': 'Refusé',
+        'on_hold': 'En attente',
+      }[d.stage] || d.stage || 'En cours';
+      const statusClass = {
+        'submitted': 's-pending',
+        'analyzing': 's-analyzing',
+        'loi_sent': 's-loi-sent',
+        'approved': 's-approved',
+        'funded': 's-funded',
+        'rejected': 's-rejected',
+        'on_hold': 's-pending',
+      }[d.stage] || 's-pending';
+      const commission = d.expectedCommission ? fmtMoney(d.expectedCommission) : '—';
+      return (
+        '<div class="dossier-card" data-id="' + escapeHtml(d.id) + '">' +
+          '<div class="dossier-card-top">' +
+            '<div>' +
+              '<div class="dossier-card-name">' + escapeHtml(d.clientName || 'Client') + '</div>' +
+              '<div class="dossier-card-meta">' + escapeHtml(d.loanTypeLabel || d.loanType || '—') + ' · ' + escapeHtml(d.province || '—') + '</div>' +
+            '</div>' +
+            '<div>' +
+              '<div class="dossier-card-amount">' + (d.finalAmount ? fmtMoney(d.finalAmount) : fmtMoney(d.requestedAmount)) + '</div>' +
+              '<div class="dossier-card-commission">Commission est. : ' + commission + '</div>' +
+            '</div>' +
+          '</div>' +
+          '<div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">' +
+            '<span class="status-badge ' + statusClass + '">' + statusLabel + '</span>' +
+            '<span style="font-size:11px; color:var(--muted);">Soumis le ' + fmtDate(d.submittedAt) + '</span>' +
+          '</div>' +
+        '</div>'
+      );
+    }).join('');
+    container.innerHTML = html;
+
+    // Click handlers
+    $$('.dossier-card').forEach(card => {
+      card.addEventListener('click', () => openDossierDetail(card.dataset.id));
+    });
+  }
+
+  function escapeHtml(s) {
+    if (s == null) return '';
+    return String(s).replace(/[<>&"']/g, c => ({
+      '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;', "'": '&#39;'
+    })[c]);
+  }
+
+  // ============== DOSSIER DETAIL ==============
+  async function openDossierDetail(id) {
+    const d = STATE.dossiers.find(x => x.id === id);
+    if (!d) return;
+    STATE.currentDossier = d;
+    const html =
+      '<div class="page-hero">' +
+        '<div class="page-eyebrow">Dossier</div>' +
+        '<h1 class="page-title">' + escapeHtml(d.clientName || '—') + '</h1>' +
+        '<p class="page-sub">' + escapeHtml(d.loanTypeLabel || d.loanType || '—') + ' · ' + escapeHtml(d.province || '—') + ' · ' + (d.finalAmount ? fmtMoney(d.finalAmount) : fmtMoney(d.requestedAmount)) + '</p>' +
+      '</div>' +
+      '<div class="profile-section">' +
+        '<div class="page-eyebrow" style="margin-bottom:14px;">Statut actuel</div>' +
+        '<div class="profile-row"><span class="profile-row-label">Étape</span><span class="profile-row-value">' + escapeHtml(d.stageLabel || d.stage || '—') + '</span></div>' +
+        '<div class="profile-row"><span class="profile-row-label">Soumis le</span><span class="profile-row-value">' + fmtDate(d.submittedAt) + '</span></div>' +
+        (d.finalRate ? '<div class="profile-row"><span class="profile-row-label">Taux approuvé</span><span class="profile-row-value">' + d.finalRate + ' %</span></div>' : '') +
+        (d.expectedCommission ? '<div class="profile-row"><span class="profile-row-label">Commission attendue</span><span class="profile-row-value">' + fmtMoney(d.expectedCommission) + '</span></div>' : '') +
+        (d.expectedFundingDate ? '<div class="profile-row"><span class="profile-row-label">Débours estimé</span><span class="profile-row-value">' + fmtDate(d.expectedFundingDate) + '</span></div>' : '') +
+      '</div>' +
+      (d.loiUrl
+        ? '<div class="profile-section"><div class="page-eyebrow" style="margin-bottom:14px;">Lettre d\'Offre Indicative (LOI)</div><a href="' + escapeHtml(d.loiUrl) + '" target="_blank" class="btn-primary" style="width:auto;display:inline-block;text-decoration:none;text-align:center;">Télécharger la LOI</a></div>'
+        : '<div class="notice">La LOI n\'est pas encore prête. Vous la recevrez dès que notre direction aura complété son analyse.</div>'
+      ) +
+      '<div class="profile-section">' +
+        '<div class="page-eyebrow" style="margin-bottom:14px;">Documents du client</div>' +
+        '<p style="font-size:13px;color:var(--muted);margin-bottom:12px;">Téléversez ici les documents que votre client vous a fournis (états financiers, déclarations de revenus, plans, évaluations, etc.).</p>' +
+        '<button class="btn-secondary" disabled>📎 Téléverser un document (bientôt disponible)</button>' +
+      '</div>' +
+      '<div class="engagement-bar"><strong>Confidentialité préservée.</strong> Vous voyez le statut et la LOI. Les analyses internes (Score, Hugo, Comité Crédit) restent dans la coulisse — sauf si la direction décide de vous partager un rapport spécifique.</div>';
+    $('detail-content').innerHTML = html;
+    showView('detail');
+  }
+
+  // ============== SUBMIT NEW DOSSIER ==============
+  // 2026-05-21 : le courtier remplit les coordonnées client + projet ici,
+  // puis on redirige vers Score Norvex avec tous les params pré-remplis.
+  // Le courtier uploade les documents directement dans Score Norvex.
+  // À la fin de l'analyse, le dossier est créé avec referrerBrokerId
+  // et la LOI est envoyée au courtier.
+  function handleSubmitDossier(e) {
+    e.preventDefault();
+    const form = $('submit-form');
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      const missing = Array.from(form.querySelectorAll('[required]:invalid')).map(el => {
+        const lbl = el.closest('.field, .field-row > .field');
+        const label = lbl ? lbl.querySelector('label') : null;
+        return label ? label.textContent.replace('*', '').trim() : el.name;
+      });
+      setStatus('submit-status', '⚠️ Champ(s) manquant(s) : ' + missing.join(', '), 'error');
+      return;
+    }
+    const loanType = (form.querySelector('input[name="loanType"]:checked') || {}).value || '';
+    const province = (form.querySelector('input[name="province"]:checked') || {}).value || '';
+    const amountRaw = form.loanAmount.value.replace(/[^\d]/g, '');
+
+    // Mapping loanType courtier → type Score Norvex
+    const scoreTypeMap = {
+      'acquisition': 'hyp',
+      'construction': 'con',
+      'refinancement': 'ref',
+      'terrain': 'hyp',
+      'multi-residentielle': 'hyp',
+      'commercial': 'hyp',
+      'autre': 'hyp',
+    };
+    const scoreType = scoreTypeMap[loanType] || 'hyp';
+
+    // Build URL params pour Score Norvex
+    const params = new URLSearchParams({
+      broker: STATE.broker.code || '',
+      brokerId: STATE.broker.id || '',
+      brokerName: STATE.broker.name || '',
+      brokerEmail: STATE.broker.email || '',
+      brokerAgency: STATE.broker.agency || '',
+      clientName: form.clientName.value.trim(),
+      clientCompany: form.clientCompany.value.trim(),
+      clientEmail: form.clientEmail.value.trim(),
+      clientPhone: form.clientPhone.value.trim(),
+      address: form.projectAddress.value.trim(),
+      amount: amountRaw || '',
+      desc: form.projectDescription.value.trim(),
+      type: scoreType,
+    });
+
+    const btn = $('submit-form-btn');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span>Redirection vers Score Norvex...';
+    setStatus('submit-status', '✅ Coordonnées enregistrées. Vous êtes redirigé vers Score Norvex pour téléverser les documents et lancer l\'analyse.', 'success');
+
+    // Redirection vers Score Norvex avec params (même onglet)
+    setTimeout(() => {
+      window.location.href = '/capital-norvex-score.html?' + params.toString();
+    }, 1200);
+  }
+
+  // ============== LOGOUT ==============
+  function handleLogout() {
+    clearSession();
+    showView('login');
+    $('login-email').value = '';
+    setStatus('login-status', 'Vous êtes déconnecté.', 'success');
+  }
+
+  // ============== INSTALL PWA ==============
+  let deferredInstallPrompt = null;
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredInstallPrompt = e;
+    const dismissed = sessionStorage.getItem('cn_install_dismissed');
+    if (!dismissed) $('install-banner').classList.add('is-visible');
+  });
+  function setupInstallBanner() {
+    $('install-btn').addEventListener('click', async () => {
+      if (!deferredInstallPrompt) return;
+      deferredInstallPrompt.prompt();
+      await deferredInstallPrompt.userChoice;
+      deferredInstallPrompt = null;
+      $('install-banner').classList.remove('is-visible');
+    });
+    $('install-dismiss').addEventListener('click', () => {
+      $('install-banner').classList.remove('is-visible');
+      sessionStorage.setItem('cn_install_dismissed', '1');
+    });
+  }
+
+  // ============== SERVICE WORKER ==============
+  function registerServiceWorker() {
+    if (!('serviceWorker' in navigator)) return;
+    navigator.serviceWorker.register('/sw-courtier.js').catch(err => {
+      console.warn('SW registration failed', err);
+    });
+  }
+
+  // ============== BOOTSTRAP ==============
+  async function init() {
+    // 1. Setup event listeners
+    $('login-submit').addEventListener('click', handleLoginSubmit);
+    $('login-email').addEventListener('keypress', e => { if (e.key === 'Enter') handleLoginSubmit(); });
+    $$('.app-nav-item').forEach(btn => {
+      btn.addEventListener('click', () => showView(btn.dataset.view));
+    });
+    $('submit-form').addEventListener('submit', handleSubmitDossier);
+    $('logout-btn').addEventListener('click', handleLogout);
+    $('back-to-dashboard').addEventListener('click', () => showView('dashboard'));
+
+    // Pill toggle (radio visual)
+    $$('[data-pill-group]').forEach(group => {
+      group.addEventListener('change', () => {
+        group.querySelectorAll('.pill').forEach(pill => {
+          const input = pill.querySelector('input');
+          pill.classList.toggle('is-active', input && input.checked);
+        });
+      });
+    });
+
+    setupInstallBanner();
+    registerServiceWorker();
+
+    // 2. Vérifier si on arrive avec un magic token dans l'URL
+    const verified = await verifyMagicLinkFromUrl();
+
+    if (verified) {
+      populateHeader();
+      showView('dashboard');
+      loadDossiers();
+      return;
+    }
+
+    // 3. Sinon, charger la session existante
+    const session = loadSession();
+    if (session) {
+      STATE.token = session.token;
+      STATE.broker = session.broker;
+      populateHeader();
+      showView('dashboard');
+      loadDossiers();
+      return;
+    }
+
+    // 4. Sinon, login
+    showView('login');
+  }
+
+  // Démarrer dès que le DOM est prêt
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+
+</body>
+</html>

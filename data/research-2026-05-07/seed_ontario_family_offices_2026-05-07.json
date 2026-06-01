@@ -1,0 +1,623 @@
+{
+  "_meta": {
+    "description": "Ontario family offices - recherche web publique 2026-05-07. Capital Norvex Inc. cible : single-family offices, multi-family offices, holding companies de familles fortunées qui placent du capital en immobilier privé commercial / hypothèques privées. Tickets 1M-50M$. Sources : Canadian Family Offices, sites corporatifs, LinkedIn pages publiques, presse (Globe Wealth, BNN, Forbes), CAFA.",
+    "version": 1,
+    "created": "2026-05-07",
+    "researcher": "Claude (Cowork)",
+    "filtres_appliques": {
+      "tier_zero_filter": "OUI",
+      "deduplication": "OUI",
+      "tier_zero_rejected": 0
+    }
+  },
+  "familyOffices": [
+    {
+      "name": "Lawrence Tanenbaum",
+      "organization": "Kilmer Van Nostrand Co. Limited / Kilmer Group",
+      "title": "Chairman & CEO",
+      "region": "ON",
+      "city": "Toronto",
+      "language": "en",
+      "investmentThesis": "Private equity, real estate, infrastructure, sports & media investments across North America",
+      "approachAngle": "Multi-billion family office avec déploiement immobilier prouvé — partenaire idéal pour gros calls de capital en commercial real estate",
+      "ticketRange": {"min": 5000000, "max": 50000000},
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "https://www.linkedin.com/company/kilmer-group",
+        "website": "https://www.kilmergroup.com"
+      },
+      "sourceUrl": "https://www.kilmergroup.com/larry-tanenbaum-his-footprint-is-everywhere-in-this-city/",
+      "notes": "Fondé Kilmer Group 1968. ~20B$ AUM. Contrôle 20% MLSE. Track record long en résidentiel/commercial/infrastructure."
+    },
+    {
+      "name": "Galen Weston",
+      "organization": "Wittington Investments Ltd.",
+      "title": "Controlling Shareholder",
+      "region": "ON",
+      "city": "Toronto",
+      "language": "en",
+      "investmentThesis": "Real estate holdings, food & retail, alternative investments via family holding company",
+      "approachAngle": "Holding $21B avec opérations immobilières — long-term hold mentality sur propriétés commerciales",
+      "ticketRange": {"min": 10000000, "max": 50000000},
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "website": "https://wittingtoninvestments.com"
+      },
+      "sourceUrl": "https://en.wikipedia.org/wiki/Wittington_Investments",
+      "notes": "3e génération (Weston). Contrôle Loblaws, Choice Properties REIT. ~21B$ AUM. Conservateur, long-term real estate holder."
+    },
+    {
+      "name": "Gerald Schwartz",
+      "organization": "Onex Corporation / Schwartz Reisman Family Office",
+      "title": "Founder & Chairman",
+      "region": "ON",
+      "city": "Toronto",
+      "language": "en",
+      "investmentThesis": "Private equity, real estate, credit and direct investments globally",
+      "approachAngle": "Family office institutionnel avec plateforme RE dédiée — appétit prouvé pour structures complexes",
+      "ticketRange": {"min": 5000000, "max": 50000000},
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "https://www.linkedin.com/company/onex",
+        "website": "https://www.onex.com"
+      },
+      "sourceUrl": "https://www.onex.com/Board-GerrySchwartz",
+      "notes": "Fondateur Onex (1984). Marié à Heather Reisman (Indigo). Net worth 1.5B$+. Déploiement RE sophistiqué."
+    },
+    {
+      "name": "Aubrey Dan",
+      "organization": "Dancap Family Investment Office",
+      "title": "Principal",
+      "region": "ON",
+      "city": "Toronto",
+      "language": "en",
+      "investmentThesis": "Private equity, private debt, real estate, hedge funds, infrastructure - 120+ funds",
+      "approachAngle": "Single-family office 24+ ans gérant private debt et RE alongside PE — capital flexible disponible",
+      "ticketRange": {"min": 1000000, "max": 25000000},
+      "publicContact": {
+        "email": "info@dancap.ca",
+        "phone": "",
+        "linkedin": "https://www.linkedin.com/company/dancap-private-equity-inc",
+        "website": "https://dancap.ca"
+      },
+      "sourceUrl": "https://dancap.ca/about-us/",
+      "notes": "Fondé 2000. Gère 3.9B$ across 120+ portfolio companies. Tony Award philanthropist. Infrastructure private debt prouvée."
+    },
+    {
+      "name": "Peter Thomson",
+      "organization": "Thomvest / Thomvest Properties",
+      "title": "Chairman & Founder",
+      "region": "ON",
+      "city": "Toronto",
+      "language": "en",
+      "investmentThesis": "Real estate acquisitions (NNN properties 4M-15M$), venture capital, private equity globally",
+      "approachAngle": "Family office Thomson Reuters avec fonds RE dédié Dallas — structures institutionnelles flexibles",
+      "ticketRange": {"min": 4000000, "max": 30000000},
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "https://www.linkedin.com/company/thomvest-ventures",
+        "website": "https://www.thomvest.com"
+      },
+      "sourceUrl": "https://www.thomvest.com/family-investment-office",
+      "notes": "Famille Thomson Reuters (majority). Fondé 1996. 75+ private investments. Thomvest Properties depuis 2020."
+    },
+    {
+      "name": "Philip Reichmann",
+      "organization": "ReichmannHauer Capital Partners",
+      "title": "Founder",
+      "region": "ON",
+      "city": "Toronto",
+      "language": "en",
+      "investmentThesis": "Global real estate investing (office, hotels, senior housing, student housing) via private equity",
+      "approachAngle": "Famille multi-gen gérant héritage Olympia & York — expertise RE substantielle prouvée",
+      "ticketRange": {"min": 5000000, "max": 50000000},
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "website": "https://www.rirealtyadvisors.com"
+      },
+      "sourceUrl": "https://www.rirealtyadvisors.com/reichmann-international-history/",
+      "notes": "Family office Reichmann (Olympia & York legacy, 70M+ sq ft globally). Fondé 2005. Office/hotels/housing global."
+    },
+    {
+      "name": "Jim Balsillie",
+      "organization": "Wealhouse Capital",
+      "title": "Co-Founder",
+      "region": "ON",
+      "city": "Toronto",
+      "language": "en",
+      "investmentThesis": "Technology investing, residential real estate (Canada, US, Middle East), art and alternative assets",
+      "approachAngle": "Billionaire FO avec 1.6B$+ AUM — investisseur sophistiqué avec track record RE",
+      "ticketRange": {"min": 5000000, "max": 30000000},
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "https://www.linkedin.com/in/jim-balsillie/",
+        "website": ""
+      },
+      "sourceUrl": "https://canadianfamilyoffices.com/wealth/jim-balsillie-on-tech-investing-family-and-what-hes-into-now/",
+      "notes": "BlackBerry co-founder/CEO (exit 2012). 1.6B$+ AUM. Heavy résidentiel RE Canada/US. Board MDA."
+    },
+    {
+      "name": "Michael Domb",
+      "organization": "Forest Hill Capital",
+      "title": "Founder & CEO",
+      "region": "ON",
+      "city": "Toronto",
+      "language": "en",
+      "investmentThesis": "Multifamily real estate along Toronto transit corridors (Eglinton LRT focus)",
+      "approachAngle": "FO spécialisé multifamily transit-oriented — match parfait pour partenariats financement Capital Norvex",
+      "ticketRange": {"min": 2000000, "max": 20000000},
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "https://www.linkedin.com/in/michael-domb-6931a869/",
+        "website": "https://www.foresthillcapital.ca"
+      },
+      "sourceUrl": "https://www.foresthilladvisory.com/foresthillcapital",
+      "notes": "Fondé 2014. FO gérant multifamily portfolio. Focus Eglinton LRT corridor + downtown Toronto."
+    },
+    {
+      "name": "Tom McCullough",
+      "organization": "Northwood Family Office",
+      "title": "Co-Founder & Chairman",
+      "region": "ON",
+      "city": "Toronto",
+      "language": "en",
+      "investmentThesis": "Integrated wealth, investment management, real estate & alternatives for families 10M-500M$+ NW",
+      "approachAngle": "Plus grand multi-family office Canada — capacité institutionnelle RE pour familles UHNW",
+      "ticketRange": {"min": 5000000, "max": 30000000},
+      "publicContact": {
+        "email": "info@northwoodfamilyoffice.com",
+        "phone": "",
+        "linkedin": "https://www.linkedin.com/company/northwood-family-office",
+        "website": "https://www.northwoodfamilyoffice.com"
+      },
+      "sourceUrl": "https://www.northwoodfamilyoffice.com/",
+      "notes": "Fondé 2003. Plus grand MFO Canada. CI Financial majority stake (2022). Sert 500+ familles. Co-founder Scott Hayman aussi."
+    },
+    {
+      "name": "David Picton",
+      "organization": "Picton Mahoney Asset Management",
+      "title": "Founder",
+      "region": "ON",
+      "city": "Toronto",
+      "language": "en",
+      "investmentThesis": "Alternatives, hedge funds, fixed income, merger arbitrage, multi-asset strategies",
+      "approachAngle": "Boutique 100% employee-owned 9.6B$ AUM — investisseurs sophistiqués avec exposure RE institutionnelle",
+      "ticketRange": {"min": 1000000, "max": 25000000},
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "https://www.linkedin.com/company/picton-mahoney-asset-management",
+        "website": "https://www.pictonmahoney.com"
+      },
+      "sourceUrl": "https://www.pictonmahoney.com/",
+      "notes": "Fondé 2004. 9.6B$ AUM. 100% employee-owned. Alt asset specialist. Great Place to Work 2020-2024."
+    },
+    {
+      "name": "Arthur Salzer",
+      "organization": "Northland Wealth Management",
+      "title": "Founder & CEO",
+      "region": "ON",
+      "city": "Oakville",
+      "language": "en",
+      "investmentThesis": "Conflict-free investment management, estate planning, family governance, alternative investments",
+      "approachAngle": "MFO indépendant 30+ ans expérience family office — allocateur capital sans biais pour RE et alternatives",
+      "ticketRange": {"min": 2000000, "max": 25000000},
+      "publicContact": {
+        "email": "info@northlandwealth.com",
+        "phone": "+1 416-360-3423",
+        "linkedin": "https://www.linkedin.com/company/northland-wealth-management",
+        "website": "https://www.northlandwealth.com"
+      },
+      "sourceUrl": "https://www.northlandwealth.com/",
+      "notes": "Fondé 2011. Independent family-owned MFO. Bureaux Oakville & Calgary. Best MFO North America Award 2022."
+    },
+    {
+      "name": "à identifier",
+      "organization": "Tacita Capital",
+      "title": "Co-Founders / Managing Partners",
+      "region": "ON",
+      "city": "Toronto",
+      "language": "en",
+      "investmentThesis": "Tax-optimized private investments: hedge funds, PE, private debt, private real estate, specialty vehicles",
+      "approachAngle": "MFO indépendant Toronto avec expertise RE et alternatives — focus familles affluentes, déploiement direct",
+      "ticketRange": {"min": 2000000, "max": 30000000},
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "https://www.linkedin.com/company/tacita-capital-inc",
+        "website": "https://tacitacapital.com"
+      },
+      "sourceUrl": "https://tacitacapital.com/",
+      "notes": "MFO privé indépendant Toronto. Founders investissent leur capital alongside clients. Tax optimization focus."
+    },
+    {
+      "name": "Neil Nisker & Tim Cestnick",
+      "organization": "Our Family Office Inc.",
+      "title": "Co-Founders",
+      "region": "ON",
+      "city": "Toronto",
+      "language": "en",
+      "investmentThesis": "Integrated wealth, investment, tax planning, real estate, PE for UHNW families",
+      "approachAngle": "Premier shared family office Canada — services institutionnels avec focus RE et alternatives",
+      "ticketRange": {"min": 5000000, "max": 40000000},
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "https://www.linkedin.com/company/our-family-office-inc",
+        "website": "https://ourfamilyoffice.ca"
+      },
+      "sourceUrl": "https://ourfamilyoffice.ca/",
+      "notes": "Shared family office model (premier au Canada). 3B$+ AUM. Partenariat Ballentine Partners global."
+    },
+    {
+      "name": "à identifier",
+      "organization": "Richter Family Office",
+      "title": "Leadership Team",
+      "region": "ON",
+      "city": "Toronto",
+      "language": "en",
+      "investmentThesis": "Real estate portfolio management, wealth planning, tax optimization, business valuation pour UHNW",
+      "approachAngle": "FO multi-juridiction 8B$+ AUM avec expertise RE explicite — expansion Toronto signal appétit marché",
+      "ticketRange": {"min": 3000000, "max": 30000000},
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "website": "https://www.richter.ca/richter-family-office/"
+      },
+      "sourceUrl": "https://www.richter.ca/richter-family-office/",
+      "notes": "HQ Montréal (1926). 8B$ AUM. Family office services depuis 1999. Expansion Toronto 2024+. RE focus marketing."
+    },
+    {
+      "name": "Albert Soberano",
+      "organization": "Sharno Group Inc. / Sharno Capital Corporation",
+      "title": "Chairman",
+      "region": "ON",
+      "city": "Toronto",
+      "language": "en",
+      "investmentThesis": "Commercial real estate (industrial, retail), résidentiel (low/mid-rise), private equity GTA & Golden Horseshoe",
+      "approachAngle": "FO familial avec focus GTA multifamily + commercial — ticket size aligné avec Capital Norvex",
+      "ticketRange": {"min": 2000000, "max": 20000000},
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "https://www.linkedin.com/company/sharno",
+        "website": "https://www.sharnogroup.com"
+      },
+      "sourceUrl": "https://www.sharnogroup.com/home",
+      "notes": "Family office privé. Famille Soberano. GTA résidentiel & commercial. Registered Exempt Market Dealer."
+    },
+    {
+      "name": "à identifier",
+      "organization": "White Owl Family Office Group",
+      "title": "Leadership Team",
+      "region": "ON",
+      "city": "Markham",
+      "language": "en",
+      "investmentThesis": "Real estate (unlevered, developed, income-producing), PE, private debt, public/private equity funds",
+      "approachAngle": "FO multi-asset avec portefeuille RE significatif — long-term hold aligned avec capital hypothécaire privé",
+      "ticketRange": {"min": 2000000, "max": 25000000},
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "https://www.linkedin.com/company/white-owl-family-office-group",
+        "website": "https://whiteowlgroup.ca"
+      },
+      "sourceUrl": "https://whiteowlgroup.ca/",
+      "notes": "Private investment firm. Markham. Owned RE portfolio: industrial, rental, condo. PE et debt focus."
+    },
+    {
+      "name": "Lawrence Zucker",
+      "organization": "Osmington Capital Partners",
+      "title": "Chief Executive Officer",
+      "region": "ON",
+      "city": "Toronto",
+      "language": "en",
+      "investmentThesis": "Real estate, private equity, venture capital; control & minority equity structures across capital stack",
+      "approachAngle": "FO Thomson Reuters (David Thomson chair) — plateforme RE billion$ avec sources institutionnelles",
+      "ticketRange": {"min": 10000000, "max": 50000000},
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "website": "https://osmingtoncp.com"
+      },
+      "sourceUrl": "https://osmingtoncp.com/",
+      "notes": "Osmington Inc. fondé 1995. Affilié David Thomson (Thomson Reuters Chair). 91M$ resort acquisition (2024). Union Station redev."
+    },
+    {
+      "name": "à identifier",
+      "organization": "Prime Quadrant",
+      "title": "Leadership Team",
+      "region": "ON",
+      "city": "Toronto",
+      "language": "en",
+      "investmentThesis": "Alternative assets: PE, real estate, private debt, VC, hedge funds pour UHNW families",
+      "approachAngle": "Leading cross-border MFO 22B$+ AUM — plateforme institutionnelle RE accessible aux familles",
+      "ticketRange": {"min": 5000000, "max": 40000000},
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "https://www.linkedin.com/company/prime-quadrant",
+        "website": "https://primequadrant.com"
+      },
+      "sourceUrl": "https://primequadrant.com/",
+      "notes": "Fondé 1998. HQ Toronto. 200+ familles NA. 22B$+ AUM. Partenariat iCapital alt fund admin."
+    },
+    {
+      "name": "à identifier",
+      "organization": "Foster Family Office",
+      "title": "Leadership Team",
+      "region": "ON",
+      "city": "Toronto",
+      "language": "en",
+      "investmentThesis": "Private equity, private debt, alternative investments pour préservation et croissance de richesse",
+      "approachAngle": "Boutique FO 30+ ans avec expertise private debt — aligné avec thèse Capital Norvex",
+      "ticketRange": {"min": 1000000, "max": 20000000},
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "website": "https://fostergroup.ca/foster-family-office/"
+      },
+      "sourceUrl": "https://fostergroup.ca/foster-family-office/",
+      "notes": "Opérant 30+ ans (depuis 1994). Petit, service personnel. PE & debt specialist. Accès institutional-quality investments."
+    },
+    {
+      "name": "à identifier",
+      "organization": "Walia Group of Companies",
+      "title": "Leadership Team",
+      "region": "ON",
+      "city": "Toronto",
+      "language": "en",
+      "investmentThesis": "Real estate (hospitality, retail, commercial, résidentiel), PE, middle-market operating businesses",
+      "approachAngle": "Single FO avec deep RE roots — property management & development expertise GTA",
+      "ticketRange": {"min": 2000000, "max": 15000000},
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "https://www.linkedin.com/company/walia-group-of-companies",
+        "website": "https://waliagoc.ca"
+      },
+      "sourceUrl": "https://waliagoc.ca/",
+      "notes": "Single family office. 3 plateformes opérationnelles (4M-10M$ EBITDA). Cash flowing business preference."
+    },
+    {
+      "name": "Geoff Beattie",
+      "organization": "Generation Capital",
+      "title": "Chairman & CEO",
+      "region": "ON",
+      "city": "Toronto",
+      "language": "en",
+      "investmentThesis": "Diverse financial management, investment services, private foundations management",
+      "approachAngle": "Single FO famille Thomson — base capital institutionnelle avec infrastructure investissement sophistiquée",
+      "ticketRange": {"min": 5000000, "max": 30000000},
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "https://www.linkedin.com/in/geoff-beattie-5b862128a/",
+        "website": ""
+      },
+      "sourceUrl": "https://www.crunchbase.com/person/geoffrey-beattie",
+      "notes": "Woodbridge Company (vehicule famille Thomson) president 1998-2012. Generation Capital CEO depuis 2013. 2 private foundations."
+    },
+    {
+      "name": "à identifier",
+      "organization": "Access Family Office Corp.",
+      "title": "Leadership Team",
+      "region": "ON",
+      "city": "Ancaster",
+      "language": "en",
+      "investmentThesis": "Discretionary investment management, tax planning, estate planning, business succession pour pros et familles",
+      "approachAngle": "MFO ON en croissance avec focus work-optional — accessible mid-market capital deployment",
+      "ticketRange": {"min": 500000, "max": 15000000},
+      "publicContact": {
+        "email": "",
+        "phone": "+1 905-896-8373",
+        "linkedin": "https://www.linkedin.com/company/access-family-office",
+        "website": "https://accessfo.com"
+      },
+      "sourceUrl": "https://accessfo.com/contact/",
+      "notes": "Établi 2021. Ancaster HQ + Mississauga. Discretionary management. MFO en croissance ON."
+    },
+    {
+      "name": "à identifier",
+      "organization": "Richardson Wealth - Private Family Office Division",
+      "title": "Leadership Team",
+      "region": "ON",
+      "city": "Toronto",
+      "language": "en",
+      "investmentThesis": "Wealth, investment, tax, business succession, estate planning pour HNW families",
+      "approachAngle": "Firme indépendante établie (1857) avec division FO dédiée — expérience multi-générationnelle",
+      "ticketRange": {"min": 3000000, "max": 25000000},
+      "publicContact": {
+        "email": "",
+        "phone": "+1 416-943-6696",
+        "linkedin": "https://www.linkedin.com/company/richardson-wealth",
+        "website": "https://richardsonwealth.com"
+      },
+      "sourceUrl": "https://rwprivatefamilyoffice.com/One",
+      "notes": "Établi 1857. TSX-listed (RCG). Private FO Division explicite. 100 Queens Quay East, Toronto. Alt investing focus."
+    },
+    {
+      "name": "à identifier",
+      "organization": "Canaccord Genuity Wealth Management",
+      "title": "Leadership Team",
+      "region": "ON",
+      "city": "Toronto",
+      "language": "en",
+      "investmentThesis": "HNW tailored wealth, investment, estate planning, tax optimization globally",
+      "approachAngle": "Firme globale 115B$+ assets avec présence Toronto — services institutionnels pour familles affluentes",
+      "ticketRange": {"min": 2000000, "max": 20000000},
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "https://www.linkedin.com/company/canaccord-wealth-management",
+        "website": "https://www.canaccordgenuity.com/wealth-management-canada"
+      },
+      "sourceUrl": "https://www.canaccordgenuity.com/wealth-management-canada/",
+      "notes": "115B$+ global client assets. 1.5B$+ revenu fiscal (2023). 47 bureaux 4 continents."
+    },
+    {
+      "name": "Tom Gaglardi",
+      "organization": "Northland Properties (Gaglardi Family Office)",
+      "title": "Owner / Leadership",
+      "region": "ON",
+      "city": "Toronto",
+      "language": "en",
+      "investmentThesis": "Hospitality (63 hôtels), real estate development, commercial/résidentiel property management NA",
+      "approachAngle": "Plus gros groupe hospitality privé Canada (8B$ USD wealth) avec divisions RE — portefeuille Toronto",
+      "ticketRange": {"min": 5000000, "max": 30000000},
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "website": "https://northland.ca"
+      },
+      "sourceUrl": "https://northland.ca/leadership-team/",
+      "notes": "Gaglardi family office (1952). 8B$ USD wealth estimé. 63 hôtels, 175 restos, Sutton Place Toronto, Northland Living. (Note: HQ BC mais présence ON forte)"
+    },
+    {
+      "name": "Jonathan Goodman",
+      "organization": "Dundee Corporation",
+      "title": "Chairman & CEO",
+      "region": "ON",
+      "city": "Toronto",
+      "language": "en",
+      "investmentThesis": "Mining, merchant banking, real estate, energy, commodities, agriculture, infrastructure",
+      "approachAngle": "Holding multi-gen avec 600M$+ merchant banking capital — Dundee REIT et Merchant Bank RE focus",
+      "ticketRange": {"min": 5000000, "max": 25000000},
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "https://www.linkedin.com/company/dundee-corporation",
+        "website": "https://dundeecorporation.com"
+      },
+      "sourceUrl": "https://en.wikipedia.org/wiki/Dundee_Corporation",
+      "notes": "TSX-listed. Fondé 1991 (Ned Goodman). Famille Goodman 99% common shares. Dundee Merchant Bank 600M$+ RE focus."
+    },
+    {
+      "name": "à identifier",
+      "organization": "Stonebridge Financial",
+      "title": "Leadership Team",
+      "region": "ON",
+      "city": "Toronto",
+      "language": "en",
+      "investmentThesis": "Private debt and credit solutions to public, private and institutional clients",
+      "approachAngle": "Firme régulée (1998) avec spécialisation private debt — aligné avec thèse Capital Norvex",
+      "ticketRange": {"min": 1000000, "max": 15000000},
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "website": ""
+      },
+      "sourceUrl": "https://pitchbook.com/profiles/advisor/60591-79",
+      "notes": "Fondé 1998. Firme financière régulée. Private debt et credit specialist. HQ Toronto."
+    },
+    {
+      "name": "à identifier",
+      "organization": "Jarislowsky Fraser",
+      "title": "Leadership Team Toronto",
+      "region": "ON",
+      "city": "Toronto",
+      "language": "en",
+      "investmentThesis": "Research-driven equity, pension funds, foundations, endowments, HNW individuals Canada/intl",
+      "approachAngle": "Boutique investment 62.3B$+ avec bureau Toronto — investisseurs sophistiqués avec mandats RE",
+      "ticketRange": {"min": 2000000, "max": 20000000},
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "website": "https://toronto.scotiawealthmanagement.com/scotia-jarislowsky-fraser/"
+      },
+      "sourceUrl": "https://jflglobal.com/en-us/about/",
+      "notes": "Fondé 1955. 62.3B$ AUM. Détenu par Scotiabank (2018). Bureau Toronto. HNW individuels avec intérêts RE significatifs."
+    },
+    {
+      "name": "à identifier",
+      "organization": "Gluskin Sheff + Associates (Legacy)",
+      "title": "Leadership (post-transition RBC)",
+      "region": "ON",
+      "city": "Toronto",
+      "language": "en",
+      "investmentThesis": "Portfolio management for HNW individuals, family offices, foundations, endowments, pensions",
+      "approachAngle": "Wealth manager Toronto historique (8B$+ AUM peak) — source de référence pour familles HNW",
+      "ticketRange": {"min": 2000000, "max": 15000000},
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "https://www.linkedin.com/company/gluskin-sheff",
+        "website": "https://www.gluskinsheff.com"
+      },
+      "sourceUrl": "https://en.wikipedia.org/wiki/Gluskin_Sheff",
+      "notes": "Fondé 1984. Acquis Onex 2019. Private wealth teams transition vers RBC. Legacy Toronto HNW family office practice."
+    },
+    {
+      "name": "Timothy Burt",
+      "organization": "Cardinal Capital Management",
+      "title": "Founder",
+      "region": "ON",
+      "city": "Toronto",
+      "language": "en",
+      "investmentThesis": "Long-term alternative investments pour individuels, familles, holdings corp, trusts; equity focus",
+      "approachAngle": "Boutique investissement Toronto 5.2B$ AUM — alt investment specialist pour family offices",
+      "ticketRange": {"min": 1000000, "max": 15000000},
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "website": "https://www.cardinal.ca"
+      },
+      "sourceUrl": "https://www.cardinal.ca/about",
+      "notes": "Fondé 1992. 5.2B$ AUM (juin 2025). 84 staff, 12 CFA. Alt investment specialist. Family offices et corps."
+    },
+    {
+      "name": "à identifier",
+      "organization": "Hillsdale Investment Management Inc.",
+      "title": "Leadership Team",
+      "region": "ON",
+      "city": "Toronto",
+      "language": "en",
+      "investmentThesis": "Canadian, US, Intl & Global equities; discretionary advisory pour individuels, familles, retraite",
+      "approachAngle": "Boutique equity Toronto indépendant 10B$+ AUM — clients institutionnels avec mandats RE",
+      "ticketRange": {"min": 2000000, "max": 20000000},
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "https://www.linkedin.com/company/hillsdale-investment-management",
+        "website": "https://www.hillsdaleinv.com"
+      },
+      "sourceUrl": "https://www.hillsdaleinv.com/",
+      "notes": "Fondé 1996. 10B$+ AUM. 100 King St W, Suite 5900, Toronto. Boutique indépendant."
+    },
+    {
+      "name": "à identifier",
+      "organization": "JNU Investments",
+      "title": "Leadership Team",
+      "region": "ON",
+      "city": "Toronto",
+      "language": "en",
+      "investmentThesis": "Acquisitions opérationnelles en hospitalité, retail, commercial RE; GTA focus",
+      "approachAngle": "Single FO actif déploiement capital commercial RE et hospitalité — mindset acquisition aligné Capital Norvex",
+      "ticketRange": {"min": 1000000, "max": 15000000},
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "website": ""
+      },
+      "sourceUrl": "https://www.axial.net/company/jnu-investments/",
+      "notes": "Single family office. Acquisitions GTA. Hospitalité, retail, commercial RE holdings. Diversification active."
+    }
+  ]
+}

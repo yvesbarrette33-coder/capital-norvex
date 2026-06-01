@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<!-- Microsoft Clarity Analytics + Loi 25 Consent (Capital Norvex) -->
+<script>
+(function(){
+  var k='cn_analytics_consent';
+  var consent=localStorage.getItem(k);
+  function loadClarity(){
+    (function(c,l,a,r,i,t,y){
+      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window,document,"clarity","script","wqmwilt1it");
+  }
+  if(consent==='accepted'){loadClarity();}
+  else if(consent===null){
+    document.addEventListener('DOMContentLoaded',function(){
+      var b=document.createElement('div');
+      b.id='cn-consent-banner';
+      b.style.cssText='position:fixed;bottom:20px;left:20px;right:20px;max-width:560px;margin:0 auto;background:#0a0a0a;color:#f5f5f5;padding:20px 24px;border-radius:8px;box-shadow:0 10px 40px rgba(0,0,0,0.35);z-index:99999;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:1.55;';
+      b.innerHTML='<div style="margin-bottom:14px;">Capital Norvex utilise des outils d’analyse anonymes (Microsoft Clarity) pour améliorer votre expérience. Aucune donnée personnelle n’est partagée à des fins commerciales. <a href="https://privacy.microsoft.com/privacystatement" target="_blank" rel="noopener" style="color:#c9a85c;text-decoration:underline;">En savoir plus</a></div>'+
+      '<div style="display:flex;gap:10px;flex-wrap:wrap;">'+
+      '<button id="cn-c-acc" style="background:#c9a85c;color:#0a0a0a;border:none;padding:10px 20px;border-radius:4px;font-weight:600;cursor:pointer;font-size:13px;font-family:inherit;">Accepter</button>'+
+      '<button id="cn-c-ref" style="background:transparent;color:#f5f5f5;border:1px solid #555;padding:10px 20px;border-radius:4px;font-weight:600;cursor:pointer;font-size:13px;font-family:inherit;">Refuser</button>'+
+      '</div>';
+      document.body.appendChild(b);
+      document.getElementById('cn-c-acc').onclick=function(){localStorage.setItem(k,'accepted');b.remove();loadClarity();};
+      document.getElementById('cn-c-ref').onclick=function(){localStorage.setItem(k,'refused');b.remove();};
+    });
+  }
+})();
+</script>
+<!-- End Clarity -->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a0d13">
+<title>Capsule vidéo — Capital Norvex</title>
+<meta name="description" content="Capital Norvex — financement immobilier privé propulsé par IA propriétaire.">
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" href="/icon-512.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ink:#0a0d13;--ink2:#131720;--gold:#b8975a;--gold2:#d4b07a;
+  --cream:#faf8f4;--muted:#7a8294;--muted2:#a0a8b8;
+  --border:rgba(184,151,90,.18);
+}
+body{background:var(--ink);color:var(--cream);font-family:'DM Sans',sans-serif;font-weight:300;min-height:100vh;display:flex;flex-direction:column}
+nav{display:flex;align-items:center;justify-content:space-between;padding:1.2rem 2.5rem;background:rgba(10,13,19,.96);border-bottom:1px solid var(--border)}
+.nav-brand{display:flex;align-items:center;gap:.9rem;font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--cream);text-decoration:none;letter-spacing:.04em}
+.nav-brand-mark{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;background:var(--ink);border:1px solid var(--gold);color:var(--gold);font-family:'Playfair Display',serif;font-weight:500;font-size:1.2rem;letter-spacing:.05em}
+.nav-tagline{font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);font-family:'DM Sans',sans-serif;font-weight:400}
+main{flex:1;display:flex;flex-direction:column;align-items:center;padding:3rem 1.5rem 4rem;max-width:960px;margin:0 auto;width:100%}
+.kicker{display:inline-flex;align-items:center;gap:.7rem;font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem}
+.kicker::before,.kicker::after{content:"";display:block;width:1.6rem;height:1px;background:var(--gold)}
+h1{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:400;line-height:1.2;color:var(--cream);text-align:center;margin-bottom:.6rem}
+h1 em{font-style:italic;color:var(--gold2)}
+.subtitle{font-size:.95rem;color:var(--muted2);text-align:center;max-width:600px;margin:0 auto 2.4rem;line-height:1.6}
+.video-wrap{position:relative;padding-bottom:56.25%;height:0;width:100%;background:#000;border:1px solid var(--border);box-shadow:0 16px 50px rgba(0,0,0,.5)}
+.video-wrap iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
+.cta-row{margin-top:2.4rem;display:flex;flex-wrap:wrap;gap:1rem;justify-content:center}
+.cta-btn{display:inline-block;padding:.9rem 2.2rem;background:var(--gold);color:var(--ink);font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;font-weight:500;text-decoration:none;transition:.2s}
+.cta-btn:hover{background:var(--gold2);transform:translateY(-2px)}
+.cta-btn.ghost{background:transparent;color:var(--gold2);border:1px solid var(--gold)}
+.cta-btn.ghost:hover{background:rgba(184,151,90,.08)}
+.foot{padding:2rem 1.5rem;text-align:center;border-top:1px solid var(--border);font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.foot a{color:var(--muted2);text-decoration:none}
+.foot a:hover{color:var(--gold2)}
+.error{padding:3rem 2rem;text-align:center;color:var(--muted2);max-width:520px;margin:0 auto}
+.error h2{font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--cream);margin-bottom:1rem;font-weight:400}
+@media(max-width:600px){nav{padding:1rem 1.2rem}.nav-tagline{display:none}main{padding:2rem 1rem 3rem}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="/">
+    <span class="nav-brand-mark">M</span>
+    <span>Capital Norvex</span>
+    <span class="nav-tagline" id="nav-tagline">· Capital structuré · Ambition maîtrisée</span>
+  </a>
+</nav>
+<script>
+  // Tagline FR/EN — priorité ?lang= explicite, sinon nativeLang de la vidéo,
+  // sinon fr. Ce script s'exécute avant le catalogue principal mais lit le
+  // même catalogue qui sera défini juste après par le script principal.
+  // Pour éviter une dépendance d'ordre, on duplique juste le mapping ID→nativeLang ici.
+  (function(){
+    const NATIVE = {
+      "PiEVzxDJQ0E": "en",
+      "XQ4D-oibzDM": "fr",
+      "GR8MyoVhOaM": "en",
+      "T1lKc2amOnQ": "fr",
+      "c8w5joFPMTY": "en",
+      "aJJuOUBIunc": "fr",
+      "KRmp0JA1JYU": "en",
+      "ydAnJRY_xa4": "fr",
+      "EPNttISUXLM": "en",
+      "yszalAXpbwc": "fr",
+      // Vidéos personnelles HeyGen (Tier 1 — 2026-05-12)
+      "gQB8o0nwdmY": "fr",  // Bouchard
+      "mcSfynPrsLA": "fr",  // Tessier
+      "8mDiRHr36XE": "fr",  // Chiara
+      "KqYRcLQ1ESU": "en",  // Thomson
+      "K0XryVReehU": "en"   // Weston
+    };
+    const params = new URLSearchParams(location.search);
+    const explicit = (params.get("lang") || "").toLowerCase();
+    const id = (params.get("v") || "").trim();
+    const lang = (explicit === "en" || explicit === "fr") ? explicit : (NATIVE[id] || "fr");
+    if (lang === "en") {
+      document.getElementById("nav-tagline").textContent = "· Structured capital · Measured ambition";
+    }
+  })();
+</script>
+
+<main>
+  <div id="content">
+    <!-- Rendu dynamique selon ?v= -->
+  </div>
+</main>
+
+<div class="foot">
+  <a href="https://capitalnorvex.com">capitalnorvex.com</a> &nbsp;·&nbsp;
+  Capital Norvex Inc. &nbsp;·&nbsp;
+  Île-des-Sœurs, Montréal QC
+</div>
+
+<script>
+// Catalogue des capsules avec versions FR + EN.
+// Bug fix Yves 2026-05-08 PM : si l'email était EN, l'URL inclut &lang=en
+// pour que la page s'affiche en anglais.
+// Chaque vidéo a une `nativeLang` — la langue parlée dans la vidéo.
+// Si aucun ?lang= n'est fourni, la page s'affichera dans la nativeLang
+// pour rester cohérent avec le contenu de la vidéo.
+const CAPSULES = {
+  // Vidéo phare Capital Norvex 60 sec (2026-05-28)
+  "EPNttISUXLM": {
+    nativeLang: "en",
+    fr: {
+      kicker: "Capital Norvex",
+      title: "Capital Norvex en <em>60 secondes</em>",
+      subtitle: "Voici à quoi ressemble le prêt privé immobilier en 2026 — 60 secondes.",
+    },
+    en: {
+      kicker: "Norvex Capital",
+      title: "Norvex Capital in <em>60 seconds</em>",
+      subtitle: "This is what private real estate lending looks like in 2026 — 60 seconds.",
+    }
+  },
+  "yszalAXpbwc": {
+    nativeLang: "fr",
+    fr: {
+      kicker: "Capital Norvex",
+      title: "Capital Norvex en <em>60 secondes</em>",
+      subtitle: "Voici à quoi ressemble le prêt privé immobilier en 2026 — 60 secondes.",
+    },
+    en: {
+      kicker: "Norvex Capital",
+      title: "Norvex Capital in <em>60 seconds</em>",
+      subtitle: "This is what private real estate lending looks like in 2026 — 60 seconds.",
+    }
+  },
+  "PiEVzxDJQ0E": {
+    nativeLang: "en",
+    fr: {
+      kicker: "Capital Norvex",
+      title: "Lettre aux <em>partenaires</em>",
+      subtitle: "Présentation de notre programme de partenariat structuré en prêt privé immobilier — 60 secondes.",
+    },
+    en: {
+      kicker: "Capital Norvex",
+      title: "Letter to <em>partners</em>",
+      subtitle: "Introduction to our structured private real estate lending partner program — 60 seconds.",
+    }
+  },
+  "XQ4D-oibzDM": {
+    nativeLang: "fr",
+    fr: {
+      kicker: "Capital Norvex",
+      title: "Mot du <em>fondateur</em>",
+      subtitle: "Yves Barrette, Directeur-Fondateur de Capital Norvex Inc. — 60 secondes.",
+    },
+    en: {
+      kicker: "Capital Norvex",
+      title: "Word from the <em>founder</em>",
+      subtitle: "Yves Barrette, Founder & Director of Capital Norvex Inc. — 60 seconds.",
+    }
+  },
+  // Courtiers — V12 site web (2026-05-28)
+  "c8w5joFPMTY": {
+    nativeLang: "en",
+    fr: { kicker: "Capital Norvex", title: "Programme courtier <em>partenaire</em>", subtitle: "Présentation du programme courtier — site web." },
+    en: { kicker: "Norvex Capital", title: "Broker <em>partner</em> program", subtitle: "Broker partner program — website overview." }
+  },
+  "aJJuOUBIunc": {
+    nativeLang: "fr",
+    fr: { kicker: "Capital Norvex", title: "Programme courtier <em>partenaire</em>", subtitle: "Présentation du programme courtier — site web." },
+    en: { kicker: "Norvex Capital", title: "Broker <em>partner</em> program", subtitle: "Broker partner program — website overview." }
+  },
+  // Courtiers — V11 PUNCH (utilisée dans lettres outbound, conservée pour cohérence email)
+  "GR8MyoVhOaM": {
+    nativeLang: "en",
+    fr: { kicker: "Capital Norvex", title: "Programme courtier <em>partenaire</em>", subtitle: "Présentation du programme courtier — 1 min 15." },
+    en: { kicker: "Capital Norvex", title: "Broker <em>partner</em> program", subtitle: "Overview of our broker partner program — 1 min 15." }
+  },
+  "T1lKc2amOnQ": {
+    nativeLang: "fr",
+    fr: { kicker: "Capital Norvex", title: "Programme courtier <em>partenaire</em>", subtitle: "Présentation du programme courtier — 1 min 15." },
+    en: { kicker: "Capital Norvex", title: "Broker <em>partner</em> program", subtitle: "Overview of our broker partner program — 1 min 15." }
+  },
+  // Promoteurs
+  "KRmp0JA1JYU": {
+    nativeLang: "en",
+    fr: { kicker: "Capital Norvex", title: "Lettre d'intention en <em>30 minutes</em>", subtitle: "Programme de financement promoteurs — 55 secondes." },
+    en: { kicker: "Capital Norvex", title: "Letter of intent in <em>30 minutes</em>", subtitle: "Developer financing program — 55 seconds." }
+  },
+  "ydAnJRY_xa4": {
+    nativeLang: "fr",
+    fr: { kicker: "Capital Norvex", title: "Lettre d'intention en <em>30 minutes</em>", subtitle: "Programme de financement promoteurs — 55 secondes." },
+    en: { kicker: "Capital Norvex", title: "Letter of intent in <em>30 minutes</em>", subtitle: "Developer financing program — 55 seconds." }
+  },
+  // ─── Capsules personnelles HeyGen (Tier 1, 2026-05-12) ────────────────────
+  "gQB8o0nwdmY": {  // Bouchard
+    nativeLang: "fr",
+    fr: { kicker: "Capital Norvex", title: "Un mot pour <em>M. Bouchard</em>", subtitle: "Message personnel d'Yves Barrette — 35 secondes." },
+    en: { kicker: "Capital Norvex", title: "A note for <em>Mr. Bouchard</em>", subtitle: "Personal message from Yves Barrette — 35 seconds." }
+  },
+  "mcSfynPrsLA": {  // Tessier
+    nativeLang: "fr",
+    fr: { kicker: "Capital Norvex", title: "Un mot pour <em>M. Tessier</em>", subtitle: "Message personnel d'Yves Barrette — 35 secondes." },
+    en: { kicker: "Capital Norvex", title: "A note for <em>Mr. Tessier</em>", subtitle: "Personal message from Yves Barrette — 35 seconds." }
+  },
+  "8mDiRHr36XE": {  // Chiara
+    nativeLang: "fr",
+    fr: { kicker: "Capital Norvex", title: "Un mot pour <em>M. Chiara</em>", subtitle: "Message personnel d'Yves Barrette — 35 secondes." },
+    en: { kicker: "Capital Norvex", title: "A note for <em>Mr. Chiara</em>", subtitle: "Personal message from Yves Barrette — 35 seconds." }
+  },
+  "KqYRcLQ1ESU": {  // Thomson
+    nativeLang: "en",
+    fr: { kicker: "Capital Norvex", title: "Un mot pour <em>M. Thomson</em>", subtitle: "Message personnel d'Yves Barrette — 35 secondes." },
+    en: { kicker: "Capital Norvex", title: "A note for <em>Mr. Thomson</em>", subtitle: "Personal message from Yves Barrette — 35 seconds." }
+  },
+  "K0XryVReehU": {  // Weston
+    nativeLang: "en",
+    fr: { kicker: "Capital Norvex", title: "Un mot pour <em>M. Weston</em>", subtitle: "Message personnel d'Yves Barrette — 35 secondes." },
+    en: { kicker: "Capital Norvex", title: "A note for <em>Mr. Weston</em>", subtitle: "Personal message from Yves Barrette — 35 seconds." }
+  }
+};
+
+const UI = {
+  fr: {
+    suffix: " — Capital Norvex",
+    discover: "Découvrir Capital Norvex",
+    allCapsules: "Toutes nos capsules",
+    errorTitle: "Capsule introuvable",
+    errorBody: 'Le lien ne pointe vers aucune capsule. Visitez <a style="color:#d4b07a" href="/capsules.html">notre page de capsules</a> ou <a style="color:#d4b07a" href="/">retour à l\'accueil</a>.',
+    fallbackTitle: "Capsule <em>vidéo</em>",
+  },
+  en: {
+    suffix: " — Capital Norvex",
+    discover: "Discover Capital Norvex",
+    allCapsules: "All our videos",
+    errorTitle: "Video not found",
+    errorBody: 'This link does not point to any video. Visit <a style="color:#d4b07a" href="/capsules.html">our video page</a> or <a style="color:#d4b07a" href="/">return home</a>.',
+    fallbackTitle: "Video <em>capsule</em>",
+  }
+};
+
+(function() {
+  const params = new URLSearchParams(location.search);
+  const id = (params.get("v") || "").trim();
+  const explicitLang = (params.get("lang") || "").toLowerCase();
+  // Priorité : 1) ?lang=fr|en explicite, 2) nativeLang de la vidéo, 3) fallback fr
+  const nativeLang = (CAPSULES[id] && CAPSULES[id].nativeLang) || "fr";
+  const lang = (explicitLang === "en" || explicitLang === "fr") ? explicitLang : nativeLang;
+  document.documentElement.lang = lang;
+  const ui = UI[lang];
+  const content = document.getElementById("content");
+
+  // Validation stricte : ID YouTube = 11 caractères alphanumériques + - et _
+  if (!id || !/^[A-Za-z0-9_-]{11}$/.test(id)) {
+    content.innerHTML = `
+      <div class="error">
+        <h2>${ui.errorTitle}</h2>
+        <p>${ui.errorBody}</p>
+      </div>`;
+    return;
+  }
+
+  const meta = (CAPSULES[id] && CAPSULES[id][lang]) || {
+    kicker: "Capital Norvex",
+    title: ui.fallbackTitle,
+    subtitle: "",
+  };
+
+  document.title = meta.title.replace(/<[^>]+>/g, "") + ui.suffix;
+
+  const embedSrc = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0&modestbranding=1`;
+
+  content.innerHTML = `
+    <div class="kicker">${meta.kicker}</div>
+    <h1>${meta.title}</h1>
+    ${meta.subtitle ? `<p class="subtitle">${meta.subtitle}</p>` : ""}
+    <div class="video-wrap">
+      <iframe src="${embedSrc}"
+              title="${meta.title.replace(/<[^>]+>/g, "")}"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen></iframe>
+    </div>
+    <div class="cta-row">
+      <a class="cta-btn" href="/">${ui.discover}</a>
+      <a class="cta-btn ghost" href="/capsules.html">${ui.allCapsules}</a>
+    </div>`;
+})();
+</script>
+
+</body>
+</html>

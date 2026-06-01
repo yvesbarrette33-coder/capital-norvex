@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<!-- Microsoft Clarity Analytics + Loi 25 Consent (Capital Norvex) -->
+<script>
+(function(){
+  var k='cn_analytics_consent';
+  var consent=localStorage.getItem(k);
+  function loadClarity(){
+    (function(c,l,a,r,i,t,y){
+      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window,document,"clarity","script","wqmwilt1it");
+  }
+  if(consent==='accepted'){loadClarity();}
+  else if(consent===null){
+    document.addEventListener('DOMContentLoaded',function(){
+      var b=document.createElement('div');
+      b.id='cn-consent-banner';
+      b.style.cssText='position:fixed;bottom:20px;left:20px;right:20px;max-width:560px;margin:0 auto;background:#0a0a0a;color:#f5f5f5;padding:20px 24px;border-radius:8px;box-shadow:0 10px 40px rgba(0,0,0,0.35);z-index:99999;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:1.55;';
+      b.innerHTML='<div style="margin-bottom:14px;">Capital Norvex utilise des outils d’analyse anonymes (Microsoft Clarity) pour améliorer votre expérience. Aucune donnée personnelle n’est partagée à des fins commerciales. <a href="https://privacy.microsoft.com/privacystatement" target="_blank" rel="noopener" style="color:#c9a85c;text-decoration:underline;">En savoir plus</a></div>'+
+      '<div style="display:flex;gap:10px;flex-wrap:wrap;">'+
+      '<button id="cn-c-acc" style="background:#c9a85c;color:#0a0a0a;border:none;padding:10px 20px;border-radius:4px;font-weight:600;cursor:pointer;font-size:13px;font-family:inherit;">Accepter</button>'+
+      '<button id="cn-c-ref" style="background:transparent;color:#f5f5f5;border:1px solid #555;padding:10px 20px;border-radius:4px;font-weight:600;cursor:pointer;font-size:13px;font-family:inherit;">Refuser</button>'+
+      '</div>';
+      document.body.appendChild(b);
+      document.getElementById('cn-c-acc').onclick=function(){localStorage.setItem(k,'accepted');b.remove();loadClarity();};
+      document.getElementById('cn-c-ref').onclick=function(){localStorage.setItem(k,'refused');b.remove();};
+    });
+  }
+})();
+</script>
+<!-- End Clarity -->
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rendez-vous — Capital Norvex</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=Georgia&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0A0A0A;
+    --ink2: #1c1c1c;
+    --gold: #C9A227;
+    --gold-soft: #E5D89E;
+    --cream: #FBF9F2;
+    --paper: #FFFFFF;
+    --border: #e8e2cc;
+    --muted: #6b6354;
+    --green: #2d8a3e;
+    --red: #c0392b;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: Georgia, "Times New Roman", serif;
+    color: var(--ink);
+    background: linear-gradient(180deg, #fff 0%, var(--cream) 100%);
+    min-height: 100vh;
+  }
+  .lang-bar {
+    position: absolute; top: 24px; right: 32px;
+    font-family: -apple-system, sans-serif;
+    font-size: 12.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .lang-bar a {
+    color: var(--ink); text-decoration: none; padding: 4px 8px;
+    cursor: pointer;
+  }
+  .lang-bar a.active { color: var(--gold); border-bottom: 1px solid var(--gold); }
+  header.brand {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 36px 24px 32px 24px;
+    text-align: center;
+  }
+  .brand-name {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 38px;
+    letter-spacing: 0.18em;
+    color: var(--gold);
+    margin: 0;
+  }
+  .brand-tag {
+    font-style: italic;
+    font-size: 13.5px;
+    color: #d6cca0;
+    margin-top: 8px;
+    letter-spacing: 0.04em;
+  }
+  main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 48px 24px 64px 24px;
+  }
+  h1 {
+    font-family: "Playfair Display", Georgia, serif;
+    font-weight: 400;
+    font-size: 30px;
+    color: var(--ink);
+    margin: 0 0 14px 0;
+    line-height: 1.25;
+  }
+  .lead {
+    font-size: 15.5px;
+    line-height: 1.7;
+    color: #2a2a2a;
+    margin: 0 0 28px 0;
+  }
+  .alt {
+    background: #fefcf3;
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    padding: 14px 18px;
+    margin: 0 0 32px 0;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .alt strong { color: var(--ink); }
+  form { display: block; }
+  label {
+    display: block;
+    font-family: -apple-system, sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 18px 0 6px 0;
+  }
+  input[type=text], input[type=email], input[type=tel], textarea {
+    width: 100%;
+    padding: 11px 13px;
+    font-family: Georgia, serif;
+    font-size: 15px;
+    color: var(--ink);
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+  }
+  input:focus, textarea:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 2px rgba(201, 162, 39, 0.15);
+  }
+  textarea { min-height: 120px; resize: vertical; }
+  .submit-btn {
+    margin-top: 30px;
+    display: inline-block;
+    background: var(--ink);
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    padding: 14px 36px;
+    font-family: -apple-system, sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.2s;
+  }
+  .submit-btn:hover { background: var(--gold); color: var(--ink); }
+  .submit-btn:disabled { opacity: 0.5; cursor: wait; }
+  .success, .error {
+    padding: 24px 22px;
+    border-radius: 6px;
+    font-size: 15px;
+    line-height: 1.7;
+    margin-top: 20px;
+  }
+  .success { background: #e8f5ec; border: 1px solid #a8d4b3; color: #1a5d28; }
+  .error { background: #fdecea; border: 1px solid #f0b7b0; color: #8c1f1f; }
+  footer {
+    text-align: center;
+    padding: 32px 24px 48px 24px;
+    font-family: -apple-system, sans-serif;
+    font-size: 11.5px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+  }
+  footer a { color: var(--muted); text-decoration: none; }
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<div class="lang-bar">
+  <a id="lang-fr" class="active" onclick="setLang('fr')">FR</a>
+  <span style="color:#999">·</span>
+  <a id="lang-en" onclick="setLang('en')">EN</a>
+</div>
+
+<header class="brand">
+  <h1 class="brand-name">CAPITAL NORVEX</h1>
+  <div class="brand-tag" id="brand-tag">Capital structuré. Ambition maîtrisée.</div>
+</header>
+
+<main>
+  <div id="form-block">
+    <h1 id="page-title">Demande de rendez-vous avec M. Yves Barrette</h1>
+    <p class="lead" id="page-lead">
+      Indiquez le motif de votre rendez-vous et vos disponibilités préférées.
+      M. Barrette validera votre demande personnellement et vous fera parvenir
+      une invitation Teams confirmée par courriel dans les 24 heures ouvrables.
+    </p>
+
+    <div class="alt" id="alt-phone">
+      <strong>Joindre directement :</strong> 438-533-PRÊT (7738) — heures ouvrables.
+    </div>
+
+    <form id="rdv-form" onsubmit="submitRdv(event)">
+      <label for="name" id="lbl-name">Nom complet</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="email" id="lbl-email">Courriel</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="phone" id="lbl-phone">Téléphone (optionnel)</label>
+      <input type="tel" id="phone" name="phone">
+
+      <label for="company" id="lbl-company">Entreprise / Cabinet (optionnel)</label>
+      <input type="text" id="company" name="company">
+
+      <label for="subject" id="lbl-subject">Motif du rendez-vous</label>
+      <input type="text" id="subject" name="subject" required>
+
+      <label for="availability" id="lbl-avail">Vos disponibilités préférées</label>
+      <textarea id="availability" name="availability" placeholder="Ex : Mardi 6 mai après-midi (13h-16h), ou jeudi 8 mai matin." required></textarea>
+
+      <label for="message" id="lbl-message">Contexte / message (optionnel)</label>
+      <textarea id="message" name="message" placeholder="Quelques mots sur votre projet ou votre demande."></textarea>
+
+      <button type="submit" class="submit-btn" id="submit-btn">Envoyer la demande</button>
+    </form>
+  </div>
+
+  <div id="success-block" class="hidden">
+    <div class="success">
+      <strong id="success-title">✓ Demande reçue.</strong><br>
+      <span id="success-text">M. Yves Barrette validera votre demande personnellement. Vous recevrez une invitation Teams confirmée par courriel dans les 24 heures ouvrables.</span>
+    </div>
+  </div>
+
+  <div id="error-block" class="hidden">
+    <div class="error" id="error-msg">Une erreur est survenue. Veuillez réessayer ou téléphoner au 438-533-PRÊT.</div>
+  </div>
+</main>
+
+<footer>
+  CAPITAL NORVEX INC. · 2705-1000 André-Prévost, Île-des-Sœurs (Verdun), Montréal, QC H3E 0G2<br>
+  <a href="tel:+14385337738">438-533-PRÊT (7738)</a> · <a href="mailto:info@capitalnorvex.com">info@capitalnorvex.com</a> · <a href="https://capitalnorvex.com">capitalnorvex.com</a>
+</footer>
+
+<script>
+const STR = {
+  fr: {
+    pageTitle: "Demande de rendez-vous avec M. Yves Barrette",
+    pageLead: "Indiquez le motif de votre rendez-vous et vos disponibilités préférées. M. Barrette validera votre demande personnellement et vous fera parvenir une invitation Teams confirmée par courriel dans les 24 heures ouvrables.",
+    altPhone: "<strong>Joindre directement :</strong> 438-533-PRÊT (7738) — heures ouvrables.",
+    lblName: "Nom complet",
+    lblEmail: "Courriel",
+    lblPhone: "Téléphone (optionnel)",
+    lblCompany: "Entreprise / Cabinet (optionnel)",
+    lblSubject: "Motif du rendez-vous",
+    lblAvail: "Vos disponibilités préférées",
+    availPlaceholder: "Ex : Mardi 6 mai après-midi (13h-16h), ou jeudi 8 mai matin.",
+    lblMessage: "Contexte / message (optionnel)",
+    messagePlaceholder: "Quelques mots sur votre projet ou votre demande.",
+    submitBtn: "Envoyer la demande",
+    submitting: "Envoi…",
+    successTitle: "✓ Demande reçue.",
+    successText: "M. Yves Barrette validera votre demande personnellement. Vous recevrez une invitation Teams confirmée par courriel dans les 24 heures ouvrables.",
+    errorMsg: "Une erreur est survenue. Veuillez réessayer ou téléphoner au 438-533-PRÊT.",
+    brandTag: "Capital structuré. Ambition maîtrisée.",
+  },
+  en: {
+    pageTitle: "Meeting request with Mr. Yves Barrette",
+    pageLead: "Please indicate the purpose of your meeting and your preferred availability. Mr. Barrette will personally review your request and send you a confirmed Teams invitation by email within 24 business hours.",
+    altPhone: "<strong>Direct line:</strong> +1 (438) 533-PRÊT (7738) — business hours.",
+    lblName: "Full name",
+    lblEmail: "Email",
+    lblPhone: "Phone (optional)",
+    lblCompany: "Company / Firm (optional)",
+    lblSubject: "Meeting purpose",
+    lblAvail: "Your preferred availability",
+    availPlaceholder: "Ex: Tuesday May 6 afternoon (1-4 pm), or Thursday May 8 morning.",
+    lblMessage: "Context / message (optional)",
+    messagePlaceholder: "A few words about your project or request.",
+    submitBtn: "Send request",
+    submitting: "Sending…",
+    successTitle: "✓ Request received.",
+    successText: "Mr. Yves Barrette will personally review your request. You will receive a confirmed Teams invitation by email within 24 business hours.",
+    errorMsg: "An error occurred. Please try again or call +1 (438) 533-PRÊT.",
+    brandTag: "Structured capital. Measured ambition.",
+  },
+};
+
+let LANG = "fr";
+
+function setLang(l) {
+  LANG = l;
+  const t = STR[l];
+  document.getElementById("lang-fr").classList.toggle("active", l === "fr");
+  document.getElementById("lang-en").classList.toggle("active", l === "en");
+  document.documentElement.lang = l;
+  document.getElementById("page-title").textContent = t.pageTitle;
+  document.getElementById("page-lead").textContent = t.pageLead;
+  document.getElementById("alt-phone").innerHTML = t.altPhone;
+  document.getElementById("lbl-name").textContent = t.lblName;
+  document.getElementById("lbl-email").textContent = t.lblEmail;
+  document.getElementById("lbl-phone").textContent = t.lblPhone;
+  document.getElementById("lbl-company").textContent = t.lblCompany;
+  document.getElementById("lbl-subject").textContent = t.lblSubject;
+  document.getElementById("lbl-avail").textContent = t.lblAvail;
+  document.getElementById("availability").placeholder = t.availPlaceholder;
+  document.getElementById("lbl-message").textContent = t.lblMessage;
+  document.getElementById("message").placeholder = t.messagePlaceholder;
+  document.getElementById("submit-btn").textContent = t.submitBtn;
+  document.getElementById("success-title").textContent = t.successTitle;
+  document.getElementById("success-text").textContent = t.successText;
+  document.getElementById("error-msg").textContent = t.errorMsg;
+  document.getElementById("brand-tag").textContent = t.brandTag;
+}
+
+// Auto-detect language from browser
+(function() {
+  const lang = (navigator.language || "fr").toLowerCase();
+  if (lang.startsWith("en")) setLang("en");
+})();
+
+// Charge SLA dynamique depuis le backend pour ajuster le texte « X heures ouvrables »
+(async function loadSla() {
+  try {
+    const r = await fetch("/api/rdv-public-config");
+    if (!r.ok) return;
+    const j = await r.json();
+    const sla = Number(j.responseSlaHours);
+    if (!sla || sla === 24) return; // défaut : on garde le texte original
+    const slaTextFr = "M. Barrette validera votre demande personnellement et vous fera parvenir une invitation Teams confirmée par courriel dans les " + sla + " heures ouvrables.";
+    const slaTextEn = "Mr. Barrette will personally review your request and send you a confirmed Teams invitation by email within " + sla + " business hours.";
+    STR.fr.pageLead = "Indiquez le motif de votre rendez-vous et vos disponibilités préférées. " + slaTextFr;
+    STR.en.pageLead = "Please indicate the purpose of your meeting and your preferred availability. " + slaTextEn;
+    STR.fr.successText = slaTextFr;
+    STR.en.successText = slaTextEn;
+    setLang(LANG);
+  } catch {}
+})();
+
+async function submitRdv(e) {
+  e.preventDefault();
+  const btn = document.getElementById("submit-btn");
+  const origText = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = STR[LANG].submitting;
+  const data = {
+    name: document.getElementById("name").value.trim(),
+    email: document.getElementById("email").value.trim(),
+    phone: document.getElementById("phone").value.trim(),
+    company: document.getElementById("company").value.trim(),
+    subject: document.getElementById("subject").value.trim(),
+    availability: document.getElementById("availability").value.trim(),
+    message: document.getElementById("message").value.trim(),
+    language: LANG,
+  };
+  try {
+    const r = await fetch("/api/rdv-public-request", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    const j = await r.json().catch(() => ({}));
+    if (!r.ok || !j.ok) throw new Error(j.error || `HTTP ${r.status}`);
+    document.getElementById("form-block").classList.add("hidden");
+    document.getElementById("success-block").classList.remove("hidden");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  } catch (err) {
+    document.getElementById("error-block").classList.remove("hidden");
+    document.getElementById("error-msg").textContent = STR[LANG].errorMsg + " (" + err.message + ")";
+    btn.disabled = false;
+    btn.textContent = origText;
+  }
+}
+</script>
+
+</body>
+</html>

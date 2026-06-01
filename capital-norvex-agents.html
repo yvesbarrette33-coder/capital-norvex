@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Capital Norvex — Norvex Agents™</title>
+  <!-- PWA Admin (Suzanne+Yves installable) - 2026-05-20 -->
+  <link rel="manifest" href="/manifest-admin.json">
+  <meta name="theme-color" content="#0a0a0a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Norvex Admin">
+  <link rel="apple-touch-icon" href="/icon-192.png">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ink:#0a0d13;--ink2:#131720;
+  --gold:#b8975a;--gold2:#d4b07a;--gold-pale:#f0e6d0;
+  --cream:#faf8f4;--stone:#e8e3da;--muted:#7a8294;--muted2:#a0a8b8;
+  --green:#2d6a4f;--green2:#52b788;--green-bg:rgba(82,183,136,.12);
+  --red:#c0392b;--red2:#e74c3c;--red-bg:rgba(192,57,43,.1);
+  --amber:#b7791f;--amber2:#d4a017;--amber-bg:rgba(183,121,31,.12);
+  --blue:#1a5276;--blue2:#2e86c1;--blue-bg:rgba(46,134,193,.1);
+  --border:rgba(184,151,90,.15);
+}
+body{background:#eeebe5;color:var(--ink);font-family:'DM Sans',sans-serif;font-weight:300;min-height:100vh}
+
+/* ── TOPBAR (cohérent avec pipeline) ── */
+.topbar{background:var(--ink);display:flex;align-items:center;justify-content:space-between;padding:.85rem 2rem;position:sticky;top:0;z-index:300}
+.tb-left{display:flex;align-items:center;gap:1.2rem}
+.tb-logo{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--gold);letter-spacing:.04em}
+.tb-sep{width:1px;height:20px;background:rgba(255,255,255,.1)}
+.tb-title{font-size:.58rem;letter-spacing:.24em;text-transform:uppercase;color:var(--muted2)}
+.tb-back{font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted2);text-decoration:none;border:1px solid rgba(255,255,255,.12);padding:.38rem .9rem}
+.tb-back:hover{border-color:var(--gold);color:var(--gold)}
+
+/* ── HEADER ── */
+.wrap{padding:2rem;max-width:1280px;margin:0 auto}
+.page-tag{font-size:.58rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:.7rem;margin-bottom:.5rem}
+.page-tag::before{content:"";display:block;width:1.5rem;height:1px;background:var(--gold)}
+.page-title{font-family:'Playfair Display',serif;font-size:2rem;font-weight:400}
+.page-title em{font-style:italic;color:var(--gold)}
+.page-sub{font-size:.78rem;color:var(--muted);margin-top:.6rem}
+
+/* ── TABS ── */
+.tabs{display:flex;gap:0;margin:2rem 0 1.5rem;border-bottom:2px solid var(--ink)}
+.tab{padding:.9rem 1.6rem;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;background:transparent;border:none;cursor:pointer;color:var(--muted);font-family:'DM Sans',sans-serif;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .2s}
+.tab:hover{color:var(--ink)}
+.tab.active{color:var(--ink);border-bottom-color:var(--gold);font-weight:500}
+.tab-count{display:inline-block;font-family:'DM Mono',monospace;font-size:.55rem;background:var(--ink);color:var(--cream);padding:.1rem .42rem;margin-left:.5rem;letter-spacing:0}
+.tab.active .tab-count{background:var(--gold);color:var(--ink)}
+
+/* ── KPI ── */
+.kpi-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--stone);margin-bottom:1.5rem}
+.kpi{background:var(--cream);padding:1rem 1.2rem}
+.kpi-val{font-family:'Playfair Display',serif;font-size:1.5rem;line-height:1}
+.kpi-val.gold{color:var(--gold)}
+.kpi-val.green{color:var(--green2)}
+.kpi-val.amber{color:var(--amber2)}
+.kpi-label{font-size:.54rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:.35rem}
+
+/* ── FILTERS ── */
+.filters{display:flex;gap:.8rem;flex-wrap:wrap;margin-bottom:1.2rem;align-items:center}
+.f-btn{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;border:1px solid var(--stone);background:var(--cream);color:var(--muted);padding:.45rem .9rem;cursor:pointer;font-family:'DM Sans',sans-serif}
+.f-btn:hover,.f-btn.active{border-color:var(--gold);color:var(--gold);background:#fdf9f4}
+
+/* ── TABLE ── */
+.tbl{width:100%;border-collapse:collapse;background:var(--cream)}
+.tbl th{background:var(--ink);color:var(--cream);font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;padding:.75rem 1rem;text-align:left;font-weight:400}
+.tbl td{padding:.85rem 1rem;border-bottom:1px solid var(--stone);font-size:.78rem;vertical-align:middle}
+.tbl tr:hover td{background:#fdf9f4}
+.pill{font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;padding:.2rem .55rem;border:1px solid;white-space:nowrap;font-family:'DM Sans',sans-serif}
+.pill-research{border-color:rgba(46,134,193,.4);color:var(--blue2);background:var(--blue-bg)}
+.pill-ready{border-color:rgba(82,183,136,.4);color:var(--green2);background:var(--green-bg)}
+.pill-pending{border-color:rgba(212,160,23,.4);color:var(--amber2);background:var(--amber-bg)}
+.pill-approved{border-color:rgba(82,183,136,.4);color:var(--green2);background:var(--green-bg)}
+.pill-sent{border-color:rgba(46,134,193,.5);color:#1a7ab5;background:rgba(46,134,193,.08)}
+.pill-cold{border-color:rgba(122,130,148,.4);color:var(--muted)}
+.pill-warm{border-color:rgba(212,160,23,.4);color:var(--amber2);background:var(--amber-bg)}
+.pill-active{border-color:rgba(82,183,136,.4);color:var(--green2);background:var(--green-bg)}
+.pill-champion{border-color:rgba(184,151,90,.5);color:var(--gold);background:rgba(184,151,90,.1)}
+.pill-tier{font-family:'DM Mono',monospace;font-size:.56rem;border-color:rgba(184,151,90,.4);color:var(--gold);background:rgba(184,151,90,.08)}
+
+.btn-approve{background:var(--green);color:#fff;font-size:.55rem;letter-spacing:.14em;text-transform:uppercase;border:none;padding:.4rem .9rem;cursor:pointer;font-family:'DM Sans',sans-serif}
+.btn-approve:hover{background:var(--green2)}
+.btn-reject{background:transparent;color:var(--red);font-size:.55rem;letter-spacing:.14em;text-transform:uppercase;border:1px solid var(--red);padding:.4rem .9rem;cursor:pointer;font-family:'DM Sans',sans-serif;margin-left:.4rem}
+.btn-reject:hover{background:var(--red);color:#fff}
+.btn-view{background:transparent;color:var(--ink);font-size:.55rem;letter-spacing:.14em;text-transform:uppercase;border:1px solid var(--stone);padding:.4rem .9rem;cursor:pointer;font-family:'DM Sans',sans-serif;margin-left:.4rem}
+.btn-view:hover{border-color:var(--gold);color:var(--gold)}
+.btn-send{background:var(--gold);color:var(--ink);font-size:.55rem;letter-spacing:.14em;text-transform:uppercase;border:none;padding:.4rem .9rem;cursor:pointer;font-family:'DM Sans',sans-serif;margin-left:.4rem;font-weight:500}
+.btn-send:hover{background:var(--ink);color:var(--gold)}
+.btn-test{background:transparent;color:var(--blue2);font-size:.55rem;letter-spacing:.14em;text-transform:uppercase;border:1px solid var(--blue2);padding:.4rem .9rem;cursor:pointer;font-family:'DM Sans',sans-serif;margin-left:.4rem}
+.btn-test:hover{background:var(--blue2);color:#fff}
+.btn-preview{background:transparent;color:var(--gold);font-size:.55rem;letter-spacing:.14em;text-transform:uppercase;border:1px solid var(--gold);padding:.4rem .9rem;cursor:pointer;font-family:'DM Sans',sans-serif;margin-left:.4rem}
+.btn-preview:hover{background:var(--gold);color:var(--ink)}
+.row-actions{display:inline-flex;flex-wrap:wrap;gap:.3rem;justify-content:flex-end}
+
+/* ── MODAL ── */
+.modal-bg{position:fixed;inset:0;background:rgba(10,13,19,.85);backdrop-filter:blur(6px);z-index:9000;display:none;align-items:flex-start;justify-content:center;padding:2rem;overflow-y:auto}
+.modal-bg.shown{display:flex}
+.modal{background:var(--cream);max-width:780px;width:100%;border-top:4px solid var(--gold);box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.modal-head{padding:1.2rem 1.6rem;border-bottom:1px solid var(--stone);display:flex;justify-content:space-between;align-items:flex-start;gap:1rem}
+.modal-title{font-family:'Playfair Display',serif;font-size:1.1rem;line-height:1.4}
+.modal-meta{font-size:.7rem;color:var(--muted);margin-top:.4rem;line-height:1.6}
+.modal-meta strong{color:var(--ink);font-weight:500}
+.modal-close{background:none;border:1px solid var(--stone);color:var(--muted);font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;padding:.4rem .9rem;cursor:pointer;font-family:'DM Sans',sans-serif;flex-shrink:0}
+.modal-close:hover{border-color:var(--red);color:var(--red)}
+.modal-body{padding:0;background:#fff;max-height:60vh;overflow-y:auto;border-bottom:1px solid var(--stone)}
+.modal-body iframe{width:100%;border:none;min-height:60vh;display:block}
+.modal-actions{padding:1rem 1.6rem;display:flex;gap:.6rem;justify-content:flex-end;background:var(--cream);flex-wrap:wrap}
+
+/* ── HISTORY ── */
+.history-card{background:var(--cream);padding:1.2rem 1.4rem;margin-top:1.5rem;border-left:3px solid var(--gold)}
+.history-title{font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:.9rem}
+.history-row{padding:.55rem 0;border-bottom:1px solid var(--stone);font-size:.74rem;color:var(--ink);display:flex;justify-content:space-between;align-items:center;gap:1rem}
+.history-row:last-child{border-bottom:none}
+.history-meta{font-size:.62rem;color:var(--muted);margin-top:.15rem}
+.history-pill{font-size:.5rem;letter-spacing:.14em;text-transform:uppercase;padding:.18rem .5rem;border:1px solid;font-family:'DM Sans',sans-serif;flex-shrink:0}
+.history-pill.test{border-color:var(--blue2);color:var(--blue2);background:rgba(46,134,193,.06)}
+.history-pill.live{border-color:var(--green2);color:var(--green2);background:var(--green-bg)}
+.history-pill.fail{border-color:var(--red);color:var(--red);background:var(--red-bg)}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--ink);color:var(--cream);padding:1rem 1.4rem;font-size:.78rem;z-index:9500;box-shadow:0 8px 32px rgba(0,0,0,.3);max-width:380px;border-left:3px solid var(--gold);display:none}
+.toast.shown{display:block;animation:toast-in .25s ease-out}
+.toast.error{border-left-color:var(--red2)}
+.toast.success{border-left-color:var(--green2)}
+@keyframes toast-in{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+
+.empty{padding:3rem 1rem;text-align:center;color:var(--muted);font-size:.85rem;font-style:italic}
+.note{padding:.7rem 1rem;background:rgba(212,160,23,.08);border-left:3px solid var(--amber2);font-size:.7rem;color:var(--amber);margin-bottom:1rem;letter-spacing:.02em}
+.tier-zero-banner{padding:1rem;background:var(--red-bg);border-left:4px solid var(--red);font-size:.75rem;color:var(--red);margin-bottom:1.5rem;display:flex;align-items:center;gap:.6rem}
+.tier-zero-banner strong{letter-spacing:.1em}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+
+/* ── DATA SOURCE BADGE ── */
+.ds-badge{display:inline-flex;align-items:center;gap:.4rem;font-size:.55rem;letter-spacing:.16em;text-transform:uppercase;padding:.3rem .7rem;margin-left:1rem;border:1px solid var(--stone);font-family:'DM Mono',monospace}
+.ds-badge.live{border-color:var(--green2);color:var(--green2);background:var(--green-bg)}
+.ds-badge.mock{border-color:var(--amber2);color:var(--amber);background:var(--amber-bg)}
+.ds-dot{width:6px;height:6px;border-radius:50%;background:currentColor;animation:dot-blink 1.6s infinite}
+@keyframes dot-blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* ── AUTH OVERLAY ── */
+.auth-overlay{position:fixed;inset:0;background:rgba(10,13,19,.92);backdrop-filter:blur(8px);z-index:9999;display:flex;align-items:center;justify-content:center;padding:2rem}
+.auth-card{background:var(--cream);max-width:440px;width:100%;padding:2.5rem 2.2rem;text-align:center;border-top:4px solid var(--gold)}
+.auth-logo{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--gold);letter-spacing:.06em;margin-bottom:.5rem}
+.auth-tag{font-size:.55rem;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);margin-bottom:1.6rem}
+.auth-title{font-family:'Playfair Display',serif;font-size:1.3rem;line-height:1.4;margin-bottom:.5rem}
+.auth-sub{font-size:.78rem;color:var(--muted);margin-bottom:1.8rem;line-height:1.6}
+.auth-btns{display:flex;flex-direction:column;gap:.6rem;align-items:center}
+.auth-btn{display:inline-flex;align-items:center;gap:.7rem;background:var(--ink);color:var(--cream);border:none;padding:.85rem 1.6rem;font-family:'DM Sans',sans-serif;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;transition:background .2s;min-width:280px;justify-content:center}
+.auth-btn:hover{background:var(--gold);color:var(--ink)}
+.auth-btn.ms{background:#0078D4;color:#fff}
+.auth-btn.ms:hover{background:#005A9E;color:#fff}
+.auth-btn .g-ico{width:18px;height:18px;background:#fff;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-family:Arial,sans-serif;font-weight:bold;font-size:.7rem;color:#4285F4}
+.auth-btn .ms-ico{width:16px;height:16px;display:inline-grid;grid-template-columns:1fr 1fr;gap:1px}
+.auth-btn .ms-ico span{display:block}
+.auth-btn .ms-ico span:nth-child(1){background:#F25022}
+.auth-btn .ms-ico span:nth-child(2){background:#7FBA00}
+.auth-btn .ms-ico span:nth-child(3){background:#00A4EF}
+.auth-btn .ms-ico span:nth-child(4){background:#FFB900}
+.auth-divider{font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin:.4rem 0;font-family:'DM Sans',sans-serif}
+.auth-err{margin-top:1.2rem;padding:.7rem;background:var(--red-bg);border-left:3px solid var(--red);font-size:.7rem;color:var(--red);text-align:left;display:none}
+.auth-help{margin-top:1.2rem;font-size:.62rem;color:var(--muted);font-style:italic;line-height:1.6}
+
+/* ── USER CHIP IN TOPBAR ── */
+.tb-user{display:none;align-items:center;gap:.6rem;font-size:.65rem;color:var(--muted2);cursor:pointer;background:rgba(255,255,255,.04);padding:.3rem .8rem .3rem .35rem;border:1px solid rgba(255,255,255,.08)}
+.tb-user.shown{display:inline-flex}
+.tb-user-avatar{width:24px;height:24px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:500;color:var(--ink);font-family:'DM Sans',sans-serif}
+.tb-signout{font-size:.5rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);cursor:pointer;margin-left:.5rem}
+.tb-signout:hover{color:var(--gold)}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="tb-left">
+    <span class="tb-logo">Capital Norvex</span>
+    <span class="tb-sep"></span>
+    <span class="tb-title">Norvex Agents™ — v1</span>
+  </div>
+  <div style="display:flex;align-items:center;gap:.8rem">
+    <span id="agents-last-refresh" style="font-size:11px;color:#888;">—</span>
+    <button onclick="loadFromApi()" style="background:transparent;border:1px solid #c9a961;color:#c9a961;padding:6px 14px;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;font-family:inherit;">↻ Rafraîchir</button>
+    <span id="tb-user" class="tb-user">
+      <span class="tb-user-avatar" id="tb-user-avatar">?</span>
+      <span id="tb-user-email"></span>
+      <span class="tb-signout" onclick="signOut()">Déconnexion</span>
+    </span>
+    <a class="tb-back" href="capital-norvex-pipeline.html">← Pipeline</a>
+  </div>
+</header>
+
+<!-- AUTH OVERLAY -->
+<div class="auth-overlay" id="auth-overlay">
+  <div class="auth-card">
+    <div class="auth-logo">Capital Norvex</div>
+    <div class="auth-tag">Norvex Agents™</div>
+    <h2 class="auth-title">Authentification requise</h2>
+    <p class="auth-sub">Cette console contient des données prospects sensibles. Connecte-toi avec ton compte Microsoft 365 autorisé.</p>
+    <div class="auth-btns">
+      <button class="auth-btn ms" onclick="signInMicrosoft()">
+        <span class="ms-ico"><span></span><span></span><span></span><span></span></span>
+        Se connecter avec Microsoft
+      </button>
+    </div>
+    <div class="auth-err" id="auth-err"></div>
+    <p class="auth-help">
+      Comptes autorisés :<br>
+      <strong>yves@capitalnorvex.com</strong>, <strong>info@capitalnorvex.com</strong>, <strong>suzanne@capitalnorvex.com</strong>
+    </p>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="page-tag">Orchestration des agents <span id="ds-badge" class="ds-badge mock"><span class="ds-dot"></span><span id="ds-label">Données fictives</span></span></div>
+  <h1 class="page-title">Trois agents, une <em>discipline</em>.</h1>
+  <p class="page-sub">Capital, Courtiers, Promoteurs — chaque action sortante est en attente de votre approbation.</p>
+
+  <div class="tier-zero-banner" id="tier-zero-banner" style="display:none">
+    <strong>🚫 ALERTE TIER ZERO :</strong> <span id="tz-msg"></span>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab active" data-tab="capital" onclick="setTab('capital')">
+      Capital <span class="tab-count" id="cnt-capital">0</span>
+    </button>
+    <button class="tab" data-tab="courtiers" onclick="setTab('courtiers')">
+      Courtiers <span class="tab-count" id="cnt-courtiers">0</span>
+    </button>
+    <button class="tab" data-tab="promoteurs" onclick="setTab('promoteurs')">
+      Promoteurs <span class="tab-count" id="cnt-promoteurs">0</span>
+    </button>
+    <button class="tab" data-tab="conseillers" onclick="setTab('conseillers')">
+      Conseillers <span class="tab-count" id="cnt-conseillers">0</span>
+    </button>
+  </div>
+
+  <!-- ── PANEL CAPITAL ── -->
+  <section class="tab-panel active" id="panel-capital">
+    <div class="kpi-strip">
+      <div class="kpi"><div class="kpi-val gold" id="cap-kpi-total">0</div><div class="kpi-label">Cibles totales</div></div>
+      <div class="kpi"><div class="kpi-val" id="cap-kpi-ready">0</div><div class="kpi-label">Prêtes pour approche</div></div>
+      <div class="kpi"><div class="kpi-val amber" id="cap-kpi-pending">0</div><div class="kpi-label">À approuver</div></div>
+      <div class="kpi"><div class="kpi-val green" id="cap-kpi-engaged">0</div><div class="kpi-label">Engagées</div></div>
+    </div>
+
+    <div class="filters">
+      <button class="f-btn active" onclick="filterCap('all')">Toutes</button>
+      <button class="f-btn" onclick="filterCap('1A')">Tier 1A</button>
+      <button class="f-btn" onclick="filterCap('1B')">Tier 1B</button>
+      <button class="f-btn" onclick="filterCap('2')">Tier 2</button>
+      <button class="f-btn" onclick="filterCap('3')">Tier 3</button>
+      <span style="width:1px;height:20px;background:var(--stone)"></span>
+      <button class="f-btn" onclick="filterCap('QC')">QC</button>
+      <button class="f-btn" onclick="filterCap('ON')">ON</button>
+      <button class="f-btn" onclick="filterCap('draft')" style="background:#0d6e4d;color:#fff">En attente</button>
+    </div>
+
+    <table class="tbl">
+      <thead><tr>
+        <th>Cible</th><th>Tier</th><th>Région</th><th>Capital estimé</th><th>Email</th><th>Envoi</th><th style="text-align:right">Action</th>
+      </tr></thead>
+      <tbody id="cap-tbody">
+        <tr><td colspan="7" class="empty">Chargement…</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ── PANEL COURTIERS ── -->
+  <section class="tab-panel" id="panel-courtiers">
+    <div class="kpi-strip">
+      <div class="kpi"><div class="kpi-val gold" id="crt-kpi-total">0</div><div class="kpi-label">Courtiers</div></div>
+      <div class="kpi"><div class="kpi-val" id="crt-kpi-warms">0</div><div class="kpi-label">Warms</div></div>
+      <div class="kpi"><div class="kpi-val green" id="crt-kpi-active">0</div><div class="kpi-label">Actifs</div></div>
+      <div class="kpi"><div class="kpi-val amber" id="crt-kpi-champs">0</div><div class="kpi-label">Champions</div></div>
+    </div>
+
+    <div class="filters">
+      <button class="f-btn active" onclick="filterCrt('all')">Tous</button>
+      <button class="f-btn" onclick="filterCrt('cold')">Cold</button>
+      <button class="f-btn" onclick="filterCrt('warm')">Warm</button>
+      <button class="f-btn" onclick="filterCrt('active')">Actif</button>
+      <button class="f-btn" onclick="filterCrt('champion')">Champion</button>
+      <button class="f-btn" onclick="filterCrt('draft')" style="background:#0d6e4d;color:#fff">En attente</button>
+      <span style="width:1px;height:20px;background:var(--stone)"></span>
+      <button class="f-btn" onclick="filterCrt('QC')">QC</button>
+      <button class="f-btn" onclick="filterCrt('ON')">ON</button>
+    </div>
+
+    <table class="tbl">
+      <thead><tr>
+        <th>Courtier</th><th>Firme</th><th>Région</th><th>Spécialité</th><th>Email</th><th>Envoi</th><th style="text-align:right">Action</th>
+      </tr></thead>
+      <tbody id="crt-tbody">
+        <tr><td colspan="7" class="empty">Chargement…</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ── PANEL PROMOTEURS ── -->
+  <section class="tab-panel" id="panel-promoteurs">
+    <div class="kpi-strip">
+      <div class="kpi"><div class="kpi-val gold" id="pro-kpi-total">0</div><div class="kpi-label">Promoteurs en base</div></div>
+      <div class="kpi"><div class="kpi-val amber" id="pro-kpi-pending">0</div><div class="kpi-label">Drafts à envoyer</div></div>
+      <div class="kpi"><div class="kpi-val green" id="pro-kpi-sent">0</div><div class="kpi-label">Envoyés</div></div>
+      <div class="kpi"><div class="kpi-val" id="pro-kpi-tested">0</div><div class="kpi-label">Tests</div></div>
+    </div>
+
+    <div class="filters">
+      <button class="f-btn active" onclick="filterPro('all')">Tous</button>
+      <button class="f-btn" onclick="filterPro('draft')">À envoyer (drafts)</button>
+      <button class="f-btn" onclick="filterPro('sent')">Envoyés</button>
+      <button class="f-btn" onclick="filterPro('with-email')">Avec email</button>
+      <button class="f-btn" onclick="filterPro('no-email')">Sans email</button>
+    </div>
+
+    <table class="tbl">
+      <thead><tr>
+        <th>Promoteur</th><th>Société</th><th>Région</th><th>Email</th><th>Envoi</th><th style="text-align:right">Action</th>
+      </tr></thead>
+      <tbody id="pro-tbody">
+        <tr><td colspan="6" class="empty">Chargement…</td></tr>
+      </tbody>
+    </table>
+
+    <!-- Historique global -->
+    <div class="history-card">
+      <div class="history-title">📜 Historique d'envois récent (toutes sections)</div>
+      <div id="history-list">
+        <div class="history-row"><span style="color:var(--muted);font-style:italic">Chargement…</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PANEL CONSEILLERS (avocats fiscalistes/successoraux/M&A) ── -->
+  <section class="tab-panel" id="panel-conseillers">
+    <div class="kpi-strip">
+      <div class="kpi"><div class="kpi-val gold" id="adv-kpi-total">0</div><div class="kpi-label">Conseillers en base</div></div>
+      <div class="kpi"><div class="kpi-val amber" id="adv-kpi-pending">0</div><div class="kpi-label">Drafts à envoyer</div></div>
+      <div class="kpi"><div class="kpi-val green" id="adv-kpi-sent">0</div><div class="kpi-label">Envoyés</div></div>
+      <div class="kpi"><div class="kpi-val" id="adv-kpi-tested">0</div><div class="kpi-label">Tests</div></div>
+    </div>
+
+    <div class="filters">
+      <button class="f-btn active" onclick="filterAdv('all')">Tous</button>
+      <button class="f-btn" onclick="filterAdv('draft')">À envoyer (drafts)</button>
+      <button class="f-btn" onclick="filterAdv('sent')">Envoyés</button>
+      <span style="width:1px;height:20px;background:var(--stone)"></span>
+      <button class="f-btn" onclick="filterAdv('QC')">QC</button>
+      <button class="f-btn" onclick="filterAdv('ON')">ON</button>
+    </div>
+
+    <table class="tbl">
+      <thead><tr>
+        <th>Conseiller</th><th>Cabinet</th><th>Titre</th><th>Région</th><th>Email</th><th>Envoi</th><th style="text-align:right">Action</th>
+      </tr></thead>
+      <tbody id="adv-tbody">
+        <tr><td colspan="7" class="empty">Chargement…</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+</div>
+
+<!-- ── MODAL APERÇU ── -->
+<div class="modal-bg" id="modal-bg" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-head">
+      <div>
+        <div class="modal-title" id="modal-title">Aperçu du courriel</div>
+        <div class="modal-meta" id="modal-meta"></div>
+      </div>
+      <button class="modal-close" onclick="closeModal()">Fermer</button>
+    </div>
+    <div class="modal-body">
+      <iframe id="modal-iframe" sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation"></iframe>
+    </div>
+    <div class="modal-actions" id="modal-actions"></div>
+  </div>
+</div>
+
+<!-- ── TOAST ── -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ─── FIREBASE INIT (mêmes credentials que capital-norvex-pipeline.html) ──
+const _fbConfig = {
+  apiKey: atob("QUl6YVN5QjUxMWR3MWcxaEFSb0lsbzVRM3djMk9NTThQOHlKUnA4"),
+  authDomain: "capital-norvex.firebaseapp.com",
+  projectId: "capital-norvex",
+  storageBucket: "capital-norvex.firebasestorage.app",
+  messagingSenderId: "547910657658",
+  appId: "1:547910657658:web:9ae5ebf5fac9c0461ffdc3"
+};
+let _db = null;
+let _auth = null;
+let _currentUser = null;
+try {
+  if (!firebase.apps.length) firebase.initializeApp(_fbConfig);
+  _db = firebase.firestore();
+  _auth = firebase.auth();
+} catch (e) {
+  console.warn('[agents] Firebase init failed:', e);
+}
+
+// ─── AUTH ─────────────────────────────────────────────────────
+// Liste blanche d'emails autorisés. Doit rester synchro avec
+// firestore.rules (function isAdmin()).
+const ALLOWED_EMAILS = [
+  'yves@capitalnorvex.com',
+  'info@capitalnorvex.com',
+  'suzanne@capitalnorvex.com'
+];
+
+// Tenant Microsoft (Capital Norvex)
+const MS_TENANT_ID = 'f0aa7085-09d1-4494-ba12-cee80f00d9d0';
+
+function showAuthError(msg) {
+  const el = document.getElementById('auth-err');
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+
+function hideAuthError() {
+  document.getElementById('auth-err').style.display = 'none';
+}
+
+function _handleAuthError(e, providerName) {
+  console.error(`[auth] sign-in ${providerName} failed:`, e);
+  if (e.code === 'auth/operation-not-allowed') {
+    showAuthError(`Le fournisseur ${providerName} n'est pas activé dans Firebase Console. Active-le sous Authentication → Sign-in method.`);
+  } else if (e.code === 'auth/popup-closed-by-user' || e.code === 'auth/cancelled-popup-request') {
+    // silencieux
+  } else if (e.code === 'auth/account-exists-with-different-credential') {
+    showAuthError("Ce courriel existe déjà avec un autre fournisseur. Contacte l'administrateur.");
+  } else {
+    showAuthError(`Erreur : ${e.message}`);
+  }
+}
+
+async function signInMicrosoft() {
+  hideAuthError();
+  if (!_auth) { showAuthError('Firebase Auth non initialisé.'); return; }
+  try {
+    const provider = new firebase.auth.OAuthProvider('microsoft.com');
+    provider.setCustomParameters({
+      tenant: MS_TENANT_ID,
+      prompt: 'select_account'
+    });
+    provider.addScope('openid');
+    provider.addScope('profile');
+    provider.addScope('email');
+    await _auth.signInWithPopup(provider);
+  } catch (e) {
+    _handleAuthError(e, 'Microsoft');
+  }
+}
+
+async function signOut() {
+  if (_auth) await _auth.signOut();
+  location.reload();
+}
+
+function onAuthChanged(user) {
+  if (!user) {
+    document.getElementById('auth-overlay').style.display = 'flex';
+    document.getElementById('tb-user').classList.remove('shown');
+    return;
+  }
+  const email = (user.email || '').toLowerCase();
+  if (!ALLOWED_EMAILS.includes(email)) {
+    showAuthError(`Compte non autorisé : ${user.email}. Connecte-toi avec un compte de la liste.`);
+    _auth.signOut();
+    return;
+  }
+  _currentUser = user;
+  document.getElementById('auth-overlay').style.display = 'none';
+  const tb = document.getElementById('tb-user');
+  tb.classList.add('shown');
+  document.getElementById('tb-user-email').textContent = email;
+  document.getElementById('tb-user-avatar').textContent = (email[0] || '?').toUpperCase();
+  // Maintenant qu'on est admin authentifié, charge via l'API Netlify
+  loadFromApi();
+}
+
+if (_auth) _auth.onAuthStateChanged(onAuthChanged);
+
+// ─── INTERNAL_SECRET (clé pour appeler les Netlify functions) ─────────────
+// Stockée en localStorage. Demandée à la 1re action si absente.
+const SECRET_KEY = 'cn_admin_secret';
+function getInternalSecret() {
+  return localStorage.getItem(SECRET_KEY);
+}
+function promptForSecret() {
+  const s = prompt(
+    'Clé interne (INTERNAL_SECRET) requise pour cette action.\n' +
+    'Elle sera mémorisée dans ton navigateur.\n\n' +
+    'Demande à Yves si tu ne l\'as pas.'
+  );
+  if (s && s.trim()) {
+    localStorage.setItem(SECRET_KEY, s.trim());
+    return s.trim();
+  }
+  return null;
+}
+function requireSecret() {
+  return getInternalSecret() || promptForSecret();
+}
+
+// ─── DATA ─────────────────────────────────────────────────────
+let DATA_SOURCE = 'mock';
+const DATA = {
+  capitalTargets: [],
+  brokers:        [],
+  promoteurs:     [],
+  advisors:       [],
+  history:        [],
+  counts: {
+    capital:    { total: 0, pending: 0, sent: 0, tested: 0 },
+    courtiers:  { total: 0, pending: 0, sent: 0, tested: 0 },
+    promoteurs: { total: 0, pending: 0, sent: 0, tested: 0 },
+    advisors:   { total: 0, pending: 0, sent: 0, tested: 0 },
+  }
+};
+
+// ─── STATE ────────────────────────────────────────────────────
+let activeTab = 'capital';
+let capFilter = 'all';
+let crtFilter = 'all';
+let proFilter = 'all';
+let advFilter = 'all';
+
+// ─── DATA LOAD via Netlify function ────────────────────────────
+async function loadFromApi(_retryCount) {
+  _retryCount = _retryCount || 0;
+  let secret = getInternalSecret();
+  // Auto-prompt visible si la clé manque (au lieu de toast silencieux)
+  if (!secret) {
+    secret = window.prompt(
+      'Clé interne (INTERNAL_SECRET) requise pour charger les données.\n\n' +
+      'Indice : commence par « Norvex... »'
+    );
+    if (secret && secret.trim()) {
+      localStorage.setItem(SECRET_KEY, secret.trim());
+      secret = secret.trim();
+    } else {
+      showToast('Clé requise. Recharge la page (Cmd+R) pour réessayer.', 'error');
+      return;
+    }
+  }
+  try {
+    const r = await fetch('/api/agent-list-outreach?t=' + Date.now(), {
+      headers: { 'X-Internal-Secret': secret },
+      cache: 'no-store'
+    });
+    if (r.status === 401) {
+      // Clé obsolète/refusée → purge + re-prompt automatique + retry (max 2)
+      localStorage.removeItem(SECRET_KEY);
+      if (_retryCount >= 2) {
+        showToast('Clé interne refusée 3 fois. Vérifie avec Yves.', 'error');
+        return;
+      }
+      const newSecret = window.prompt(
+        'Clé interne refusée par le serveur (probablement obsolète).\n\n' +
+        'Tape la nouvelle clé interne :\n' +
+        '(indice : commence par « Norvex... »)'
+      );
+      if (newSecret && newSecret.trim()) {
+        localStorage.setItem(SECRET_KEY, newSecret.trim());
+        return loadFromApi(_retryCount + 1); // retry automatique
+      } else {
+        showToast('Annulé. Recharge (Cmd+R) pour réessayer.', 'error');
+        return;
+      }
+    }
+    if (!r.ok) {
+      const t = await r.text();
+      showToast('Erreur chargement : ' + t.slice(0, 200), 'error');
+      return;
+    }
+    const data = await r.json();
+    DATA.capitalTargets = data.capital.rows || [];
+    DATA.brokers        = data.courtiers.rows || [];
+    DATA.promoteurs     = data.promoteurs.rows || [];
+    DATA.advisors       = (data.advisors && data.advisors.rows) || [];
+    const lrA = document.getElementById('agents-last-refresh');
+    if (lrA) lrA.textContent = 'Maj : ' + new Date().toLocaleTimeString('fr-CA');
+    showToast('Données rafraîchies', 'success');
+    DATA.history        = data.history || [];
+    DATA.counts = {
+      capital:    data.capital.counts,
+      courtiers:  data.courtiers.counts,
+      promoteurs: data.promoteurs.counts,
+      advisors:   (data.advisors && data.advisors.counts) || { total: 0, pending: 0, sent: 0, tested: 0 },
+    };
+    DATA_SOURCE = 'live';
+    updateDataSourceBadge();
+    renderCapital();
+    renderCourtiers();
+    renderPromoteurs();
+    renderAdvisors();
+    renderHistory();
+  } catch (e) {
+    showToast('Erreur réseau : ' + e.message, 'error');
+  }
+}
+
+function updateDataSourceBadge() {
+  const badge = document.getElementById('ds-badge');
+  const label = document.getElementById('ds-label');
+  if (DATA_SOURCE === 'live') {
+    badge.className = 'ds-badge live';
+    const total = DATA.capitalTargets.length + DATA.brokers.length + DATA.promoteurs.length + DATA.advisors.length;
+    label.textContent = `Firestore en direct · ${total} enregistrements`;
+  } else {
+    badge.className = 'ds-badge mock';
+    label.textContent = 'Pas encore chargé';
+  }
+}
+
+// ─── TAB SWITCHING ────────────────────────────────────────────
+function setTab(name) {
+  activeTab = name;
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + name));
+}
+
+// ─── FILTERS ──────────────────────────────────────────────────
+function filterCap(val) {
+  capFilter = val;
+  document.querySelectorAll('#panel-capital .f-btn').forEach(b => {
+    b.classList.toggle('active', b.textContent.trim().toLowerCase() === val.toLowerCase() || (val === 'all' && b.textContent.trim() === 'Toutes') || (val === 'draft' && b.textContent.trim() === 'En attente'));
+  });
+  renderCapital();
+}
+function filterCrt(val) {
+  crtFilter = val;
+  document.querySelectorAll('#panel-courtiers .f-btn').forEach(b => {
+    b.classList.toggle('active', b.textContent.trim().toLowerCase() === val.toLowerCase() || (val === 'all' && b.textContent.trim() === 'Tous') || (val === 'draft' && b.textContent.trim() === 'En attente'));
+  });
+  renderCourtiers();
+}
+function filterPro(val) {
+  proFilter = val;
+  document.querySelectorAll('#panel-promoteurs .f-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.fval === val || (val === 'all' && b.textContent.trim() === 'Tous'));
+  });
+  // tag aussi via texte si data attr absent
+  document.querySelectorAll('#panel-promoteurs .f-btn').forEach(b => {
+    const lbl = b.textContent.trim().toLowerCase();
+    const map = {'tous':'all','à envoyer (drafts)':'draft','envoyés':'sent','avec email':'with-email','sans email':'no-email'};
+    b.classList.toggle('active', map[lbl] === val);
+  });
+  renderPromoteurs();
+}
+function filterAdv(val) {
+  advFilter = val;
+  document.querySelectorAll('#panel-conseillers .f-btn').forEach(b => {
+    const lbl = b.textContent.trim().toLowerCase();
+    const map = {'tous':'all','à envoyer (drafts)':'draft','envoyés':'sent','qc':'QC','on':'ON'};
+    b.classList.toggle('active', map[lbl] === val);
+  });
+  renderAdvisors();
+}
+
+// ─── HELPERS ──────────────────────────────────────────────────
+function fmt(n) { return (n || 0).toLocaleString('fr-CA').replace(/,/g,' '); }
+function escHtml(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function fmtDate(iso) {
+  if (!iso) return '—';
+  try {
+    const d = new Date(iso);
+    return d.toLocaleString('fr-CA', { dateStyle: 'short', timeStyle: 'short' });
+  } catch { return iso; }
+}
+function envoiCell(r) {
+  // Priorité 1 : draft prêt à valider (même si déjà envoyé une fois auparavant = re-touche)
+  if (r.pendingDraft) {
+    let testLine = '';
+    if (r.lastTestAt) {
+      testLine = `<div style="font-size:.6rem;color:var(--blue2);margin-top:.2rem">Test : ${fmtDate(r.lastTestAt)}</div>`;
+    }
+    // Badge "re-touche" si déjà envoyé une fois (sentAt existant + nouveau draft)
+    const isRelance = !!r.sentAt;
+    const badge = isRelance
+      ? `<span class="pill pill-pending" style="background:#f57c00;color:white">re-touche prête</span>`
+      : `<span class="pill pill-pending">draft prêt</span>`;
+    const prevLine = isRelance
+      ? `<div style="font-size:.58rem;color:var(--muted);margin-top:.25rem">1er envoi : ${fmtDate(r.sentAt)}</div>`
+      : '';
+    return `<div>${badge}</div>${testLine}${prevLine}`;
+  }
+  // Priorité 2 : déjà envoyé, pas de nouveau draft
+  if (r.sentAt) {
+    return `<div><span class="pill pill-sent">envoyé</span></div>
+            <div style="font-size:.62rem;color:var(--muted);margin-top:.25rem">${fmtDate(r.sentAt)}<br>→ ${escHtml(r.sentTo || '?')}</div>`;
+  }
+  return '<span style="color:var(--muted);font-size:.7rem">—</span>';
+}
+
+// ─── RENDERS ──────────────────────────────────────────────────
+function renderCapital() {
+  const all = DATA.capitalTargets;
+  let rows = all;
+  if (['1A','1B','2','3'].includes(capFilter)) rows = rows.filter(r => r.tier === capFilter);
+  if (['QC','ON'].includes(capFilter)) rows = rows.filter(r => r.region === capFilter);
+  if (capFilter === 'draft') rows = rows.filter(r => r.pendingDraft && !r.sentAt);
+
+  document.getElementById('cap-kpi-total').textContent = all.length;
+  document.getElementById('cap-kpi-ready').textContent = all.filter(t => t.status === 'ready').length;
+  document.getElementById('cap-kpi-pending').textContent = DATA.counts.capital.pending;
+  document.getElementById('cap-kpi-engaged').textContent = DATA.counts.capital.sent;
+  document.getElementById('cnt-capital').textContent = rows.length;
+
+  const tbody = document.getElementById('cap-tbody');
+  if (rows.length === 0) { tbody.innerHTML = '<tr><td colspan="7" class="empty">Aucune cible.</td></tr>'; return; }
+
+  tbody.innerHTML = rows.map(r => {
+    const ce = r.capitalEstimate || {min:0,max:0};
+    const cap = `${fmt((ce.min||0)/1e6)}M – ${fmt((ce.max||0)/1e6)}M $`;
+    const actions = renderActions('capitalTargets', r);
+    const emailVal = r.email || (r.contactInfo && r.contactInfo.email) || (r.publicContact && r.publicContact.email) || '';
+    const emailCell = emailVal && emailVal.includes('@')
+      ? `<span style="font-family:'DM Mono',monospace;font-size:.7rem">${escHtml(emailVal)}</span>`
+      : '<span style="color:var(--muted);font-style:italic;font-size:.7rem">à enrichir</span>';
+    return `<tr>
+      <td><strong>${escHtml(r.name || r.companyName || '?')}</strong><br><span style="font-size:.6rem;color:var(--muted)">${escHtml(r.organization || r.language || '')}</span></td>
+      <td><span class="pill pill-tier">${escHtml(r.tier || '—')}</span></td>
+      <td>${escHtml(r.region || '—')}</td>
+      <td style="font-family:'Playfair Display',serif;color:var(--gold)">${cap}</td>
+      <td>${emailCell}</td>
+      <td>${envoiCell(r)}</td>
+      <td style="text-align:right">${actions}</td>
+    </tr>`;
+  }).join('');
+}
+
+function renderCourtiers() {
+  const all = DATA.brokers;
+  let rows = all;
+  if (['cold','warm','active','champion'].includes(crtFilter)) rows = rows.filter(r => r.relationshipStatus === crtFilter);
+  if (['QC','ON'].includes(crtFilter)) rows = rows.filter(r => r.region === crtFilter);
+  if (crtFilter === 'draft') rows = rows.filter(r => r.pendingDraft && !r.sentAt);
+
+  document.getElementById('crt-kpi-total').textContent = all.length;
+  document.getElementById('crt-kpi-warms').textContent = all.filter(b => b.relationshipStatus === 'warm').length;
+  document.getElementById('crt-kpi-active').textContent = all.filter(b => b.relationshipStatus === 'active').length;
+  document.getElementById('crt-kpi-champs').textContent = all.filter(b => b.relationshipStatus === 'champion').length;
+  document.getElementById('cnt-courtiers').textContent = rows.length;
+
+  const tbody = document.getElementById('crt-tbody');
+  if (rows.length === 0) { tbody.innerHTML = '<tr><td colspan="7" class="empty">Aucun courtier.</td></tr>'; return; }
+  tbody.innerHTML = rows.map(r => {
+    const emailVal = r.email || (r.contactInfo && r.contactInfo.email) || (r.publicContact && r.publicContact.email) || '';
+    const emailCell = emailVal && emailVal.includes('@')
+      ? `<span style="font-family:'DM Mono',monospace;font-size:.7rem">${escHtml(emailVal)}</span>`
+      : '<span style="color:var(--muted);font-style:italic;font-size:.7rem">à enrichir</span>';
+    return `<tr>
+      <td><strong>${escHtml(r.name || '?')}</strong></td>
+      <td>${escHtml(r.firmName || '—')}</td>
+      <td>${escHtml(r.region || '—')}</td>
+      <td>${escHtml((r.specialty || []).join(', '))}</td>
+      <td>${emailCell}</td>
+      <td>${envoiCell(r)}</td>
+      <td style="text-align:right">${renderActions('brokers', r)}</td>
+    </tr>`;
+  }).join('');
+}
+
+function renderPromoteurs() {
+  const all = DATA.promoteurs;
+  let rows = all;
+  const _email = r => r.email || (r.contactInfo && r.contactInfo.email) || (r.publicContact && r.publicContact.email) || '';
+  if (proFilter === 'draft')      rows = rows.filter(r => r.pendingDraft);
+  if (proFilter === 'sent')       rows = rows.filter(r => r.sentAt);
+  if (proFilter === 'with-email') rows = rows.filter(r => _email(r).includes('@'));
+  if (proFilter === 'no-email')   rows = rows.filter(r => !_email(r).includes('@'));
+
+  document.getElementById('pro-kpi-total').textContent = all.length;
+  document.getElementById('pro-kpi-pending').textContent = DATA.counts.promoteurs.pending;
+  document.getElementById('pro-kpi-sent').textContent = DATA.counts.promoteurs.sent;
+  document.getElementById('pro-kpi-tested').textContent = DATA.counts.promoteurs.tested;
+  document.getElementById('cnt-promoteurs').textContent = all.length;
+
+  const tbody = document.getElementById('pro-tbody');
+  if (rows.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="6" class="empty">Aucun promoteur. Lance <code>python -m agents.promoteurs.prospector</code> pour scraper.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = rows.map(r => {
+    const contact = r.principalContact || '';
+    const company = r.companyName || '?';
+    const emailVal = r.email || (r.contactInfo && r.contactInfo.email) || (r.publicContact && r.publicContact.email) || '';
+    const email = emailVal && emailVal.includes('@')
+      ? `<span style="font-family:'DM Mono',monospace;font-size:.7rem">${escHtml(emailVal)}</span>`
+      : '<span style="color:var(--muted);font-style:italic;font-size:.7rem">à enrichir</span>';
+    return `<tr>
+      <td><strong>${escHtml(contact || 'Direction')}</strong><br><span style="font-size:.6rem;color:var(--muted)">${escHtml(company)}</span></td>
+      <td>${escHtml(r.city || r.region || '—')}</td>
+      <td>${escHtml(r.region || '—')}</td>
+      <td>${email}</td>
+      <td>${envoiCell(r)}</td>
+      <td style="text-align:right">${renderActions('promoteurTargets', r)}</td>
+    </tr>`;
+  }).join('');
+}
+
+function renderAdvisors() {
+  const all = DATA.advisors;
+  let rows = all;
+  if (advFilter === 'draft')   rows = rows.filter(r => r.pendingDraft);
+  if (advFilter === 'sent')    rows = rows.filter(r => r.sentAt);
+  if (advFilter === 'QC')      rows = rows.filter(r => (r.region || '').toUpperCase() === 'QC');
+  if (advFilter === 'ON')      rows = rows.filter(r => (r.region || '').toUpperCase() === 'ON');
+
+  document.getElementById('adv-kpi-total').textContent = all.length;
+  document.getElementById('adv-kpi-pending').textContent = DATA.counts.advisors.pending;
+  document.getElementById('adv-kpi-sent').textContent = DATA.counts.advisors.sent;
+  document.getElementById('adv-kpi-tested').textContent = DATA.counts.advisors.tested;
+  document.getElementById('cnt-conseillers').textContent = all.length;
+
+  const tbody = document.getElementById('adv-tbody');
+  if (rows.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="7" class="empty">Aucun conseiller. Lance <code>python -m agents.capital.discover_law_firms</code> pour découvrir.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = rows.map(r => {
+    const name = r.name || '?';
+    const firm = r.organization || '—';
+    const title = r.title || '—';
+    const region = r.region || '—';
+    const emailVal = r.email || (r.publicContact && r.publicContact.email) || (r.contactInfo && r.contactInfo.email) || '';
+    const email = emailVal && emailVal.includes('@')
+      ? `<span style="font-family:'DM Mono',monospace;font-size:.7rem">${escHtml(emailVal)}</span>`
+      : '<span style="color:var(--muted);font-style:italic;font-size:.7rem">à enrichir</span>';
+    return `<tr>
+      <td><strong>${escHtml(name)}</strong></td>
+      <td>${escHtml(firm)}</td>
+      <td><span style="font-size:.7rem">${escHtml(title)}</span></td>
+      <td>${escHtml(region)}</td>
+      <td>${email}</td>
+      <td>${envoiCell(r)}</td>
+      <td style="text-align:right">${renderActions('advisorTargets', r)}</td>
+    </tr>`;
+  }).join('');
+}
+
+function renderActions(collection, r) {
+  // Si re-touche prête (pendingDraft + sentAt antérieur) : afficher boutons quand même.
+  // Si déjà envoyé SANS nouveau draft : bloc envoyé (pas de boutons).
+  if (r.sentAt && !r.pendingDraft) {
+    return `<div class="row-actions"><span style="font-size:.62rem;color:var(--muted);font-style:italic">envoyé ${fmtDate(r.sentAt)}</span></div>`;
+  }
+  // Sinon : 3 boutons TOUJOURS visibles (le backend génère le draft à la volée si manquant)
+  const emailVal = r.email || (r.contactInfo && r.contactInfo.email) || (r.publicContact && r.publicContact.email) || '';
+  const hasEmail = emailVal.includes('@');
+  const isRelance = !!r.sentAt; // re-touche d'un déjà envoyé
+  const sendLabel = isRelance ? '📤 Renvoyer' : '📤 Envoyer';
+  const out = [
+    `<button class="btn-preview" onclick="preview('${collection}','${r.id}')">👁️ Aperçu</button>`,
+  ];
+  if (hasEmail) {
+    out.push(`<button class="btn-test" onclick="sendTest('${collection}','${r.id}')">🧪 Test à yves@</button>`);
+    out.push(`<button class="btn-send" onclick="sendLive('${collection}','${r.id}')">${sendLabel}</button>`);
+  } else {
+    out.push(`<span style="font-size:.6rem;color:var(--muted);font-style:italic;align-self:center">email à enrichir avant envoi</span>`);
+  }
+  return `<div class="row-actions">${out.join('')}</div>`;
+}
+
+function renderHistory() {
+  const list = document.getElementById('history-list');
+  if (!DATA.history || DATA.history.length === 0) {
+    list.innerHTML = '<div class="history-row"><span style="color:var(--muted);font-style:italic">Aucun envoi récent.</span></div>';
+    return;
+  }
+  list.innerHTML = DATA.history.slice(0, 30).map(h => {
+    const d = h.details || {};
+    const who = d.companyName || h.targetId || '?';
+    const isTest = !!d.isTest;
+    const failed = h.action === 'outreach_failed' || h.result === 'failure';
+    const pillCls = failed ? 'fail' : (isTest ? 'test' : 'live');
+    const pillTxt = failed ? 'échec' : (isTest ? 'test' : 'envoyé');
+    return `<div class="history-row">
+      <div>
+        <div><strong>${escHtml(who)}</strong> → ${escHtml(d.to || '?')}</div>
+        <div class="history-meta">${fmtDate(h.timestamp)} · via ${escHtml(d.via || '—')} · ${escHtml(h.targetType || '?')}</div>
+      </div>
+      <span class="history-pill ${pillCls}">${pillTxt}</span>
+    </div>`;
+  }).join('');
+}
+
+// ─── ACTIONS ──────────────────────────────────────────────────
+let CURRENT_PREVIEW = null;
+
+async function preview(collection, docId) {
+  const secret = requireSecret();
+  if (!secret) return;
+  showToast('Chargement de l\'aperçu…');
+  try {
+    const r = await fetch('/api/agent-send-outreach', {
+      method: 'POST',
+      headers: { 'X-Internal-Secret': secret, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ collection, docId, action: 'preview' })
+    });
+    const data = await r.json().catch(() => ({}));
+    if (!r.ok) {
+      // Cas spécial : draft manquant → afficher modal d'aide avec commande à copier
+      if (data && data.needsDraft) {
+        openHelpModal({
+          title: 'Aucun draft prêt pour cette cible',
+          message: data.error || '',
+          hint: data.hint || '',
+        });
+        return;
+      }
+      throw new Error(data.error || `HTTP ${r.status}`);
+    }
+    CURRENT_PREVIEW = { collection, docId, ...data.preview };
+    openModal(data.preview);
+  } catch (e) {
+    showToast('Aperçu impossible : ' + e.message, 'error');
+  }
+}
+
+function openHelpModal({ title, message, hint }) {
+  document.getElementById('modal-title').textContent = title;
+  document.getElementById('modal-meta').innerHTML = escHtml(message);
+  const iframe = document.getElementById('modal-iframe');
+  iframe.srcdoc = `<html><body style="font-family:'DM Mono',monospace;padding:24px;background:#fafafa;color:#222;line-height:1.6">
+    <h3 style="margin-top:0">Comment générer ce draft</h3>
+    <p>${escHtml(message)}</p>
+    <pre style="background:#1f2329;color:#e6e6e6;padding:16px;border-radius:6px;white-space:pre-wrap;font-size:.85em">${escHtml(hint)}</pre>
+    <p style="margin-top:18px;color:#666;font-size:.85em">Demande à Claude (ou à ton équipe technique) de lancer cette commande sur ton Mac. Le draft apparaîtra ici dans les secondes qui suivent.</p>
+  </body></html>`;
+  document.getElementById('modal-actions').innerHTML = `
+    <button class="btn-preview" onclick="closeModal()">Fermer</button>
+  `;
+  document.getElementById('modal-bg').classList.add('shown');
+}
+
+function openModal(p) {
+  document.getElementById('modal-title').textContent = p.subject || '(sans sujet)';
+  document.getElementById('modal-meta').innerHTML =
+    `À : <strong>${escHtml(p.toName || '')}</strong> &lt;${escHtml(p.to || '')}&gt; · langue ${escHtml((p.lang||'fr').toUpperCase())}`;
+  const iframe = document.getElementById('modal-iframe');
+  iframe.srcdoc = p.html || '<p>(vide)</p>';
+  // Boutons d'action sous l'aperçu
+  document.getElementById('modal-actions').innerHTML = `
+    <button class="btn-test" onclick="sendTest(CURRENT_PREVIEW.collection, CURRENT_PREVIEW.docId, true)">🧪 Test à yves@</button>
+    <button class="btn-send" onclick="sendLive(CURRENT_PREVIEW.collection, CURRENT_PREVIEW.docId, true)">📤 Envoyer pour de vrai</button>
+  `;
+  document.getElementById('modal-bg').classList.add('shown');
+}
+function closeModal() {
+  document.getElementById('modal-bg').classList.remove('shown');
+  document.getElementById('modal-iframe').srcdoc = '';
+  CURRENT_PREVIEW = null;
+}
+
+async function sendTest(collection, docId, fromModal) {
+  if (!confirm('Envoyer un courriel de TEST à yves@capitalnorvex.com ?\n\nLa cible NE sera PAS marquée comme contactée.')) return;
+  await doSend(collection, docId, true, 'yves@capitalnorvex.com', fromModal);
+}
+
+async function sendLive(collection, docId, fromModal) {
+  const target = findTarget(collection, docId);
+  const to = target?.pendingDraft?.to || '?';
+  const company = target?.companyName || target?.name || docId;
+  if (!confirm(`⚠️  ENVOI RÉEL\n\nCible : ${company}\nDestinataire : ${to}\n\nLa cible sera marquée comme contactée. Confirmer ?`)) return;
+  await doSend(collection, docId, false, null, fromModal);
+}
+
+async function doSend(collection, docId, isTest, testTo, closeAfter) {
+  const secret = requireSecret();
+  if (!secret) return;
+  // Détection re-touche : si la cible a déjà été envoyée + nouveau pendingDraft,
+  // on bypass automatiquement le check 14j anti-harcèlement (décision Yves explicite
+  // de relancer = validation manuelle de la fenêtre de timing).
+  const target = findTarget(collection, docId);
+  const isRelance = !!(target && target.sentAt && target.pendingDraft);
+  showToast(isTest ? 'Envoi du test en cours…' : (isRelance ? 'Re-touche en cours…' : 'Envoi en cours…'));
+  try {
+    const body = { collection, docId, action: 'send', isTest };
+    if (isTest && testTo) body.testTo = testTo;
+    if (isRelance) body.bypassRateLimit = true;
+    const r = await fetch('/api/agent-send-outreach', {
+      method: 'POST',
+      headers: { 'X-Internal-Secret': secret, 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    const data = await r.json().catch(() => ({}));
+    if (!r.ok) {
+      throw new Error(data.error || data.graphError || ('HTTP ' + r.status));
+    }
+    showToast(`✅ ${isTest ? 'Test envoyé' : 'Envoyé'} à ${data.to} (via ${data.via})`, 'success');
+    if (closeAfter) closeModal();
+    // Mise à jour locale IMMÉDIATE pour que la ligne disparaisse du filtre "En attente"
+    // sans attendre le rechargement API (évite double-clic accidentel).
+    if (!isTest) {
+      const _map = { capitalTargets: DATA.capitalTargets, brokers: DATA.brokers, promoteurTargets: DATA.promoteurs, advisorTargets: DATA.advisors };
+      const _arr = _map[collection] || [];
+      const _idx = _arr.findIndex(r => r.id === docId);
+      if (_idx >= 0) _arr[_idx] = { ..._arr[_idx], sentAt: new Date().toISOString(), pendingDraft: null };
+      renderCapital(); renderCourtiers(); renderPromoteurs(); renderAdvisors();
+    }
+    // Rechargement réel depuis Firestore après 3s pour confirmer.
+    setTimeout(loadFromApi, 3000);
+  } catch (e) {
+    showToast('❌ Échec : ' + e.message, 'error');
+  }
+}
+
+function findTarget(collection, docId) {
+  const map = { capitalTargets: DATA.capitalTargets, brokers: DATA.brokers, promoteurTargets: DATA.promoteurs, advisorTargets: DATA.advisors };
+  return (map[collection] || []).find(r => r.id === docId);
+}
+
+// ─── TOAST ────────────────────────────────────────────────────
+let _toastTimer = null;
+function showToast(msg, type) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast shown' + (type ? ' ' + type : '');
+  if (_toastTimer) clearTimeout(_toastTimer);
+  _toastTimer = setTimeout(() => { t.classList.remove('shown'); }, 4000);
+}
+
+// ─── INIT ─────────────────────────────────────────────────────
+// La page n'affiche que des squelettes vides tant que loadFromApi() n'a pas
+// ramené les vraies données. loadFromApi() est appelé par onAuthChanged()
+// après authentification Microsoft réussie.
+renderCapital();
+renderCourtiers();
+renderPromoteurs();
+renderAdvisors();
+renderHistory();
+if (!_auth) {
+  document.getElementById('auth-overlay').style.display = 'none';
+  loadFromApi();
+}
+</script>
+</body>
+</html>

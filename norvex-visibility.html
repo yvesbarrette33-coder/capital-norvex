@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Norvex Visibility — Capital Norvex</title>
+<link rel="icon" type="image/png" href="/icon-512.png">
+<style>
+  :root{
+    --bg:#0a0a0a; --surface:#111; --card:#161616;
+    --border:#262626; --border-h:#3a3a3a;
+    --gold:#c9a85c; --gold-l:#e5cd87;
+    --text:#e9e9e9; --text-dim:#9a9a9a; --text-mute:#6a6a6a;
+    --green:#3ecf8e; --red:#ef5e5e; --amber:#e5a83b;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;min-height:100vh;font-size:14px;line-height:1.55}
+  a{color:var(--gold);text-decoration:none}a:hover{text-decoration:underline}
+  header{border-bottom:1px solid var(--border);padding:20px 28px;display:flex;justify-content:space-between;align-items:center;background:var(--surface)}
+  header h1{font-size:18px;font-weight:600;letter-spacing:0.5px}
+  header h1 span{color:var(--gold)}
+  .controls{display:flex;gap:10px;align-items:center}
+  .controls select,.controls button{background:var(--card);color:var(--text);border:1px solid var(--border);padding:8px 14px;border-radius:6px;font-family:inherit;font-size:13px;cursor:pointer}
+  .controls button:hover{border-color:var(--gold)}
+  .controls button.primary{background:var(--gold);color:#0a0a0a;border-color:var(--gold);font-weight:600}
+  main{padding:28px;max-width:1400px;margin:0 auto}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:24px}
+  .kpi{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:18px}
+  .kpi label{display:block;font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-mute);margin-bottom:8px}
+  .kpi .val{font-size:30px;font-weight:600;letter-spacing:-0.5px}
+  .kpi .val.gold{color:var(--gold)}
+  .kpi .sub{margin-top:4px;font-size:12px;color:var(--text-dim)}
+  section{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:20px 24px;margin-bottom:20px}
+  section h2{font-size:14px;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold);margin-bottom:14px;font-weight:500;display:flex;justify-content:space-between;align-items:center}
+  section h2 .count{color:var(--text-mute);font-size:12px;font-weight:400}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th{text-align:left;padding:10px 12px;border-bottom:1px solid var(--border);color:var(--text-mute);font-weight:500;font-size:11px;letter-spacing:1px;text-transform:uppercase}
+  td{padding:10px 12px;border-bottom:1px solid var(--border)}
+  tr:last-child td{border-bottom:none}
+  tbody tr:hover{background:rgba(201,168,92,0.04)}
+  .email{font-family:"SF Mono",Menlo,monospace;font-size:12.5px}
+  .badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;letter-spacing:0.5px}
+  .badge-gold{background:rgba(201,168,92,0.15);color:var(--gold-l)}
+  .badge-green{background:rgba(62,207,142,0.15);color:var(--green)}
+  .badge-dim{background:rgba(255,255,255,0.05);color:var(--text-dim)}
+  .links{display:flex;gap:14px;flex-wrap:wrap;padding-top:8px}
+  .link-card{flex:1;min-width:260px;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px 18px;display:flex;align-items:center;justify-content:space-between;transition:border-color 0.15s;text-decoration:none}
+  .link-card:hover{border-color:var(--gold);text-decoration:none}
+  .link-card strong{color:var(--text);font-size:13px;font-weight:600;display:block;margin-bottom:3px}
+  .link-card .lc-sub{font-size:11.5px;color:var(--text-dim)}
+  .link-card .lc-arrow{color:var(--gold);font-size:18px}
+  .login-overlay{position:fixed;inset:0;background:rgba(10,10,10,0.96);display:flex;align-items:center;justify-content:center;z-index:9999;backdrop-filter:blur(8px)}
+  .login-box{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:32px 36px;width:380px;max-width:90%}
+  .login-box h2{color:var(--gold);font-size:14px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:18px;text-align:center}
+  .login-box input{width:100%;background:var(--bg);color:var(--text);border:1px solid var(--border);padding:11px 14px;border-radius:6px;font-family:inherit;font-size:14px;margin-bottom:12px}
+  .login-box button{width:100%;background:var(--gold);color:#0a0a0a;border:none;padding:11px;border-radius:6px;font-weight:600;cursor:pointer;font-family:inherit}
+  .login-box .err{color:var(--red);font-size:12px;margin-top:6px;min-height:16px;text-align:center}
+  .loading{padding:40px;text-align:center;color:var(--text-dim);font-size:13px}
+  .empty{padding:24px;text-align:center;color:var(--text-mute);font-size:13px}
+  .from-tag{font-size:10px;padding:1px 6px;border-radius:3px;background:rgba(255,255,255,0.04);color:var(--text-mute);margin-left:6px}
+  .ago{color:var(--text-dim);font-size:11.5px}
+  .num{text-align:right;font-variant-numeric:tabular-nums}
+</style>
+</head>
+<body>
+
+<div class="login-overlay" id="login">
+  <div class="login-box">
+    <h2>Norvex Visibility</h2>
+    <input type="password" id="secret-input" placeholder="Internal secret" autocomplete="off">
+    <button onclick="login()">Entrer</button>
+    <div class="err" id="login-err"></div>
+  </div>
+</div>
+
+<header>
+  <h1>Norvex<span> Visibility</span></h1>
+  <div class="controls">
+    <select id="days">
+      <option value="7">7 jours</option>
+      <option value="14" selected>14 jours</option>
+      <option value="30">30 jours</option>
+    </select>
+    <button onclick="loadSnapshot(false)">↻ Snapshot rapide</button>
+    <button onclick="loadSnapshot(true)" class="primary">⚡ Filtrer humains</button>
+  </div>
+</header>
+
+<main>
+  <div id="loading" class="loading" style="display:none">Chargement du snapshot SendGrid…</div>
+
+  <div id="dashboard" style="display:none">
+
+    <div class="kpis" id="kpis"></div>
+
+    <section>
+      <h2>Top clickers <span class="count" id="cl-count"></span></h2>
+      <div id="topClickers"></div>
+    </section>
+
+    <section>
+      <h2>Top openers <span class="count" id="op-count"></span></h2>
+      <div id="topOpeners"></div>
+    </section>
+
+    <section>
+      <h2>Activité récente <span class="count" id="re-count"></span></h2>
+      <div id="recent"></div>
+    </section>
+
+    <section>
+      <h2>Sources externes</h2>
+      <div class="links">
+        <a class="link-card" href="https://clarity.microsoft.com/projects/view/wqmwilt1it" target="_blank" rel="noopener">
+          <div><strong>Microsoft Clarity</strong><div class="lc-sub">Heatmaps, session recordings, behavior</div></div>
+          <div class="lc-arrow">↗</div>
+        </a>
+        <a class="link-card" href="https://app.sendgrid.com/email_activity" target="_blank" rel="noopener">
+          <div><strong>SendGrid Activity</strong><div class="lc-sub">Email activity feed (raw)</div></div>
+          <div class="lc-arrow">↗</div>
+        </a>
+        <a class="link-card" href="/capital-norvex-brain.html">
+          <div><strong>Norvex Brain</strong><div class="lc-sub">Tableau central</div></div>
+          <div class="lc-arrow">↗</div>
+        </a>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<script>
+  // SSO Norvex : on lit d'abord sessionStorage (cette session), puis localStorage
+  // (SSO partagé Brain/Pipeline/Camille/etc. — survit aux fermetures de browser).
+  let SECRET = sessionStorage.getItem("cn_secret")
+            || localStorage.getItem("norvex_secret")
+            || "";
+
+  function fmtAgo(iso){
+    if(!iso) return "—";
+    const d = new Date(iso);
+    const diff = (Date.now() - d.getTime())/1000;
+    if(diff<60) return "à l'instant";
+    if(diff<3600) return Math.floor(diff/60)+" min";
+    if(diff<86400) return Math.floor(diff/3600)+" h";
+    return Math.floor(diff/86400)+" j";
+  }
+
+  function login(){
+    const v = document.getElementById("secret-input").value.trim();
+    if(!v){document.getElementById("login-err").textContent="Secret requis";return;}
+    SECRET = v;
+    sessionStorage.setItem("cn_secret", v);
+    // Pose aussi la clé SSO partagée pour les autres dashboards
+    localStorage.setItem("norvex_secret", v);
+    localStorage.setItem("cnx_brain_auth", "1");
+    document.getElementById("login").style.display = "none";
+    loadSnapshot(false);
+  }
+
+  document.getElementById("secret-input").addEventListener("keydown", e => {
+    if(e.key==="Enter") login();
+  });
+
+  if(SECRET){
+    document.getElementById("login").style.display = "none";
+    loadSnapshot(false);
+  }
+
+  async function loadSnapshot(detailed){
+    const days = document.getElementById("days").value;
+    document.getElementById("loading").style.display = "block";
+    document.getElementById("loading").textContent = detailed
+      ? "Filtrage humain en cours (fetch détaillé, ~20-30s)…"
+      : "Chargement du snapshot SendGrid…";
+    document.getElementById("dashboard").style.display = "none";
+
+    try {
+      const url = "/api/visibility-snapshot?days=" + days + (detailed ? "&detailed=1" : "");
+      const r = await fetch(url, { headers: { "x-internal-secret": SECRET }});
+      if(r.status === 401){
+        sessionStorage.removeItem("cn_secret");
+        localStorage.removeItem("norvex_secret");
+        localStorage.removeItem("cnx_brain_auth");
+        SECRET = "";
+        document.getElementById("login").style.display = "flex";
+        document.getElementById("loading").style.display = "none";
+        document.getElementById("login-err").textContent = "Secret invalide";
+        return;
+      }
+      if(!r.ok){
+        const errTxt = await r.text();
+        document.getElementById("loading").textContent = "Erreur: " + errTxt.slice(0,200);
+        return;
+      }
+      const data = await r.json();
+      render(data);
+    } catch(e){
+      document.getElementById("loading").textContent = "Erreur réseau: " + e.message;
+    }
+  }
+
+  function render(data){
+    document.getElementById("loading").style.display = "none";
+    document.getElementById("dashboard").style.display = "block";
+
+    const t = data.totals;
+    const isHuman = t.detailed;
+    document.getElementById("kpis").innerHTML = `
+      <div class="kpi"><label>Fenêtre</label><div class="val">${t.windowDays}j</div><div class="sub">${t.windowStart} → ${t.windowEnd}</div></div>
+      <div class="kpi"><label>Destinataires actifs</label><div class="val gold">${t.totalRecipientsWithActivity}</div><div class="sub">${t.totalEngagedMessages} / ${t.totalMessagesScanned} messages</div></div>
+      <div class="kpi"><label>${isHuman ? "Ouvertures humaines" : "Ouvertures (brut)"}</label><div class="val">${isHuman ? t.totalHumanOpens : t.totalRawOpens}</div><div class="sub">${isHuman ? "filtre bots actif" : "incluant scanners"}</div></div>
+      <div class="kpi"><label>${isHuman ? "Clics humains" : "Clics (brut)"}</label><div class="val gold">${isHuman ? t.totalHumanClicks : t.totalRawClicks}</div><div class="sub">${isHuman ? "filtre bots actif" : "incluant scanners"}</div></div>
+    `;
+
+    const colKey = isHuman ? "humanClicks" : "rawClicks";
+    const colKeyOp = isHuman ? "humanOpens" : "rawOpens";
+
+    document.getElementById("cl-count").textContent = data.topClickers.length + " destinataires";
+    document.getElementById("op-count").textContent = data.topOpeners.length + " destinataires";
+    document.getElementById("re-count").textContent = data.recent.length + " entrées récentes";
+
+    document.getElementById("topClickers").innerHTML = data.topClickers.length === 0
+      ? '<div class="empty">Aucun clic enregistré dans cette fenêtre.</div>'
+      : renderTable(data.topClickers, "Clics", colKey, colKeyOp);
+
+    document.getElementById("topOpeners").innerHTML = data.topOpeners.length === 0
+      ? '<div class="empty">Aucune ouverture enregistrée dans cette fenêtre.</div>'
+      : renderTable(data.topOpeners, "Opens", colKeyOp, colKey);
+
+    document.getElementById("recent").innerHTML = data.recent.length === 0
+      ? '<div class="empty">Aucune activité récente.</div>'
+      : renderRecent(data.recent);
+  }
+
+  function renderTable(list, primaryLabel, primaryKey, secondaryKey){
+    const rows = list.map((e, i) => `
+      <tr>
+        <td>${i+1}</td>
+        <td><span class="email">${e.email}</span> ${e.fromEmail ? `<span class="from-tag">via ${e.fromEmail}</span>` : ""}</td>
+        <td>${(e.subject || "—").slice(0, 60)}${(e.subject||"").length > 60 ? "…" : ""}</td>
+        <td class="num"><span class="badge badge-gold">${e[primaryKey]}</span></td>
+        <td class="num">${e[secondaryKey]}</td>
+        <td class="num">${e.uniqueUAs}</td>
+        <td><span class="ago">${fmtAgo(e.lastEventAt)}</span></td>
+      </tr>
+    `).join("");
+    const secLabel = primaryLabel === "Clics" ? "Opens" : "Clics";
+    return `<table>
+      <thead><tr><th>#</th><th>Email</th><th>Sujet</th><th class="num">${primaryLabel}</th><th class="num">${secLabel}</th><th class="num">UAs</th><th>Dernière act.</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+  }
+
+  function renderRecent(list){
+    const rows = list.map(e => `
+      <tr>
+        <td><span class="email">${e.email}</span></td>
+        <td>${(e.subject || "—").slice(0, 50)}${(e.subject||"").length > 50 ? "…" : ""}</td>
+        <td class="num"><span class="badge ${e.rawClicks > 0 ? 'badge-gold' : 'badge-dim'}">${e.rawClicks}c</span> <span class="badge badge-dim">${e.rawOpens}o</span></td>
+        <td><span class="ago">${fmtAgo(e.lastEventAt)}</span></td>
+      </tr>
+    `).join("");
+    return `<table>
+      <thead><tr><th>Email</th><th>Sujet</th><th class="num">Activité</th><th>Quand</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+  }
+</script>
+</body>
+</html>

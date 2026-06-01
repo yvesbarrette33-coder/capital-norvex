@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Capital Norvex — Admin</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:Arial,sans-serif;background:#0f1117;color:#e8e0ce;min-height:100vh}
+
+  /* ── LOGIN ── */
+  #login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
+  .login-box{background:#1a1d26;border:1px solid #2a2d38;border-radius:8px;padding:48px 40px;width:100%;max-width:380px;text-align:center}
+  .login-logo{color:#C9A84C;font-size:22px;font-weight:700;letter-spacing:3px;margin-bottom:4px}
+  .login-sub{color:#6b7280;font-size:11px;letter-spacing:2px;margin-bottom:32px}
+  .login-box h2{font-size:16px;color:#d4c9b0;margin-bottom:24px;font-weight:400}
+  .login-box input{width:100%;background:#0f1117;border:1px solid #2a2d38;border-radius:4px;padding:12px 16px;color:#e8e0ce;font-size:15px;outline:none;margin-bottom:16px}
+  .login-box input:focus{border-color:#C9A84C}
+  .login-box button{width:100%;background:#C9A84C;color:#0a0d13;border:none;border-radius:4px;padding:13px;font-size:14px;font-weight:700;letter-spacing:1px;cursor:pointer}
+  .login-box button:hover{background:#e8c97a}
+  .login-error{color:#ef4444;font-size:13px;margin-top:12px;display:none}
+
+  /* ── HEADER ── */
+  #admin-screen{display:none}
+  .admin-header{background:#0a0d13;border-bottom:1px solid #1e2130;padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
+  .admin-header-left{display:flex;align-items:center;gap:12px}
+  .admin-logo{color:#C9A84C;font-size:16px;font-weight:700;letter-spacing:2px}
+  .admin-badge{background:#1a1d26;border:1px solid #2a2d38;color:#6b7280;font-size:10px;letter-spacing:1px;padding:3px 8px;border-radius:3px}
+  .btn-refresh{background:transparent;border:1px solid #2a2d38;color:#6b7280;padding:7px 14px;border-radius:4px;font-size:12px;cursor:pointer;letter-spacing:1px}
+  .btn-refresh:hover{border-color:#C9A84C;color:#C9A84C}
+  .btn-logout{background:transparent;border:none;color:#6b7280;font-size:12px;cursor:pointer;padding:7px 0}
+  .btn-logout:hover{color:#ef4444}
+
+  /* ── PIPELINE ── */
+  .pipeline{display:flex;gap:16px;padding:24px;overflow-x:auto;min-height:calc(100vh - 60px);align-items:flex-start}
+  .col{flex:0 0 300px;background:#1a1d26;border-radius:8px;border:1px solid #2a2d38;overflow:hidden}
+  .col-header{padding:14px 16px;border-bottom:1px solid #2a2d38;display:flex;align-items:center;justify-content:space-between}
+  .col-title{font-size:11px;letter-spacing:2px;font-weight:700;text-transform:uppercase}
+  .col-count{background:#0f1117;color:#6b7280;font-size:11px;padding:2px 8px;border-radius:10px}
+  .col-body{padding:12px;display:flex;flex-direction:column;gap:10px;min-height:80px}
+
+  /* Stage colors */
+  .stage-analyse .col-header{border-top:3px solid #6b7280}
+  .stage-analyse .col-title{color:#9ca3af}
+  .stage-docs .col-header{border-top:3px solid #3b82f6}
+  .stage-docs .col-title{color:#60a5fa}
+  .stage-approuve .col-header{border-top:3px solid #C9A84C}
+  .stage-approuve .col-title{color:#C9A84C}
+  .stage-engagement .col-header{border-top:3px solid #22c55e}
+  .stage-engagement .col-title{color:#4ade80}
+
+  /* ── CARDS ── */
+  .card{background:#0f1117;border:1px solid #2a2d38;border-radius:6px;padding:14px}
+  .card-name{font-size:14px;font-weight:700;color:#e8e0ce;margin-bottom:6px}
+  .card-info{font-size:11px;color:#6b7280;line-height:1.8}
+  .card-info a{color:#C9A84C;text-decoration:none}
+  .card-info a:hover{text-decoration:underline}
+  .card-tags{display:flex;flex-wrap:wrap;gap:5px;margin:10px 0 0}
+  .tag{font-size:10px;padding:2px 7px;border-radius:3px;letter-spacing:0.5px}
+  .tag-type{background:#1e2130;color:#9ca3af;border:1px solid #2a2d38}
+  .tag-score{background:#1e2130;border:1px solid #2a2d38}
+  .tag-score.good{color:#4ade80}
+  .tag-score.medium{color:#facc15}
+  .tag-score.low{color:#f87171}
+  .tag-decision{background:#1e2130;color:#C9A84C;border:1px solid #3a2d0a}
+
+  .btn-approuver{width:100%;margin-top:12px;background:#C9A84C;color:#0a0d13;border:none;border-radius:4px;padding:9px;font-size:12px;font-weight:700;letter-spacing:1px;cursor:pointer}
+  .btn-approuver:hover{background:#e8c97a}
+  .btn-approuver:disabled{background:#2a2d38;color:#6b7280;cursor:default}
+  .btn-envoyer{width:100%;margin-top:8px;background:transparent;color:#C9A84C;border:1px solid #C9A84C;border-radius:4px;padding:8px;font-size:11px;font-weight:700;letter-spacing:1px;cursor:pointer}
+  .btn-envoyer:hover{background:#1a1208}
+  .btn-envoyer.sent{color:#4ade80;border-color:#4ade80}
+  .btn-envoyer.sent:hover{background:#0a1a0a}
+
+  .empty{color:#3a3d48;font-size:12px;text-align:center;padding:20px 0}
+
+  /* Loading */
+  .loading{display:flex;align-items:center;justify-content:center;padding:60px;color:#6b7280;font-size:13px}
+
+  /* ── MODAL ── */
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:100;align-items:center;justify-content:center;padding:20px}
+  .modal-overlay.open{display:flex}
+  .modal{background:#1a1d26;border:1px solid #2a2d38;border-radius:8px;width:100%;max-width:420px;padding:32px}
+  .modal h3{color:#C9A84C;font-size:14px;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px}
+  .modal-client{color:#9ca3af;font-size:12px;margin-bottom:24px}
+  .modal label{display:block;color:#9ca3af;font-size:11px;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+  .modal input,.modal select{width:100%;background:#0f1117;border:1px solid #2a2d38;border-radius:4px;padding:11px 14px;color:#e8e0ce;font-size:14px;outline:none;margin-bottom:16px}
+  .modal input:focus,.modal select:focus{border-color:#C9A84C}
+  .modal select option{background:#1a1d26}
+  .lang-toggle{display:flex;gap:8px;margin-bottom:16px}
+  .lang-btn{flex:1;padding:10px;border-radius:4px;border:1px solid #2a2d38;background:#0f1117;color:#6b7280;font-size:13px;font-weight:700;cursor:pointer;letter-spacing:1px}
+  .lang-btn.active{border-color:#C9A84C;color:#C9A84C;background:#1a1208}
+  .modal-actions{display:flex;gap:10px;margin-top:8px}
+  .btn-cancel{flex:1;padding:11px;border-radius:4px;border:1px solid #2a2d38;background:transparent;color:#6b7280;font-size:13px;cursor:pointer}
+  .btn-cancel:hover{border-color:#6b7280;color:#9ca3af}
+  .btn-confirm{flex:2;padding:11px;border-radius:4px;border:none;background:#C9A84C;color:#0a0d13;font-size:13px;font-weight:700;letter-spacing:1px;cursor:pointer}
+  .btn-confirm:hover{background:#e8c97a}
+  .btn-confirm:disabled{background:#2a2d38;color:#6b7280;cursor:default}
+
+  @media(max-width:600px){
+    .pipeline{padding:12px;gap:12px}
+    .col{flex:0 0 260px}
+  }
+</style>
+</head>
+<body>
+
+<!-- MODAL APPROBATION -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal">
+    <h3 id="modal-title">Approuver le dossier</h3>
+    <div class="modal-client" id="modal-client-name"></div>
+
+    <label>Courriel du partenaire <span id="modal-email-hint" style="color:#3a3d48;font-weight:400">(optionnel)</span></label>
+    <input type="email" id="modal-partner-email" placeholder="partenaire@exemple.com">
+
+    <label>Nom du partenaire <span style="color:#3a3d48;font-weight:400">(optionnel)</span></label>
+    <input type="text" id="modal-partner-name" placeholder="Prénom Nom ou Société">
+
+    <label>Langue du sommaire</label>
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="lang-fr" onclick="setLang('fr')">FR</button>
+      <button class="lang-btn" id="lang-en" onclick="setLang('en')">EN</button>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal()">Annuler</button>
+      <button class="btn-confirm" id="btn-confirm-approuver" onclick="confirmApprouver()">APPROUVER SEULEMENT</button>
+    </div>
+  </div>
+</div>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">CAPITAL NORVEX</div>
+    <div class="login-sub">ESPACE ADMINISTRATEUR</div>
+    <h2>Mot de passe</h2>
+    <input type="password" id="pw-input" placeholder="••••••••" autocomplete="current-password">
+    <button onclick="doLogin()">ACCÉDER</button>
+    <div class="login-error" id="login-error">Mot de passe incorrect.</div>
+  </div>
+</div>
+
+<!-- ADMIN -->
+<div id="admin-screen">
+  <div class="admin-header">
+    <div class="admin-header-left">
+      <span class="admin-logo">CAPITAL NORVEX</span>
+      <span class="admin-badge">ADMIN</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:16px">
+      <button class="btn-refresh" onclick="loadDossiers()">&#8635; Actualiser</button>
+      <button class="btn-logout" onclick="doLogout()">Déconnexion</button>
+    </div>
+  </div>
+
+  <div class="pipeline" id="pipeline">
+    <div class="loading">Chargement des dossiers…</div>
+  </div>
+</div>
+
+<script>
+const STAGES = [
+  { key: "analyse",    label: "Analyse / Nouvelle",  cls: "stage-analyse" },
+  { key: "docs",       label: "Docs requis",          cls: "stage-docs" },
+  { key: "approuve",   label: "Approuvé",             cls: "stage-approuve" },
+  { key: "engagement", label: "Engagement",           cls: "stage-engagement" },
+];
+
+let adminPw = "";
+
+function doLogin() {
+  const pw = document.getElementById("pw-input").value;
+  if (!pw) return;
+  adminPw = pw;
+  verifyPassword(pw);
+}
+
+document.getElementById("pw-input").addEventListener("keydown", (e) => {
+  if (e.key === "Enter") doLogin();
+});
+
+async function verifyPassword(pw) {
+  try {
+    const resp = await fetch("/.netlify/functions/admin-get-dossiers", {
+      headers: { "X-Admin-Password": pw }
+    });
+    if (resp.status === 401) {
+      document.getElementById("login-error").style.display = "block";
+      adminPw = "";
+      return;
+    }
+    localStorage.setItem("adminPw", pw);
+    document.getElementById("login-screen").style.display = "none";
+    document.getElementById("admin-screen").style.display = "block";
+    const data = await resp.json();
+    renderPipeline(data.dossiers || []);
+  } catch (e) {
+    document.getElementById("login-error").textContent = "Erreur de connexion.";
+    document.getElementById("login-error").style.display = "block";
+  }
+}
+
+function doLogout() {
+  localStorage.removeItem("adminPw");
+  adminPw = "";
+  document.getElementById("admin-screen").style.display = "none";
+  document.getElementById("login-screen").style.display = "flex";
+  document.getElementById("pw-input").value = "";
+  document.getElementById("login-error").style.display = "none";
+}
+
+async function loadDossiers() {
+  document.getElementById("pipeline").innerHTML = '<div class="loading">Chargement…</div>';
+  try {
+    const resp = await fetch("/.netlify/functions/admin-get-dossiers", {
+      headers: { "X-Admin-Password": adminPw }
+    });
+    if (resp.status === 401) { doLogout(); return; }
+    const data = await resp.json();
+    renderPipeline(data.dossiers || []);
+  } catch (e) {
+    document.getElementById("pipeline").innerHTML = '<div class="loading">Erreur de chargement.</div>';
+  }
+}
+
+function renderPipeline(dossiers) {
+  const pipeline = document.getElementById("pipeline");
+  pipeline.innerHTML = "";
+
+  for (const stg of STAGES) {
+    const items = dossiers.filter(d => {
+      if (stg.key === "analyse") return d.stage === "analyse" || d.stage === "nouvelle";
+      return d.stage === stg.key;
+    });
+
+    const col = document.createElement("div");
+    col.className = `col ${stg.cls}`;
+    col.innerHTML = `
+      <div class="col-header">
+        <span class="col-title">${stg.label}</span>
+        <span class="col-count">${items.length}</span>
+      </div>
+      <div class="col-body" id="col-${stg.key}">
+        ${items.length === 0 ? '<div class="empty">Aucun dossier</div>' : ""}
+      </div>`;
+    pipeline.appendChild(col);
+
+    const body = col.querySelector(`#col-${stg.key}`);
+    for (const d of items) {
+      body.appendChild(makeCard(d, stg.key));
+    }
+  }
+}
+
+function makeCard(d, colStage) {
+  const card = document.createElement("div");
+  card.className = "card";
+  card.id = "card-" + d.id;
+
+  const scoreClass = d.score >= 70 ? "good" : d.score >= 50 ? "medium" : "low";
+  const montantFmt = d.montant ? `${Number(d.montant).toLocaleString("fr-CA")} $` : "";
+
+  card.innerHTML = `
+    <div class="card-name">${d.prenom} ${d.nom}</div>
+    <div class="card-info">
+      <a href="mailto:${d.email}">${d.email}</a><br>
+      ${d.tel ? `<a href="tel:${d.tel}">${d.tel}</a><br>` : ""}
+      ${d.adresse || ""}
+    </div>
+    <div class="card-tags">
+      ${d.type ? `<span class="tag tag-type">${d.type}</span>` : ""}
+      ${montantFmt ? `<span class="tag tag-type">${montantFmt}</span>` : ""}
+      ${d.score ? `<span class="tag tag-score ${scoreClass}">${d.score}/100</span>` : ""}
+      ${d.decision ? `<span class="tag tag-decision">${d.decision}</span>` : ""}
+    </div>
+    ${colStage === "docs" ? `<button class="btn-approuver" onclick="approuver('${d.id}', '${(d.prenom + ' ' + d.nom).replace(/'/g, "\\'")}')">APPROUVER</button>` : ""}
+    ${(colStage === "approuve" || colStage === "engagement") ? `<button class="btn-envoyer${d.partnerSummarySent ? ' sent' : ''}" onclick="envoyerPartenaire('${d.id}', '${(d.prenom + ' ' + d.nom).replace(/'/g, "\\'")}', '${colStage}', '${(d.partnerEmail||'').replace(/'/g, "\\'")}', '${(d.partnerName||'').replace(/'/g, "\\'")}', '${d.partnerLang||'fr'}')">${d.partnerSummarySent ? 'SOMMAIRE ENVOYÉ ✓' : 'ENVOYER AU PARTENAIRE'}</button>` : ""}
+  `;
+  return card;
+}
+
+let pendingDossierId = null;
+let pendingDossierStage = null;
+let selectedLang = "fr";
+let modalMode = "approuver"; // "approuver" | "envoyer"
+
+function updateConfirmButton() {
+  const email = document.getElementById("modal-partner-email").value.trim();
+  const btn = document.getElementById("btn-confirm-approuver");
+  if (modalMode === "envoyer") {
+    btn.textContent = "ENVOYER AU PARTENAIRE";
+  } else {
+    btn.textContent = email ? "APPROUVER & ENVOYER" : "APPROUVER SEULEMENT";
+  }
+}
+
+function approuver(dossierId, clientName) {
+  modalMode = "approuver";
+  pendingDossierId = dossierId;
+  pendingDossierStage = "docs";
+  selectedLang = "fr";
+  document.getElementById("modal-title").textContent = "Approuver le dossier";
+  document.getElementById("modal-client-name").textContent = clientName;
+  document.getElementById("modal-partner-email").value = "";
+  document.getElementById("modal-partner-name").value = "";
+  document.getElementById("modal-email-hint").textContent = "(optionnel)";
+  document.getElementById("lang-fr").classList.add("active");
+  document.getElementById("lang-en").classList.remove("active");
+  document.getElementById("btn-confirm-approuver").disabled = false;
+  updateConfirmButton();
+  document.getElementById("modal-overlay").classList.add("open");
+  setTimeout(() => document.getElementById("modal-partner-email").focus(), 100);
+}
+
+function envoyerPartenaire(dossierId, clientName, currentStage, existingEmail, existingName, existingLang) {
+  modalMode = "envoyer";
+  pendingDossierId = dossierId;
+  pendingDossierStage = currentStage;
+  selectedLang = existingLang || "fr";
+  document.getElementById("modal-client-name").textContent = clientName;
+  document.getElementById("modal-partner-email").value = existingEmail || "";
+  document.getElementById("modal-partner-name").value = existingName || "";
+  document.getElementById("modal-title").textContent = "Envoyer au partenaire";
+  document.getElementById("modal-email-hint").textContent = "";
+  document.getElementById("lang-fr").classList.toggle("active", selectedLang === "fr");
+  document.getElementById("lang-en").classList.toggle("active", selectedLang === "en");
+  document.getElementById("btn-confirm-approuver").disabled = false;
+  updateConfirmButton();
+  document.getElementById("modal-overlay").classList.add("open");
+  setTimeout(() => document.getElementById("modal-partner-email").focus(), 100);
+}
+
+function setLang(lang) {
+  selectedLang = lang;
+  document.getElementById("lang-fr").classList.toggle("active", lang === "fr");
+  document.getElementById("lang-en").classList.toggle("active", lang === "en");
+}
+
+function closeModal() {
+  document.getElementById("modal-overlay").classList.remove("open");
+  pendingDossierId = null;
+}
+
+async function confirmApprouver() {
+  const partnerEmail = document.getElementById("modal-partner-email").value.trim();
+  const partnerName  = document.getElementById("modal-partner-name").value.trim();
+  const btn = document.getElementById("btn-confirm-approuver");
+
+  // Mode "envoyer" : courriel obligatoire
+  if (modalMode === "envoyer" && !partnerEmail) {
+    document.getElementById("modal-partner-email").focus();
+    document.getElementById("modal-partner-email").style.borderColor = "#ef4444";
+    setTimeout(() => document.getElementById("modal-partner-email").style.borderColor = "", 1500);
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = "En cours…";
+
+  const payload = {
+    dossierId: pendingDossierId,
+    stage: modalMode === "approuver" ? "approuve" : pendingDossierStage,
+    partnerLang: selectedLang,
+  };
+  if (partnerEmail) payload.partnerEmail = partnerEmail;
+  if (partnerName)  payload.partnerName  = partnerName;
+  if (modalMode === "envoyer") payload.partnerSummarySent = false;
+
+  const prevText = btn.textContent;
+  try {
+    const resp = await fetch("/.netlify/functions/admin-update-stage", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Admin-Password": adminPw,
+      },
+      body: JSON.stringify(payload),
+    });
+    if (resp.ok) {
+      closeModal();
+      const card = document.getElementById("card-" + pendingDossierId);
+      if (card && modalMode === "approuver") card.style.opacity = "0.4";
+      setTimeout(() => loadDossiers(), 800);
+    } else {
+      btn.disabled = false;
+      btn.textContent = prevText;
+      alert("Erreur lors de la mise à jour.");
+    }
+  } catch (e) {
+    btn.disabled = false;
+    btn.textContent = prevText;
+    alert("Erreur réseau.");
+  }
+}
+
+// Update confirm button text as email is typed
+document.getElementById("modal-partner-email").addEventListener("input", updateConfirmButton);
+
+// Close modal on overlay click
+document.getElementById("modal-overlay").addEventListener("click", (e) => {
+  if (e.target === document.getElementById("modal-overlay")) closeModal();
+});
+
+// Auto-login si session active
+const saved = localStorage.getItem("adminPw");
+if (saved) {
+  adminPw = saved;
+  document.getElementById("login-screen").style.display = "none";
+  document.getElementById("admin-screen").style.display = "block";
+  loadDossiers();
+}
+</script>
+</body>
+</html>

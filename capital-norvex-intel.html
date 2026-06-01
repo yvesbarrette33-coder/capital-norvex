@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Norvex Intel™ — Capital Norvex</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0A0A0A;--surface:#111111;--card:#161616;--border:#2A2A2A;--border-h:#3A3A3A;
+  --gold:#C8A84B;--gold-l:#E2CA7E;--gold-d:#8C7030;--gold-glow:rgba(200,168,75,.15);
+  --text:#F0EDE8;--muted:#7A7A80;--dim:#2E2E36;
+  --green:#1A9E72;--green-bg:rgba(26,158,114,.08);--green-br:rgba(26,158,114,.25);
+  --red:#C44040;--red-bg:rgba(196,64,64,.08);--red-br:rgba(196,64,64,.25);
+  --amber:#C87830;--amber-bg:rgba(200,120,48,.08);--amber-br:rgba(200,120,48,.25);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;scroll-behavior:smooth}
+body{font-family:'Barlow',-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:#000}::-webkit-scrollbar-thumb{background:var(--gold-d)}
+
+/* ── GATE ── */
+#gate{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:999;flex-direction:column;gap:2rem}
+.gate-logo{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:6px;color:var(--muted);text-transform:uppercase}
+.gate-title{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:300;color:var(--gold-l);letter-spacing:2px}
+.gate-box{background:var(--surface);border:1px solid var(--border);padding:2rem;width:320px;display:flex;flex-direction:column;gap:.75rem}
+.gate-inp{background:var(--bg);border:1px solid var(--border);color:var(--text);font-family:'Barlow',sans-serif;font-size:.9rem;padding:.75rem 1rem;width:100%;outline:none}
+.gate-inp:focus{border-color:var(--gold)}
+.gate-btn{background:var(--gold);color:#0A0A0A;border:none;padding:.85rem;font-family:'Barlow Condensed',sans-serif;font-size:.85rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;cursor:pointer;width:100%}
+.gate-err{color:var(--red);font-size:.75rem;display:none}
+
+/* ── HEADER ── */
+#hdr{background:#000;border-bottom:1px solid var(--border);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:60px;position:sticky;top:0;z-index:100}
+.hdr-brand{display:flex;flex-direction:column}
+.hdr-cap{font-family:'Barlow Condensed',sans-serif;font-size:9px;letter-spacing:5px;color:var(--muted);text-transform:uppercase}
+.hdr-name{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;letter-spacing:2px;background:linear-gradient(135deg,#D0D8E8,var(--gold),#C0C8D8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hdr-badge{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:3px;color:var(--gold);border:1px solid var(--gold-d);padding:.2rem .6rem;text-transform:uppercase}
+
+/* ── LAYOUT ── */
+#main{max-width:960px;margin:0 auto;padding:2.5rem 1.5rem 6rem}
+
+/* ── PROGRESS ── */
+#pbar{display:flex;align-items:center;margin-bottom:2.5rem}
+.pstep{display:flex;flex-direction:column;align-items:center;gap:6px;min-width:56px;cursor:pointer}
+.pcirc{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;border:1px solid var(--border);background:var(--surface);color:var(--muted);font-family:'Barlow Condensed',sans-serif;transition:all .3s}
+.pcirc.on{border-color:var(--gold);background:rgba(200,168,75,.1);color:var(--gold)}
+.pcirc.dn{border-color:var(--gold);background:var(--gold);color:#0A0A0A}
+.plbl{font-size:9px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;font-weight:500;white-space:nowrap;transition:color .3s}
+.plbl.on{color:var(--gold)}
+.pline{flex:1;height:1px;background:var(--border);margin:0 4px;margin-bottom:22px;transition:background .3s}
+.pline.dn{background:var(--gold)}
+
+/* ── SECTIONS ── */
+.sec{display:none;animation:fadeUp .4s ease}
+.sec.on{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── CARDS ── */
+.card{background:var(--card);border:1px solid var(--border);padding:1.75rem;margin-bottom:1.25rem}
+.card-title{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:1.25rem}
+
+/* ── FORMS ── */
+.frow{margin-bottom:1rem}
+.frow label{display:block;font-size:.72rem;letter-spacing:.08em;color:var(--muted);margin-bottom:.35rem;text-transform:uppercase}
+.finp,.fsel,.ftxt{width:100%;background:var(--surface);border:1px solid var(--border);color:var(--text);font-family:'Barlow',sans-serif;font-size:.88rem;padding:.65rem .9rem;outline:none;transition:border-color .2s}
+.finp:focus,.fsel:focus,.ftxt:focus{border-color:var(--gold)}
+.fsel option{background:var(--bg)}
+.ftxt{resize:vertical;min-height:70px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem}
+.grid4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:.75rem}
+
+/* ── UNITS TABLE ── */
+.utbl{width:100%;border-collapse:collapse;font-size:.82rem}
+.utbl th{text-align:left;padding:.5rem .75rem;font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);font-weight:500;border-bottom:1px solid var(--border)}
+.utbl td{padding:.4rem .5rem}
+.utbl .finp{padding:.45rem .7rem;font-size:.82rem}
+.utbl tr:hover td{background:rgba(255,255,255,.01)}
+
+/* ── LIVE CALC ── */
+.calc-box{background:rgba(200,168,75,.04);border:1px solid rgba(200,168,75,.15);padding:1.25rem 1.5rem;margin-top:1rem}
+.calc-row{display:flex;justify-content:space-between;align-items:center;padding:.35rem 0;font-size:.82rem;border-bottom:1px solid rgba(255,255,255,.03)}
+.calc-row:last-child{border-bottom:none;padding-top:.65rem;margin-top:.25rem;border-top:1px solid rgba(200,168,75,.2)}
+.calc-lbl{color:var(--muted)}
+.calc-val{font-family:'Barlow Condensed',sans-serif;font-size:.95rem;font-weight:600;color:var(--text)}
+.calc-val.gold{color:var(--gold-l);font-size:1.1rem}
+.calc-val.red{color:var(--red)}
+.calc-val.green{color:var(--green)}
+
+/* ── COMPARABLE CARD ── */
+.comp-card{background:var(--card);border:1px solid var(--border);padding:1.25rem;margin-bottom:.75rem}
+.comp-num{font-family:'Barlow Condensed',sans-serif;font-size:.7rem;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:1rem}
+.adj-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem;margin-top:.75rem}
+.adj-item label{font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.25rem}
+
+/* ── RESULTS ── */
+.res-table{width:100%;border-collapse:collapse;margin-bottom:1.25rem}
+.res-table th{font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);font-weight:500;padding:.6rem .9rem;text-align:right;border-bottom:1px solid var(--border)}
+.res-table th:first-child{text-align:left}
+.res-table td{padding:.7rem .9rem;font-size:.85rem;border-bottom:1px solid rgba(255,255,255,.03);text-align:right;font-family:'Barlow Condensed',sans-serif}
+.res-table td:first-child{text-align:left;color:var(--muted);font-family:'Barlow',sans-serif;font-size:.82rem}
+.res-table .total-row td{font-size:1rem;font-weight:700;border-top:1px solid var(--gold-d);border-bottom:none;color:var(--gold-l)}
+.val-card{background:var(--surface);border:1px solid var(--border);padding:1.5rem;text-align:center}
+.val-label{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem}
+.val-num{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:600;color:var(--gold-l)}
+.val-range{font-size:.72rem;color:var(--muted);margin-top:.4rem}
+.flag-box{background:var(--amber-bg);border:1px solid var(--amber-br);padding:.85rem 1rem;margin-bottom:1rem;font-size:.8rem;color:var(--amber);display:none}
+.conf-badge{display:inline-block;padding:.3rem .9rem;font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;font-weight:600}
+.conf-eleve{background:var(--green-bg);border:1px solid var(--green-br);color:var(--green)}
+.conf-modere{background:var(--amber-bg);border:1px solid var(--amber-br);color:var(--amber)}
+.conf-faible{background:var(--red-bg);border:1px solid var(--red-br);color:var(--red)}
+
+/* ── SENSITIVITY ── */
+.sens-row{display:flex;justify-content:space-between;padding:.6rem 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:.82rem}
+.sens-row:last-child{border-bottom:none}
+
+/* ── AI NARRATIVE ── */
+#aiBox{background:rgba(200,168,75,.04);border:1px solid rgba(200,168,75,.2);padding:1.5rem;margin-top:1rem;white-space:pre-wrap;font-size:.85rem;line-height:1.7;color:var(--text);display:none}
+#aiBox strong,#aiBox b{color:var(--gold-l)}
+
+/* ── BUTTONS ── */
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 1.75rem;font-family:'Barlow',sans-serif;font-size:.82rem;font-weight:600;cursor:pointer;border:none;letter-spacing:.5px;transition:all .2s}
+.btn:hover{opacity:.85;transform:translateY(-1px)}
+.btn-gold{background:linear-gradient(135deg,var(--gold-d),var(--gold),var(--gold-l));color:#0A0A0A}
+.btn-outline{background:transparent;border:1px solid var(--border);color:var(--muted)}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold);opacity:1;transform:none}
+.btn-sm{padding:.55rem 1.2rem;font-size:.75rem}
+.nav-bar{display:flex;gap:.75rem;justify-content:space-between;margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border)}
+
+/* ── DIVIDER ── */
+.divider{display:flex;align-items:center;gap:.75rem;margin:1.5rem 0 1.1rem}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.dvtxt{font-size:.65rem;letter-spacing:.25em;color:var(--gold);font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;white-space:nowrap}
+
+/* ── SLIDER ── */
+.slider-wrap{display:flex;align-items:center;gap:.75rem}
+.slider-wrap input[type=range]{flex:1;accent-color:var(--gold);height:4px}
+.slider-val{font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:600;color:var(--gold-l);min-width:40px;text-align:right}
+
+/* ── PRINT ── */
+@media print{
+  #gate,#hdr,#pbar,.nav-bar,.btn{display:none!important}
+  .sec{display:block!important}
+  .card{break-inside:avoid;border:1px solid #ccc;background:#fff;color:#000}
+  #aiBox{border:1px solid #ccc;background:#fff;color:#000}
+  body{background:#fff;color:#000}
+}
+</style>
+</head>
+<body>
+
+<!-- GATE -->
+<div id="gate">
+  <div class="gate-logo">Capital Norvex · Intelligence immobilière</div>
+  <div class="gate-title">Norvex Intel™</div>
+  <div class="gate-box">
+    <input type="password" class="gate-inp" id="gateInp" placeholder="Mot de passe" onkeydown="if(event.key==='Enter')doGateLogin()">
+    <button class="gate-btn" onclick="doGateLogin()">Accéder →</button>
+    <div class="gate-err" id="gateErr">Mot de passe incorrect</div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header id="hdr">
+  <div class="hdr-brand">
+    <div class="hdr-cap">Capital Norvex</div>
+    <div class="hdr-name">NORVEX INTEL™</div>
+  </div>
+  <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap">
+    <div class="hdr-badge">Évaluation immobilière IA</div>
+    <button class="btn btn-gold btn-sm" id="btnModeAuto" onclick="toggleAutoMode()" style="font-weight:600">🤖 MODE AUTO-ÉVAL IA</button>
+    <button class="btn btn-outline btn-sm" onclick="resetAll()">↺ Nouvelle analyse</button>
+    <button class="btn btn-outline btn-sm" onclick="window.print()">⎙ Imprimer</button>
+  </div>
+</header>
+
+<!-- ═══ MODE AUTO-ÉVAL IA — Nouveau 2026-05-05 ═══ -->
+<div id="autoMode" style="display:none;padding:2rem;max-width:1100px;margin:0 auto">
+  <div class="card">
+    <div class="card-title">🤖 AUTO-ÉVALUATION IA — INPUTS MINIMAUX</div>
+    <p style="color:var(--muted);font-size:.9rem;margin-bottom:1rem">
+      Saisissez les informations de base — Claude Opus 4.6 calcule les 3 approches (revenu, comparables, coût), réconcilie, stress teste et produit la valeur prêteur conservative.
+      <strong>Pré-évaluation pour LOI préliminaire</strong> — ne remplace pas une évaluation OEAQ certifiée pour closing.
+    </p>
+
+    <h3 style="margin:1.5rem 0 .5rem 0;color:var(--gold)">Sujet</h3>
+    <div class="frow"><label>Adresse complète *</label><input type="text" class="finp" id="auto_adresse" placeholder="1234 rue des Érables, Montréal, QC"></div>
+    <div class="grid3">
+      <div class="frow"><label>Type d'actif *</label>
+        <select class="fsel" id="auto_type">
+          <option value="multi_residentiel">Multi-résidentiel locatif</option>
+          <option value="commercial_locatif">Commercial locatif</option>
+          <option value="industriel">Industriel</option>
+          <option value="construction_residentielle">Construction résidentielle</option>
+          <option value="construction_commerciale">Construction commerciale</option>
+          <option value="terrain">Terrain</option>
+          <option value="acquisition_revenu">Acquisition immeuble à revenu</option>
+        </select>
+      </div>
+      <div class="frow"><label>Marché / MRC</label><input type="text" class="finp" id="auto_marche" placeholder="Ex: Montréal — Le Plateau"></div>
+      <div class="frow"><label>Année construction</label><input type="number" class="finp" id="auto_annee" placeholder="2008"></div>
+    </div>
+    <div class="grid3">
+      <div class="frow"><label>Superficie terrain (pi²)</label><input type="number" class="finp" id="auto_sup_terrain" placeholder="5000"></div>
+      <div class="frow"><label>Superficie bâtiment (pi²)</label><input type="number" class="finp" id="auto_sup_batiment" placeholder="12000"></div>
+      <div class="frow"><label>Évaluation municipale ($)</label><input type="number" class="finp" id="auto_eval_muni" placeholder="2500000"></div>
+    </div>
+
+    <h3 style="margin:1.5rem 0 .5rem 0;color:var(--gold)">Données financières (au moins une, idéalement plusieurs)</h3>
+    <div class="grid3">
+      <div class="frow"><label>NOI annuel ($)</label><input type="number" class="finp" id="auto_noi" placeholder="180000"></div>
+      <div class="frow"><label>Revenus bruts annuels ($)</label><input type="number" class="finp" id="auto_rev_bruts" placeholder="240000"></div>
+      <div class="frow"><label>Charges d'exploitation ($)</label><input type="number" class="finp" id="auto_charges" placeholder="60000"></div>
+    </div>
+    <div class="frow"><label>Loyers / unités (texte libre — ex: 12 × 4½ à 1850$/mois)</label><input type="text" class="finp" id="auto_loyers_unites" placeholder="12 × 4½ à 1850$/mois"></div>
+    <div class="frow"><label>Coût construction estimé (si construction neuve)</label><input type="number" class="finp" id="auto_cout_constr" placeholder="3500000"></div>
+    <div class="frow"><label>Notes additionnelles</label><textarea class="finp" id="auto_notes" rows="3" placeholder="Bail commercial 20 ans, locataire AAA, rénovations 2024..."></textarea></div>
+
+    <h3 style="margin:1.5rem 0 .5rem 0;color:var(--gold)">Data Bridge (optionnel)</h3>
+    <div class="grid3">
+      <div class="frow"><label>REQ — Société</label><input type="text" class="finp" id="auto_req_nom" placeholder="9876-5432 Québec inc."></div>
+      <div class="frow"><label>REQ — Statut</label><input type="text" class="finp" id="auto_req_statut" placeholder="Active / Immatriculée"></div>
+      <div class="frow"><label>RBQ — Statut</label><input type="text" class="finp" id="auto_rbq_statut" placeholder="N/A si non applicable"></div>
+    </div>
+
+    <div style="margin-top:2rem;display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
+      <button class="btn btn-gold" id="autoSubmitBtn" onclick="runAutoEval()" style="font-size:1rem;padding:1rem 2rem">⟁ Lancer l'auto-évaluation IA</button>
+      <button class="btn btn-outline btn-sm" onclick="toggleAutoMode()">← Retour au mode manuel</button>
+      <span id="autoStatus" style="color:var(--muted);font-size:.85rem"></span>
+    </div>
+  </div>
+
+  <div id="autoResults" style="display:none;margin-top:2rem"></div>
+</div>
+
+<div id="main">
+  <!-- PROGRESS -->
+  <div id="pbar">
+    <div class="pstep" onclick="goStep(1)">
+      <div class="pcirc on" id="pc1">1</div>
+      <div class="plbl on" id="pl1">Sujet</div>
+    </div>
+    <div class="pline" id="ln1"></div>
+    <div class="pstep" onclick="goStep(2)">
+      <div class="pcirc" id="pc2">2</div>
+      <div class="plbl" id="pl2">Revenu</div>
+    </div>
+    <div class="pline" id="ln2"></div>
+    <div class="pstep" onclick="goStep(3)">
+      <div class="pcirc" id="pc3">3</div>
+      <div class="plbl" id="pl3">Coût</div>
+    </div>
+    <div class="pline" id="ln3"></div>
+    <div class="pstep" onclick="goStep(4)">
+      <div class="pcirc" id="pc4">4</div>
+      <div class="plbl" id="pl4">Comparables</div>
+    </div>
+    <div class="pline" id="ln4"></div>
+    <div class="pstep" onclick="goStep(5)">
+      <div class="pcirc" id="pc5">5</div>
+      <div class="plbl" id="pl5">Résultats</div>
+    </div>
+  </div>
+
+  <!-- ═══ STEP 1 — SUJET ═══ -->
+  <div class="sec on" id="s1">
+    <div class="card">
+      <div class="card-title">Identification du sujet</div>
+      <div class="frow"><label>Adresse complète</label><input type="text" class="finp" id="s_adresse" placeholder="1234 rue des Érables, Montréal, QC"></div>
+      <div class="grid3">
+        <div class="frow"><label>Type d'actif</label>
+          <select class="fsel" id="s_type">
+            <option value="locatif_stable">Immeuble locatif stable</option>
+            <option value="locatif_instable">Immeuble locatif (marché instable)</option>
+            <option value="commercial">Commercial</option>
+            <option value="mixte">Usage mixte</option>
+            <option value="developpement">Développement / Construction</option>
+            <option value="terrain">Terrain</option>
+          </select>
+        </div>
+        <div class="frow"><label>Conditions de marché</label>
+          <select class="fsel" id="s_marche">
+            <option value="stable">Marché stable</option>
+            <option value="instable">Marché instable / incertain</option>
+          </select>
+        </div>
+        <div class="frow"><label>Date d'évaluation</label><input type="date" class="finp" id="s_date"></div>
+      </div>
+      <div class="grid4">
+        <div class="frow"><label>Superficie terrain (pi²)</label><input type="number" class="finp" id="s_terrain_sf" placeholder="0"></div>
+        <div class="frow"><label>Superficie bâtiment (pi²)</label><input type="date" class="finp" id="s_bat_sf" placeholder="0" type="number"></div>
+        <div class="frow"><label>Année construction</label><input type="number" class="finp" id="s_annee" placeholder="2010"></div>
+        <div class="frow"><label>Évaluation municipale ($)</label><input type="number" class="finp" id="s_eval_muni" placeholder="0"></div>
+      </div>
+    </div>
+
+    <div class="divider"><span class="dvtxt">Data Bridge</span></div>
+
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title">REQ — Registre des entreprises</div>
+        <div class="frow"><label>Nom de la société</label><input type="text" class="finp" id="s_req_nom" placeholder="Construction XYZ Inc."></div>
+        <div class="frow"><label>Statut REQ</label>
+          <select class="fsel" id="s_req_statut">
+            <option value="actif">Actif ✓</option>
+            <option value="inactif">Inactif ⚠️</option>
+            <option value="dissous">Dissous ✕</option>
+            <option value="nd">N/D</option>
+          </select>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">RBQ — Régie du bâtiment</div>
+        <div class="frow"><label>N° de licence</label><input type="text" class="finp" id="s_rbq_num" placeholder="8350-0000-00"></div>
+        <div class="frow"><label>Statut RBQ</label>
+          <select class="fsel" id="s_rbq_statut">
+            <option value="actif">Actif ✓</option>
+            <option value="suspendu">Suspendu ⚠️</option>
+            <option value="revoque">Révoqué ✕</option>
+            <option value="nd">N/D</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title">Registre foncier</div>
+        <div class="grid2">
+          <div class="frow"><label>Date dernier acte</label><input type="date" class="finp" id="s_fonc_date"></div>
+          <div class="frow"><label>Montant ($)</label><input type="number" class="finp" id="s_fonc_mt" placeholder="0"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Judiciaire / Notes</div>
+        <div class="frow"><label>Jugements, hypothèques légales, notes</label><textarea class="ftxt finp" id="s_judiciaire" placeholder="Aucune issue détectée…"></textarea></div>
+      </div>
+    </div>
+
+    <div class="nav-bar">
+      <div></div>
+      <button class="btn btn-gold" onclick="goStep(2)">Approche revenu →</button>
+    </div>
+  </div>
+
+  <!-- ═══ STEP 2 — REVENU ═══ -->
+  <div class="sec" id="s2">
+    <div class="card">
+      <div class="card-title">Unités et loyers</div>
+      <table class="utbl" id="unitTable">
+        <thead>
+          <tr>
+            <th>Type d'unité</th>
+            <th style="width:80px">Nb</th>
+            <th style="width:130px">Loyer/mois ($)</th>
+            <th style="width:130px;text-align:right">Revenu annuel</th>
+            <th style="width:40px"></th>
+          </tr>
+        </thead>
+        <tbody id="unitBody"></tbody>
+      </table>
+      <button class="btn btn-outline btn-sm" style="margin-top:.75rem" onclick="addUnit()">+ Ajouter une ligne</button>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Paramètres de marché</div>
+      <div class="grid3">
+        <div class="frow">
+          <label>Taux de vacance</label>
+          <div class="slider-wrap">
+            <input type="range" id="r_vacance" min="1" max="15" step="0.5" value="5" oninput="updSlider('vacance');calcRevenu()">
+            <span class="slider-val" id="sv_vacance">5%</span>
+          </div>
+        </div>
+        <div class="frow">
+          <label>Ratio de dépenses</label>
+          <div class="slider-wrap">
+            <input type="range" id="r_depenses" min="20" max="55" step="1" value="37" oninput="updSlider('depenses');calcRevenu()">
+            <span class="slider-val" id="sv_depenses">37%</span>
+          </div>
+        </div>
+        <div class="frow">
+          <label>Cap rate du marché (%)</label>
+          <input type="number" class="finp" id="r_caprate" value="5.75" step="0.25" min="2" max="12" oninput="calcRevenu()">
+        </div>
+      </div>
+    </div>
+
+    <div class="calc-box" id="revenuCalc">
+      <div class="calc-row"><span class="calc-lbl">Revenus bruts</span><span class="calc-val" id="cr_bruts">—</span></div>
+      <div class="calc-row"><span class="calc-lbl">Vacance</span><span class="calc-val red" id="cr_vacance">—</span></div>
+      <div class="calc-row"><span class="calc-lbl">Revenus effectifs</span><span class="calc-val" id="cr_effectifs">—</span></div>
+      <div class="calc-row"><span class="calc-lbl">Dépenses d'exploitation</span><span class="calc-val red" id="cr_depenses">—</span></div>
+      <div class="calc-row"><span class="calc-lbl">NOI (Revenu net d'exploitation)</span><span class="calc-val green" id="cr_noi">—</span></div>
+      <div class="calc-row"><span class="calc-lbl">Cap rate utilisé</span><span class="calc-val" id="cr_cap">—</span></div>
+      <div class="calc-row"><span class="calc-lbl">Valeur — Approche revenu</span><span class="calc-val gold" id="cr_valeur">—</span></div>
+    </div>
+
+    <div class="nav-bar">
+      <button class="btn btn-outline" onclick="goStep(1)">← Sujet</button>
+      <button class="btn btn-gold" onclick="goStep(3)">Approche coût →</button>
+    </div>
+  </div>
+
+  <!-- ═══ STEP 3 — COÛT ═══ -->
+  <div class="sec" id="s3">
+    <div class="card">
+      <div class="card-title">Approche coût — Valeur marché</div>
+      <div class="grid2">
+        <div class="frow"><label>Valeur du terrain ($)</label><input type="number" class="finp" id="c_terrain" placeholder="0" oninput="calcCout()"></div>
+        <div class="frow"><label>Superficie bâtiment (pi²)</label><input type="number" class="finp" id="c_sf" placeholder="0" oninput="calcCout()"></div>
+      </div>
+      <div class="grid2">
+        <div class="frow"><label>Coût de construction ($/pi²)</label><input type="number" class="finp" id="c_cpp" placeholder="185" oninput="calcCout()"></div>
+        <div class="frow"><label>Coût construction total ($) <small style="color:var(--muted)">auto</small></label><input type="number" class="finp" id="c_const" placeholder="0" oninput="calcCout()" style="background:rgba(200,168,75,.04)"></div>
+      </div>
+      <div class="grid3">
+        <div class="frow">
+          <label>Soft costs (%)</label>
+          <div class="slider-wrap">
+            <input type="range" id="r_soft" min="5" max="25" step="1" value="12" oninput="updSlider('soft');calcCout()">
+            <span class="slider-val" id="sv_soft">12%</span>
+          </div>
+        </div>
+        <div class="frow">
+          <label>Profit normalisé (%)</label>
+          <div class="slider-wrap">
+            <input type="range" id="r_profit" min="8" max="25" step="1" value="15" oninput="updSlider('profit');calcCout()">
+            <span class="slider-val" id="sv_profit">15%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="calc-box" id="coutCalc">
+        <div class="calc-row"><span class="calc-lbl">Terrain</span><span class="calc-val" id="cc_terrain">—</span></div>
+        <div class="calc-row"><span class="calc-lbl">Construction</span><span class="calc-val" id="cc_const">—</span></div>
+        <div class="calc-row"><span class="calc-lbl">Soft costs</span><span class="calc-val" id="cc_soft">—</span></div>
+        <div class="calc-row"><span class="calc-lbl">Profit normalisé</span><span class="calc-val" id="cc_profit">—</span></div>
+        <div class="calc-row"><span class="calc-lbl">Valeur — Approche coût</span><span class="calc-val gold" id="cc_valeur">—</span></div>
+      </div>
+    </div>
+
+    <div class="divider"><span class="dvtxt">Valeur prêteur (conservative)</span></div>
+
+    <div class="card">
+      <div class="card-title">Base prêteur — Capital Norvex</div>
+      <div class="grid2">
+        <div class="frow"><label>Prix d'achat du terrain ($)</label><input type="number" class="finp" id="p_achat_terrain" placeholder="0" oninput="calcPreteur()"></div>
+        <div class="frow"><label>Construction validée prêteur ($)</label><input type="number" class="finp" id="p_const_validee" placeholder="0" oninput="calcPreteur()"></div>
+      </div>
+      <div style="font-size:.72rem;color:var(--muted);margin-bottom:1rem">
+        Terrain prêteur = min(prix achat, valeur marché) · Si coût construction gonflé → ajuster à la baisse
+      </div>
+      <div class="calc-box">
+        <div class="calc-row"><span class="calc-lbl">Terrain prêteur [min(achat, marché)]</span><span class="calc-val" id="cp_terrain">—</span></div>
+        <div class="calc-row"><span class="calc-lbl">Construction validée</span><span class="calc-val" id="cp_const">—</span></div>
+        <div class="calc-row"><span class="calc-lbl">Soft costs (conservateur)</span><span class="calc-val" id="cp_soft">—</span></div>
+        <div class="calc-row"><span class="calc-lbl">Valeur prêteur (finale conservative)</span><span class="calc-val gold" id="cp_total">—</span></div>
+      </div>
+    </div>
+
+    <div class="nav-bar">
+      <button class="btn btn-outline" onclick="goStep(2)">← Revenu</button>
+      <button class="btn btn-gold" onclick="goStep(4)">Comparables →</button>
+    </div>
+  </div>
+
+  <!-- ═══ STEP 4 — COMPARABLES ═══ -->
+  <div class="sec" id="s4">
+    <div id="compList"></div>
+    <div class="calc-box" style="margin-top:0">
+      <div class="calc-row"><span class="calc-lbl">Comparable 1 (ajusté)</span><span class="calc-val" id="cmp1_adj">—</span></div>
+      <div class="calc-row"><span class="calc-lbl">Comparable 2 (ajusté)</span><span class="calc-val" id="cmp2_adj">—</span></div>
+      <div class="calc-row"><span class="calc-lbl">Comparable 3 (ajusté)</span><span class="calc-val" id="cmp3_adj">—</span></div>
+      <div class="calc-row"><span class="calc-lbl">Valeur — Approche comparables</span><span class="calc-val gold" id="comp_valeur">—</span></div>
+    </div>
+    <div class="nav-bar">
+      <button class="btn btn-outline" onclick="goStep(3)">← Coût</button>
+      <button class="btn btn-gold" onclick="goStep(5);runReconciliation()">Analyser →</button>
+    </div>
+  </div>
+
+  <!-- ═══ STEP 5 — RÉSULTATS ═══ -->
+  <div class="sec" id="s5">
+    <div class="card">
+      <div class="card-title">Réconciliation des méthodes</div>
+      <div class="flag-box" id="flagDiv">⚠️ Divergence importante entre les méthodes (&gt;10%) — analyse approfondie recommandée.</div>
+      <table class="res-table">
+        <thead>
+          <tr>
+            <th>Méthode</th>
+            <th>Valeur</th>
+            <th>Poids</th>
+            <th>Contribution</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Approche revenu</td>
+            <td id="rt_rev">—</td>
+            <td id="rt_rev_p">—</td>
+            <td id="rt_rev_c">—</td>
+          </tr>
+          <tr>
+            <td>Approche coût</td>
+            <td id="rt_cout">—</td>
+            <td id="rt_cout_p">—</td>
+            <td id="rt_cout_c">—</td>
+          </tr>
+          <tr>
+            <td>Comparables</td>
+            <td id="rt_comp">—</td>
+            <td id="rt_comp_p">—</td>
+            <td id="rt_comp_c">—</td>
+          </tr>
+          <tr class="total-row">
+            <td>Valeur réconciliée</td>
+            <td id="rt_mid" colspan="3" style="text-align:right"></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:1rem;margin-top:1rem">
+        <div class="val-card">
+          <div class="val-label">Valeur basse</div>
+          <div class="val-num" id="res_low">—</div>
+          <div class="val-range">−5%</div>
+        </div>
+        <div class="val-card" style="border-color:var(--gold-d);background:rgba(200,168,75,.05)">
+          <div class="val-label">Valeur centrale</div>
+          <div class="val-num" id="res_mid">—</div>
+          <div class="val-range">Réconciliée</div>
+        </div>
+        <div class="val-card">
+          <div class="val-label">Valeur haute</div>
+          <div class="val-num" id="res_high">—</div>
+          <div class="val-range">+5%</div>
+        </div>
+        <div class="val-card">
+          <div class="val-label">Confiance</div>
+          <div style="margin-top:.5rem"><span class="conf-badge" id="res_conf">—</span></div>
+          <div class="val-range" id="res_div_pct">—</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Valeur prêteur (conservative)</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem">
+        <div class="val-card">
+          <div class="val-label">Terrain</div>
+          <div class="val-num" id="rp_terrain" style="font-size:1.5rem">—</div>
+        </div>
+        <div class="val-card">
+          <div class="val-label">Construction + Soft</div>
+          <div class="val-num" id="rp_const" style="font-size:1.5rem">—</div>
+        </div>
+        <div class="val-card" style="border-color:var(--gold-d);background:rgba(200,168,75,.05)">
+          <div class="val-label">Valeur prêteur totale</div>
+          <div class="val-num" id="rp_total">—</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Analyse de sensibilité</div>
+      <div class="sens-row">
+        <span style="color:var(--muted)">Scénario de base (réconcilié)</span>
+        <span style="font-family:'Barlow Condensed',sans-serif;font-size:1rem;color:var(--gold-l)" id="sens_base">—</span>
+      </div>
+      <div class="sens-row">
+        <span style="color:var(--muted)">Si loyers −10%</span>
+        <span style="font-family:'Barlow Condensed',sans-serif" id="sens_loyers">—</span>
+      </div>
+      <div class="sens-row">
+        <span style="color:var(--muted)">Si cap rate +1%</span>
+        <span style="font-family:'Barlow Condensed',sans-serif" id="sens_cap">—</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Analyse Norvex Intel™ — Claude AI</div>
+      <button class="btn btn-gold" id="aiBtn" onclick="runAI()">⟁ Lancer l'analyse IA</button>
+      <div id="aiBox"></div>
+    </div>
+
+    <div class="nav-bar">
+      <button class="btn btn-outline" onclick="goStep(4)">← Comparables</button>
+      <button class="btn btn-outline" onclick="window.print()">⎙ Exporter PDF</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════
+let CALC = { revenu:{}, cout:{}, preteur:{}, comps:[], reconciliation:{} };
+let currentStep = 1;
+
+// ── Password gate ──
+function doGateLogin() {
+  const v = document.getElementById('gateInp').value;
+  if (v === 'Norvex2026!' || v === 'norvex2026!' || v === 'Capital2026!' || v === 'capital2026!') {
+    localStorage.setItem('cnx_admin', '1');
+    document.getElementById('gate').style.display = 'none';
+    init();
+  } else {
+    document.getElementById('gateErr').style.display = 'block';
+    document.getElementById('gateInp').value = '';
+    document.getElementById('gateInp').focus();
+  }
+}
+if (localStorage.getItem('cnx_admin') === '1') {
+  document.getElementById('gate').style.display = 'none';
+  setTimeout(init, 100);
+}
+
+function init() {
+  document.getElementById('s_date').value = new Date().toISOString().split('T')[0];
+  initUnits();
+  initComps();
+}
+
+// ── Navigation ──
+function goStep(n) {
+  document.querySelectorAll('.sec').forEach(s => s.classList.remove('on'));
+  document.getElementById('s' + n).classList.add('on');
+  for (let i = 1; i <= 5; i++) {
+    const circ = document.getElementById('pc' + i);
+    const lbl = document.getElementById('pl' + i);
+    circ.className = 'pcirc' + (i < n ? ' dn' : i === n ? ' on' : '');
+    lbl.className = 'plbl' + (i === n ? ' on' : '');
+    if (i < 5) {
+      const ln = document.getElementById('ln' + i);
+      ln.className = 'pline' + (i < n ? ' dn' : '');
+    }
+  }
+  currentStep = n;
+  window.scrollTo(0, 0);
+  if (n === 2) calcRevenu();
+  if (n === 3) calcCout();
+  if (n === 4) calcComps();
+}
+
+function resetAll() {
+  if (!confirm('Réinitialiser toute l\'analyse?')) return;
+  location.reload();
+}
+
+// ── Slider labels ──
+function updSlider(id) {
+  const ids = { vacance: ['r_vacance', 'sv_vacance', '%'], depenses: ['r_depenses', 'sv_depenses', '%'], soft: ['r_soft', 'sv_soft', '%'], profit: ['r_profit', 'sv_profit', '%'] };
+  const [inp, lbl, suf] = ids[id];
+  document.getElementById(lbl).textContent = document.getElementById(inp).value + suf;
+}
+
+// ── Format numbers ──
+function fmtM(n) {
+  if (!n || isNaN(n)) return '—';
+  if (Math.abs(n) >= 1e6) return '$' + (n/1e6).toFixed(2) + 'M';
+  if (Math.abs(n) >= 1e3) return '$' + Math.round(n).toLocaleString('fr-CA');
+  return '$' + n.toFixed(0);
+}
+function fmtPct(n) { return (n >= 0 ? '+' : '') + n.toFixed(1) + '%'; }
+
+// ═══════════════════════════════════════════════
+// STEP 2 — REVENU
+// ═══════════════════════════════════════════════
+function initUnits() {
+  const body = document.getElementById('unitBody');
+  body.innerHTML = '';
+  [['4½', 6, 1200], ['3½', 4, 950]].forEach((u, i) => {
+    addUnitRow(u[0], u[1], u[2]);
+  });
+  calcRevenu();
+}
+
+function addUnit() { addUnitRow('', 1, 0); calcRevenu(); }
+
+function addUnitRow(type = '', nb = 1, loyer = 0) {
+  const body = document.getElementById('unitBody');
+  const tr = document.createElement('tr');
+  const rid = Date.now() + Math.random();
+  tr.id = 'ur_' + rid;
+  tr.innerHTML = `
+    <td><input type="text" class="finp" value="${type}" placeholder="4½, 3½…" oninput="calcRevenu()"></td>
+    <td><input type="number" class="finp" value="${nb}" min="1" oninput="calcRevenu()"></td>
+    <td><input type="number" class="finp" value="${loyer}" min="0" step="50" oninput="calcRevenu()"></td>
+    <td style="text-align:right;font-family:'Barlow Condensed',sans-serif;font-size:.95rem;color:var(--muted);padding:.4rem .75rem" id="ua_${rid}">${fmtM(nb*loyer*12)}</td>
+    <td><button onclick="document.getElementById('ur_${rid}').remove();calcRevenu()" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:1rem;padding:.25rem .5rem">✕</button></td>`;
+  body.appendChild(tr);
+}
+
+function getUnits() {
+  const rows = document.querySelectorAll('#unitBody tr');
+  return Array.from(rows).map(tr => {
+    const inps = tr.querySelectorAll('input[type=number]');
+    return { nb: parseFloat(inps[0]?.value) || 0, loyer: parseFloat(inps[1]?.value) || 0 };
+  });
+}
+
+function calcRevenu() {
+  const units = getUnits();
+  const bruts = units.reduce((s, u) => s + u.nb * u.loyer * 12, 0);
+
+  // Update annual column per row
+  const rows = document.querySelectorAll('#unitBody tr');
+  rows.forEach((tr, i) => {
+    const u = units[i];
+    const ua = tr.querySelector('[id^="ua_"]');
+    if (ua) ua.textContent = fmtM(u.nb * u.loyer * 12);
+  });
+
+  const vacPct = parseFloat(document.getElementById('r_vacance').value) / 100;
+  const depPct = parseFloat(document.getElementById('r_depenses').value) / 100;
+  const capRate = parseFloat(document.getElementById('r_caprate').value) / 100;
+
+  const vacance = bruts * vacPct;
+  const effectifs = bruts - vacance;
+  const depenses = effectifs * depPct;
+  const noi = effectifs - depenses;
+  const valeur = capRate > 0 ? noi / capRate : 0;
+
+  CALC.revenu = { bruts, vacance, effectifs, depenses, noi, cap_rate: capRate * 100, valeur };
+
+  document.getElementById('cr_bruts').textContent = fmtM(bruts);
+  document.getElementById('cr_vacance').textContent = '−' + fmtM(vacance);
+  document.getElementById('cr_effectifs').textContent = fmtM(effectifs);
+  document.getElementById('cr_depenses').textContent = '−' + fmtM(depenses);
+  document.getElementById('cr_noi').textContent = fmtM(noi);
+  document.getElementById('cr_cap').textContent = (capRate * 100).toFixed(2) + '%';
+  document.getElementById('cr_valeur').textContent = fmtM(valeur);
+}
+
+// ═══════════════════════════════════════════════
+// STEP 3 — COÛT
+// ═══════════════════════════════════════════════
+function calcCout() {
+  const terrain = parseFloat(document.getElementById('c_terrain').value) || 0;
+  const sf = parseFloat(document.getElementById('c_sf').value) || 0;
+  const cpp = parseFloat(document.getElementById('c_cpp').value) || 0;
+  let constTotal = parseFloat(document.getElementById('c_const').value) || 0;
+
+  // Auto-fill from $/pi² if not manually set
+  if (sf > 0 && cpp > 0) {
+    constTotal = sf * cpp;
+    document.getElementById('c_const').value = Math.round(constTotal);
+  }
+
+  const softPct = parseFloat(document.getElementById('r_soft').value) / 100;
+  const profitPct = parseFloat(document.getElementById('r_profit').value) / 100;
+  const soft = constTotal * softPct;
+  const sousTotal = terrain + constTotal + soft;
+  const profit = sousTotal * profitPct;
+  const valeur = sousTotal + profit;
+
+  CALC.cout = { terrain, construction: constTotal, soft, profit, valeur };
+
+  document.getElementById('cc_terrain').textContent = fmtM(terrain);
+  document.getElementById('cc_const').textContent = fmtM(constTotal);
+  document.getElementById('cc_soft').textContent = fmtM(soft);
+  document.getElementById('cc_profit').textContent = fmtM(profit);
+  document.getElementById('cc_valeur').textContent = fmtM(valeur);
+
+  calcPreteur();
+}
+
+function calcPreteur() {
+  const achatTerrain = parseFloat(document.getElementById('p_achat_terrain').value) || 0;
+  const constValidee = parseFloat(document.getElementById('p_const_validee').value) || 0;
+  const terrainMarche = CALC.cout.terrain || 0;
+  const softMarche = CALC.cout.soft || 0;
+
+  const terrainPreteur = achatTerrain > 0 ? Math.min(achatTerrain, terrainMarche) : terrainMarche;
+  const constFin = constValidee > 0 ? constValidee : (CALC.cout.construction || 0);
+  const softPreteur = softMarche * 0.85; // Soft costs conservateurs: -15%
+  const total = terrainPreteur + constFin + softPreteur;
+
+  CALC.preteur = { terrain: terrainPreteur, construction: constFin, soft: softPreteur, total };
+
+  document.getElementById('cp_terrain').textContent = fmtM(terrainPreteur);
+  document.getElementById('cp_const').textContent = fmtM(constFin);
+  document.getElementById('cp_soft').textContent = fmtM(softPreteur);
+  document.getElementById('cp_total').textContent = fmtM(total);
+}
+
+// ═══════════════════════════════════════════════
+// STEP 4 — COMPARABLES
+// ═══════════════════════════════════════════════
+function initComps() {
+  const container = document.getElementById('compList');
+  container.innerHTML = '';
+  for (let i = 1; i <= 3; i++) {
+    container.innerHTML += `
+    <div class="comp-card">
+      <div class="comp-num">Comparable ${i}</div>
+      <div class="grid3">
+        <div class="frow"><label>Adresse</label><input type="text" class="finp" id="co${i}_adr" placeholder="123 rue…"></div>
+        <div class="frow"><label>Date de vente</label><input type="date" class="finp" id="co${i}_date"></div>
+        <div class="frow"><label>Prix de vente ($)</label><input type="number" class="finp" id="co${i}_prix" placeholder="0" oninput="calcComps()"></div>
+      </div>
+      <div class="grid3">
+        <div class="frow"><label>Superficie (pi²)</label><input type="number" class="finp" id="co${i}_sf" placeholder="0" oninput="calcComps()"></div>
+        <div class="frow"><label>$/pi²</label><input type="text" class="finp" id="co${i}_cpp" readonly style="background:rgba(200,168,75,.04)"></div>
+      </div>
+      <div class="divider" style="margin:0.75rem 0 0.5rem"><span class="dvtxt">Ajustements</span></div>
+      <div class="adj-grid">
+        <div class="adj-item">
+          <label>Localisation (%)</label>
+          <input type="number" class="finp" id="co${i}_loc" value="0" step="1" min="-30" max="30" oninput="calcComps()">
+        </div>
+        <div class="adj-item">
+          <label>Date (%)</label>
+          <input type="number" class="finp" id="co${i}_dt" value="0" step="1" min="-20" max="20" oninput="calcComps()">
+        </div>
+        <div class="adj-item">
+          <label>Qualité (%)</label>
+          <input type="number" class="finp" id="co${i}_qual" value="0" step="1" min="-25" max="25" oninput="calcComps()">
+        </div>
+        <div class="adj-item">
+          <label>Type d'actif (%)</label>
+          <input type="number" class="finp" id="co${i}_type" value="0" step="1" min="-20" max="20" oninput="calcComps()">
+        </div>
+      </div>
+    </div>`;
+  }
+}
+
+function calcComps() {
+  const vals = [];
+  for (let i = 1; i <= 3; i++) {
+    const prix = parseFloat(document.getElementById('co' + i + '_prix').value) || 0;
+    const sf = parseFloat(document.getElementById('co' + i + '_sf').value) || 0;
+    if (sf > 0) document.getElementById('co' + i + '_cpp').value = '$' + Math.round(prix / sf).toLocaleString('fr-CA') + '/pi²';
+    const loc = parseFloat(document.getElementById('co' + i + '_loc').value) || 0;
+    const dt = parseFloat(document.getElementById('co' + i + '_dt').value) || 0;
+    const qual = parseFloat(document.getElementById('co' + i + '_qual').value) || 0;
+    const type = parseFloat(document.getElementById('co' + i + '_type').value) || 0;
+    const ajust = (loc + dt + qual + type) / 100;
+    const ajuste = prix * (1 + ajust);
+    vals.push(ajuste);
+    document.getElementById('cmp' + i + '_adj').textContent = prix > 0 ? fmtM(ajuste) + (ajust !== 0 ? ' (' + fmtPct(ajust * 100) + ')' : '') : '—';
+  }
+  const valid = vals.filter(v => v > 0);
+  const moy = valid.length > 0 ? valid.reduce((s, v) => s + v, 0) / valid.length : 0;
+  CALC.comps = { valeurs: vals, valeur: moy };
+  document.getElementById('comp_valeur').textContent = fmtM(moy);
+}
+
+// ═══════════════════════════════════════════════
+// STEP 5 — RÉCONCILIATION
+// ═══════════════════════════════════════════════
+function runReconciliation() {
+  calcRevenu(); calcCout(); calcComps();
+
+  const type = document.getElementById('s_type').value;
+  const marche = document.getElementById('s_marche').value;
+  const vRev = CALC.revenu.valeur || 0;
+  const vCout = CALC.cout.valeur || 0;
+  const vComp = CALC.comps.valeur || 0;
+
+  // Poids selon type et marché
+  let poids = { revenu: 0.60, cout: 0.25, comp: 0.15 };
+  if (type === 'developpement' || type === 'terrain') {
+    poids = { revenu: 0.20, cout: 0.55, comp: 0.25 };
+  } else if (type === 'commercial') {
+    poids = { revenu: 0.55, cout: 0.25, comp: 0.20 };
+  } else if (marche === 'instable') {
+    poids = { revenu: 0.50, cout: 0.30, comp: 0.20 };
+  }
+
+  const mid = vRev * poids.revenu + vCout * poids.cout + vComp * poids.comp;
+  const low = mid * 0.95;
+  const high = mid * 1.05;
+
+  // Divergence
+  const vals = [vRev, vCout, vComp].filter(v => v > 0);
+  const maxV = Math.max(...vals);
+  const minV = Math.min(...vals);
+  const divergence = mid > 0 ? (maxV - minV) / mid : 0;
+  const flagDiv = divergence > 0.10;
+
+  // Confiance
+  let confiance = 'élevé';
+  if (flagDiv || marche === 'instable') confiance = 'modéré';
+  if (divergence > 0.20) confiance = 'faible';
+
+  CALC.reconciliation = { vRev, vCout, vComp, poids, mid, low, high, divergence, flagDiv, confiance };
+
+  // Sensibilité
+  const capRate = (CALC.revenu.cap_rate || 5.75) / 100;
+  const noi = CALC.revenu.noi || 0;
+  const vacPct = parseFloat(document.getElementById('r_vacance').value) / 100;
+  const depPct = parseFloat(document.getElementById('r_depenses').value) / 100;
+  const bruts = CALC.revenu.bruts || 0;
+
+  const bruts_stress = bruts * 0.90;
+  const eff_stress = bruts_stress * (1 - vacPct);
+  const noi_stress = eff_stress * (1 - depPct);
+  const val_stress_loyers = capRate > 0 ? noi_stress / capRate : 0;
+
+  const capStress = capRate + 0.01;
+  const val_stress_cap = capStress > 0 ? noi / capStress : 0;
+
+  CALC.sensibilite = { stress_loyers: val_stress_loyers, stress_cap: val_stress_cap };
+
+  // Render
+  const pf = n => fmtM(n);
+  document.getElementById('rt_rev').textContent = pf(vRev);
+  document.getElementById('rt_rev_p').textContent = (poids.revenu * 100).toFixed(0) + '%';
+  document.getElementById('rt_rev_c').textContent = pf(vRev * poids.revenu);
+  document.getElementById('rt_cout').textContent = pf(vCout);
+  document.getElementById('rt_cout_p').textContent = (poids.cout * 100).toFixed(0) + '%';
+  document.getElementById('rt_cout_c').textContent = pf(vCout * poids.cout);
+  document.getElementById('rt_comp').textContent = pf(vComp);
+  document.getElementById('rt_comp_p').textContent = (poids.comp * 100).toFixed(0) + '%';
+  document.getElementById('rt_comp_c').textContent = pf(vComp * poids.comp);
+  document.getElementById('rt_mid').textContent = pf(mid);
+  document.getElementById('res_low').textContent = pf(low);
+  document.getElementById('res_mid').textContent = pf(mid);
+  document.getElementById('res_high').textContent = pf(high);
+  document.getElementById('res_div_pct').textContent = 'Divergence: ' + (divergence * 100).toFixed(1) + '%';
+
+  const badge = document.getElementById('res_conf');
+  badge.textContent = confiance.charAt(0).toUpperCase() + confiance.slice(1);
+  badge.className = 'conf-badge conf-' + (confiance === 'élevé' ? 'eleve' : confiance === 'modéré' ? 'modere' : 'faible');
+
+  document.getElementById('flagDiv').style.display = flagDiv ? 'block' : 'none';
+
+  // Valeur prêteur
+  document.getElementById('rp_terrain').textContent = pf(CALC.preteur.terrain);
+  document.getElementById('rp_const').textContent = pf((CALC.preteur.construction || 0) + (CALC.preteur.soft || 0));
+  document.getElementById('rp_total').textContent = pf(CALC.preteur.total);
+
+  // Sensibilité
+  document.getElementById('sens_base').textContent = pf(mid);
+  const svL = document.getElementById('sens_loyers');
+  svL.textContent = pf(val_stress_loyers) + ' (' + fmtPct((val_stress_loyers - mid) / mid * 100) + ')';
+  svL.style.color = val_stress_loyers < mid ? 'var(--red)' : 'var(--green)';
+  const svC = document.getElementById('sens_cap');
+  svC.textContent = pf(val_stress_cap) + ' (' + fmtPct((val_stress_cap - mid) / mid * 100) + ')';
+  svC.style.color = val_stress_cap < mid ? 'var(--red)' : 'var(--green)';
+}
+
+// ═══════════════════════════════════════════════
+// CLAUDE AI
+// ═══════════════════════════════════════════════
+async function runAI() {
+  const btn = document.getElementById('aiBtn');
+  const box = document.getElementById('aiBox');
+  btn.disabled = true;
+  btn.textContent = '⟁ Analyse en cours…';
+  box.style.display = 'block';
+  box.textContent = 'Claude AI analyse votre dossier…';
+
+  const r = CALC.reconciliation;
+  const payload = {
+    sujet: {
+      adresse: document.getElementById('s_adresse').value,
+      type_actif: document.getElementById('s_type').value,
+      marche: document.getElementById('s_marche').value,
+      superficie_terrain: document.getElementById('s_terrain_sf').value,
+      superficie_batiment: document.getElementById('s_bat_sf').value,
+      annee_construction: document.getElementById('s_annee').value,
+      eval_muni: document.getElementById('s_eval_muni').value,
+      req_nom: document.getElementById('s_req_nom').value,
+      req_statut: document.getElementById('s_req_statut').value,
+      rbq_numero: document.getElementById('s_rbq_num').value,
+      rbq_statut: document.getElementById('s_rbq_statut').value,
+      foncier_date: document.getElementById('s_fonc_date').value,
+      foncier_montant: document.getElementById('s_fonc_mt').value,
+      judiciaire_notes: document.getElementById('s_judiciaire').value
+    },
+    resultats: {
+      revenu_valeur: r.vRev, cout_valeur: r.vCout, comp_valeur: r.vComp,
+      noi: CALC.revenu.noi, cap_rate: CALC.revenu.cap_rate,
+      poids_revenu: Math.round(r.poids?.revenu * 100), poids_cout: Math.round(r.poids?.cout * 100), poids_comp: Math.round(r.poids?.comp * 100),
+      valeur_mid: r.mid, valeur_low: r.low, valeur_high: r.high,
+      divergence_pct: (r.divergence * 100).toFixed(1), flag_divergence: r.flagDiv,
+      valeur_preteur: CALC.preteur.total,
+      stress_loyers: CALC.sensibilite?.stress_loyers, stress_cap: CALC.sensibilite?.stress_cap
+    }
+  };
+
+  try {
+    const resp = await fetch('/.netlify/functions/norvex-intel', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const data = await resp.json();
+    if (data.error) throw new Error(data.error);
+    box.innerHTML = data.analysis.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    btn.textContent = '↺ Relancer l\'analyse';
+  } catch(e) {
+    box.textContent = 'Erreur: ' + e.message;
+    btn.textContent = '⟁ Réessayer';
+  }
+  btn.disabled = false;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// MODE AUTO-ÉVAL IA (nouveau 2026-05-05)
+// ═══════════════════════════════════════════════════════════════════
+function toggleAutoMode() {
+  const autoMode = document.getElementById('autoMode');
+  const main = document.getElementById('main');
+  const btn = document.getElementById('btnModeAuto');
+  if (autoMode.style.display === 'none' || !autoMode.style.display) {
+    autoMode.style.display = 'block';
+    main.style.display = 'none';
+    btn.textContent = '✕ Fermer Auto-Éval';
+  } else {
+    autoMode.style.display = 'none';
+    main.style.display = '';
+    btn.textContent = '🤖 MODE AUTO-ÉVAL IA';
+  }
+}
+
+function fmtMoney(n) {
+  if (!n && n !== 0) return 'N/D';
+  if (n >= 1000000) return '$' + (n/1000000).toFixed(2) + 'M';
+  if (n >= 1000) return '$' + Math.round(n).toLocaleString('fr-CA');
+  return '$' + Number(n).toFixed(2);
+}
+
+function num(id) {
+  const v = document.getElementById(id).value;
+  if (!v) return null;
+  const n = Number(v);
+  return isNaN(n) ? null : n;
+}
+
+function txt(id) {
+  return document.getElementById(id).value.trim() || null;
+}
+
+async function runAutoEval() {
+  const btn = document.getElementById('autoSubmitBtn');
+  const statusEl = document.getElementById('autoStatus');
+  const resultsBox = document.getElementById('autoResults');
+
+  if (!txt('auto_adresse') || !txt('auto_type')) {
+    statusEl.textContent = '⚠️ Adresse et type d\'actif requis';
+    statusEl.style.color = '#c33';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = '⟁ Claude analyse… (30-60s)';
+  statusEl.textContent = '';
+  resultsBox.style.display = 'none';
+
+  const payload = {
+    mode: 'auto',
+    sujet: {
+      adresse: txt('auto_adresse'),
+      type_actif: txt('auto_type'),
+      marche: txt('auto_marche'),
+      superficie_terrain: num('auto_sup_terrain'),
+      superficie_batiment: num('auto_sup_batiment'),
+      annee_construction: num('auto_annee'),
+      eval_muni: num('auto_eval_muni'),
+      req_nom: txt('auto_req_nom'),
+      req_statut: txt('auto_req_statut'),
+      rbq_statut: txt('auto_rbq_statut'),
+    },
+    financier: {
+      noi: num('auto_noi'),
+      revenus_bruts: num('auto_rev_bruts'),
+      charges: num('auto_charges'),
+      loyers_unites: txt('auto_loyers_unites'),
+      cout_construction_estime: num('auto_cout_constr'),
+      notes: txt('auto_notes'),
+    },
+  };
+
+  try {
+    const resp = await fetch('/.netlify/functions/norvex-intel', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    const data = await resp.json();
+    if (data.error) throw new Error(data.error);
+    renderAutoResults(data);
+    btn.textContent = '↺ Relancer auto-évaluation';
+  } catch(e) {
+    statusEl.textContent = '❌ ' + e.message;
+    statusEl.style.color = '#c33';
+    btn.textContent = '⟁ Réessayer';
+  }
+  btn.disabled = false;
+}
+
+function renderAutoResults(data) {
+  const box = document.getElementById('autoResults');
+  if (!data || !data.evaluation) {
+    box.innerHTML = '<div class="card" style="color:#c33">Réponse invalide</div>';
+    box.style.display = 'block';
+    return;
+  }
+  const ev = data.evaluation;
+  const r = ev.approche_revenu || {};
+  const c = ev.approche_comparables || {};
+  const co = ev.approche_cout || {};
+  const recon = ev.reconciliation || {};
+  const vp = ev.valeur_preteur || {};
+  const ss = ev.stress_tests || {};
+  const ver = ev.verdict || {};
+
+  const confColor = ver.confiance === 'élevé' ? '#2d8a3e' : ver.confiance === 'modéré' ? '#d6a800' : '#c33';
+  const recoEmoji = {
+    financement_ok: '✅',
+    ok_avec_conditions: '⚠️',
+    a_approfondir: '🔍',
+    refus_recommande: '❌',
+  }[ver.recommandation] || '•';
+
+  box.innerHTML = `
+    <div class="card" style="border-left:4px solid var(--gold)">
+      <div class="card-title" style="color:var(--gold)">⟁ RAPPORT D'AUTO-ÉVALUATION IA — Norvex Intel V2</div>
+
+      <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--gold);margin:1rem 0 .5rem 0">VALEUR PRÊTEUR : <strong>${fmtMoney(vp.valeur)}</strong></h2>
+      <p style="color:var(--muted);margin-bottom:1.5rem;font-size:.9rem">Marge de sécurité ${vp.marge_securite_pct || '—'}% — ${vp.marge_justification || ''}</p>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin:1.5rem 0">
+        <div style="background:rgba(255,255,255,.03);padding:1rem;border-radius:8px;border-top:2px solid var(--gold)">
+          <div style="font-size:.7rem;letter-spacing:2px;color:var(--gold);margin-bottom:.5rem">APPROCHE REVENU</div>
+          <div style="font-size:1.4rem;color:#fff;font-weight:600">${fmtMoney(r.valeur)}</div>
+          <div style="font-size:.85rem;color:var(--muted);margin-top:.5rem">
+            NOI ${fmtMoney(r.noi_utilise)} · Cap ${r.cap_rate || '—'}%<br>
+            ${r.cap_rate_justification || ''}
+          </div>
+        </div>
+        <div style="background:rgba(255,255,255,.03);padding:1rem;border-radius:8px;border-top:2px solid var(--gold)">
+          <div style="font-size:.7rem;letter-spacing:2px;color:var(--gold);margin-bottom:.5rem">APPROCHE COMPARABLES</div>
+          <div style="font-size:1.4rem;color:#fff;font-weight:600">${fmtMoney(c.valeur)}</div>
+          <div style="font-size:.85rem;color:var(--muted);margin-top:.5rem">
+            ${c.ratio_unitaire || '—'} ${c.ratio_unite || ''}<br>
+            ${c.ratio_justification || ''}
+          </div>
+        </div>
+        <div style="background:rgba(255,255,255,.03);padding:1rem;border-radius:8px;border-top:2px solid var(--gold)">
+          <div style="font-size:.7rem;letter-spacing:2px;color:var(--gold);margin-bottom:.5rem">APPROCHE COÛT</div>
+          <div style="font-size:1.4rem;color:#fff;font-weight:600">${fmtMoney(co.valeur)}</div>
+          <div style="font-size:.85rem;color:var(--muted);margin-top:.5rem">
+            ${fmtMoney(co.cout_neuf_pi2)}/pi² · Dépréciation ${co.depreciation_pct || '—'}%<br>
+            Terrain ${fmtMoney(co.valeur_terrain)}
+          </div>
+        </div>
+      </div>
+
+      <h3 style="color:var(--gold);margin-top:2rem">RÉCONCILIATION</h3>
+      <p>Pondération : <strong>${recon.poids_revenu_pct || 0}% revenu</strong> / <strong>${recon.poids_comparables_pct || 0}% comparables</strong> / <strong>${recon.poids_cout_pct || 0}% coût</strong></p>
+      <p style="color:var(--muted);font-size:.9rem">${recon.justification_ponderation || ''}</p>
+      <p style="margin-top:1rem">
+        Valeur réconciliée : <strong>${fmtMoney(recon.valeur_mid)}</strong>
+        (fourchette ${fmtMoney(recon.valeur_low)} — ${fmtMoney(recon.valeur_high)})
+      </p>
+
+      <h3 style="color:var(--gold);margin-top:2rem">STRESS TESTS</h3>
+      <ul style="line-height:1.8">
+        <li>Loyers / revenus -10% → valeur : <strong>${fmtMoney(ss.loyers_moins_10)}</strong></li>
+        <li>Cap rate +1 point → valeur : <strong>${fmtMoney(ss.cap_rate_plus_1pt)}</strong></li>
+        <li><em style="color:var(--muted)">Scénario défavorable : ${ss.scenario_defavorable || '—'}</em></li>
+      </ul>
+
+      <h3 style="color:var(--gold);margin-top:2rem">VERDICT</h3>
+      <p style="font-size:1.2rem">
+        ${recoEmoji} <strong>${(ver.recommandation || '').replace(/_/g, ' ').toUpperCase()}</strong>
+        — Confiance : <span style="color:${confColor};font-weight:600">${(ver.confiance || '—').toUpperCase()}</span>
+      </p>
+      <p>${ver.recommandation_texte || ''}</p>
+      <p style="color:var(--muted);font-size:.85rem;margin-top:.5rem"><em>${ver.confiance_justification || ''}</em></p>
+
+      <h4 style="color:var(--gold);margin-top:1.5rem">Risques principaux à surveiller</h4>
+      <ul>${(ver.risques_principaux || []).map(r => `<li>${r}</li>`).join('')}</ul>
+
+      <div style="margin-top:2rem;padding:1rem;background:rgba(255,180,0,.08);border-radius:6px;font-size:.85rem;color:#c8a800">
+        <strong>⚠️ DISCLAIMER :</strong> ${ev.disclaimer || ''}
+      </div>
+
+      <p style="margin-top:1.5rem;font-size:.75rem;color:var(--muted);text-align:right">
+        Généré le ${new Date(data.generated_at).toLocaleString('fr-CA')} — Norvex Intel V2 (Claude Opus 4.6)
+      </p>
+    </div>
+  `;
+  box.style.display = 'block';
+  box.scrollIntoView({ behavior: 'smooth' });
+}
+</script>
+</body>
+</html>

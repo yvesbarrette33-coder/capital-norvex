@@ -1,0 +1,17 @@
+node_modules
+.netlify
+*.log
+
+# Secrets locaux — JAMAIS déployer (Netlify gère les secrets via env vars du dashboard)
+.env
+.env.save
+.env.local
+.env.*.local
+**/.env
+**/.env.save
+**/.env.local
+**/.env.*.local
+
+# Garder explicitement les templates publics
+!.env.template
+!**/.env.template

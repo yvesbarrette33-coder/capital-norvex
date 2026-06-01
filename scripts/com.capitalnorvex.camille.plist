@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  launchd plist pour macOS — Lance Camille toutes les 10 minutes.
+
+  INSTALLATION (à faire 1 seule fois) :
+    cp scripts/com.capitalnorvex.camille.plist ~/Library/LaunchAgents/
+    launchctl load -w ~/Library/LaunchAgents/com.capitalnorvex.camille.plist
+
+  VÉRIFIER QUE ÇA TOURNE :
+    launchctl list | grep capitalnorvex
+
+  ARRÊTER :
+    launchctl unload -w ~/Library/LaunchAgents/com.capitalnorvex.camille.plist
+
+  Camille tourne SEULEMENT quand le Mac d'Yves est éveillé.
+  Pour un cron 24/7, déployer le pipeline Python sur Cloud Run / GitHub Actions.
+-->
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.capitalnorvex.camille</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/Users/yvesbarrette/Desktop/capitalnorvex-site/scripts/camille_run.sh</string>
+    <string>--top</string>
+    <string>25</string>
+  </array>
+
+  <key>StartInterval</key>
+  <integer>600</integer><!-- 10 minutes -->
+
+  <key>RunAtLoad</key>
+  <true/>
+
+  <key>StandardOutPath</key>
+  <string>/Users/yvesbarrette/.capitalnorvex/camille_launchd.out.log</string>
+
+  <key>StandardErrorPath</key>
+  <string>/Users/yvesbarrette/.capitalnorvex/camille_launchd.err.log</string>
+
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+  </dict>
+</dict>
+</plist>

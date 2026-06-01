@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sophie — NORVEX RELATIONS™ · Dashboard Admin</title>
+  <!-- PWA Admin (Suzanne+Yves installable) - 2026-05-20 -->
+  <link rel="manifest" href="/manifest-admin.json">
+  <meta name="theme-color" content="#0a0a0a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Norvex Admin">
+  <link rel="apple-touch-icon" href="/icon-192.png">
+<link rel="icon" href="/icon-512.png">
+<style>
+  :root {
+    --bg: #f7f7f9;
+    --card: #ffffff;
+    --border: #e5e5e7;
+    --text: #1a1a1a;
+    --muted: #777;
+    --gold: #C9A227;
+    --gold-dark: #a48618;
+    --green: #2d8a3e;
+    --red: #c33;
+    --blue: #1d4ed8;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "DM Sans", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+  }
+  header {
+    background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+    color: white;
+    padding: 20px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 3px solid var(--gold);
+  }
+  header h1 {
+    margin: 0;
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 22px;
+  }
+  header h1 .pill {
+    color: var(--gold);
+    font-size: 11px;
+    letter-spacing: 2px;
+    display: block;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-family: -apple-system, sans-serif;
+  }
+  header .stats {
+    display: flex;
+    gap: 24px;
+    font-size: 13px;
+  }
+  header .stats .num { font-size: 20px; font-weight: 700; color: var(--gold); display: block; }
+  .container { padding: 24px 32px; max-width: 1400px; margin: 0 auto; }
+  .toolbar {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+  .toolbar select, .toolbar button, .toolbar input {
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: white;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  .toolbar button { background: var(--text); color: white; border: none; }
+  .toolbar button:hover { background: var(--gold-dark); }
+  .layout {
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    gap: 24px;
+    height: calc(100vh - 220px);
+  }
+  .draft-list {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow-y: auto;
+    padding: 8px;
+  }
+  .draft-item {
+    padding: 14px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    border-left: 3px solid transparent;
+    margin-bottom: 4px;
+    transition: background .15s;
+  }
+  .draft-item:hover { background: #f0f0f3; }
+  .draft-item.active { background: #f0f4f7; border-left-color: var(--gold); }
+  .draft-item .subject {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 4px;
+    color: var(--text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .draft-item .meta {
+    font-size: 11px;
+    color: var(--muted);
+    display: flex;
+    gap: 8px;
+  }
+  .draft-item .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 99px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+  }
+  .badge-pending { background: #fff3d9; color: #8a5a00; }
+  .badge-approved { background: #d9f5e1; color: #1c5d2c; }
+  .badge-sent { background: #c8e6f1; color: #0e3a52; }
+  .badge-rejected { background: #f9d7d7; color: #8c1f1f; }
+  .badge-failed { background: #ffd7d7; color: #8c1f1f; }
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--muted);
+  }
+  .empty-state h3 { margin: 0 0 8px 0; color: var(--text); }
+  .draft-detail {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .detail-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border);
+    background: #fafbfc;
+  }
+  .detail-header h2 {
+    margin: 0 0 12px 0;
+    font-size: 18px;
+    color: var(--text);
+  }
+  .detail-meta {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 8px 16px;
+    font-size: 13px;
+  }
+  .detail-meta dt { color: var(--muted); font-weight: 500; }
+  .detail-meta dd { margin: 0; font-family: "DM Mono", monospace; font-size: 12px; word-break: break-word; }
+  .editable { background: transparent; border: 1px solid transparent; padding: 4px 8px; border-radius: 4px; width: 100%; font-family: inherit; font-size: 13px; }
+  .editable:focus { background: white; border-color: var(--gold); outline: none; }
+  .detail-body {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .preview-iframe {
+    flex: 1;
+    width: 100%;
+    border: none;
+    background: white;
+  }
+  .triage-info {
+    padding: 12px 24px;
+    background: #f0f4f7;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    border-left: 3px solid var(--gold);
+  }
+  .actions-bar {
+    padding: 16px 24px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 12px;
+    background: #fafbfc;
+  }
+  .btn {
+    padding: 12px 20px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .btn-approve { background: var(--green); color: white; }
+  .btn-approve:hover { background: #25762f; }
+  .btn-reject { background: var(--red); color: white; }
+  .btn-reject:hover { background: #a52a2a; }
+  .btn-modify { background: var(--text); color: white; }
+  .btn-modify:hover { background: #444; }
+  .btn-secondary { background: white; color: var(--text); border: 1px solid var(--border); }
+  .manual-edit-block {
+    margin: 18px 0;
+    padding: 14px 16px;
+    background: #fefcf3;
+    border: 1px solid #e6d99b;
+    border-radius: 6px;
+  }
+  .manual-edit-block .ml-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #8a6d1a;
+    margin-bottom: 8px;
+    display: block;
+  }
+  .manual-edit-block textarea {
+    width: 100%;
+    min-height: 220px;
+    padding: 10px;
+    border: 1px solid #d8c98a;
+    border-radius: 4px;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 12px;
+    background: #fefdf6;
+    box-sizing: border-box;
+  }
+  .save-manual-btn {
+    margin-top: 8px;
+    background: #2a5fa8;
+    color: white;
+    border: none;
+    padding: 9px 18px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .save-manual-btn:hover { background: #234e8c; }
+  .toast {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    background: var(--text);
+    color: white;
+    padding: 14px 22px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0,0,0,.2);
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all .3s;
+    z-index: 100;
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+  .toast.error { background: var(--red); }
+  .toast.success { background: var(--green); }
+  .login-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+  .login-card {
+    background: white;
+    padding: 36px;
+    border-radius: 12px;
+    width: 360px;
+    text-align: center;
+  }
+  .login-card h2 { margin: 0 0 24px 0; font-family: "Playfair Display", serif; color: var(--gold); }
+  .login-card input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 16px;
+    margin-bottom: 12px;
+    box-sizing: border-box;
+  }
+  .login-card button {
+    width: 100%;
+    padding: 12px;
+    background: var(--text);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .login-error { color: var(--red); font-size: 13px; margin-top: 8px; }
+  @media (max-width: 980px) {
+    .layout { grid-template-columns: 1fr; height: auto; }
+    .draft-list { max-height: 400px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ÉCRAN DE LOGIN -->
+<div id="login-overlay" class="login-overlay">
+  <div class="login-card">
+    <h2>Sophie — NORVEX RELATIONS™</h2>
+    <p style="color:var(--muted);font-size:13px">Dashboard d'approbation</p>
+    <input id="login-password" type="password" placeholder="Mot de passe" autofocus>
+    <button onclick="doLogin()">Connexion</button>
+    <div id="login-error" class="login-error"></div>
+  </div>
+</div>
+
+<header>
+  <h1>
+    <span class="pill">Sophie — NORVEX RELATIONS™</span>
+    Dashboard d'approbation
+  </h1>
+  <div class="stats">
+    <div><span class="num" id="stat-pending">0</span>En attente</div>
+    <div><span class="num" id="stat-sent">0</span>Envoyés</div>
+    <div><span class="num" id="stat-rejected">0</span>Rejetés</div>
+  </div>
+</header>
+
+<div class="container">
+  <div class="toolbar">
+    <label style="font-size:13px;color:var(--muted)">Filtre :</label>
+    <select id="filter-status" onchange="loadDrafts()">
+      <option value="pending_yves_approval" selected>En attente d'approbation</option>
+      <option value="sent">Envoyés</option>
+      <option value="rejected">Rejetés</option>
+      <option value="send_failed">Échecs d'envoi</option>
+      <option value="all">Tous</option>
+    </select>
+    <button onclick="loadDrafts()">🔄 Rafraîchir</button>
+    <span style="margin-left:auto;font-size:12px;color:var(--muted)">
+      Dernière mise à jour : <span id="last-refresh">—</span>
+    </span>
+  </div>
+
+  <div class="layout">
+    <div id="draft-list" class="draft-list">
+      <div class="empty-state">Chargement…</div>
+    </div>
+
+    <div id="draft-detail" class="draft-detail">
+      <div class="empty-state" style="margin:auto">
+        <h3>Aucun draft sélectionné</h3>
+        <p>Sélectionne un draft à gauche pour voir les détails.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+// SSO Norvex : on accepte toute clé SSO disponible (priorité norvex_secret partagé)
+let SECRET = localStorage.getItem("norvex_secret") || localStorage.getItem("sophie_secret");
+let CURRENT_DRAFTS = [];
+let CURRENT_DRAFT_ID = null;
+
+// ── LOGIN ────────────────────────────────────────────────────────
+function showToast(msg, type) {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.className = "toast show " + (type || "");
+  setTimeout(() => t.classList.remove("show"), 3000);
+}
+
+async function doLogin() {
+  const pwd = document.getElementById("login-password").value.trim();
+  if (!pwd) return;
+  try {
+    const r = await fetch("/api/sophie-list-drafts", {
+      method: "POST",
+      headers: { "X-Internal-Secret": pwd, "Content-Type": "application/json" },
+      body: JSON.stringify({ status: "pending_yves_approval", limit: 1 })
+    });
+    if (r.status === 401) {
+      document.getElementById("login-error").textContent = "Mot de passe incorrect";
+      return;
+    }
+    SECRET = pwd;
+    localStorage.setItem("sophie_secret", pwd);
+    document.getElementById("login-overlay").style.display = "none";
+    loadDrafts();
+    // Pré-sélection si ?edit= dans l'URL
+    const editId = new URLSearchParams(window.location.search).get("edit");
+    if (editId) setTimeout(() => selectDraft(editId), 500);
+  } catch (e) {
+    document.getElementById("login-error").textContent = "Erreur : " + e.message;
+  }
+}
+
+document.getElementById("login-password").addEventListener("keydown", e => {
+  if (e.key === "Enter") doLogin();
+});
+
+if (SECRET) {
+  document.getElementById("login-overlay").style.display = "none";
+  loadDrafts();
+  const editId = new URLSearchParams(window.location.search).get("edit");
+  if (editId) setTimeout(() => selectDraft(editId), 500);
+}
+
+// ── CHARGEMENT ───────────────────────────────────────────────────
+async function loadDrafts() {
+  if (!SECRET) return;
+  const status = document.getElementById("filter-status").value;
+  try {
+    const r = await fetch("/api/sophie-list-drafts", {
+      method: "POST",
+      headers: { "X-Internal-Secret": SECRET, "Content-Type": "application/json" },
+      body: JSON.stringify({ status, limit: 100 })
+    });
+    if (r.status === 401) {
+      localStorage.removeItem("sophie_secret");
+      location.reload();
+      return;
+    }
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    const data = await r.json();
+    CURRENT_DRAFTS = data.drafts || [];
+    renderList();
+    renderStats();
+    document.getElementById("last-refresh").textContent =
+      new Date().toLocaleTimeString("fr-CA");
+  } catch (e) {
+    showToast("Chargement échoué : " + e.message, "error");
+  }
+}
+
+function renderStats() {
+  // Compte uniquement le statut affiché actuellement
+  const filtered = CURRENT_DRAFTS;
+  document.getElementById("stat-pending").textContent =
+    filtered.filter(d => d.status === "pending_yves_approval").length;
+  document.getElementById("stat-sent").textContent =
+    filtered.filter(d => d.status === "sent").length;
+  document.getElementById("stat-rejected").textContent =
+    filtered.filter(d => d.status === "rejected").length;
+}
+
+function renderList() {
+  const el = document.getElementById("draft-list");
+  if (CURRENT_DRAFTS.length === 0) {
+    el.innerHTML = `<div class="empty-state">
+      <h3>Aucun draft</h3>
+      <p>Pas de draft Camille pour ce filtre.</p>
+    </div>`;
+    return;
+  }
+  el.innerHTML = CURRENT_DRAFTS.map(d => {
+    const badgeClass = {
+      "pending_yves_approval": "badge-pending",
+      "approved": "badge-approved",
+      "sent": "badge-sent",
+      "rejected": "badge-rejected",
+      "send_failed": "badge-failed",
+    }[d.status] || "badge-pending";
+    const badgeText = {
+      "pending_yves_approval": "En attente",
+      "approved": "Approuvé",
+      "sent": "Envoyé",
+      "rejected": "Rejeté",
+      "send_failed": "Échec",
+    }[d.status] || d.status;
+    const date = d.createdAt ? new Date(d.createdAt).toLocaleString("fr-CA",
+      { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" }) : "?";
+    const active = d.id === CURRENT_DRAFT_ID ? "active" : "";
+    return `<div class="draft-item ${active}" onclick="selectDraft('${d.id}')">
+      <div class="subject">${escapeHtml(d.subject || "(sans objet)")}</div>
+      <div class="meta">
+        <span class="badge ${badgeClass}">${badgeText}</span>
+        <span>${escapeHtml(d.toRecipient || "?")}</span>
+        <span style="margin-left:auto">${date}</span>
+      </div>
+    </div>`;
+  }).join("");
+}
+
+function selectDraft(id) {
+  CURRENT_DRAFT_ID = id;
+  const d = CURRENT_DRAFTS.find(x => x.id === id);
+  if (!d) return;
+  renderList();
+  renderDetail(d);
+}
+
+function renderDetail(d) {
+  const isPending = d.status === "pending_yves_approval";
+  const triageHtml = d.triageSnapshot ? `
+    <div class="triage-info">
+      <strong>Triage Sonnet :</strong>
+      ${escapeHtml(d.triageSnapshot.summary || "(résumé indisponible)")}
+      <br><small>
+        Catégorie : <code>${escapeHtml(d.triageSnapshot.category || "?")}</code> ·
+        Priorité : <code>${escapeHtml(d.triageSnapshot.priority || "?")}</code>
+        ${d.triageSnapshot.jurisdiction ? "· Juridiction : <code>" + escapeHtml(d.triageSnapshot.jurisdiction) + "</code>" : ""}
+      </small>
+    </div>` : "";
+
+  const cc = (d.ccRecipients || []).join(", ") || "(aucun)";
+  const html = d.signedHtml || d.bodyHtml || "(pas de contenu HTML)";
+
+  const noteHtml = d.internalNoteForYves ? `
+    <div style="padding:12px 24px;background:#fffbe5;border-bottom:1px solid var(--border);font-size:13px;border-left:3px solid var(--gold)">
+      <strong>📝 Note Camille pour Yves :</strong> ${escapeHtml(d.internalNoteForYves)}
+    </div>` : "";
+
+  const questionsHtml = (d.openQuestions && d.openQuestions.length) ? `
+    <div style="padding:12px 24px;background:#fff3f3;border-bottom:1px solid var(--border);font-size:13px;border-left:3px solid var(--red)">
+      <strong>❓ Questions ouvertes :</strong>
+      <ul style="margin:6px 0 0 0;padding-left:20px">
+        ${d.openQuestions.map(q => `<li>${escapeHtml(q)}</li>`).join("")}
+      </ul>
+    </div>` : "";
+
+  document.getElementById("draft-detail").innerHTML = `
+    <div class="detail-header">
+      <h2>📧 ${escapeHtml(d.subject || "(sans objet)")}</h2>
+      <dl class="detail-meta">
+        <dt>De (boîte)</dt><dd>${escapeHtml(d.sourceMailbox || "?")}</dd>
+        <dt>À</dt><dd><input class="editable" id="edit-to" value="${escapeAttr(d.toRecipient || "")}" ${isPending ? "" : "disabled"}></dd>
+        <dt>CC</dt><dd>${escapeHtml(cc)}</dd>
+        <dt>Objet</dt><dd><input class="editable" id="edit-subject" value="${escapeAttr(d.subject || "")}" ${isPending ? "" : "disabled"}></dd>
+        <dt>Statut</dt><dd>${escapeHtml(d.status)}</dd>
+      </dl>
+    </div>
+    ${triageHtml}
+    ${noteHtml}
+    ${questionsHtml}
+    <div class="detail-body">
+      <iframe id="preview-iframe" class="preview-iframe" srcdoc="${escapeAttr(html)}"></iframe>
+    </div>
+    ${isPending ? `
+      <div class="manual-edit-block">
+        <span class="ml-label">⚡ Ajouts rapides (insère un bloc dans le HTML ci-dessous)</span>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 14px 0">
+          <button class="save-manual-btn" style="background:#5a6e8a" onclick="injectSnippet('${d.id}', 'phone')">📞 + Téléphone</button>
+          <button class="save-manual-btn" style="background:#5a6e8a" onclick="injectSnippet('${d.id}', 'teams')">💻 + Lien Teams</button>
+          <button class="save-manual-btn" style="background:#5a6e8a" onclick="injectSnippet('${d.id}', 'both')">📅 + Tél &amp; Teams</button>
+        </div>
+        <span class="ml-label">✏️ Corrections manuelles avant approbation (édite le HTML directement, aucun appel IA)</span>
+        <textarea id="manualHtml-${d.id}">${escapeHtml(d.bodyHtml || "")}</textarea>
+        <button class="save-manual-btn" onclick="saveManualHtml('${d.id}')">💾 Sauvegarder mes corrections</button>
+        <span style="margin-left:10px;color:var(--muted);font-size:12px;font-style:italic">Mes modifications ne sont PAS envoyées tant que je n'ai pas cliqué « Approuver et envoyer ».</span>
+      </div>
+      <div class="actions-bar">
+        <button class="btn btn-approve" onclick="approveDraft('${d.id}')">✅ Approuver et envoyer</button>
+        <button class="btn btn-modify" onclick="saveModifications('${d.id}')">💾 Sauvegarder modifications</button>
+        <button class="btn btn-reject" onclick="rejectDraft('${d.id}')">❌ Rejeter</button>
+        <button class="btn btn-secondary" style="margin-left:auto" onclick="loadDrafts()">🔄 Rafraîchir</button>
+      </div>
+    ` : `
+      <div class="actions-bar">
+        <span style="color:var(--muted);font-size:13px">
+          ${d.status === "sent" ? "✅ Envoyé le " + new Date(d.sentAt).toLocaleString("fr-CA") : ""}
+          ${d.status === "rejected" ? "❌ Rejeté le " + new Date(d.rejectedAt).toLocaleString("fr-CA") + (d.rejectionReason ? " — " + escapeHtml(d.rejectionReason) : "") : ""}
+        </span>
+      </div>
+    `}
+  `;
+}
+
+async function approveDraft(id) {
+  if (!confirm("Approuver et envoyer ce courriel maintenant ? Yves sera en CC.")) return;
+  // D'abord sauvegarder les modifications éventuelles
+  await saveModifications(id, true);
+  try {
+    const r = await fetch("/api/sophie-approve", {
+      method: "POST",
+      headers: { "X-Internal-Secret": SECRET, "Content-Type": "application/json" },
+      body: JSON.stringify({ draftId: id })
+    });
+    const data = await r.json();
+    if (!r.ok || !data.ok) throw new Error(data.message || data.error || `HTTP ${r.status}`);
+    showToast("✅ " + data.message, "success");
+    loadDrafts();
+  } catch (e) {
+    showToast("❌ " + e.message, "error");
+  }
+}
+
+async function rejectDraft(id) {
+  const reason = prompt("Raison du rejet (optionnel) :", "");
+  if (reason === null) return;
+  try {
+    const r = await fetch("/api/sophie-reject", {
+      method: "POST",
+      headers: { "X-Internal-Secret": SECRET, "Content-Type": "application/json" },
+      body: JSON.stringify({ draftId: id, reason })
+    });
+    const data = await r.json();
+    if (!r.ok || !data.ok) throw new Error(data.message || data.error || `HTTP ${r.status}`);
+    showToast("Draft rejeté", "success");
+    loadDrafts();
+  } catch (e) {
+    showToast("Erreur : " + e.message, "error");
+  }
+}
+
+async function saveModifications(id, silent) {
+  const subject = document.getElementById("edit-subject")?.value;
+  const toRecipient = document.getElementById("edit-to")?.value;
+  const manualHtml = document.getElementById("manualHtml-" + id)?.value;
+  const d = CURRENT_DRAFTS.find(x => x.id === id);
+  if (!d) return;
+  // Construire payload avec uniquement les champs modifiés
+  const payload = { draftId: id };
+  let changed = false;
+  if (subject !== undefined && subject !== d.subject) { payload.subject = subject; changed = true; }
+  if (toRecipient !== undefined && toRecipient !== d.toRecipient) { payload.toRecipient = toRecipient; changed = true; }
+  if (manualHtml !== undefined && manualHtml !== (d.bodyHtml || "")) { payload.bodyHtml = manualHtml; changed = true; }
+  if (!changed) {
+    if (!silent) showToast("Aucune modification");
+    return;
+  }
+  try {
+    const r = await fetch("/api/sophie-update-draft", {
+      method: "POST",
+      headers: { "X-Internal-Secret": SECRET, "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    if (!silent) {
+      showToast("✅ Modifications sauvegardées", "success");
+      loadDrafts();
+    }
+  } catch (e) {
+    if (!silent) showToast("Erreur : " + e.message, "error");
+  }
+}
+
+function injectSnippet(id, kind) {
+  const ta = document.getElementById("manualHtml-" + id);
+  if (!ta) return;
+  const lang = (CURRENT_DRAFTS.find(x => x.id === id)?.language || "fr").toLowerCase();
+  const isEn = lang === "en";
+  const phoneFr = '<p>Pour joindre M. Yves Barrette directement : <strong>438-533-PRÊT (7738)</strong> aux heures ouvrables.</p>';
+  const phoneEn = '<p>To reach Mr. Yves Barrette directly: <strong>+1 (438) 533-PRÊT (7738)</strong> during business hours.</p>';
+  const teamsFr = '<p>Pour réserver un créneau Teams, complétez le formulaire en ligne : <a href="https://capitalnorvex.com/rdv-public.html">capitalnorvex.com/rdv-public.html</a>. M. Barrette validera personnellement votre demande et vous fera parvenir une invitation Teams confirmée par courriel.</p>';
+  const teamsEn = '<p>To book a Teams slot, please fill out the online form: <a href="https://capitalnorvex.com/rdv-public.html">capitalnorvex.com/rdv-public.html</a>. Mr. Barrette will personally review your request and send you a confirmed Teams invitation by email.</p>';
+  const bothFr = '<p>Deux options pour échanger avec M. Yves Barrette :</p><ul><li>Par téléphone : <strong>438-533-PRÊT (7738)</strong>, heures ouvrables.</li><li>Pour un créneau Teams, complétez le formulaire en ligne : <a href="https://capitalnorvex.com/rdv-public.html">capitalnorvex.com/rdv-public.html</a> — M. Barrette validera personnellement et enverra une invitation confirmée par courriel.</li></ul>';
+  const bothEn = '<p>Two ways to connect with Mr. Yves Barrette:</p><ul><li>By phone: <strong>+1 (438) 533-PRÊT (7738)</strong>, business hours.</li><li>For a Teams slot, please fill out the online form: <a href="https://capitalnorvex.com/rdv-public.html">capitalnorvex.com/rdv-public.html</a> — Mr. Barrette will personally review and send a confirmed invitation by email.</li></ul>';
+  let snippet = "";
+  if (kind === "phone") snippet = isEn ? phoneEn : phoneFr;
+  else if (kind === "teams") snippet = isEn ? teamsEn : teamsFr;
+  else if (kind === "both") snippet = isEn ? bothEn : bothFr;
+  if (!snippet) return;
+  const pos = ta.selectionStart ?? ta.value.length;
+  const before = ta.value.slice(0, pos);
+  const after = ta.value.slice(pos);
+  ta.value = before + "\n" + snippet + "\n" + after;
+  ta.focus();
+  showToast("✅ Bloc inséré — n'oublie pas « Sauvegarder mes corrections »", "success");
+}
+
+async function saveManualHtml(id) {
+  const manualHtml = document.getElementById("manualHtml-" + id)?.value;
+  if (manualHtml === undefined) return;
+  try {
+    const r = await fetch("/api/sophie-update-draft", {
+      method: "POST",
+      headers: { "X-Internal-Secret": SECRET, "Content-Type": "application/json" },
+      body: JSON.stringify({ draftId: id, bodyHtml: manualHtml })
+    });
+    const data = await r.json().catch(() => ({}));
+    if (!r.ok) throw new Error(data.message || data.error || `HTTP ${r.status}`);
+    showToast("✅ Corrections sauvegardées (pas encore envoyées)", "success");
+    loadDrafts();
+  } catch (e) {
+    showToast("❌ " + e.message, "error");
+  }
+}
+
+// ── HELPERS ──────────────────────────────────────────────────────
+function escapeHtml(s) {
+  return String(s || "").replace(/[&<>"']/g, c =>
+    ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c])
+  );
+}
+function escapeAttr(s) { return escapeHtml(s); }
+
+// Auto-refresh toutes les 60s
+setInterval(() => { if (SECRET) loadDrafts(); }, 60000);
+</script>
+
+</body>
+</html>

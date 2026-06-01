@@ -1,0 +1,47 @@
+{
+  "name": "Norvex Admin",
+  "short_name": "Norvex Admin",
+  "description": "Dashboard exécutif Capital Norvex Inc. — Brain, Maestro, agents IA, pipeline, sollicitations",
+  "start_url": "/capital-norvex-brain.html",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#c9a961",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Brain",
+      "short_name": "Brain",
+      "url": "/capital-norvex-brain.html"
+    },
+    {
+      "name": "Maestro",
+      "short_name": "Maestro",
+      "url": "/maestro-admin.html"
+    },
+    {
+      "name": "Norvex Agents",
+      "short_name": "Agents",
+      "url": "/capital-norvex-agents.html"
+    },
+    {
+      "name": "Pipeline",
+      "short_name": "Pipeline",
+      "url": "/capital-norvex-pipeline.html"
+    }
+  ]
+}

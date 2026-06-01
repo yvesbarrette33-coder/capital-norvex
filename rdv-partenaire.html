@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<!-- Microsoft Clarity Analytics + Loi 25 Consent (Capital Norvex) -->
+<script>
+(function(){
+  var k='cn_analytics_consent';
+  var consent=localStorage.getItem(k);
+  function loadClarity(){
+    (function(c,l,a,r,i,t,y){
+      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window,document,"clarity","script","wqmwilt1it");
+  }
+  if(consent==='accepted'){loadClarity();}
+  else if(consent===null){
+    document.addEventListener('DOMContentLoaded',function(){
+      var b=document.createElement('div');
+      b.id='cn-consent-banner';
+      b.style.cssText='position:fixed;bottom:20px;left:20px;right:20px;max-width:560px;margin:0 auto;background:#0a0a0a;color:#f5f5f5;padding:20px 24px;border-radius:8px;box-shadow:0 10px 40px rgba(0,0,0,0.35);z-index:99999;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:1.55;';
+      b.innerHTML='<div style="margin-bottom:14px;">Capital Norvex utilise des outils d’analyse anonymes (Microsoft Clarity) pour améliorer votre expérience. Aucune donnée personnelle n’est partagée à des fins commerciales. <a href="https://privacy.microsoft.com/privacystatement" target="_blank" rel="noopener" style="color:#c9a85c;text-decoration:underline;">En savoir plus</a></div>'+
+      '<div style="display:flex;gap:10px;flex-wrap:wrap;">'+
+      '<button id="cn-c-acc" style="background:#c9a85c;color:#0a0a0a;border:none;padding:10px 20px;border-radius:4px;font-weight:600;cursor:pointer;font-size:13px;font-family:inherit;">Accepter</button>'+
+      '<button id="cn-c-ref" style="background:transparent;color:#f5f5f5;border:1px solid #555;padding:10px 20px;border-radius:4px;font-weight:600;cursor:pointer;font-size:13px;font-family:inherit;">Refuser</button>'+
+      '</div>';
+      document.body.appendChild(b);
+      document.getElementById('cn-c-acc').onclick=function(){localStorage.setItem(k,'accepted');b.remove();loadClarity();};
+      document.getElementById('cn-c-ref').onclick=function(){localStorage.setItem(k,'refused');b.remove();};
+    });
+  }
+})();
+</script>
+<!-- End Clarity -->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Capital Norvex — Rendez-vous Partenaire</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F5EFE0;
+    --cream-warm: #FAF6EA;
+    --ink: #0A0A0A;
+    --ink-soft: #1a1a1a;
+    --gold: #C8B070;
+    --gold-dark: #9A8554;
+    --stone: #d6cdb8;
+    --muted: #6a6a6a;
+    --green: #4a7c4a;
+    --red: #b03030;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: 'Inter', -apple-system, system-ui, sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .topbar {
+    background: var(--ink);
+    padding: 24px 24px 28px;
+    text-align: center;
+    border-bottom: 3px solid var(--gold);
+  }
+  .topbar-logo {
+    color: var(--gold);
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    letter-spacing: 4px;
+    font-weight: 400;
+  }
+  .topbar-tagline {
+    color: var(--gold);
+    font-style: italic;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    margin-top: 8px;
+    opacity: 0.85;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+  .hero {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+  .hero-eyebrow {
+    color: var(--gold-dark);
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1.25;
+    margin-bottom: 12px;
+  }
+  .hero-title em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  .hero-sub {
+    font-size: 15px;
+    color: var(--muted);
+    max-width: 540px;
+    margin: 0 auto;
+  }
+  .partner-card {
+    background: var(--cream-warm);
+    border-left: 3px solid var(--gold);
+    padding: 18px 22px;
+    margin: 32px 0 28px;
+  }
+  .partner-card-label {
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    margin-bottom: 6px;
+  }
+  .partner-card-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    color: var(--ink);
+  }
+  .partner-card-org {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .day-block {
+    margin-bottom: 24px;
+  }
+  .day-label {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    color: var(--ink);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--stone);
+  }
+  .slots {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 10px;
+  }
+  .slot-btn {
+    background: #fff;
+    border: 1px solid var(--stone);
+    color: var(--ink);
+    padding: 14px 12px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    text-align: center;
+    transition: all 0.15s ease;
+    letter-spacing: 0.3px;
+  }
+  .slot-btn:hover {
+    border-color: var(--gold);
+    background: var(--cream-warm);
+    color: var(--ink);
+  }
+  .slot-btn.selected {
+    background: var(--ink);
+    color: var(--gold);
+    border-color: var(--gold);
+  }
+
+  .form-section {
+    margin-top: 36px;
+    padding: 28px;
+    background: #fff;
+    border: 1px solid var(--stone);
+    display: none;
+  }
+  .form-section.visible { display: block; }
+  .form-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .form-subtitle {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 24px;
+  }
+  .selected-slot {
+    background: var(--ink);
+    color: var(--gold);
+    padding: 14px 18px;
+    margin-bottom: 24px;
+    text-align: center;
+    letter-spacing: 0.5px;
+  }
+  .selected-slot-label {
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    color: var(--gold);
+    opacity: 0.7;
+    margin-bottom: 4px;
+  }
+  .selected-slot-time {
+    font-size: 16px;
+    color: #fff;
+  }
+
+  .field { margin-bottom: 18px; }
+  .field-label {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    margin-bottom: 6px;
+  }
+  .field-input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--stone);
+    background: var(--cream-warm);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: var(--ink);
+    transition: border-color 0.15s;
+  }
+  .field-input:focus {
+    outline: none;
+    border-color: var(--gold);
+  }
+
+  .submit-btn {
+    width: 100%;
+    background: var(--ink);
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    padding: 18px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .submit-btn:hover {
+    background: var(--gold);
+    color: var(--ink);
+  }
+  .submit-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .status-msg {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 13px;
+    padding: 14px;
+  }
+  .status-msg.error {
+    background: #f5e6e6;
+    color: var(--red);
+    border-left: 3px solid var(--red);
+  }
+  .status-msg.success {
+    background: #e6f0e6;
+    color: var(--green);
+    border-left: 3px solid var(--green);
+  }
+
+  .loader {
+    text-align: center;
+    padding: 40px;
+    color: var(--muted);
+    font-size: 14px;
+    letter-spacing: 1px;
+  }
+
+  .confirmation-page {
+    text-align: center;
+    padding: 40px 20px;
+    display: none;
+  }
+  .confirmation-page.visible { display: block; }
+  .confirmation-icon {
+    font-size: 56px;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+  .confirmation-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    color: var(--ink);
+    margin-bottom: 14px;
+  }
+  .confirmation-text {
+    font-size: 15px;
+    color: var(--muted);
+    max-width: 480px;
+    margin: 0 auto 24px;
+  }
+  .teams-link-btn {
+    display: inline-block;
+    background: var(--ink);
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    padding: 16px 36px;
+    text-decoration: none;
+    letter-spacing: 1.5px;
+    font-size: 13px;
+    text-transform: uppercase;
+    margin-top: 12px;
+  }
+
+  .lang-switch {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    color: var(--gold);
+    font-size: 12px;
+    letter-spacing: 2px;
+  }
+  .lang-switch a {
+    color: var(--gold);
+    text-decoration: none;
+    cursor: pointer;
+    opacity: 0.6;
+  }
+  .lang-switch a.active { opacity: 1; }
+  .lang-switch a:hover { opacity: 1; }
+
+  .footer {
+    background: var(--ink);
+    color: var(--gold);
+    text-align: center;
+    padding: 22px;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+  }
+
+  @media (max-width: 600px) {
+    .hero-title { font-size: 26px; }
+    .container { padding: 28px 18px 60px; }
+    .slots { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar" style="position:relative;">
+  <div class="topbar-logo">CAPITAL NORVEX</div>
+  <div class="topbar-tagline" id="tagline">Capital structuré. Ambition maîtrisée.</div>
+  <div class="lang-switch">
+    <a id="lang-fr" class="active" onclick="switchLang('fr')">FR</a>
+    &nbsp;·&nbsp;
+    <a id="lang-en" onclick="switchLang('en')">EN</a>
+  </div>
+</div>
+
+<div class="container">
+
+  <div id="loader" class="loader">
+    <span id="loading-text">Chargement de votre calendrier…</span>
+  </div>
+
+  <div id="error-page" style="display:none;text-align:center;padding:40px 20px;">
+    <h2 style="font-family:'Playfair Display',serif;font-weight:400;color:var(--ink);margin-bottom:14px;" id="error-title">Lien invalide ou expiré</h2>
+    <p style="color:var(--muted);font-size:14px;" id="error-msg">Ce lien de réservation n'est plus valide. Veuillez contacter directement Capital Norvex.</p>
+  </div>
+
+  <div id="main-content" style="display:none;">
+    <div class="hero">
+      <div class="hero-eyebrow" id="eyebrow">RENDEZ-VOUS PARTENAIRE</div>
+      <h1 class="hero-title" id="hero-title">Réservez votre <em>discussion</em> Capital Norvex</h1>
+      <p class="hero-sub" id="hero-sub">Sélectionnez un créneau ci-dessous. Réunion Microsoft Teams de 30 minutes — confirmation immédiate.</p>
+    </div>
+
+    <div class="partner-card">
+      <div class="partner-card-label" id="partner-label">PRÉPARÉ POUR</div>
+      <div class="partner-card-name" id="partner-name">—</div>
+      <div class="partner-card-org" id="partner-org"></div>
+    </div>
+
+    <div id="days-container"></div>
+
+    <div id="form-section" class="form-section">
+      <div class="form-title" id="form-title">Confirmez votre rendez-vous</div>
+      <div class="form-subtitle" id="form-subtitle">Vos coordonnées pour l'invitation Teams</div>
+
+      <div class="selected-slot">
+        <div class="selected-slot-label" id="selected-slot-label">CRÉNEAU SÉLECTIONNÉ</div>
+        <div class="selected-slot-time" id="selected-slot-time">—</div>
+      </div>
+
+      <div class="field">
+        <label class="field-label" id="lbl-name">NOM COMPLET</label>
+        <input type="text" id="contact-name" class="field-input" required>
+      </div>
+
+      <div class="field">
+        <label class="field-label" id="lbl-email">COURRIEL</label>
+        <input type="email" id="contact-email" class="field-input" required>
+      </div>
+
+      <div class="field">
+        <label class="field-label" id="lbl-phone">TÉLÉPHONE (OPTIONNEL)</label>
+        <input type="tel" id="contact-phone" class="field-input">
+      </div>
+
+      <button id="submit-btn" class="submit-btn" onclick="submitBooking()">
+        <span id="submit-label">CONFIRMER LE RENDEZ-VOUS</span>
+      </button>
+
+      <div id="status-msg" class="status-msg" style="display:none;"></div>
+    </div>
+  </div>
+
+  <div id="confirmation" class="confirmation-page">
+    <div class="confirmation-icon">&diams;</div>
+    <h2 class="confirmation-title" id="conf-title">Rendez-vous confirmé</h2>
+    <p class="confirmation-text" id="conf-text">Votre invitation Microsoft Teams a été envoyée à votre boîte de courriel. Vous recevrez également un courriel de confirmation de Capital Norvex.</p>
+    <a id="teams-link" class="teams-link-btn" target="_blank" style="display:none;">REJOINDRE LA RÉUNION TEAMS →</a>
+  </div>
+
+</div>
+
+<div class="footer">
+  CAPITAL NORVEX · CAPITALNORVEX.COM
+</div>
+
+<script>
+  // ─── State ─────────────────────────────────────────────────────────────
+  const params = new URLSearchParams(window.location.search);
+  const TOKEN = params.get('token');
+  let DATA = null;
+  let LANG = 'fr';
+  let SELECTED_SLOT = null;
+
+  // ─── i18n ──────────────────────────────────────────────────────────────
+  const I18N = {
+    fr: {
+      tagline: "Capital structuré. Ambition maîtrisée.",
+      loading: "Chargement de votre calendrier…",
+      errorTitle: "Lien invalide ou expiré",
+      errorMsg: "Ce lien de réservation n'est plus valide. Veuillez contacter directement Capital Norvex.",
+      eyebrow: "RENDEZ-VOUS PARTENAIRE",
+      heroTitleHtml: "Réservez votre <em>discussion</em> Capital Norvex",
+      heroSub: "Sélectionnez un créneau ci-dessous. Réunion Microsoft Teams de 30 minutes — confirmation immédiate.",
+      partnerLabel: "PRÉPARÉ POUR",
+      formTitle: "Confirmez votre rendez-vous",
+      formSubtitle: "Vos coordonnées pour l'invitation Teams",
+      slotLabel: "CRÉNEAU SÉLECTIONNÉ",
+      lblName: "NOM COMPLET",
+      lblEmail: "COURRIEL",
+      lblPhone: "TÉLÉPHONE (OPTIONNEL)",
+      submitLabel: "CONFIRMER LE RENDEZ-VOUS",
+      submitting: "CONFIRMATION EN COURS…",
+      confTitle: "Rendez-vous confirmé",
+      confText: "Votre invitation Microsoft Teams a été envoyée à votre boîte de courriel. Vous recevrez également un courriel de confirmation de Capital Norvex.",
+      joinTeams: "REJOINDRE LA RÉUNION TEAMS →",
+      noSlots: "Aucun créneau disponible pour les prochains jours. Veuillez répondre à mon courriel directement.",
+      bookingError: "Erreur lors de la réservation. Veuillez réessayer ou répondre directement à mon courriel.",
+      slotTaken: "Ce créneau vient d'être pris. Veuillez en choisir un autre.",
+    },
+    en: {
+      tagline: "Structured capital. Measured ambition.",
+      loading: "Loading your calendar…",
+      errorTitle: "Invalid or expired link",
+      errorMsg: "This booking link is no longer valid. Please contact Capital Norvex directly.",
+      eyebrow: "PARTNER MEETING",
+      heroTitleHtml: "Book your Capital Norvex <em>discussion</em>",
+      heroSub: "Select a slot below. 30-minute Microsoft Teams meeting — instant confirmation.",
+      partnerLabel: "PREPARED FOR",
+      formTitle: "Confirm your meeting",
+      formSubtitle: "Your contact details for the Teams invite",
+      slotLabel: "SELECTED SLOT",
+      lblName: "FULL NAME",
+      lblEmail: "EMAIL",
+      lblPhone: "PHONE (OPTIONAL)",
+      submitLabel: "CONFIRM MEETING",
+      submitting: "CONFIRMING…",
+      confTitle: "Meeting confirmed",
+      confText: "Your Microsoft Teams invite has been sent to your inbox. You'll also receive a confirmation email from Capital Norvex.",
+      joinTeams: "JOIN TEAMS MEETING →",
+      noSlots: "No slots available in the coming days. Please reply to my email directly.",
+      bookingError: "Booking error. Please retry or reply directly to my email.",
+      slotTaken: "This slot was just taken. Please pick another.",
+    }
+  };
+
+  function t(key) { return I18N[LANG][key] || key; }
+
+  function switchLang(newLang) {
+    LANG = newLang;
+    document.getElementById('lang-fr').classList.toggle('active', newLang === 'fr');
+    document.getElementById('lang-en').classList.toggle('active', newLang === 'en');
+    document.documentElement.lang = newLang;
+    applyI18n();
+    if (DATA) renderDays();
+  }
+
+  function applyI18n() {
+    document.getElementById('tagline').textContent = t('tagline');
+    document.getElementById('loading-text').textContent = t('loading');
+    document.getElementById('error-title').textContent = t('errorTitle');
+    document.getElementById('error-msg').textContent = t('errorMsg');
+    document.getElementById('eyebrow').textContent = t('eyebrow');
+    document.getElementById('hero-title').innerHTML = t('heroTitleHtml');
+    document.getElementById('hero-sub').textContent = t('heroSub');
+    document.getElementById('partner-label').textContent = t('partnerLabel');
+    document.getElementById('form-title').textContent = t('formTitle');
+    document.getElementById('form-subtitle').textContent = t('formSubtitle');
+    document.getElementById('selected-slot-label').textContent = t('slotLabel');
+    document.getElementById('lbl-name').textContent = t('lblName');
+    document.getElementById('lbl-email').textContent = t('lblEmail');
+    document.getElementById('lbl-phone').textContent = t('lblPhone');
+    document.getElementById('submit-label').textContent = t('submitLabel');
+    document.getElementById('conf-title').textContent = t('confTitle');
+    document.getElementById('conf-text').textContent = t('confText');
+    const tl = document.getElementById('teams-link');
+    if (tl) tl.textContent = t('joinTeams');
+  }
+
+  // ─── Load availability ─────────────────────────────────────────────────
+  async function loadAvailability() {
+    if (!TOKEN) {
+      showError();
+      return;
+    }
+    try {
+      const r = await fetch('/.netlify/functions/rdv-partenaire-availability?token=' + encodeURIComponent(TOKEN));
+      if (!r.ok) {
+        showError();
+        return;
+      }
+      DATA = await r.json();
+      if (!DATA.ok) {
+        showError();
+        return;
+      }
+      // Détection langue depuis token
+      LANG = DATA.partner.lang || 'fr';
+      switchLang(LANG);
+
+      document.getElementById('loader').style.display = 'none';
+      document.getElementById('main-content').style.display = 'block';
+
+      // Partner info
+      document.getElementById('partner-name').textContent = DATA.partner.name;
+      const orgEl = document.getElementById('partner-org');
+      if (DATA.partner.organization) {
+        orgEl.textContent = DATA.partner.organization;
+      } else {
+        orgEl.style.display = 'none';
+      }
+
+      renderDays();
+    } catch (e) {
+      console.error(e);
+      showError();
+    }
+  }
+
+  function renderDays() {
+    const container = document.getElementById('days-container');
+    container.innerHTML = '';
+    if (!DATA.days || DATA.days.length === 0) {
+      container.innerHTML = '<div class="status-msg error" style="display:block;">' + t('noSlots') + '</div>';
+      return;
+    }
+    DATA.days.forEach((day, dayIdx) => {
+      const block = document.createElement('div');
+      block.className = 'day-block';
+      const lbl = document.createElement('div');
+      lbl.className = 'day-label';
+      lbl.textContent = day.dateLabel;
+      block.appendChild(lbl);
+      const grid = document.createElement('div');
+      grid.className = 'slots';
+      day.slots.forEach((slot) => {
+        const btn = document.createElement('button');
+        btn.className = 'slot-btn';
+        btn.textContent = slot.timeLabel;
+        btn.onclick = () => selectSlot(slot, btn);
+        grid.appendChild(btn);
+      });
+      block.appendChild(grid);
+      container.appendChild(block);
+    });
+  }
+
+  function selectSlot(slot, btnEl) {
+    SELECTED_SLOT = slot;
+    document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('selected'));
+    btnEl.classList.add('selected');
+    document.getElementById('selected-slot-time').textContent =
+      slot.dateLabel + ' · ' + slot.timeLabel;
+    document.getElementById('form-section').classList.add('visible');
+    document.getElementById('form-section').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function showError() {
+    document.getElementById('loader').style.display = 'none';
+    document.getElementById('error-page').style.display = 'block';
+  }
+
+  // ── MODE PUBLIC (pas de token) : formulaire de demande générique ──
+  function showPublicRequestMode() {
+    document.getElementById('loader').style.display = 'none';
+    document.getElementById('main-content').style.display = 'block';
+
+    // Adapter les textes pour le mode public
+    const i18nPublic = {
+      fr: {
+        eyebrow: "DEMANDE DE RENDEZ-VOUS",
+        heroTitleHtml: "Réservez une <em>discussion</em> avec Yves Barrette",
+        heroSub: "Indiquez vos coordonnées et vos disponibilités préférées. Yves vous reviendra personnellement dans les 24 h pour confirmer un créneau Microsoft Teams ou téléphonique.",
+      },
+      en: {
+        eyebrow: "MEETING REQUEST",
+        heroTitleHtml: "Request a <em>discussion</em> with Yves Barrette",
+        heroSub: "Provide your contact details and preferred availability. Yves will personally reply within 24 h to confirm a Microsoft Teams or phone slot.",
+      }
+    };
+    document.getElementById('eyebrow').textContent = i18nPublic[LANG].eyebrow;
+    document.getElementById('hero-title').innerHTML = i18nPublic[LANG].heroTitleHtml;
+    document.getElementById('hero-sub').textContent = i18nPublic[LANG].heroSub;
+
+    // Cacher la partner-card (pas de personnalisation possible)
+    document.querySelector('.partner-card').style.display = 'none';
+
+    // Cacher le calendrier de slots
+    document.getElementById('days-container').style.display = 'none';
+
+    // Afficher directement le formulaire avec champs additionnels
+    const formSection = document.getElementById('form-section');
+    formSection.classList.add('visible');
+
+    // Cacher le "selected slot" (pas de slot dans ce mode)
+    formSection.querySelector('.selected-slot').style.display = 'none';
+
+    // Adapter le titre du formulaire
+    document.getElementById('form-title').textContent = (LANG === 'en' ? 'Your contact details' : 'Vos coordonnées');
+    document.getElementById('form-subtitle').textContent = (LANG === 'en' ? 'Yves will reply personally within 24h' : 'Yves vous reviendra personnellement dans les 24 h');
+
+    // Ajouter champs supplémentaires AVANT le bouton submit
+    const submitBtn = document.getElementById('submit-btn');
+    if (!document.getElementById('contact-org')) {
+      const fields = `
+        <div class="field">
+          <label class="field-label">${LANG === 'en' ? 'COMPANY (OPTIONAL)' : 'ENTREPRISE (OPTIONNEL)'}</label>
+          <input type="text" id="contact-org" class="field-input">
+        </div>
+        <div class="field">
+          <label class="field-label">${LANG === 'en' ? 'SUBJECT' : 'SUJET'}</label>
+          <input type="text" id="contact-subject" class="field-input" placeholder="${LANG === 'en' ? 'e.g. Partnership program / Loan inquiry' : 'ex : Programme partenaire / Demande de financement'}" required>
+        </div>
+        <div class="field">
+          <label class="field-label">${LANG === 'en' ? 'PREFERRED AVAILABILITY' : 'DISPONIBILITÉS PRÉFÉRÉES'}</label>
+          <textarea id="contact-availability" class="field-input" rows="3" placeholder="${LANG === 'en' ? 'e.g. Tue/Wed afternoon, or Thu morning' : 'ex : mardi/mercredi PM, ou jeudi AM'}" required></textarea>
+        </div>
+        <div class="field">
+          <label class="field-label">${LANG === 'en' ? 'MESSAGE (OPTIONAL)' : 'MESSAGE (OPTIONNEL)'}</label>
+          <textarea id="contact-message" class="field-input" rows="3" placeholder="${LANG === 'en' ? 'Any context you wish to share before our call' : 'Contexte ou information utile avant notre échange'}"></textarea>
+        </div>
+      `;
+      submitBtn.insertAdjacentHTML('beforebegin', fields);
+    }
+
+    // Override du label du bouton et du handler submit
+    document.getElementById('submit-label').textContent = (LANG === 'en' ? 'SEND REQUEST' : 'ENVOYER MA DEMANDE');
+    submitBtn.setAttribute('onclick', 'submitPublicRequest()');
+  }
+
+  async function submitPublicRequest() {
+    const name = document.getElementById('contact-name').value.trim();
+    const email = document.getElementById('contact-email').value.trim();
+    const phone = document.getElementById('contact-phone').value.trim();
+    const org = document.getElementById('contact-org').value.trim();
+    const subject = document.getElementById('contact-subject').value.trim();
+    const availability = document.getElementById('contact-availability').value.trim();
+    const message = document.getElementById('contact-message').value.trim();
+
+    if (!name || !email || !subject || !availability) {
+      showStatus(LANG === 'en' ? 'Please fill name, email, subject and availability.' : 'Veuillez renseigner nom, courriel, sujet et disponibilités.', 'error');
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      showStatus(LANG === 'en' ? 'Invalid email format.' : 'Courriel invalide.', 'error');
+      return;
+    }
+
+    const btn = document.getElementById('submit-btn');
+    btn.disabled = true;
+    document.getElementById('submit-label').textContent = (LANG === 'en' ? 'SENDING…' : 'ENVOI EN COURS…');
+    document.getElementById('status-msg').style.display = 'none';
+
+    try {
+      const r = await fetch('/.netlify/functions/rdv-public-request', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name, email, phone: phone || null,
+          company: org || null,
+          subject, availability,
+          message: message || null,
+          language: LANG,
+        }),
+      });
+      const data = await r.json();
+      if (!r.ok || !data.ok) {
+        showStatus((LANG === 'en' ? 'Submission error: ' : 'Erreur d\'envoi : ') + (data.error || r.status), 'error');
+        btn.disabled = false;
+        document.getElementById('submit-label').textContent = (LANG === 'en' ? 'SEND REQUEST' : 'ENVOYER MA DEMANDE');
+        return;
+      }
+
+      // Success — show confirmation
+      document.getElementById('main-content').style.display = 'none';
+      const confEl = document.getElementById('confirmation');
+      confEl.classList.add('visible');
+      document.getElementById('conf-title').textContent = (LANG === 'en' ? 'Request received' : 'Demande reçue');
+      document.getElementById('conf-text').textContent = (LANG === 'en'
+        ? 'Yves will personally reply within 24 hours to confirm a meeting slot. Thank you for your interest in Capital Norvex.'
+        : 'Yves vous reviendra personnellement dans les 24 h pour confirmer un créneau. Merci de votre intérêt pour Capital Norvex.');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (e) {
+      console.error(e);
+      showStatus((LANG === 'en' ? 'Submission error.' : 'Erreur d\'envoi.'), 'error');
+      btn.disabled = false;
+      document.getElementById('submit-label').textContent = (LANG === 'en' ? 'SEND REQUEST' : 'ENVOYER MA DEMANDE');
+    }
+  }
+
+  function showStatus(msg, type) {
+    const el = document.getElementById('status-msg');
+    el.className = 'status-msg ' + type;
+    el.textContent = msg;
+    el.style.display = 'block';
+  }
+
+  async function submitBooking() {
+    if (!SELECTED_SLOT) return;
+    const name = document.getElementById('contact-name').value.trim();
+    const email = document.getElementById('contact-email').value.trim();
+    const phone = document.getElementById('contact-phone').value.trim();
+
+    if (!name || !email) {
+      showStatus(LANG === 'en' ? 'Please fill name and email.' : 'Veuillez renseigner nom et courriel.', 'error');
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      showStatus(LANG === 'en' ? 'Invalid email format.' : 'Courriel invalide.', 'error');
+      return;
+    }
+
+    const btn = document.getElementById('submit-btn');
+    btn.disabled = true;
+    document.getElementById('submit-label').textContent = t('submitting');
+    document.getElementById('status-msg').style.display = 'none';
+
+    try {
+      const r = await fetch('/.netlify/functions/rdv-partenaire-book', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          token: TOKEN,
+          slotStart: SELECTED_SLOT.isoStart,
+          slotEnd: SELECTED_SLOT.isoEnd,
+          contactName: name,
+          contactEmail: email,
+          contactPhone: phone || null,
+        }),
+      });
+      const data = await r.json();
+      if (!r.ok || !data.ok) {
+        if (r.status === 409) {
+          showStatus(t('slotTaken'), 'error');
+        } else {
+          showStatus(t('bookingError') + ' (' + (data.error || r.status) + ')', 'error');
+        }
+        btn.disabled = false;
+        document.getElementById('submit-label').textContent = t('submitLabel');
+        return;
+      }
+
+      // Success — show confirmation page
+      document.getElementById('main-content').style.display = 'none';
+      document.getElementById('confirmation').classList.add('visible');
+      if (data.joinUrl) {
+        const tl = document.getElementById('teams-link');
+        tl.href = data.joinUrl;
+        tl.style.display = 'inline-block';
+        tl.textContent = t('joinTeams');
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (e) {
+      console.error(e);
+      showStatus(t('bookingError'), 'error');
+      btn.disabled = false;
+      document.getElementById('submit-label').textContent = t('submitLabel');
+    }
+  }
+
+  // ─── Init ──────────────────────────────────────────────────────────────
+  applyI18n();
+  loadAvailability();
+</script>
+
+</body>
+</html>

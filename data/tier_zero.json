@@ -1,0 +1,57 @@
+{
+  "_meta": {
+    "description": "TIER ZERO — Personnes invisibles aux 3 agents Capital Norvex (Capital, Courtiers, Promoteurs). Aucune communication, aucune cartographie, aucune recherche, aucune mention. Si un agent tente de toucher quelqu'un de cette liste, il doit STOP immédiatement et alerter Yves.",
+    "version": 1,
+    "created": "2026-04-30",
+    "owner": "Yves Barrette",
+    "rule_id": "R-TIER-ZERO",
+    "instructions_pour_ajouter": "Yves ajoute manuellement de nouvelles entrées dans 'protected_individuals'. Toute modification doit être journalisée par les agents (date, auteur, raison)."
+  },
+  "protected_individuals": [
+    {
+      "name": "Serge Daoust",
+      "added": "2026-04-30",
+      "added_by": "Yves Barrette",
+      "reason": "Relation privée Yves — INVISIBLE aux agents",
+      "aliases": [],
+      "known_emails": [],
+      "known_organizations": []
+    },
+    {
+      "name": "Pierre Boivin",
+      "added": "2026-04-30",
+      "added_by": "Yves Barrette",
+      "reason": "Relation privée Yves — INVISIBLE aux agents",
+      "aliases": [],
+      "known_emails": [],
+      "known_organizations": []
+    },
+    {
+      "name": "Emanuele (Lino) Saputo",
+      "added": "2026-04-30",
+      "added_by": "Yves Barrette",
+      "reason": "Relation personnelle Yves — INVISIBLE aux agents (Yves les connaît très bien)",
+      "aliases": ["Lino Saputo", "Emanuele Saputo"],
+      "known_emails": [],
+      "known_organizations": ["Jolina Capital Inc.", "Gestion Jolina Inc.", "Saputo Inc."]
+    },
+    {
+      "name": "Famille Saputo",
+      "added": "2026-04-30",
+      "added_by": "Yves Barrette",
+      "reason": "Relation personnelle Yves — INVISIBLE aux agents (incluant tous les membres de la famille élargie)",
+      "aliases": ["Saputo family", "Joey Saputo", "Francesco Saputo"],
+      "known_emails": [],
+      "known_organizations": ["Jolina Capital Inc.", "Gestion Jolina Inc.", "Saputo Inc.", "Placements Italcan Inc."]
+    },
+    {
+      "name": "Jolina Capital",
+      "added": "2026-04-30",
+      "added_by": "Yves Barrette",
+      "reason": "Family office Saputo — entité protégée par extension de la relation Yves/Saputo",
+      "aliases": ["Jolina Capital Inc.", "Gestion Jolina Inc.", "11446037 Canada Inc."],
+      "known_emails": [],
+      "known_organizations": []
+    }
+  ]
+}

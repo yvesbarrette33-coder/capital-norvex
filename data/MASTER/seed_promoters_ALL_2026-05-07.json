@@ -1,0 +1,3969 @@
+{
+  "_meta": {
+    "description": "MASTER consolidé - toutes les cibles Capital Norvex Inc. issues des recherches du 6 et 7 mai 2026. Combine vague 1 QC + vague 2 QC + Ontario brokers + QC promoteurs + Ontario promoteurs + Ontario family offices. Dédup global (name+firmName ou name+companyName ou name+organization).",
+    "version": 1,
+    "created": "2026-05-07",
+    "researcher": "Claude (Cowork)",
+    "sources": [
+      "qc_brokers_vague1",
+      "qc_brokers_vague2",
+      "ontario_brokers",
+      "qc_promoters",
+      "ontario_promoters",
+      "ontario_family_offices"
+    ],
+    "filtres_appliques": {
+      "tier_zero_filter": "OUI (Daoust, Boivin, Saputo, Jolina, Italcan, Drouin/Finstar, Peter Quinn)",
+      "deduplication": "OUI globale par (name+firme/companyName/organization)"
+    },
+    "totals": {
+      "brokers": 117,
+      "promoters": 101,
+      "family_offices": 32,
+      "grand_total": 250
+    },
+    "brokers_by_region": {
+      "QC": 93,
+      "ON": 24
+    },
+    "promoters_by_region": {
+      "QC": 58,
+      "ON": 43
+    }
+  },
+  "promoters": [
+    {
+      "name": "Vincent Chiara",
+      "companyName": "Groupe Mach",
+      "region": "QC",
+      "city": "Montréal",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "commercial",
+        "mixte",
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "multilogement",
+        "commercial",
+        "bureau",
+        "mixte",
+        "résidentiel"
+      ],
+      "recentProjects": "Quartier des Lumières (2024); Sun Life Building (2023)",
+      "estimatedAnnualVolume": 2500000000,
+      "relationshipStatus": "researching",
+      "score": 8,
+      "contactInfo": {
+        "email": "info@groupemach.com",
+        "phone": "+1-514-374-6224",
+        "website": "https://www.groupemach.com/en",
+        "linkedin": "https://ca.linkedin.com/in/vincent-chiara-64144359",
+        "contact_person": "Vincent Chiara, Founder & President"
+      },
+      "sourceUrl": "https://www.groupemach.com/en/vincent-chiara.html",
+      "notes": "Leader canadien, 40M pi², 3000+ unités résidentielles, ambition 10 000 unités, B Corp",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "(à identifier)",
+      "companyName": "Devimco Immobilier",
+      "region": "QC",
+      "city": "Montréal",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "mixte",
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "condo",
+        "multilogement",
+        "mixte",
+        "résidentiel"
+      ],
+      "recentProjects": "Auguste & Louis (2024); Wellington sur le Bassin (2023); District Griffin (2024)",
+      "estimatedAnnualVolume": 1200000000,
+      "relationshipStatus": "researching",
+      "score": 8,
+      "contactInfo": {
+        "email": "info@devimco.com",
+        "phone": "450-645-2525",
+        "website": "https://devimco.com",
+        "linkedin": "https://ca.linkedin.com/company/devimco",
+        "contact_person": ""
+      },
+      "sourceUrl": "https://devimco.com/projets-immobiliers-residentiels-achat/",
+      "notes": "30 ans, projets mixtes intégrés, District Griffin 1.2B$, 1 condo sur 2 vendus à Griffintown",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "Kheng Ly",
+      "companyName": "Brivia Group",
+      "region": "QC",
+      "city": "Montréal",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "condo",
+        "multilogement",
+        "résidentiel"
+      ],
+      "recentProjects": "Square Phillips (2024); QuinzeCent (2024)",
+      "estimatedAnnualVolume": 800000000,
+      "relationshipStatus": "researching",
+      "score": 7,
+      "contactInfo": {
+        "email": "info@briviagroup.ca",
+        "phone": "514-728-8889",
+        "website": "https://briviagroup.ca/en/",
+        "linkedin": "https://ca.linkedin.com/company/groupe-brivia-group",
+        "contact_person": "Kheng Ly, President & CEO"
+      },
+      "sourceUrl": "https://briviagroup.ca/en/",
+      "notes": "Fondée 2000. QuinzeCent = 450 units, 48000+ pi² commercial. 20+ projets en développement",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "(à identifier)",
+      "companyName": "Broccolini",
+      "region": "QC",
+      "city": "Montréal",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "autres",
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "condo",
+        "multilogement",
+        "résidentiel",
+        "social"
+      ],
+      "recentProjects": "Le Sherbrooke (2025, 515 condos, 25 étages); Pointe-Saint-Charles (2024, 800 unités)",
+      "estimatedAnnualVolume": 1500000000,
+      "relationshipStatus": "researching",
+      "score": 8,
+      "contactInfo": {
+        "email": "contact@broccolini.com",
+        "phone": "",
+        "website": "https://www.broccolini.com/fr",
+        "linkedin": "https://ca.linkedin.com/company/broccolini",
+        "contact_person": ""
+      },
+      "sourceUrl": "https://www.broccolini.com/fr/residentiel",
+      "notes": "75 ans expérience, partenariat gouvernemental logement abordable",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "Mathieu Duguay",
+      "companyName": "Cogir Immobilier",
+      "region": "QC",
+      "city": "Brossard",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "commercial",
+        "industriel",
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "multilogement",
+        "résidences seniors",
+        "commercial",
+        "industriel"
+      ],
+      "recentProjects": "Affiniti Saint-Bruno (2025)",
+      "estimatedAnnualVolume": 1500000000,
+      "relationshipStatus": "researching",
+      "score": 8,
+      "contactInfo": {
+        "email": "info@cogir.net",
+        "phone": "1-866-671-6381",
+        "website": "https://www.cogir.net/",
+        "linkedin": "https://ca.linkedin.com/company/cogir-immobilier",
+        "contact_person": "Mathieu Duguay, CEO & CIO"
+      },
+      "sourceUrl": "https://realestate.cogir.net/executive-team/",
+      "notes": "Fondée 1995. 74 000 unités NA. 1500 unités/an. Affiniti = 1B$+",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "(à identifier)",
+      "companyName": "Groupe Sélection",
+      "region": "QC",
+      "city": "Laval",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "multilogement",
+        "résidences seniors",
+        "résidentiel"
+      ],
+      "recentProjects": "Rosemont Les Quartiers (2023)",
+      "estimatedAnnualVolume": 2000000000,
+      "relationshipStatus": "researching",
+      "score": 8,
+      "contactInfo": {
+        "email": "contact@groupeselection.com",
+        "phone": "",
+        "website": "https://www.groupeselection.com",
+        "linkedin": "https://ca.linkedin.com/company/groupeselection",
+        "contact_person": ""
+      },
+      "sourceUrl": "https://ca.linkedin.com/company/groupeselection",
+      "notes": "Leader #2 RPA seniors QC, 50+ complexes, actifs 5B$+",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "(à identifier)",
+      "companyName": "Groupe Maurice",
+      "region": "QC",
+      "city": "Montréal",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "multilogement",
+        "résidences seniors"
+      ],
+      "recentProjects": "Multiple résidences seniors RPA QC",
+      "estimatedAnnualVolume": 2400000000,
+      "relationshipStatus": "researching",
+      "score": 8,
+      "contactInfo": {
+        "email": "divulgation@legroupemaurice.com",
+        "phone": "1-833-546-4546",
+        "website": "https://www.legroupemaurice.com/en",
+        "linkedin": "https://ca.linkedin.com/company/le-groupe-maurice",
+        "contact_person": ""
+      },
+      "sourceUrl": "https://www.legroupemaurice.com/en/our-contact-details/",
+      "notes": "Leader #4 RPA seniors. 85% vendu à Ventas REIT pour 2.4B$",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "(à identifier)",
+      "companyName": "Prével",
+      "region": "QC",
+      "city": "Montréal",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "condo",
+        "multilogement",
+        "résidentiel",
+        "urbain"
+      ],
+      "recentProjects": "Bassins du Havre Griffintown (2023); 21e Arrondissement (2023)",
+      "estimatedAnnualVolume": 800000000,
+      "relationshipStatus": "researching",
+      "score": 7,
+      "contactInfo": {
+        "email": "info@prevel.ca",
+        "phone": "514-281-9696",
+        "website": "https://www.prevel.ca/fr",
+        "linkedin": "https://ca.linkedin.com/company/groupe-pr-vel",
+        "contact_person": ""
+      },
+      "sourceUrl": "https://www.prevel.ca/fr/contact",
+      "notes": "45+ ans, projets urbains humains, qualité, 681 rue William",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "Vianney Bélanger",
+      "companyName": "COPRIM",
+      "region": "QC",
+      "city": "Montréal",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "mixte",
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "condo",
+        "multilogement",
+        "mixte",
+        "résidentiel"
+      ],
+      "recentProjects": "Vision Bridge-Bonaventure (2026, 9500 unités)",
+      "estimatedAnnualVolume": 1200000000,
+      "relationshipStatus": "researching",
+      "score": 8,
+      "contactInfo": {
+        "email": "",
+        "phone": "",
+        "website": "",
+        "linkedin": "",
+        "contact_person": "Vianney Bélanger, President"
+      },
+      "sourceUrl": "https://www.lapresse.ca/actualites/grand-montreal/2022-04-11/secteur-bridge-bonaventure/des-promoteurs-immobiliers-se-disent-baillonnes-par-montreal.php",
+      "notes": "Consortium Vision Bridge-Bonaventure (Devimco/Broccolini/Mach/Petra)",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "(à identifier)",
+      "companyName": "Groupe Quorum",
+      "region": "QC",
+      "city": "Montréal",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "multilogement",
+        "résidentiel",
+        "condo"
+      ],
+      "recentProjects": "Highlands LaSalle (2024)",
+      "estimatedAnnualVolume": 600000000,
+      "relationshipStatus": "researching",
+      "score": 7,
+      "contactInfo": {
+        "email": "info@quorumcanada.com",
+        "phone": "+1-514-612-5888",
+        "website": "https://www.constructionsquorum.com/en/",
+        "linkedin": "https://ca.linkedin.com/company/groupequorum",
+        "contact_person": ""
+      },
+      "sourceUrl": "https://www.constructionsquorum.com/en/",
+      "notes": "Multigénérationnel, Montréal/Laval",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "Peter Sergakis",
+      "companyName": "Placements Sergakis Inc.",
+      "region": "QC",
+      "city": "Montréal",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "commercial",
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "multilogement",
+        "commercial",
+        "résidentiel"
+      ],
+      "recentProjects": "Sainte-Catherine Ouest (2025, 202 unités, 15 étages)",
+      "estimatedAnnualVolume": 400000000,
+      "relationshipStatus": "researching",
+      "score": 6,
+      "contactInfo": {
+        "email": "",
+        "phone": "(514) 937-6137",
+        "website": "https://www.sergakis.com/a-propos",
+        "linkedin": "https://ca.linkedin.com/company/placements-sergakis-inc-",
+        "contact_person": "Peter Sergakis, Founder"
+      },
+      "sourceUrl": "https://www.sergakis.com/a-propos",
+      "notes": "50+ ans, milliers d'unités résidentielles + restaurants/bars",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "Yann Lapointe",
+      "companyName": "Pur Immobilia",
+      "region": "QC",
+      "city": "Montréal",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "condo",
+        "résidentiel",
+        "urbain"
+      ],
+      "recentProjects": "810 Saint-Antoine Est (2025)",
+      "estimatedAnnualVolume": 400000000,
+      "relationshipStatus": "researching",
+      "score": 6,
+      "contactInfo": {
+        "email": "info@purimmobilia.com",
+        "phone": "(514) 396-2222",
+        "website": "https://www.purimmobilia.com/en",
+        "linkedin": "",
+        "contact_person": "Yann Lapointe & Philippe Bernard, Co-founders"
+      },
+      "sourceUrl": "https://www.purimmobilia.com/en/about-us/",
+      "notes": "Fondée 2008, revitalisation urbaine, qualité de vie & durabilité",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "(à identifier)",
+      "companyName": "Groupe Immobilier Scalia",
+      "region": "QC",
+      "city": "Montréal",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "mixte",
+        "hotel",
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "condo",
+        "multilogement",
+        "mixte",
+        "hôtel"
+      ],
+      "recentProjects": "Condos Brock (2023)",
+      "estimatedAnnualVolume": 500000000,
+      "relationshipStatus": "researching",
+      "score": 7,
+      "contactInfo": {
+        "email": "contact@scalia.ca",
+        "phone": "",
+        "website": "https://scalia.ca/",
+        "linkedin": "https://ca.linkedin.com/company/groupe-immobilier-scalia",
+        "contact_person": ""
+      },
+      "sourceUrl": "https://scalia.ca/",
+      "notes": "45+ ans, multi-logements, mixtes, hôtels, industriel - approche 360°",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "Marco Musto",
+      "companyName": "Construction Musto",
+      "region": "QC",
+      "city": "Montréal",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "condo",
+        "multilogement",
+        "résidentiel"
+      ],
+      "recentProjects": "Bass 3-4 Griffintown (2024); SE7T Phase 3 (2024); Le Vittorio (2023)",
+      "estimatedAnnualVolume": 400000000,
+      "relationshipStatus": "researching",
+      "score": 6,
+      "contactInfo": {
+        "email": "contact@constructionsmusto.com",
+        "phone": "",
+        "website": "https://www.constructionsmusto.com/",
+        "linkedin": "",
+        "contact_person": "Marco & Luigi Musto, Propriétaires"
+      },
+      "sourceUrl": "https://www.constructionsmusto.com/",
+      "notes": "Famille 40+ ans. Most active developer Griffintown. SE7T 246 condos luxe. Platinum APCHQ",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "(à identifier)",
+      "companyName": "Groupe Mathieu",
+      "region": "QC",
+      "city": "Blainville",
+      "subregion": "Rive-Nord (Grand Montréal)",
+      "projectTypes": [
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "maisons unifamiliales",
+        "townhouses",
+        "condos"
+      ],
+      "recentProjects": "Le Prestige Chambéry Blainville (2023); Place Notre-Dame (2023); Noüvo District Terrebonne (2024)",
+      "estimatedAnnualVolume": 300000000,
+      "relationshipStatus": "researching",
+      "score": 6,
+      "contactInfo": {
+        "email": "contact@groupemathieu.com",
+        "phone": "",
+        "website": "https://groupemathieu.com/?lang=en",
+        "linkedin": "",
+        "contact_person": ""
+      },
+      "sourceUrl": "https://groupemathieu.com/projects/?lang=en",
+      "notes": "Construction résidentielle Rive-Nord, projets haut standing",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "Pietro Rinollini",
+      "companyName": "Constructions Métrocité",
+      "region": "QC",
+      "city": "Laval",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "condos",
+        "multilogement"
+      ],
+      "recentProjects": "Square Jean-Béraud Laval (2024)",
+      "estimatedAnnualVolume": 250000000,
+      "relationshipStatus": "researching",
+      "score": 6,
+      "contactInfo": {
+        "email": "info@metrocite.ca",
+        "phone": "",
+        "website": "https://www.metrocite.ca/en/about/",
+        "linkedin": "https://ca.linkedin.com/company/metrocite",
+        "contact_person": "Pietro Rinollini, Founder"
+      },
+      "sourceUrl": "https://www.metrocite.ca/en/about/",
+      "notes": "40+ ans, 1000+ unités construites, Laval spécialisé",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "(à identifier)",
+      "companyName": "Groupe Immobilier Ménard",
+      "region": "QC",
+      "city": "Laval",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "townhouses",
+        "maisons"
+      ],
+      "recentProjects": "Le Domaine des 4 Vents Laval (2024)",
+      "estimatedAnnualVolume": 150000000,
+      "relationshipStatus": "researching",
+      "score": 5,
+      "contactInfo": {
+        "email": "contact@groupemenard.ca",
+        "phone": "",
+        "website": "https://www.groupemenard.ca/",
+        "linkedin": "",
+        "contact_person": ""
+      },
+      "sourceUrl": "https://www.groupemenard.ca/",
+      "notes": "Fondée 1988, townhouses neuves Laval",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "(à identifier)",
+      "companyName": "Bastium Construction",
+      "region": "QC",
+      "city": "Laval",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "condos",
+        "multilogement"
+      ],
+      "recentProjects": "Le Luca Laval (2022, 87 appartements, 9 étages)",
+      "estimatedAnnualVolume": 100000000,
+      "relationshipStatus": "researching",
+      "score": 5,
+      "contactInfo": {
+        "email": "contact@bastiumconstruction.com",
+        "phone": "",
+        "website": "https://bastiumconstruction.com/",
+        "linkedin": "",
+        "contact_person": ""
+      },
+      "sourceUrl": "https://bastiumconstruction.com/realisations/",
+      "notes": "Construction lourd résidentiel/commercial/industriel",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "(à identifier)",
+      "companyName": "Syscomax",
+      "region": "QC",
+      "city": "Laval",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "commercial",
+        "industriel",
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "multilogement",
+        "commercial",
+        "industriel"
+      ],
+      "recentProjects": "Axial Towers Laval (2020, 230 unités)",
+      "estimatedAnnualVolume": 200000000,
+      "relationshipStatus": "researching",
+      "score": 6,
+      "contactInfo": {
+        "email": "info@syscomax.com",
+        "phone": "",
+        "website": "https://www.syscomax.com/en/",
+        "linkedin": "",
+        "contact_person": ""
+      },
+      "sourceUrl": "https://www.syscomax.com/en/current-projects/",
+      "notes": "Depuis 1988, Entreprise construction année 2024 Laval-Laurentides (ACQ)",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "Ousmane Kagoné",
+      "companyName": "Kagoné Gestion Immobilière",
+      "region": "QC",
+      "city": "Longueuil",
+      "subregion": "Grand Montréal (Rive-Sud)",
+      "projectTypes": [
+        "commercial",
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "multilogement",
+        "commercial",
+        "gestion"
+      ],
+      "recentProjects": "Multi-résidentiels et commercial Rive-Sud",
+      "estimatedAnnualVolume": 200000000,
+      "relationshipStatus": "researching",
+      "score": 6,
+      "contactInfo": {
+        "email": "contact@kagone.com",
+        "phone": "",
+        "website": "https://www.kagone.com/promoteur-immobilier.php",
+        "linkedin": "",
+        "contact_person": "Ousmane Kagoné, Président Fondateur"
+      },
+      "sourceUrl": "https://www.kagone.com/promoteur-immobilier.php",
+      "notes": "25+ ans, services complets gestion/courtage/consulting",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "(à identifier)",
+      "companyName": "Groupe Petra",
+      "region": "QC",
+      "city": "Saint-Léonard",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "commercial",
+        "industriel"
+      ],
+      "projectTypesDetail": [
+        "commercial",
+        "industriel",
+        "bureau"
+      ],
+      "recentProjects": "Portefeuille 10M pi² QC/MTL/TO",
+      "estimatedAnnualVolume": 400000000,
+      "relationshipStatus": "researching",
+      "score": 6,
+      "contactInfo": {
+        "email": "info@groupepetra.com",
+        "phone": "(514) 321-7515",
+        "website": "https://groupepetra.com/",
+        "linkedin": "https://ca.linkedin.com/company/groupepetra",
+        "contact_person": "M. Labonte (mlabonte@groupepetra.com)"
+      },
+      "sourceUrl": "https://groupepetra.com/",
+      "notes": "Depuis 1986, commercial/industriel/bureaux MTL/QC/TO",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "(à identifier)",
+      "companyName": "Carbonleo",
+      "region": "QC",
+      "city": "Mont-Royal",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "commercial",
+        "mixte"
+      ],
+      "projectTypesDetail": [
+        "commercial",
+        "mixte",
+        "retail"
+      ],
+      "recentProjects": "Royalmount (2024, 824k pi² phase 1, 170+ commerces); Quartier Dix30",
+      "estimatedAnnualVolume": 2000000000,
+      "relationshipStatus": "researching",
+      "score": 8,
+      "contactInfo": {
+        "email": "contact@carbonleo.com",
+        "phone": "",
+        "website": "https://www.carbonleo.com/",
+        "linkedin": "https://ca.linkedin.com/company/carbonleo",
+        "contact_person": ""
+      },
+      "sourceUrl": "https://www.carbonleo.com/",
+      "notes": "Fondée 2012, Royalmount neutre carbone, Dix30 = 4000 homes à ajouter",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "(à identifier)",
+      "companyName": "LSR GesDev / Sotramont",
+      "region": "QC",
+      "city": "Montréal",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "mixte",
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "multilogement",
+        "résidentiel",
+        "mixte"
+      ],
+      "recentProjects": "Arbora Griffintown (2015, 434 unités, plus grand CLT mondial)",
+      "estimatedAnnualVolume": 300000000,
+      "relationshipStatus": "researching",
+      "score": 6,
+      "contactInfo": {
+        "email": "contact@lsr-gesdev.com",
+        "phone": "",
+        "website": "https://sotramont.com/en/",
+        "linkedin": "",
+        "contact_person": ""
+      },
+      "sourceUrl": "https://building.ca/lsr-gesdev-and-sotramont-to-build-arbora-in-griffintown/",
+      "notes": "LSR depuis 1969 (Rive-Sud). Arbora = 597 560 pi², 130M$, partenariat Aldo Bensadoun",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "Paul Martin",
+      "companyName": "Quintcap",
+      "region": "QC",
+      "city": "Brossard",
+      "subregion": "Grand Montréal (Rive-Sud)",
+      "projectTypes": [
+        "commercial",
+        "industriel",
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "commercial",
+        "industriel",
+        "résidentiel",
+        "bureau"
+      ],
+      "recentProjects": "2510 Lapinière (2023); 1850 rue Panama (2023)",
+      "estimatedAnnualVolume": 600000000,
+      "relationshipStatus": "researching",
+      "score": 7,
+      "contactInfo": {
+        "email": "reception@quintcap.com",
+        "phone": "450-671-1681",
+        "website": "https://quintcap.com/en/",
+        "linkedin": "",
+        "contact_person": "Paul Martin, D. Charette"
+      },
+      "sourceUrl": "https://quintcap.com/en/contact/",
+      "notes": "50+ ans Brossard, vaste portefeuille résidentiel/commercial/industriel/bureau",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "(à identifier)",
+      "companyName": "Groupe HD Immobilier",
+      "region": "QC",
+      "city": "Longueuil",
+      "subregion": "Grand Montréal (Rive-Sud)",
+      "projectTypes": [
+        "commercial",
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "multilogement",
+        "résidentiel",
+        "commercial"
+      ],
+      "recentProjects": "Longueuil Roland-Therrien (2026, 525 unités, 200M$)",
+      "estimatedAnnualVolume": 800000000,
+      "relationshipStatus": "researching",
+      "score": 7,
+      "contactInfo": {
+        "email": "info@groupehdimmobilier.ca",
+        "phone": "",
+        "website": "https://groupehdimmobilier.ca/en",
+        "linkedin": "https://ca.linkedin.com/company/groupe-hd-immobilier",
+        "contact_person": ""
+      },
+      "sourceUrl": "https://groupehdimmobilier.ca/en",
+      "notes": "Investissement/développement/construction/gestion. 2500+ unités",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "(à identifier)",
+      "companyName": "Momentum One",
+      "region": "QC",
+      "city": "Brossard",
+      "subregion": "Grand Montréal (Rive-Sud)",
+      "projectTypes": [
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "multilogement",
+        "résidentiel locatif"
+      ],
+      "recentProjects": "Multilogements Rive-Sud",
+      "estimatedAnnualVolume": 150000000,
+      "relationshipStatus": "researching",
+      "score": 5,
+      "contactInfo": {
+        "email": "contact@momentum1.ca",
+        "phone": "",
+        "website": "https://momentum1.ca/",
+        "linkedin": "",
+        "contact_person": ""
+      },
+      "sourceUrl": "https://momentum1.ca/",
+      "notes": "Boutique cabinet immobilier locatif Rive-Sud",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "(à identifier)",
+      "companyName": "Asgaard",
+      "region": "QC",
+      "city": "Montréal",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "commercial",
+        "industriel"
+      ],
+      "projectTypesDetail": [
+        "commercial",
+        "industriel",
+        "bureau"
+      ],
+      "recentProjects": "2900 Chemin Baronnie Varennes (2024)",
+      "estimatedAnnualVolume": 500000000,
+      "relationshipStatus": "researching",
+      "score": 7,
+      "contactInfo": {
+        "email": "contact@asgaard.ca",
+        "phone": "(514) 729-8484",
+        "website": "https://www.asgaard.ca/",
+        "linkedin": "https://ca.linkedin.com/company/asgaard",
+        "contact_person": ""
+      },
+      "sourceUrl": "https://www.asgaard.ca/",
+      "notes": "Fondée 2004 (Francischiello & Celli), commercial industriel/bureau, MTL/Varennes/QC/Ottawa",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "Patrice Groleau",
+      "companyName": "McGill Immobilier",
+      "region": "QC",
+      "city": "Montréal",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "condo",
+        "résidentiel"
+      ],
+      "recentProjects": "Maestria centre-ville (2024, plus haut QC); Imperia (2023)",
+      "estimatedAnnualVolume": 600000000,
+      "relationshipStatus": "researching",
+      "score": 7,
+      "contactInfo": {
+        "email": "info@mcgillimmobilier.com",
+        "phone": "",
+        "website": "https://mcgillimmobilier.com/",
+        "linkedin": "https://ca.linkedin.com/company/mcgill-real-estate",
+        "contact_person": "Patrice Groleau & Debby Doktorczyk, Founders"
+      },
+      "sourceUrl": "https://mcgillimmobilier.com/en/about/",
+      "notes": "1 sur 4 condos neufs MTL, 10000+ condos représentés",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "(à identifier)",
+      "companyName": "Construction Voyer",
+      "region": "QC",
+      "city": "Laval",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "multilogement",
+        "résidentiel"
+      ],
+      "recentProjects": "Multilogements Laval/Rive-Nord",
+      "estimatedAnnualVolume": 150000000,
+      "relationshipStatus": "researching",
+      "score": 5,
+      "contactInfo": {
+        "email": "info@voyer.ca",
+        "phone": "",
+        "website": "https://voyer.ca/en/upcoming-projects/",
+        "linkedin": "",
+        "contact_person": ""
+      },
+      "sourceUrl": "https://voyer.ca/en/upcoming-projects/",
+      "notes": "Multilogements Laval/Rive-Nord",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "(à identifier)",
+      "companyName": "Magil Construction",
+      "region": "QC",
+      "city": "Montréal",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "commercial",
+        "industriel",
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "commercial",
+        "industriel",
+        "institutionnel",
+        "résidentiel"
+      ],
+      "recentProjects": "Royalmount Footbridge (2024)",
+      "estimatedAnnualVolume": 1500000000,
+      "relationshipStatus": "researching",
+      "score": 8,
+      "contactInfo": {
+        "email": "contact@magil.com",
+        "phone": "",
+        "website": "https://www.magil.com/",
+        "linkedin": "https://ca.linkedin.com/company/magil-construction-corporation",
+        "contact_person": ""
+      },
+      "sourceUrl": "https://www.magil.com/",
+      "notes": "Fondée 1953, MTL/London/Toronto/Vancouver",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "(à identifier)",
+      "companyName": "Maître Carré",
+      "region": "QC",
+      "city": "Montréal",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "mixte",
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "résidentiel",
+        "mixte",
+        "durable"
+      ],
+      "recentProjects": "Projets durables MTL",
+      "estimatedAnnualVolume": 150000000,
+      "relationshipStatus": "researching",
+      "score": 5,
+      "contactInfo": {
+        "email": "contact@maitrecarre.ca",
+        "phone": "",
+        "website": "https://maitrecarre.ca/",
+        "linkedin": "",
+        "contact_person": ""
+      },
+      "sourceUrl": "https://maitrecarre.ca/projets/",
+      "notes": "Depuis 2009, BCorp, durable & engagement social",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "(à identifier)",
+      "companyName": "Habitations Trigone",
+      "region": "QC",
+      "city": "Deux-Montagnes",
+      "subregion": "Grand Montréal (Rive-Nord)",
+      "projectTypes": [
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "multilogement",
+        "résidentiel"
+      ],
+      "recentProjects": "Domaine d'Accurso Deux-Montagnes (2026, 5 tours 16 étages)",
+      "estimatedAnnualVolume": 200000000,
+      "relationshipStatus": "researching",
+      "score": 6,
+      "contactInfo": {
+        "email": "",
+        "phone": "",
+        "website": "",
+        "linkedin": "",
+        "contact_person": ""
+      },
+      "sourceUrl": "https://www.lapresse.ca/affaires/2026-01-27/a-deux-pas-du-rem-de-deux-montagnes/les-promoteurs-de-trigone-comptent-racheter-le-domaine-d-accurso.php",
+      "notes": "Promoteur émergent, projet REM Deux-Montagnes",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "(à identifier)",
+      "companyName": "Capital Property Developments (CPD)",
+      "region": "QC",
+      "city": "Longueuil",
+      "subregion": "Grand Montréal (Rive-Sud)",
+      "projectTypes": [
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "multilogement",
+        "résidentiel locatif"
+      ],
+      "recentProjects": "Longueuil Roland-Therrien (2026, 525 unités)",
+      "estimatedAnnualVolume": 300000000,
+      "relationshipStatus": "researching",
+      "score": 6,
+      "contactInfo": {
+        "email": "",
+        "phone": "",
+        "website": "",
+        "linkedin": "",
+        "contact_person": ""
+      },
+      "sourceUrl": "https://lecourrierdusud.ca/longueuil-projet-immobilier-commerces-roland-therrien/",
+      "notes": "Consortium Groupe HD/CPD/Kastello",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "(à identifier)",
+      "companyName": "Kastello",
+      "region": "QC",
+      "city": "Longueuil",
+      "subregion": "Grand Montréal (Rive-Sud)",
+      "projectTypes": [
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "multilogement",
+        "résidentiel"
+      ],
+      "recentProjects": "Longueuil Roland-Therrien (2026)",
+      "estimatedAnnualVolume": 250000000,
+      "relationshipStatus": "researching",
+      "score": 6,
+      "contactInfo": {
+        "email": "",
+        "phone": "",
+        "website": "",
+        "linkedin": "",
+        "contact_person": ""
+      },
+      "sourceUrl": "https://lecourrierdusud.ca/longueuil-projet-immobilier-commerces-roland-therrien/",
+      "notes": "Consortium HD/CPD/Kastello, partenaire Rive-Sud",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "(à identifier)",
+      "companyName": "Pomerleau",
+      "region": "QC",
+      "city": "Montréal",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "industriel"
+      ],
+      "projectTypesDetail": [
+        "construction",
+        "infrastructure",
+        "civil",
+        "industriel"
+      ],
+      "recentProjects": "Multiples grands projets Canada",
+      "estimatedAnnualVolume": 3000000000,
+      "relationshipStatus": "researching",
+      "score": 8,
+      "contactInfo": {
+        "email": "contact@pomerleau.ca",
+        "phone": "",
+        "website": "https://pomerleau.ca/en",
+        "linkedin": "https://ca.linkedin.com/company/pomerleau-inc",
+        "contact_person": ""
+      },
+      "sourceUrl": "https://pomerleau.ca/en",
+      "notes": "Entrepreneur construction majeur Canada. Bâtiment/infrastructure/civil/industriel",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "(à identifier)",
+      "companyName": "Cromwell",
+      "region": "QC",
+      "city": "Montréal",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "commercial",
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "commercial",
+        "résidentiel locatif"
+      ],
+      "recentProjects": "Portefeuille locatif MTL/QC/TO",
+      "estimatedAnnualVolume": 400000000,
+      "relationshipStatus": "researching",
+      "score": 6,
+      "contactInfo": {
+        "email": "",
+        "phone": "",
+        "website": "",
+        "linkedin": "",
+        "contact_person": ""
+      },
+      "sourceUrl": "https://www.guidehabitation.ca/fr/9050/cromwell/",
+      "notes": "Depuis 1986, propriétaire/gestionnaire portefeuille locatif",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "(à identifier)",
+      "companyName": "Acquisitions R. Allard",
+      "region": "QC",
+      "city": "Montréal",
+      "subregion": "Grand Montréal",
+      "projectTypes": [
+        "terrain"
+      ],
+      "projectTypesDetail": [
+        "acquisition foncière",
+        "développement"
+      ],
+      "recentProjects": "Acquisitions terrains Grand MTL",
+      "estimatedAnnualVolume": 150000000,
+      "relationshipStatus": "researching",
+      "score": 5,
+      "contactInfo": {
+        "email": "contact@acqra.ca",
+        "phone": "",
+        "website": "https://acqra.ca/accueil",
+        "linkedin": "",
+        "contact_person": ""
+      },
+      "sourceUrl": "https://acqra.ca/accueil",
+      "notes": "Acquisition foncière, recherche partenaires actifs",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "William Trudel",
+      "companyName": "Trudel Corporation",
+      "region": "QC",
+      "city": "Québec",
+      "subregion": "Capitale-Nationale",
+      "projectTypes": [
+        "commercial",
+        "mixte",
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "multilogement",
+        "commercial",
+        "mixte",
+        "retail"
+      ],
+      "recentProjects": "Fleur de Lys (2025, 1.5B$, 480+ unités phase 1); projets Trois-Rivières (2024)",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 5,
+      "contactInfo": {
+        "email": "info@trudelimmeubles.com",
+        "phone": "418-614-1550",
+        "website": "https://trudel.ca/",
+        "linkedin": "https://ca.linkedin.com/company/trudel-ca",
+        "contact_person": "William Trudel, Président & CEO"
+      },
+      "sourceUrl": "https://trudel.ca/",
+      "notes": "Majoriste Québec, commercial et résidentiel, début 2000s",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "Michel Dallaire",
+      "companyName": "Groupe Dallaire",
+      "region": "QC",
+      "city": "Québec",
+      "subregion": "Capitale-Nationale",
+      "projectTypes": [
+        "commercial",
+        "industriel",
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "multilogement",
+        "condo",
+        "commercial",
+        "industriel"
+      ],
+      "recentProjects": "Altura (2024, 160 unités, 14-28 étages); Faubourg du Moulin",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 5,
+      "contactInfo": {
+        "email": "sac@groupedallaire.ca",
+        "phone": "418-781-6300",
+        "website": "https://groupedallaire.ca/",
+        "linkedin": "https://ca.linkedin.com/company/groupe-dallaire-inc-",
+        "contact_person": "Michel Dallaire (CEO) & Alain Dallaire (VP Op)"
+      },
+      "sourceUrl": "https://groupedallaire.ca/",
+      "notes": "Depuis 1965, plus grand propriétaire foncier région métro QC",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "Alexandre Tanguay",
+      "companyName": "Groupe Immobilier Tanguay",
+      "region": "QC",
+      "city": "Québec",
+      "subregion": "Capitale-Nationale",
+      "projectTypes": [
+        "commercial",
+        "industriel"
+      ],
+      "projectTypesDetail": [
+        "commercial",
+        "industriel"
+      ],
+      "recentProjects": "Acquisitions Vieux-Québec (2021+)",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 5,
+      "contactInfo": {
+        "email": "",
+        "phone": "418-835-5249",
+        "website": "https://groupeimmobiliertanguay.ca/",
+        "linkedin": "",
+        "contact_person": "Alexandre Tanguay, Président"
+      },
+      "sourceUrl": "https://groupeimmobiliertanguay.ca/",
+      "notes": "Régional Québec, Maison Chevalier 1752, Vieux-Québec",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "Yves Doyon",
+      "companyName": "Le Groupe Norplex",
+      "region": "QC",
+      "city": "Québec",
+      "subregion": "Capitale-Nationale",
+      "projectTypes": [
+        "commercial",
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "condo",
+        "commercial",
+        "bureau"
+      ],
+      "recentProjects": "Europa Project Honoré-Mercier; Lofts du Théâtre Saint-Joseph; Monastère Capucins",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 5,
+      "contactInfo": {
+        "email": "info@norplex.ca",
+        "phone": "418-529-2245",
+        "website": "https://norplex.ca/",
+        "linkedin": "",
+        "contact_person": "Yves Doyon, Président"
+      },
+      "sourceUrl": "https://norplex.ca/",
+      "notes": "Région Québec, luxury condo Vieux-Port/Vieux-Limoilou, 'The Site First'",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "(à identifier)",
+      "companyName": "Immostar",
+      "region": "QC",
+      "city": "Québec",
+      "subregion": "Capitale-Nationale",
+      "projectTypes": [
+        "commercial",
+        "industriel",
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "multilogement",
+        "commercial",
+        "industriel",
+        "bureau"
+      ],
+      "recentProjects": "Projets multi-résidentiels LEED & WELL (2024)",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 5,
+      "contactInfo": {
+        "email": "confidential@immostar.ca",
+        "phone": "418-915-5555",
+        "website": "https://immostar.ca/en",
+        "linkedin": "",
+        "contact_person": ""
+      },
+      "sourceUrl": "https://immostar.ca/en/about",
+      "notes": "Région QC, LEED/WELL/ToD pioneer",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "(à identifier)",
+      "companyName": "Kevlar Immobilier",
+      "region": "QC",
+      "city": "Québec",
+      "subregion": "Capitale-Nationale",
+      "projectTypes": [
+        "commercial",
+        "industriel",
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "condo",
+        "commercial",
+        "industriel"
+      ],
+      "recentProjects": "Projets résidentiels/commerciaux/industriels haut de gamme (2024)",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 5,
+      "contactInfo": {
+        "email": "info@kevlarinc.com",
+        "phone": "514-393-8858",
+        "website": "https://groupekevlar.com/en/",
+        "linkedin": "https://ca.linkedin.com/company/kevlar-inc",
+        "contact_person": ""
+      },
+      "sourceUrl": "https://groupekevlar.com/en/",
+      "notes": "Fondé 1996, multi-secteur, excellence & innovation",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "Charles Custeau",
+      "companyName": "Groupe Custeau Immobilier",
+      "region": "QC",
+      "city": "Sherbrooke",
+      "subregion": "Estrie",
+      "projectTypes": [
+        "commercial",
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "multilogement",
+        "condo",
+        "commercial"
+      ],
+      "recentProjects": "Masson Project Fleurimont (2024, ~800 unités); logements sociaux/abordables (2024)",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 5,
+      "contactInfo": {
+        "email": "info@groupecusteau.com",
+        "phone": "819-564-8866",
+        "website": "https://www.groupecusteau.com/",
+        "linkedin": "https://ca.linkedin.com/company/groupe-custeau",
+        "contact_person": "Charles Custeau, Président (avec Philippe & Denis)"
+      },
+      "sourceUrl": "https://www.groupecusteau.com/",
+      "notes": "Estrie 40+ ans, construction/gestion/financement, 800u Fleurimont",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "Philippe Dusseault",
+      "companyName": "Immeubles Must Urbain",
+      "region": "QC",
+      "city": "Sherbrooke",
+      "subregion": "Estrie",
+      "projectTypes": [
+        "commercial",
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "multilogement",
+        "condo",
+        "commercial",
+        "bureau"
+      ],
+      "recentProjects": "Revitalisation Wellington South & King East (2024); ~1500 unités downtown (2024)",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 5,
+      "contactInfo": {
+        "email": "",
+        "phone": "819-791-4338",
+        "website": "https://www.immeublesmusturbain.com/",
+        "linkedin": "",
+        "contact_person": "Philippe Dusseault, Président-fondateur"
+      },
+      "sourceUrl": "https://www.immeublesmusturbain.com/",
+      "notes": "Estrie fondé 2012, downtown Sherbrooke revitalization",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "(à identifier)",
+      "companyName": "Construction de l'Estrie",
+      "region": "QC",
+      "city": "Sherbrooke",
+      "subregion": "Estrie",
+      "projectTypes": [
+        "commercial",
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "multilogement",
+        "commercial",
+        "résidentiel"
+      ],
+      "recentProjects": "Rénovation & construction commerciale (2024)",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 5,
+      "contactInfo": {
+        "email": "",
+        "phone": "819-212-1792",
+        "website": "https://constructiondelestrie.com/",
+        "linkedin": "",
+        "contact_person": ""
+      },
+      "sourceUrl": "https://constructiondelestrie.com/",
+      "notes": "Estrie, entrepreneur général, rénovation & construction neuve",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "Gilles Desjardins",
+      "companyName": "Groupe Brigil",
+      "region": "QC",
+      "city": "Gatineau",
+      "subregion": "Outaouais",
+      "projectTypes": [
+        "commercial",
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "multilogement",
+        "condo",
+        "commercial"
+      ],
+      "recentProjects": "Projets résidentiels Ottawa-Gatineau",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 5,
+      "contactInfo": {
+        "email": "reception@brigil.com",
+        "phone": "819-243-7392",
+        "website": "https://brigil.com/",
+        "linkedin": "https://ca.linkedin.com/in/gilles-desjardins-brigil",
+        "contact_person": "Gilles Desjardins, Président-fondateur"
+      },
+      "sourceUrl": "https://brigil.com/",
+      "notes": "Outaouais fondé 1985, ~14k unités, 4500 rental units",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "Jean-Pierre Poulin",
+      "companyName": "Devcore Group",
+      "region": "QC",
+      "city": "Gatineau",
+      "subregion": "Outaouais",
+      "projectTypes": [
+        "commercial",
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "multilogement",
+        "condo",
+        "commercial"
+      ],
+      "recentProjects": "CINQ23 (2024, résidentiel-commercial); Domaine de la Baie (2024)",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 5,
+      "contactInfo": {
+        "email": "reception@devcore.ca",
+        "phone": "819-663-7777",
+        "website": "https://devcore.ca/",
+        "linkedin": "https://www.linkedin.com/in/jean-pierre-poulin-04a5205a/",
+        "contact_person": "Jean-Pierre Poulin (JP), Fondateur"
+      },
+      "sourceUrl": "https://devcore.ca/",
+      "notes": "Outaouais 25+ ans, $500M actifs QC-ON, Mercure Award 2024",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "Marc St-Gelais",
+      "companyName": "Immeubles MCJR",
+      "region": "QC",
+      "city": "Saguenay",
+      "subregion": "Saguenay-Lac-Saint-Jean",
+      "projectTypes": [
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "multilogement",
+        "condo"
+      ],
+      "recentProjects": "Place du Progrès (livraison 2026, 114 unités, 40M$); Édifice Laflamme (2024)",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 5,
+      "contactInfo": {
+        "email": "",
+        "phone": "",
+        "website": "",
+        "linkedin": "",
+        "contact_person": "Marc & Sophie St-Gelais"
+      },
+      "sourceUrl": "https://informeaffaires.com/regional/immobilier/le-projet-de-logements-de-40-m-de-la-place-du-progres-est-lance",
+      "notes": "Saguenay, 114 unités multilogement (11% abordable), 35% écoénergétique",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "Jérémi Foucault",
+      "companyName": "Groupe JCO",
+      "region": "QC",
+      "city": "Saguenay",
+      "subregion": "Saguenay-Lac-Saint-Jean",
+      "projectTypes": [
+        "commercial",
+        "mixte",
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "multilogement",
+        "commercial",
+        "mixte"
+      ],
+      "recentProjects": "Le Trefflé (2024, 24u, 6.25M$); rue des Mouettes (2024+, 300+ logements)",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 5,
+      "contactInfo": {
+        "email": "",
+        "phone": "",
+        "website": "https://groupejco.ca/",
+        "linkedin": "",
+        "contact_person": "Jérémi Foucault & Jean-Daniel Tremblay, Associés"
+      },
+      "sourceUrl": "https://groupejco.ca/",
+      "notes": "Saguenay ~12 employés, 16M$ projets Chicoutimi-Jonquière 2024",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "Jean-Michel Tremblay",
+      "companyName": "Projet 7 / Concept Platinum",
+      "region": "QC",
+      "city": "Saguenay",
+      "subregion": "Saguenay-Lac-Saint-Jean",
+      "projectTypes": [
+        "commercial",
+        "mixte",
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "commercial",
+        "multilogement",
+        "mixte"
+      ],
+      "recentProjects": "Complexe 175 Laterrière (2024, 7M$, multiservice)",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 5,
+      "contactInfo": {
+        "email": "jeanmichel.tremblay@conceptplatinum.ca",
+        "phone": "418-402-1311",
+        "website": "https://projet7.ca/",
+        "linkedin": "",
+        "contact_person": "Jean-Michel Tremblay"
+      },
+      "sourceUrl": "https://projet7.ca/",
+      "notes": "Saguenay fondé 2018, développement & vente terrain",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "Michel Savard",
+      "companyName": "Habitations Manicouagan",
+      "region": "QC",
+      "city": "Baie-Comeau",
+      "subregion": "Côte-Nord",
+      "projectTypes": [
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "multilogement",
+        "condo"
+      ],
+      "recentProjects": "56 unités sociales Baie-Comeau secteur Mingan (2024+)",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 5,
+      "contactInfo": {
+        "email": "",
+        "phone": "",
+        "website": "",
+        "linkedin": "",
+        "contact_person": "Michel Savard, Président"
+      },
+      "sourceUrl": "https://macotenord.com/56-nouveaux-logements-sociaux-et-abordables-pour-baie-comeau/",
+      "notes": "Côte-Nord, Housing Accelerator Fund $900M, abordable focus",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "Dave Coutu-Larouche",
+      "companyName": "Trans-Action Investissement",
+      "region": "QC",
+      "city": "Rouyn-Noranda",
+      "subregion": "Abitibi-Témiscamingue",
+      "projectTypes": [
+        "commercial",
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "multilogement",
+        "commercial"
+      ],
+      "recentProjects": "Rue Perreault (printemps 2025, 70M$, 228 unités); Malartic 32 unités (2024+)",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 5,
+      "contactInfo": {
+        "email": "",
+        "phone": "",
+        "website": "https://www.transactioninvestissement.com/",
+        "linkedin": "https://www.linkedin.com/in/dave-coutu-larouche-86916398/",
+        "contact_person": "Dave Coutu-Larouche, PDG"
+      },
+      "sourceUrl": "https://www.transactioninvestissement.com/",
+      "notes": "Abitibi ~10 ans, 70M$ Perreault 228u (25% abordable), éco-énergétique",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "Stéphane Chouinard",
+      "companyName": "C4 Immobilier",
+      "region": "QC",
+      "city": "Rivière-du-Loup",
+      "subregion": "Bas-Saint-Laurent",
+      "projectTypes": [
+        "commercial",
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "multilogement",
+        "commercial"
+      ],
+      "recentProjects": "Complexe Fraser (2024, 81 unités, 24M$+); entrée ouest RDL",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 5,
+      "contactInfo": {
+        "email": "",
+        "phone": "",
+        "website": "",
+        "linkedin": "",
+        "contact_person": "Stéphane Chouinard & Guillaume Lavoie"
+      },
+      "sourceUrl": "https://infodimanche.com/actualites/actualite/518840/un-projet-de-78-logements-abordables-a-l-entree-ouest-de-riviere-du-loup",
+      "notes": "BSL, Complexe Fraser (50x 3½, 16 studios, 15x 4½+), SHQ+ville",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "(à identifier)",
+      "companyName": "Groupe Robin",
+      "region": "QC",
+      "city": "Trois-Rivières",
+      "subregion": "Mauricie",
+      "projectTypes": [
+        "autres",
+        "hotel",
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "multilogement",
+        "condo",
+        "hôtel",
+        "santé"
+      ],
+      "recentProjects": "District 55 Trois-Rivières (juillet 2025, 60 unités); 80 unités résidentielles + 5 hôtels LEED",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 5,
+      "contactInfo": {
+        "email": "constructiongrouperobin@grouperobin.com",
+        "phone": "819-519-2242",
+        "website": "https://grouperobin.com/",
+        "linkedin": "https://ca.linkedin.com/company/groupe-robin",
+        "contact_person": ""
+      },
+      "sourceUrl": "https://grouperobin.com/decouvrez-nos-projets-a-venir-pour-2024-a-trois-rivieres/",
+      "notes": "Multi-régional Trois-Rivières, District 55 LEED certified",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "Brian Demontigny",
+      "companyName": "Groupe Demontigny Construction",
+      "region": "QC",
+      "city": "Trois-Rivières",
+      "subregion": "Mauricie",
+      "projectTypes": [
+        "commercial",
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "multilogement",
+        "commercial",
+        "résidentiel"
+      ],
+      "recentProjects": "Multi-unités nord Trois-Rivières (2024)",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 5,
+      "contactInfo": {
+        "email": "",
+        "phone": "819-378-6332",
+        "website": "https://groupedemontigny.com/",
+        "linkedin": "",
+        "contact_person": "Brian Demontigny (avec Linda Auger)"
+      },
+      "sourceUrl": "https://groupedemontigny.com/",
+      "notes": "Mauricie fondé 1985, Novoclimat Sélect",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "Yannick Lemonde",
+      "companyName": "Habitations Urbania",
+      "region": "QC",
+      "city": "Bécancour",
+      "subregion": "Centre-du-Québec",
+      "projectTypes": [
+        "commercial",
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "résidentiel",
+        "condo",
+        "commercial"
+      ],
+      "recentProjects": "100+ projets, filière batterie Bécancour (2024)",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 5,
+      "contactInfo": {
+        "email": "info@habitationsurbania.com",
+        "phone": "819-698-4956",
+        "website": "https://www.habitationsurbania.com/",
+        "linkedin": "",
+        "contact_person": "Yannick Lemonde, Président"
+      },
+      "sourceUrl": "https://www.habitationsurbania.com/",
+      "notes": "Centre-du-QC, 100+ projets, Quality Rating A (GCR)",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "(à identifier)",
+      "companyName": "IDA Développement (Groupe Chagall)",
+      "region": "QC",
+      "city": "Drummondville",
+      "subregion": "Centre-du-Québec",
+      "projectTypes": [
+        "commercial",
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "condo",
+        "multilogement",
+        "commercial"
+      ],
+      "recentProjects": "OTTERA Quartier (2024+, 200+ unités, 31M$); La Source coopérative (2024); Le Symbioze + Carré 29 Octobre",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 5,
+      "contactInfo": {
+        "email": "info@idadev.ca",
+        "phone": "1-800-871-7118",
+        "website": "https://idadev.ca/",
+        "linkedin": "",
+        "contact_person": ""
+      },
+      "sourceUrl": "https://idadev.ca/en/a-propos/",
+      "notes": "Centre-du-QC, OTTERA Drummondville 31M$, coopérative non-spéculative",
+      "_source": "qc_promoters"
+    },
+    {
+      "name": "Jack DelZotto (fondateur, gestion familiale)",
+      "companyName": "Tridel",
+      "region": "ON",
+      "city": "Toronto",
+      "subregion": "GTA",
+      "projectTypes": [
+        "multilogement",
+        "résidentiel"
+      ],
+      "projectTypesDetail": [
+        "condo",
+        "high-rise",
+        "mixte durable"
+      ],
+      "recentProjects": "MRKT Condos (119 Denison, 2024); One Bloor West (occupancy 2025)",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 8,
+      "contactInfo": {
+        "email": "ask@tridel.com",
+        "phone": "416-661-9394",
+        "website": "https://www.tridel.com/",
+        "linkedin": "https://ca.linkedin.com/company/tridel",
+        "contact_person": "à identifier"
+      },
+      "sourceUrl": "https://www.tridel.com/",
+      "notes": "Plus grand condo builder GTA (90 000 unités). Actif depuis 1930s. 2024 BILD Award Green Builder of Year.",
+      "_source": "ontario_promoters"
+    },
+    {
+      "name": "à identifier",
+      "companyName": "Concord Pacific (Concord Adex Toronto)",
+      "region": "ON",
+      "city": "Toronto",
+      "subregion": "GTA",
+      "projectTypes": [
+        "multilogement",
+        "mixte"
+      ],
+      "projectTypesDetail": [
+        "condo",
+        "résidentiel",
+        "master-planned communities"
+      ],
+      "recentProjects": "CityPlace Waterfront (complété); Concord Waterfront (en cours)",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 8,
+      "contactInfo": {
+        "email": "media@concordpacific.com",
+        "phone": "416-813-2999",
+        "website": "https://www.concordpacific.com/",
+        "linkedin": "https://ca.linkedin.com/company/concord-pacific-developments-inc.",
+        "contact_person": "à identifier"
+      },
+      "sourceUrl": "https://www.concordpacific.com/",
+      "notes": "Plus grand master-planned communities builder Canada. Concord Adex spécialisé Toronto.",
+      "_source": "ontario_promoters"
+    },
+    {
+      "name": "John H. Daniels",
+      "companyName": "The Daniels Corporation",
+      "region": "ON",
+      "city": "Toronto",
+      "subregion": "GTA",
+      "projectTypes": [
+        "multilogement",
+        "commercial",
+        "mixte"
+      ],
+      "projectTypesDetail": [
+        "condo",
+        "résidentiel",
+        "townhouses",
+        "retail"
+      ],
+      "recentProjects": "Festival Tower (TIFF); Regent Park revitalization (53 acres, partenariat TCH)",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 8,
+      "contactInfo": {
+        "email": "info@danielscorp.com",
+        "phone": "416-598-2129",
+        "website": "https://danielshomes.ca/",
+        "linkedin": "https://ca.linkedin.com/company/the-daniels-corporation",
+        "contact_person": "John H. Daniels, Fondateur"
+      },
+      "sourceUrl": "https://danielshomes.ca/",
+      "notes": "Fondée 1982. ~40 000 homes construites. Regent Park = modèle global revitalization.",
+      "_source": "ontario_promoters"
+    },
+    {
+      "name": "à identifier",
+      "companyName": "Menkes Developments Ltd",
+      "region": "ON",
+      "city": "Toronto",
+      "subregion": "GTA",
+      "projectTypes": [
+        "multilogement",
+        "commercial",
+        "industriel"
+      ],
+      "projectTypesDetail": [
+        "condo",
+        "résidentiel",
+        "single-family",
+        "retail"
+      ],
+      "recentProjects": "Lake & Town (Etobicoke); Mobilio (Vaughan); Joshua Creek (Oakville)",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 8,
+      "contactInfo": {
+        "email": "info@menkes.com",
+        "phone": "416-491-2222",
+        "website": "https://www.menkes.com/",
+        "linkedin": "https://ca.linkedin.com/company/menkes-developments",
+        "contact_person": "Famille Menkes"
+      },
+      "sourceUrl": "https://www.menkes.com/",
+      "notes": "Fondée 1954. 15 000+ résidences, 20M+ sq ft commercial. Pionnier condo high-rise (1976).",
+      "_source": "ontario_promoters"
+    },
+    {
+      "name": "Peter Gilgan",
+      "companyName": "Mattamy Asset Management / Mattamy Homes",
+      "region": "ON",
+      "city": "Toronto",
+      "subregion": "GTA, Ottawa",
+      "projectTypes": [
+        "multilogement",
+        "résidentiel"
+      ],
+      "projectTypesDetail": [
+        "single-family",
+        "townhomes",
+        "condo",
+        "village homes"
+      ],
+      "recentProjects": "The Laurels Milton (2027); Preserve West Oakville; Hounslow Station North York",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 8,
+      "contactInfo": {
+        "email": "Info.Ottawa@mattamyhomes.com",
+        "phone": "+1 613-831-4115",
+        "website": "https://mattamyhomes.com/",
+        "linkedin": "https://ca.linkedin.com/company/mattamy-asset-management",
+        "contact_person": "Peter Gilgan, Fondateur"
+      },
+      "sourceUrl": "https://mattamyhomes.com/",
+      "notes": "Plus grand single-family builder Canada. ~8000 homes/an. Usine 470K sq ft prefab près Pearson.",
+      "_source": "ontario_promoters"
+    },
+    {
+      "name": "à identifier",
+      "companyName": "Great Gulf",
+      "region": "ON",
+      "city": "Toronto",
+      "subregion": "GTA",
+      "projectTypes": [
+        "multilogement",
+        "résidentiel"
+      ],
+      "projectTypesDetail": [
+        "townhomes",
+        "condo",
+        "single-family",
+        "semi-detached"
+      ],
+      "recentProjects": "Terra Barrie (Barrie); Milton projects (2024)",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 7,
+      "contactInfo": {
+        "email": "info@greatgulf.com",
+        "phone": "416-774-2600",
+        "website": "https://www.greatgulf.com/",
+        "linkedin": "https://ca.linkedin.com/company/great-gulf",
+        "contact_person": "à identifier"
+      },
+      "sourceUrl": "https://www.greatgulf.com/",
+      "notes": "2024 DRHBA Builder of Year Large Volume. Actif Milton, Oakville, Whitby, Brampton.",
+      "_source": "ontario_promoters"
+    },
+    {
+      "name": "à identifier",
+      "companyName": "Pemberton Group",
+      "region": "ON",
+      "city": "Toronto",
+      "subregion": "GTA",
+      "projectTypes": [
+        "multilogement",
+        "résidentiel"
+      ],
+      "projectTypesDetail": [
+        "condo high-rise",
+        "master-planned"
+      ],
+      "recentProjects": "Yonge & Eglinton; Church & Dundas; 1169 Queen West",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 8,
+      "contactInfo": {
+        "email": "",
+        "phone": "",
+        "website": "https://pembertongroup.com/",
+        "linkedin": "",
+        "contact_person": "à identifier"
+      },
+      "sourceUrl": "https://pembertongroup.com/",
+      "notes": "50+ ans. 18 000 units complétées, 6 000 en construction. Muzzo Group affiliate.",
+      "_source": "ontario_promoters"
+    },
+    {
+      "name": "Mark Mandelbaum & Barry Fenton",
+      "companyName": "Lifetime Developments",
+      "region": "ON",
+      "city": "Toronto",
+      "subregion": "GTA",
+      "projectTypes": [
+        "multilogement",
+        "résidentiel"
+      ],
+      "projectTypesDetail": [
+        "condo",
+        "high-rise",
+        "waterfront"
+      ],
+      "recentProjects": "Q Tower (200 Queens Quay, 980 suites, 640M$, 2030); XO Condos (1182 King W, 700 units); Panda (2022)",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 7,
+      "contactInfo": {
+        "email": "",
+        "phone": "416-987-3344",
+        "website": "https://lifetimedevelopments.com/",
+        "linkedin": "https://ca.linkedin.com/company/lifetimedevelopments",
+        "contact_person": "Mark Mandelbaum & Barry Fenton, Co-fondateurs"
+      },
+      "sourceUrl": "https://lifetimedevelopments.com/",
+      "notes": "Fondée 1999. 15 000 condos construits.",
+      "_source": "ontario_promoters"
+    },
+    {
+      "name": "Mark Mandelbaum & Barry Fenton",
+      "companyName": "Lanterra Developments",
+      "region": "ON",
+      "city": "Toronto",
+      "subregion": "GTA",
+      "projectTypes": [
+        "multilogement",
+        "mixte"
+      ],
+      "projectTypesDetail": [
+        "condo high-rise",
+        "mixed-use",
+        "waterfront"
+      ],
+      "recentProjects": "Maple Leaf Square (1.25M sq ft, MLSE); WaterPark City (2 000 suites); Notting Hill (1 320 suites)",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 8,
+      "contactInfo": {
+        "email": "info@lanterracustomercare.com",
+        "phone": "416-635-7424",
+        "website": "https://lanterradevelopments.com/",
+        "linkedin": "https://ca.linkedin.com/company/lanterra-developments",
+        "contact_person": "Mark Mandelbaum & Barry Fenton, Co-fondateurs"
+      },
+      "sourceUrl": "https://lanterradevelopments.com/",
+      "notes": "Fondée 1999. 15 000 condos. Bay/Yonge/Wellesley : 3 000 units. Partenariats Cadillac Fairview, MLSE.",
+      "_source": "ontario_promoters"
+    },
+    {
+      "name": "John Ruddy",
+      "companyName": "Trinity Development Group",
+      "region": "ON",
+      "city": "Ottawa",
+      "subregion": "Ottawa",
+      "projectTypes": [
+        "multilogement",
+        "commercial",
+        "mixte"
+      ],
+      "projectTypesDetail": [
+        "urbain",
+        "centres communautaires",
+        "retail"
+      ],
+      "recentProjects": "Trinity Station (Ottawa LeBreton, 1 632 units, 59 étages)",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 7,
+      "contactInfo": {
+        "email": "info@trinity-group.com",
+        "phone": "613-565-5864",
+        "website": "https://www.trinity-group.com/",
+        "linkedin": "https://ca.linkedin.com/company/trinity-development-group",
+        "contact_person": "John Ruddy, Fondateur"
+      },
+      "sourceUrl": "https://www.trinity-group.com/",
+      "notes": "Fondée 1992. 30+ ans. 11.2M sq ft. 7 500 units en pipeline.",
+      "_source": "ontario_promoters"
+    },
+    {
+      "name": "à identifier",
+      "companyName": "Empire Communities",
+      "region": "ON",
+      "city": "Vaughan",
+      "subregion": "GTA",
+      "projectTypes": [
+        "multilogement",
+        "résidentiel"
+      ],
+      "projectTypesDetail": [
+        "low-rise",
+        "high-rise",
+        "single-family",
+        "townhomes"
+      ],
+      "recentProjects": "Communautés GTA, Hamilton, Niagara",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 7,
+      "contactInfo": {
+        "email": "",
+        "phone": "905-307-8102",
+        "website": "https://empirehomes.com/",
+        "linkedin": "https://ca.linkedin.com/company/empire-communities",
+        "contact_person": "à identifier"
+      },
+      "sourceUrl": "https://empirehomes.com/",
+      "notes": "Fondée 1993. 38 000+ homes en 100+ communities. Ontario 2013 Green Builder. HQ Vaughan.",
+      "_source": "ontario_promoters"
+    },
+    {
+      "name": "Alan Norris (CEO)",
+      "companyName": "Brookfield Residential",
+      "region": "ON",
+      "city": "Toronto",
+      "subregion": "GTA",
+      "projectTypes": [
+        "multilogement",
+        "résidentiel"
+      ],
+      "projectTypesDetail": [
+        "boutique condos",
+        "single-family",
+        "townhomes",
+        "master-planned"
+      ],
+      "recentProjects": "Courtice; Aurora; Whitby; Caledon",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 7,
+      "contactInfo": {
+        "email": "",
+        "phone": "(800) 841-2647",
+        "website": "https://www.brookfieldresidential.com/",
+        "linkedin": "",
+        "contact_person": "Alan Norris, CEO; Peter Nesbitt, COO GTA"
+      },
+      "sourceUrl": "https://www.brookfieldresidential.com/",
+      "notes": "65+ ans en GTA. HQ: 3381 Steeles Ave E, Suite 100, Toronto.",
+      "_source": "ontario_promoters"
+    },
+    {
+      "name": "à identifier",
+      "companyName": "Minto Communities",
+      "region": "ON",
+      "city": "Ottawa",
+      "subregion": "Ottawa, GTA",
+      "projectTypes": [
+        "multilogement",
+        "résidentiel",
+        "commercial"
+      ],
+      "projectTypesDetail": [
+        "condo",
+        "homes",
+        "townhomes",
+        "apartments"
+      ],
+      "recentProjects": "North Oak Tower 3 (Oakville); Park & Main Towns (Markham)",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 8,
+      "contactInfo": {
+        "email": "info@mintoapartmentreit.com",
+        "phone": "613-230-7051",
+        "website": "https://www.minto.com/",
+        "linkedin": "https://ca.linkedin.com/company/minto-group",
+        "contact_person": "à identifier"
+      },
+      "sourceUrl": "https://www.minto.com/",
+      "notes": "70+ ans. 100 000+ homes. 2.9B$ assets. 13 000 multi-residential units. 2024 GOHBA Builder of Year (5e fois).",
+      "_source": "ontario_promoters"
+    },
+    {
+      "name": "à identifier",
+      "companyName": "Tribute Communities",
+      "region": "ON",
+      "city": "Pickering",
+      "subregion": "GTA",
+      "projectTypes": [
+        "multilogement",
+        "résidentiel"
+      ],
+      "projectTypesDetail": [
+        "low-rise freeholds",
+        "high-rise condos",
+        "townhomes"
+      ],
+      "recentProjects": "Lindsay Heights; Storybrook (Fergus)",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 7,
+      "contactInfo": {
+        "email": "",
+        "phone": "905-839-3500",
+        "website": "https://www.tributecommunities.com/",
+        "linkedin": "",
+        "contact_person": "à identifier"
+      },
+      "sourceUrl": "https://www.tributecommunities.com/",
+      "notes": "40+ ans, 40 000+ homes. HQ Pickering. 38 awards en 10 ans.",
+      "_source": "ontario_promoters"
+    },
+    {
+      "name": "à identifier",
+      "companyName": "Greenpark Group",
+      "region": "ON",
+      "city": "Vaughan",
+      "subregion": "GTA",
+      "projectTypes": [
+        "multilogement",
+        "résidentiel"
+      ],
+      "projectTypesDetail": [
+        "townhomes",
+        "semi-detached",
+        "detached",
+        "luxury",
+        "high-rise"
+      ],
+      "recentProjects": "Communautés Oakville, Thornhill, Caledon, Mississauga",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 7,
+      "contactInfo": {
+        "email": "ginfo@greenparkhomes.com",
+        "phone": "416-661-5329",
+        "website": "https://greenparkgroup.ca/",
+        "linkedin": "https://ca.linkedin.com/company/greenparkgroup",
+        "contact_person": "à identifier"
+      },
+      "sourceUrl": "https://greenparkgroup.ca/",
+      "notes": "Fondée 1967. 80 000+ families. 500-1 000 employés. Transition low-rise → high-rise (2002).",
+      "_source": "ontario_promoters"
+    },
+    {
+      "name": "à identifier",
+      "companyName": "Aspen Ridge Homes",
+      "region": "ON",
+      "city": "Vaughan",
+      "subregion": "GTA",
+      "projectTypes": [
+        "multilogement",
+        "résidentiel"
+      ],
+      "projectTypesDetail": [
+        "single-family",
+        "condos"
+      ],
+      "recentProjects": "Brampton, Richmond Hill, Bradford, East Gwillimbury",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 6,
+      "contactInfo": {
+        "email": "",
+        "phone": "905-669-9292",
+        "website": "https://www.aspenridgehomes.com/",
+        "linkedin": "https://ca.linkedin.com/company/aspen-ridge-homes",
+        "contact_person": "à identifier"
+      },
+      "sourceUrl": "https://www.aspenridgehomes.com/",
+      "notes": "25+ ans. HQ: 29 Floral Parkway, Vaughan.",
+      "_source": "ontario_promoters"
+    },
+    {
+      "name": "Mark Libfeld & Sheldon Libfeld",
+      "companyName": "Conservatory Group",
+      "region": "ON",
+      "city": "Toronto",
+      "subregion": "GTA",
+      "projectTypes": [
+        "multilogement",
+        "résidentiel",
+        "commercial"
+      ],
+      "projectTypesDetail": [
+        "single-family",
+        "townhomes",
+        "medium-density apartments",
+        "high-density"
+      ],
+      "recentProjects": "Milan Condos (825 Church, 322 suites, 37 étages); Altitude (88 Grangeway, 26 étages, 222 units)",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 7,
+      "contactInfo": {
+        "email": "tcgleasing@rogers.com",
+        "phone": "905-477-7609",
+        "website": "https://conservatorygroup.ca/",
+        "linkedin": "https://ca.linkedin.com/company/conservatory-group",
+        "contact_person": "Mark Libfeld & Sheldon Libfeld"
+      },
+      "sourceUrl": "https://conservatorygroup.ca/",
+      "notes": "Depuis 1957 (Ted Libfeld). TCG 1979. 30 000+ homes. Diversifié land planning, design, construction, property management.",
+      "_source": "ontario_promoters"
+    },
+    {
+      "name": "Angelo De Gasperis",
+      "companyName": "CountryWide Homes",
+      "region": "ON",
+      "city": "Concord",
+      "subregion": "GTA",
+      "projectTypes": [
+        "multilogement",
+        "résidentiel"
+      ],
+      "projectTypesDetail": [
+        "single-family",
+        "townhomes",
+        "master-planned"
+      ],
+      "recentProjects": "Bodhi Townhome Living (Brampton, 95 townhomes)",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 6,
+      "contactInfo": {
+        "email": "",
+        "phone": "905-907-1500",
+        "website": "https://countrywidehomes.ca/",
+        "linkedin": "",
+        "contact_person": "Angelo De Gasperis"
+      },
+      "sourceUrl": "https://countrywidehomes.ca/",
+      "notes": "Fondée 2005. 5 000+ homes. De Gasperis 50+ ans expérience.",
+      "_source": "ontario_promoters"
+    },
+    {
+      "name": "à identifier",
+      "companyName": "Caivan Communities",
+      "region": "ON",
+      "city": "Ottawa",
+      "subregion": "Ottawa, GTA",
+      "projectTypes": [
+        "multilogement",
+        "résidentiel"
+      ],
+      "projectTypesDetail": [
+        "townhomes",
+        "single homes",
+        "condo"
+      ],
+      "recentProjects": "45+ active projects (Milton, Oakville, Brampton, Mississauga, Caledon, Vaughan)",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 6,
+      "contactInfo": {
+        "email": "info@caivan.com",
+        "phone": "613-518-1864",
+        "website": "https://caivan.com/",
+        "linkedin": "https://ca.linkedin.com/company/caivan-communities",
+        "contact_person": "à identifier"
+      },
+      "sourceUrl": "https://caivan.com/",
+      "notes": "Intégré community developer. 45+ active projects. Partenariat U Waterloo (10M$ donation).",
+      "_source": "ontario_promoters"
+    },
+    {
+      "name": "à identifier",
+      "companyName": "RioCan Real Estate Investment Trust",
+      "region": "ON",
+      "city": "Toronto",
+      "subregion": "GTA",
+      "projectTypes": [
+        "commercial",
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "retail",
+        "supermarket-anchored centres",
+        "high-rise apartments"
+      ],
+      "recentProjects": "Redéveloppement malls vers appartements high-rise",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 8,
+      "contactInfo": {
+        "email": "investments@riocan.com",
+        "phone": "1-800-465-2733",
+        "website": "https://www.riocan.com/",
+        "linkedin": "",
+        "contact_person": "à identifier"
+      },
+      "sourceUrl": "https://www.riocan.com/",
+      "notes": "2e plus gros REIT Canada. 168 propriétés, 31M sq ft. 66% revenue Ontario.",
+      "_source": "ontario_promoters"
+    },
+    {
+      "name": "à identifier",
+      "companyName": "First Capital Real Estate Investment Trust",
+      "region": "ON",
+      "city": "Toronto",
+      "subregion": "GTA",
+      "projectTypes": [
+        "commercial"
+      ],
+      "projectTypesDetail": [
+        "retail",
+        "neighbourhood retail centres",
+        "mixed-use"
+      ],
+      "recentProjects": "Redéveloppement centres commerciaux",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 7,
+      "contactInfo": {
+        "email": "",
+        "phone": "416-504-4114",
+        "website": "https://fcr.ca/",
+        "linkedin": "https://ca.linkedin.com/company/first-capital-reit",
+        "contact_person": "à identifier"
+      },
+      "sourceUrl": "https://fcr.ca/",
+      "notes": "REIT depuis 2019. 139 centres, 22.2M sq ft, 9.2B$ assets. 45% GTA/Ottawa. ACQUIS par KingSett & Choice (9.4B$, 2026).",
+      "_source": "ontario_promoters"
+    },
+    {
+      "name": "à identifier",
+      "companyName": "SmartCentres Real Estate Investment Trust",
+      "region": "ON",
+      "city": "Vaughan",
+      "subregion": "GTA",
+      "projectTypes": [
+        "commercial",
+        "multilogement",
+        "industriel"
+      ],
+      "projectTypesDetail": [
+        "power centres",
+        "self-storage",
+        "mixed-use",
+        "retail",
+        "bureau"
+      ],
+      "recentProjects": "StudioCentre (Leslieville); Vaughan Metropolitan Centre; 3 self-storage 2025",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 8,
+      "contactInfo": {
+        "email": "",
+        "phone": "",
+        "website": "https://smartcentres.com/",
+        "linkedin": "https://ca.linkedin.com/company/smartcentres",
+        "contact_person": "à identifier"
+      },
+      "sourceUrl": "https://smartcentres.com/",
+      "notes": "Plus gros REIT intégré Canada. 12.1B$ assets, 197 propriétés, 35.6M sq ft, 3 500 acres.",
+      "_source": "ontario_promoters"
+    },
+    {
+      "name": "à identifier",
+      "companyName": "Cadillac Fairview Corporation Limited",
+      "region": "ON",
+      "city": "Toronto",
+      "subregion": "GTA",
+      "projectTypes": [
+        "commercial",
+        "multilogement",
+        "mixte",
+        "industriel"
+      ],
+      "projectTypesDetail": [
+        "bureau",
+        "retail",
+        "résidentiel",
+        "industriel",
+        "mixed-use"
+      ],
+      "recentProjects": "Redéveloppements résidentiels; Expansion industrielle 550K sq ft GTA West (2026)",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 8,
+      "contactInfo": {
+        "email": "contactus@cadillacfairview.com",
+        "phone": "416-598-8200",
+        "website": "https://cadillacfairview.com/",
+        "linkedin": "https://ca.linkedin.com/company/cadillac-fairview",
+        "contact_person": "à identifier"
+      },
+      "sourceUrl": "https://cadillacfairview.com/",
+      "notes": "Détenue Ontario Teachers' Pension. 25 propriétés ON. Erin Mills historic project.",
+      "_source": "ontario_promoters"
+    },
+    {
+      "name": "à identifier",
+      "companyName": "Allied Properties Real Estate Investment Trust",
+      "region": "ON",
+      "city": "Toronto",
+      "subregion": "GTA",
+      "projectTypes": [
+        "commercial",
+        "multilogement",
+        "mixte"
+      ],
+      "projectTypesDetail": [
+        "bureau Class I brick & beam",
+        "rental residential"
+      ],
+      "recentProjects": "KING Toronto (opérationnel); Toronto House (acquisition complète)",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 7,
+      "contactInfo": {
+        "email": "info@alliedreit.com",
+        "phone": "416-977-9002",
+        "website": "https://alliedreit.com/",
+        "linkedin": "https://ca.linkedin.com/company/alliedreit",
+        "contact_person": "à identifier"
+      },
+      "sourceUrl": "https://alliedreit.com/",
+      "notes": "HQ Toronto. Focus downtown Toronto/Montréal. KING Toronto principal development.",
+      "_source": "ontario_promoters"
+    },
+    {
+      "name": "à identifier",
+      "companyName": "Crombie Real Estate Investment Trust",
+      "region": "ON",
+      "city": "Toronto",
+      "subregion": "GTA",
+      "projectTypes": [
+        "commercial",
+        "mixte"
+      ],
+      "projectTypesDetail": [
+        "grocery/pharmacy-anchored",
+        "freestanding retail"
+      ],
+      "recentProjects": "The RailYards (Toronto); development pipeline",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 7,
+      "contactInfo": {
+        "email": "investing@crombie.ca",
+        "phone": "902-755-8100",
+        "website": "https://www.crombie.ca/",
+        "linkedin": "https://ca.linkedin.com/company/crombiereit",
+        "contact_person": "à identifier"
+      },
+      "sourceUrl": "https://www.crombie.ca/",
+      "notes": "National retail REIT. 308 propriétés, 18.9M sq ft. Office Toronto: Suite 300, 200 Ronson.",
+      "_source": "ontario_promoters"
+    },
+    {
+      "name": "Anthony Heller",
+      "companyName": "Plazacorp Urban Residential Communities",
+      "region": "ON",
+      "city": "Toronto",
+      "subregion": "GTA",
+      "projectTypes": [
+        "multilogement",
+        "résidentiel"
+      ],
+      "projectTypesDetail": [
+        "condo high-rise",
+        "townhouses"
+      ],
+      "recentProjects": "Yorkville, King West, Queen West, Lawrence Park, Liberty Village",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 7,
+      "contactInfo": {
+        "email": "info@plazacorp.com",
+        "phone": "416-481-2222",
+        "website": "https://plaza.ca/",
+        "linkedin": "",
+        "contact_person": "Anthony Heller, Fondateur"
+      },
+      "sourceUrl": "https://plaza.ca/",
+      "notes": "Fondée 1981. 13 000+ suites. Toronto prime neighbourhoods.",
+      "_source": "ontario_promoters"
+    },
+    {
+      "name": "à identifier",
+      "companyName": "Triovest Realty Advisors Inc.",
+      "region": "ON",
+      "city": "Toronto",
+      "subregion": "GTA",
+      "projectTypes": [
+        "commercial",
+        "multilogement",
+        "industriel",
+        "mixte"
+      ],
+      "projectTypesDetail": [
+        "bureau",
+        "industriel",
+        "résidentiel",
+        "retail"
+      ],
+      "recentProjects": "3B$ actuellement en développement (pipeline)",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 7,
+      "contactInfo": {
+        "email": "",
+        "phone": "416-362-0045",
+        "website": "https://www.triovest.com/",
+        "linkedin": "https://ca.linkedin.com/company/triovest",
+        "contact_person": "à identifier"
+      },
+      "sourceUrl": "https://www.triovest.com/",
+      "notes": "Manager/developer institutionnel. 11B$ portfolio. ACQUIS par Colliers (juin 2025). HQ: 40 University Ave.",
+      "_source": "ontario_promoters"
+    },
+    {
+      "name": "à identifier",
+      "companyName": "Slate Asset Management",
+      "region": "ON",
+      "city": "Toronto",
+      "subregion": "GTA, Hamilton",
+      "projectTypes": [
+        "multilogement",
+        "industriel",
+        "mixte"
+      ],
+      "projectTypesDetail": [
+        "condo",
+        "résidentiel",
+        "industriel",
+        "waterfront"
+      ],
+      "recentProjects": "Steelport (Hamilton, 800 acres Stelco, 23K jobs); Corktown (Hamilton); One Delisle (Yonge/St Clair); Junction House",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 7,
+      "contactInfo": {
+        "email": "info@slateam.com",
+        "phone": "+1 416 644 4264",
+        "website": "https://www.slateam.com/",
+        "linkedin": "https://www.linkedin.com/company/slateam",
+        "contact_person": "à identifier"
+      },
+      "sourceUrl": "https://www.slateam.com/",
+      "notes": "Global alt investment. 6.3B$ assets. Steelport majeur (3.8B$ impact économique 10 ans). HQ: 121 King W #1600.",
+      "_source": "ontario_promoters"
+    },
+    {
+      "name": "à identifier",
+      "companyName": "Dream Office Real Estate Investment Trust",
+      "region": "ON",
+      "city": "Toronto",
+      "subregion": "GTA",
+      "projectTypes": [
+        "commercial"
+      ],
+      "projectTypesDetail": [
+        "bureau Class A",
+        "downtown Toronto"
+      ],
+      "recentProjects": "Adelaide Place (150 York, 181 University); ventes propriétés Toronto",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 6,
+      "contactInfo": {
+        "email": "info@dream.ca",
+        "phone": "416-365-3535",
+        "website": "https://dream.ca/office/",
+        "linkedin": "",
+        "contact_person": "à identifier"
+      },
+      "sourceUrl": "https://dream.ca/office/",
+      "notes": "Open-ended REIT. 4M+ sq ft downtown Toronto. Ticker D.UN.",
+      "_source": "ontario_promoters"
+    },
+    {
+      "name": "à identifier",
+      "companyName": "KingSett Capital",
+      "region": "ON",
+      "city": "Toronto",
+      "subregion": "GTA",
+      "projectTypes": [
+        "multilogement",
+        "commercial"
+      ],
+      "projectTypesDetail": [
+        "multi-family condos",
+        "apartments",
+        "mixed-use"
+      ],
+      "recentProjects": "Valhalla Village (Toronto, 495 units, 172 affordable, geothermal)",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 8,
+      "contactInfo": {
+        "email": "marketing@kingsettcapital.com",
+        "phone": "416-687-6703",
+        "website": "https://www.kingsettcapital.com/",
+        "linkedin": "https://ca.linkedin.com/company/kingsett-capital",
+        "contact_person": "à identifier"
+      },
+      "sourceUrl": "https://www.kingsettcapital.com/",
+      "notes": "Fondée 2002. 12.5B$ equity levés. 15.9B$ portfolio, 40B$ transactions. 3 700 multi-family Canada. ACQUIERT First Capital (2026).",
+      "_source": "ontario_promoters"
+    },
+    {
+      "name": "à identifier",
+      "companyName": "H&R Real Estate Investment Trust",
+      "region": "ON",
+      "city": "Toronto",
+      "subregion": "GTA",
+      "projectTypes": [
+        "commercial",
+        "multilogement",
+        "industriel"
+      ],
+      "projectTypesDetail": [
+        "bureau",
+        "retail",
+        "industriel",
+        "résidentiel"
+      ],
+      "recentProjects": "Atrium (Toronto); propriétés majeures Canada/US",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 8,
+      "contactInfo": {
+        "email": "info@hr-reit.com",
+        "phone": "(416) 635-7520",
+        "website": "https://www.hr-reit.com/",
+        "linkedin": "https://ca.linkedin.com/company/h&r-reit",
+        "contact_person": "à identifier"
+      },
+      "sourceUrl": "https://www.hr-reit.com/",
+      "notes": "Fondée 1996. 10.8B$ assets. 26.9M sq ft NA. 28% Ontario. HQ: 3625 Dufferin #500.",
+      "_source": "ontario_promoters"
+    },
+    {
+      "name": "Jonathan Wener",
+      "companyName": "Canderel Group",
+      "region": "ON",
+      "city": "Toronto",
+      "subregion": "GTA",
+      "projectTypes": [
+        "multilogement",
+        "commercial",
+        "mixte"
+      ],
+      "projectTypesDetail": [
+        "high-rise residential",
+        "mixed-use",
+        "commercial"
+      ],
+      "recentProjects": "College Park (5.3 ha); Aura (tallest residential Canada); YC Condos (66 étages, Yonge/College)",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 8,
+      "contactInfo": {
+        "email": "",
+        "phone": "514-940-1420",
+        "website": "https://canderel.com/",
+        "linkedin": "https://ca.linkedin.com/company/canderel",
+        "contact_person": "Jonathan Wener (Fondateur), Brett Wener (CEO)"
+      },
+      "sourceUrl": "https://canderel.com/",
+      "notes": "Fondée 1975. 50+ ans. 5B$+ real estate, 30M+ sq ft. (Note: Canderel basé Montréal mais portefeuille majeur Toronto)",
+      "_source": "ontario_promoters"
+    },
+    {
+      "name": "à identifier",
+      "companyName": "Oxford Properties Group",
+      "region": "ON",
+      "city": "Toronto",
+      "subregion": "GTA",
+      "projectTypes": [
+        "commercial",
+        "multilogement",
+        "mixte",
+        "industriel"
+      ],
+      "projectTypesDetail": [
+        "bureau",
+        "retail",
+        "industriel",
+        "multi-residential",
+        "life sciences",
+        "hotel"
+      ],
+      "recentProjects": "Canada Square Midtown (9.2 acres, 3M sq ft, 5 tours, 2 700 homes)",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 8,
+      "contactInfo": {
+        "email": "enquiries@oxfordproperties.com",
+        "phone": "416-865-8300",
+        "website": "https://www.oxfordproperties.com/",
+        "linkedin": "https://ca.linkedin.com/company/oxford-properties-group",
+        "contact_person": "à identifier"
+      },
+      "sourceUrl": "https://www.oxfordproperties.com/",
+      "notes": "Détenue OMERS depuis 2003. 80B$ assets gérés globally. HQ Toronto. Hudson Yards, Yorkdale, Fairmont Banff.",
+      "_source": "ontario_promoters"
+    },
+    {
+      "name": "Kris Singhal",
+      "companyName": "Richcraft Homes",
+      "region": "ON",
+      "city": "Ottawa",
+      "subregion": "Ottawa",
+      "projectTypes": [
+        "multilogement",
+        "résidentiel"
+      ],
+      "projectTypesDetail": [
+        "single-family",
+        "townhomes",
+        "high-rise"
+      ],
+      "recentProjects": "Riverside South, Nepean, Gloucester, Kanata, Cumberland",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 7,
+      "contactInfo": {
+        "email": "info@richcraft.com",
+        "phone": "613-739-7111",
+        "website": "https://www.richcraft.com/",
+        "linkedin": "https://ca.linkedin.com/company/richcraft-homes",
+        "contact_person": "Kris Singhal, Fondateur"
+      },
+      "sourceUrl": "https://www.richcraft.com/",
+      "notes": "Fondée 1983. 6 000+ homes. 600+ construites/an depuis 4 ans. Plus gros propriétaire terrains privés Ottawa.",
+      "_source": "ontario_promoters"
+    },
+    {
+      "name": "Sam Mizrahi",
+      "companyName": "Mizrahi Developments",
+      "region": "ON",
+      "city": "Toronto",
+      "subregion": "GTA",
+      "projectTypes": [
+        "multilogement",
+        "résidentiel"
+      ],
+      "projectTypesDetail": [
+        "condo luxe",
+        "high-end",
+        "mid-rise boutique"
+      ],
+      "recentProjects": "133 Hazelton; 1451 Wellington; 181 Davenport; The One (Yonge/Bloor — receivership 2023, Tridel 2024)",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 7,
+      "contactInfo": {
+        "email": "",
+        "phone": "416-922-4200",
+        "website": "https://mizrahidevelopments.ca/",
+        "linkedin": "https://ca.linkedin.com/company/mizrahi-developments",
+        "contact_person": "Sam Mizrahi, Fondateur"
+      },
+      "sourceUrl": "https://mizrahidevelopments.ca/",
+      "notes": "Fondée 2008. Luxury high-end. The One = 1.6B$ debt receivership 2023, Tridel completion 2024.",
+      "_source": "ontario_promoters"
+    },
+    {
+      "name": "Bill Malhotra",
+      "companyName": "Claridge Homes",
+      "region": "ON",
+      "city": "Ottawa",
+      "subregion": "Ottawa",
+      "projectTypes": [
+        "multilogement",
+        "résidentiel"
+      ],
+      "projectTypesDetail": [
+        "high-rise",
+        "low-rise",
+        "townhomes",
+        "retirement"
+      ],
+      "recentProjects": "Claridge ICON (tallest residential Ottawa); Claridge MOON (intégration LRT)",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 7,
+      "contactInfo": {
+        "email": "info@claridgehomes.com",
+        "phone": "613-233-6030",
+        "website": "https://www.claridgehomes.com/",
+        "linkedin": "https://ca.linkedin.com/company/claridge-homes",
+        "contact_person": "Bill Malhotra, Fondateur"
+      },
+      "sourceUrl": "https://www.claridgehomes.com/",
+      "notes": "Fondée 1986. 30+ ans. 15 000+ homes. Plus gros condo developer Ottawa. Propriétaire Andaz Ottawa.",
+      "_source": "ontario_promoters"
+    },
+    {
+      "name": "à identifier",
+      "companyName": "Phoenix Homes",
+      "region": "ON",
+      "city": "Ottawa",
+      "subregion": "Ottawa",
+      "projectTypes": [
+        "multilogement",
+        "résidentiel",
+        "commercial"
+      ],
+      "projectTypesDetail": [
+        "single-family",
+        "townhomes",
+        "condos",
+        "retail"
+      ],
+      "recentProjects": "Diamondview Estates, Greely, Findlay Creek, Barrhaven West, Carp",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 6,
+      "contactInfo": {
+        "email": "",
+        "phone": "613-723-9227",
+        "website": "https://www.phoenixhomes.ca/",
+        "linkedin": "",
+        "contact_person": "à identifier"
+      },
+      "sourceUrl": "https://www.phoenixhomes.ca/",
+      "notes": "Depuis 1988. DCR/Phoenix Group: 7 000+ serviced lots. 1.2M sq ft mixte Albert St.",
+      "_source": "ontario_promoters"
+    },
+    {
+      "name": "Mario Roque",
+      "companyName": "LIV Communities (Landmart Homes)",
+      "region": "ON",
+      "city": "Burlington",
+      "subregion": "GTA",
+      "projectTypes": [
+        "multilogement",
+        "résidentiel"
+      ],
+      "projectTypesDetail": [
+        "custom homes",
+        "townhomes"
+      ],
+      "recentProjects": "Développements GTA région Burlington",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 6,
+      "contactInfo": {
+        "email": "info@livhere.ca",
+        "phone": "289-245-1300",
+        "website": "https://livhere.ca/",
+        "linkedin": "",
+        "contact_person": "Mario Roque"
+      },
+      "sourceUrl": "https://livhere.ca/",
+      "notes": "Landmart 40+ ans. LIV Communities 2015. 2016 Cross Builder Challenge Award.",
+      "_source": "ontario_promoters"
+    },
+    {
+      "name": "à identifier",
+      "companyName": "Centurion Apartment Real Estate Investment Trust",
+      "region": "ON",
+      "city": "Toronto",
+      "subregion": "GTA, Ottawa",
+      "projectTypes": [
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "rental apartments",
+        "student housing",
+        "multi-family"
+      ],
+      "recentProjects": "Les Terrasses Francesca (Ottawa, 276 units); Station Place (Etobicoke, 333 units, 50%); Oshawa (2 propriétés)",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 7,
+      "contactInfo": {
+        "email": "info@centurion.ca",
+        "phone": "1-833-733-5617",
+        "website": "https://centurion.ca/",
+        "linkedin": "",
+        "contact_person": "à identifier"
+      },
+      "sourceUrl": "https://centurion.ca/",
+      "notes": "Fondée 2003. Plus grand REIT apt privé Canada. 7.8B$ AUM. ON: Barrie, Cambridge, K-W, Ottawa, Etobicoke.",
+      "_source": "ontario_promoters"
+    },
+    {
+      "name": "à identifier",
+      "companyName": "Greenwin Inc.",
+      "region": "ON",
+      "city": "Toronto",
+      "subregion": "GTA",
+      "projectTypes": [
+        "multilogement",
+        "commercial"
+      ],
+      "projectTypesDetail": [
+        "rental apartments",
+        "non-profit",
+        "abordable",
+        "mixed-use"
+      ],
+      "recentProjects": "Downtown Toronto 844-unit 2-tower rental avec Choice Properties (acquisition 2025)",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 7,
+      "contactInfo": {
+        "email": "",
+        "phone": "416-487-3883",
+        "website": "https://www.greenwin.ca/",
+        "linkedin": "https://ca.linkedin.com/company/greenwin-corp",
+        "contact_person": "à identifier"
+      },
+      "sourceUrl": "https://www.greenwin.ca/",
+      "notes": "Depuis 1948. 6.1B$ AUM. 20 000+ residential, 2 000 affordable. Leader ON rental.",
+      "_source": "ontario_promoters"
+    },
+    {
+      "name": "à identifier",
+      "companyName": "Drewlo Holdings",
+      "region": "ON",
+      "city": "London",
+      "subregion": "Southwestern Ontario",
+      "projectTypes": [
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "luxury apartment",
+        "rental"
+      ],
+      "recentProjects": "6 villes SW Ontario (Burlington, K-W, London, Sarnia, Woodstock)",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 6,
+      "contactInfo": {
+        "email": "info@drewloholdings.com",
+        "phone": "519-472-8200",
+        "website": "https://www.drewloholdings.com/",
+        "linkedin": "https://ca.linkedin.com/company/drewlo-holdings",
+        "contact_person": "à identifier"
+      },
+      "sourceUrl": "https://www.drewloholdings.com/",
+      "notes": "Fondée 1958. 65+ ans. 10 000+ units. Canadian Rental Housing Provider Year award.",
+      "_source": "ontario_promoters"
+    },
+    {
+      "name": "à identifier",
+      "companyName": "Sundance Homes",
+      "region": "ON",
+      "city": "Markham",
+      "subregion": "GTA",
+      "projectTypes": [
+        "multilogement",
+        "résidentiel"
+      ],
+      "projectTypesDetail": [
+        "townhomes",
+        "semi-detached"
+      ],
+      "recentProjects": "Midhurst Valley (Barrie); Oakridge Green (Richmond Hill); Bondhead (Simcoe)",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 6,
+      "contactInfo": {
+        "email": "",
+        "phone": "905-307-2220",
+        "website": "https://sundancehome.com/",
+        "linkedin": "",
+        "contact_person": "à identifier"
+      },
+      "sourceUrl": "https://sundancehome.com/",
+      "notes": "20 ans tradition. Communities Barrie, Bond Head, Oshawa, Richmond Hill, Toronto, Whitby.",
+      "_source": "ontario_promoters"
+    },
+    {
+      "name": "Anthony DiCenzo",
+      "companyName": "DiCenzo Homes",
+      "region": "ON",
+      "city": "Hamilton",
+      "subregion": "Niagara, Hamilton",
+      "projectTypes": [
+        "multilogement",
+        "commercial"
+      ],
+      "projectTypesDetail": [
+        "single-family",
+        "high-rise rental",
+        "commercial"
+      ],
+      "recentProjects": "Southern Ontario (Hamilton region principal)",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 6,
+      "contactInfo": {
+        "email": "",
+        "phone": "289-919-0559",
+        "website": "https://dicenzohomes.ca/",
+        "linkedin": "",
+        "contact_person": "Anthony DiCenzo, Président"
+      },
+      "sourceUrl": "https://dicenzohomes.ca/",
+      "notes": "Fondée 1952 (Tony DiCenzo). 2e génération. Plus gros propriétaire terrains southern ON.",
+      "_source": "ontario_promoters"
+    },
+    {
+      "name": "à identifier",
+      "companyName": "Moderno (Habitations Moderno Inc.)",
+      "region": "QC",
+      "city": "Joliette",
+      "subregion": "Lanaudière",
+      "projectTypes": [
+        "multilogement",
+        "résidentiel"
+      ],
+      "projectTypesDetail": [
+        "Condos locatifs",
+        "Multifamiliaux",
+        "Maisons prestige"
+      ],
+      "recentProjects": "Aqua Roca (2024, 230 units phase 1: 59 logements); 9 condos quartier Saint-Pierre Sud (2023)",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 5,
+      "contactInfo": {
+        "email": "rh@moderno.immo",
+        "phone": "",
+        "website": "https://moderno.immo",
+        "linkedin": "",
+        "contact_person": ""
+      },
+      "sourceUrl": "https://moderno.immo/",
+      "notes": "Promoteur Lanaudière 10+ ans. Projets multilogements et maisons prestige.",
+      "_source": "qc_promoters_round2"
+    },
+    {
+      "name": "à identifier",
+      "companyName": "Groupe EVEX",
+      "region": "QC",
+      "city": "Repentigny",
+      "subregion": "Lanaudière",
+      "projectTypes": [
+        "multilogement",
+        "commercial",
+        "résidentiel",
+        "industriel"
+      ],
+      "projectTypesDetail": [
+        "Condos locatifs",
+        "Espaces commerciaux",
+        "Projets mixtes"
+      ],
+      "recentProjects": "Projets résidentiels et commerciaux Lanaudière + Grand MTL",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 5,
+      "contactInfo": {
+        "email": "info@groupeevex.com",
+        "phone": "514-884-3839",
+        "website": "https://groupeevex.com",
+        "linkedin": "",
+        "contact_person": ""
+      },
+      "sourceUrl": "https://groupeevex.com/",
+      "notes": "Leader Lanaudière + Grand MTL, 35+ ans. Résidentiel/commercial/industriel.",
+      "_source": "qc_promoters_round2"
+    },
+    {
+      "name": "à identifier",
+      "companyName": "Vert Développement Immobilier",
+      "region": "QC",
+      "city": "Saint-Hyacinthe",
+      "subregion": "Montérégie",
+      "projectTypes": [
+        "résidentiel",
+        "commercial",
+        "mixte"
+      ],
+      "projectTypesDetail": [
+        "Commercial",
+        "Résidentiel urbain",
+        "Villégiature"
+      ],
+      "recentProjects": "Domaine Les Arpents Verts; Le Domaine Sur Le Vert (phase 2)",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 5,
+      "contactInfo": {
+        "email": "",
+        "phone": "",
+        "website": "",
+        "linkedin": "",
+        "contact_person": ""
+      },
+      "sourceUrl": "https://www.projethabitation.com/Repertoire/Promoteur/Monteregie/Saint-Hyacinthe/Vert-Developpement-Immobilier-Inc.-3765/",
+      "notes": "Adresse: 3805 Boulevard Laurier O, Saint-Hyacinthe.",
+      "_source": "qc_promoters_round2"
+    },
+    {
+      "name": "à identifier",
+      "companyName": "Habitations Noveco",
+      "region": "QC",
+      "city": "Saint-Jérôme",
+      "subregion": "Laurentides",
+      "projectTypes": [
+        "résidentiel",
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "Maisons de ville",
+        "Triplex",
+        "Jumelés"
+      ],
+      "recentProjects": "Le Quartier Hämo (Saint-Jérôme)",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 5,
+      "contactInfo": {
+        "email": "vente@habitationsnoveco.com",
+        "phone": "514-290-2025",
+        "website": "https://www.habitationsnoveco.com",
+        "linkedin": "https://ca.linkedin.com/company/habitations-noveco",
+        "contact_person": ""
+      },
+      "sourceUrl": "https://www.habitationsnoveco.com/",
+      "notes": "Constructeur Rive-Nord, projets résidentiels neufs.",
+      "_source": "qc_promoters_round2"
+    },
+    {
+      "name": "à identifier",
+      "companyName": "Domaine Artemis",
+      "region": "QC",
+      "city": "Saint-Jérôme",
+      "subregion": "Laurentides",
+      "projectTypes": [
+        "multilogement",
+        "résidentiel"
+      ],
+      "projectTypesDetail": [
+        "Condos locatifs",
+        "Habitations 55+"
+      ],
+      "recentProjects": "Habitations locatives quartier Bellefeuille (2024)",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 5,
+      "contactInfo": {
+        "email": "location@domaineartemis.ca",
+        "phone": "514-800-8061",
+        "website": "https://domaineartemis.ca",
+        "linkedin": "",
+        "contact_person": ""
+      },
+      "sourceUrl": "https://domaineartemis.ca/",
+      "notes": "Habitations locatives prestige Saint-Jérôme.",
+      "_source": "qc_promoters_round2"
+    },
+    {
+      "name": "Ray Junior Courtemanche",
+      "companyName": "Investissement Ray Junior",
+      "region": "QC",
+      "city": "Mirabel",
+      "subregion": "Laurentides",
+      "projectTypes": [
+        "résidentiel",
+        "commercial",
+        "multilogement",
+        "mixte"
+      ],
+      "projectTypesDetail": [
+        "Cité Mirabel mega-project",
+        "Condos urbains",
+        "Parc aquatique",
+        "Espaces commerciaux"
+      ],
+      "recentProjects": "Cité Mirabel (3500+ units); Luxxcité (304 condos); Skyblü; Moana Parc Aquatique (175-200M$)",
+      "estimatedAnnualVolume": 1000000000,
+      "relationshipStatus": "researching",
+      "score": 8,
+      "contactInfo": {
+        "email": "",
+        "phone": "",
+        "website": "https://www.investissementrayjunior.com",
+        "linkedin": "",
+        "contact_person": "Ray Junior Courtemanche, Fondateur"
+      },
+      "sourceUrl": "https://www.investissementrayjunior.com/",
+      "notes": "Fondée 1984. 1B$+ projets réalisés. Mega-projet Cité Mirabel.",
+      "_source": "qc_promoters_round2"
+    },
+    {
+      "name": "Christian St-James & Matthieu Cardinal",
+      "companyName": "Services Immobiliers First",
+      "region": "QC",
+      "city": "Sherbrooke",
+      "subregion": "Estrie",
+      "projectTypes": [
+        "multilogement",
+        "résidentiel"
+      ],
+      "projectTypesDetail": [
+        "Complexes résidentiels",
+        "Réhabilitation",
+        "Projets mixtes"
+      ],
+      "recentProjects": "Humano District; Les Verrières du Lac; Réhabilitation Petites Soeurs Sainte-Famille Sherbrooke",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 6,
+      "contactInfo": {
+        "email": "",
+        "phone": "819-791-5253",
+        "website": "https://servicesimmobiliersfirst.ca",
+        "linkedin": "",
+        "contact_person": "Christian St-James & Matthieu Cardinal, Fondateurs"
+      },
+      "sourceUrl": "https://servicesimmobiliersfirst.ca/",
+      "notes": "Leader résidentiel Estrie. Plusieurs développements majeurs en cours.",
+      "_source": "qc_promoters_round2"
+    },
+    {
+      "name": "à identifier",
+      "companyName": "Entreprises Lachance",
+      "region": "QC",
+      "city": "Sherbrooke",
+      "subregion": "Estrie",
+      "projectTypes": [
+        "multilogement",
+        "résidentiel"
+      ],
+      "projectTypesDetail": [
+        "Maisons neuves",
+        "Locatif",
+        "Duplexes",
+        "Townhouses"
+      ],
+      "recentProjects": "Sherbrooke, Coaticook, Compton, Orford, East Angus, Drummondville",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 5,
+      "contactInfo": {
+        "email": "",
+        "phone": "819-820-1545",
+        "website": "https://lachance.qc.ca",
+        "linkedin": "",
+        "contact_person": ""
+      },
+      "sourceUrl": "https://lachance.qc.ca/",
+      "notes": "Fondée 1962, 60+ ans. Promotion + gestion locative Estrie.",
+      "_source": "qc_promoters_round2"
+    },
+    {
+      "name": "à identifier",
+      "companyName": "Habitations Plus",
+      "region": "QC",
+      "city": "Magog",
+      "subregion": "Estrie",
+      "projectTypes": [
+        "résidentiel"
+      ],
+      "projectTypesDetail": [
+        "Unifamiliales",
+        "Jumelées"
+      ],
+      "recentProjects": "Magog, Orford, Windsor, Richmond, East-Angus, Sherbrooke",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 5,
+      "contactInfo": {
+        "email": "",
+        "phone": "819-588-1178",
+        "website": "https://habitationsplus.com",
+        "linkedin": "",
+        "contact_person": ""
+      },
+      "sourceUrl": "https://habitationsplus.com/",
+      "notes": "Constructeur Estrie depuis 2006. Multi-villes.",
+      "_source": "qc_promoters_round2"
+    },
+    {
+      "name": "Roxann Malbeuf",
+      "companyName": "Structures RP3",
+      "region": "QC",
+      "city": "Magog",
+      "subregion": "Estrie",
+      "projectTypes": [
+        "résidentiel"
+      ],
+      "projectTypesDetail": [
+        "Construction haut de gamme",
+        "Rénovations majeures"
+      ],
+      "recentProjects": "Projets résidentiels haut de gamme Magog/Estrie",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 5,
+      "contactInfo": {
+        "email": "",
+        "phone": "",
+        "website": "https://www.structuresrp3.com",
+        "linkedin": "https://ca.linkedin.com/company/structures-rp3",
+        "contact_person": "Roxann Malbeuf, VP/DG"
+      },
+      "sourceUrl": "https://www.structuresrp3.com/",
+      "notes": "Premier secteur certifié neutre carbone (LCL Environnement). RBQ 5679-6824-01.",
+      "_source": "qc_promoters_round2"
+    },
+    {
+      "name": "à identifier",
+      "companyName": "LOGISCO",
+      "region": "QC",
+      "city": "Lévis",
+      "subregion": "Capitale-Nationale",
+      "projectTypes": [
+        "multilogement",
+        "commercial",
+        "mixte"
+      ],
+      "projectTypesDetail": [
+        "Condos locatifs",
+        "Espaces commerciaux"
+      ],
+      "recentProjects": "District GC (264 units, 95M$); 7000+ units portfolio, objectif 10000",
+      "estimatedAnnualVolume": 500000000,
+      "relationshipStatus": "researching",
+      "score": 7,
+      "contactInfo": {
+        "email": "",
+        "phone": "418-564-4726",
+        "website": "https://logisco.com/fr",
+        "linkedin": "",
+        "contact_person": ""
+      },
+      "sourceUrl": "https://logisco.com/fr",
+      "notes": "Developer majeur Québec/Lévis. 7000+ units, objectif 10000. 950 rue Concorde, Lévis.",
+      "_source": "qc_promoters_round2"
+    },
+    {
+      "name": "Marie Dugal",
+      "companyName": "CONCREA",
+      "region": "QC",
+      "city": "Lévis",
+      "subregion": "Capitale-Nationale",
+      "projectTypes": [
+        "multilogement",
+        "commercial",
+        "résidentiel"
+      ],
+      "projectTypesDetail": [
+        "Immeubles résidentiels",
+        "Mixtes",
+        "Commercial"
+      ],
+      "recentProjects": "Le Vital (230 units, 11 étages, Umano); Capella; Solis; Cloria",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 6,
+      "contactInfo": {
+        "email": "info@concrea.ca",
+        "phone": "418-227-8151",
+        "website": "https://concrea.ca",
+        "linkedin": "",
+        "contact_person": "Marie Dugal, Chargée de projet"
+      },
+      "sourceUrl": "https://concrea.ca/",
+      "notes": "Bureaux multiples: Sainte-Adèle, Saint-Georges, Brossard, Lévis.",
+      "_source": "qc_promoters_round2"
+    },
+    {
+      "name": "Jérôme Côté & Caroline Boilard",
+      "companyName": "Construction Maurice Bilodeau",
+      "region": "QC",
+      "city": "Lévis",
+      "subregion": "Capitale-Nationale",
+      "projectTypes": [
+        "multilogement",
+        "commercial",
+        "résidentiel"
+      ],
+      "projectTypesDetail": [
+        "Maisons neuves",
+        "Commercial",
+        "Multilogements",
+        "Résidences aînés"
+      ],
+      "recentProjects": "Projets résidentiels/commerciaux/institutionnels Lévis et Rive-Sud",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 5,
+      "contactInfo": {
+        "email": "",
+        "phone": "",
+        "website": "https://www.mauricebilodeau.com",
+        "linkedin": "",
+        "contact_person": "Jérôme Côté & Caroline Boilard (Propriétaires depuis 2015)"
+      },
+      "sourceUrl": "https://www.mauricebilodeau.com/",
+      "notes": "Fondée 1972. 50+ ans. ~40 employés. Certifié Novoclimat.",
+      "_source": "qc_promoters_round2"
+    },
+    {
+      "name": "à identifier",
+      "companyName": "Construction JL Groleau",
+      "region": "QC",
+      "city": "Lévis",
+      "subregion": "Capitale-Nationale",
+      "projectTypes": [
+        "multilogement",
+        "commercial"
+      ],
+      "projectTypesDetail": [
+        "Multilogements",
+        "Commercial",
+        "Institutionnel"
+      ],
+      "recentProjects": "Projet 100 logements abordables aînés (2026)",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 5,
+      "contactInfo": {
+        "email": "",
+        "phone": "",
+        "website": "https://www.groleau.ca",
+        "linkedin": "",
+        "contact_person": ""
+      },
+      "sourceUrl": "https://www.groleau.ca/",
+      "notes": "Entrepreneur général 40+ ans. Multilogements complexes multiphases.",
+      "_source": "qc_promoters_round2"
+    },
+    {
+      "name": "à identifier",
+      "companyName": "Les Immeubles Roussin",
+      "region": "QC",
+      "city": "Lévis",
+      "subregion": "Capitale-Nationale",
+      "projectTypes": [
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "Condos locatifs",
+        "Studios/Lofts"
+      ],
+      "recentProjects": "L'Allié (262 condos locatifs, Umano District Lévis)",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 5,
+      "contactInfo": {
+        "email": "",
+        "phone": "",
+        "website": "https://immeublesroussin.com",
+        "linkedin": "",
+        "contact_person": ""
+      },
+      "sourceUrl": "https://immeublesroussin.com/",
+      "notes": "Famille Québec 60+ ans. Location et gestion immobilière.",
+      "_source": "qc_promoters_round2"
+    },
+    {
+      "name": "Sylvain Desrochers",
+      "companyName": "Habitations Sylvain Desrochers",
+      "region": "QC",
+      "city": "Vaudreuil-Dorion",
+      "subregion": "Montérégie",
+      "projectTypes": [
+        "résidentiel"
+      ],
+      "projectTypesDetail": [
+        "Maisons personnalisées"
+      ],
+      "recentProjects": "Vaudreuil-Dorion, St-Lazare",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 5,
+      "contactInfo": {
+        "email": "info@habitations-sd.com",
+        "phone": "450-732-0506",
+        "website": "https://www.habitations-sd.com",
+        "linkedin": "",
+        "contact_person": "Sylvain Desrochers"
+      },
+      "sourceUrl": "https://www.habitations-sd.com/",
+      "notes": "Leader maisons neuves Île-MTL ouest depuis 1997.",
+      "_source": "qc_promoters_round2"
+    },
+    {
+      "name": "Lynda Ferland & Émanuel Lablie Aumais & Raymond Allard",
+      "companyName": "Groupe FAA (Habitations Raymond Allard)",
+      "region": "QC",
+      "city": "Vaudreuil-Dorion",
+      "subregion": "Montérégie",
+      "projectTypes": [
+        "résidentiel"
+      ],
+      "projectTypesDetail": [
+        "Maisons neuves",
+        "Condos"
+      ],
+      "recentProjects": "Vaudreuil-Dorion, Salaberry-de-Valleyfield, Mirabel, Coteau-du-Lac, Léry",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 5,
+      "contactInfo": {
+        "email": "info@gfaa.ca",
+        "phone": "450-424-2425",
+        "website": "https://www.groupefaa.ca",
+        "linkedin": "",
+        "contact_person": "Lynda Ferland, Émanuel Lablie Aumais, Raymond Allard"
+      },
+      "sourceUrl": "https://www.groupefaa.ca/",
+      "notes": "Construction reconnue 35+ ans Montérégie.",
+      "_source": "qc_promoters_round2"
+    },
+    {
+      "name": "à identifier",
+      "companyName": "Legacy Développement Immobilier",
+      "region": "QC",
+      "city": "Vaudreuil-Dorion",
+      "subregion": "Montérégie",
+      "projectTypes": [
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "Condos locatifs",
+        "Mixtes"
+      ],
+      "recentProjects": "Verdora (245 units locatifs, livraison sept 2025)",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 5,
+      "contactInfo": {
+        "email": "",
+        "phone": "",
+        "website": "https://fr.legacydevgroup.ca",
+        "linkedin": "",
+        "contact_person": ""
+      },
+      "sourceUrl": "https://fr.legacydevgroup.ca/",
+      "notes": "50 ans secteur. Verdora 245 units, 10% abordables, services premium.",
+      "_source": "qc_promoters_round2"
+    },
+    {
+      "name": "à identifier",
+      "companyName": "Maisons Pépin (BÉACité)",
+      "region": "QC",
+      "city": "Sainte-Julie",
+      "subregion": "Montérégie",
+      "projectTypes": [
+        "résidentiel",
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "Bungalows",
+        "Cottages",
+        "Maisons de ville"
+      ],
+      "recentProjects": "BÉACité; Vilamo Domaine Nature",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 5,
+      "contactInfo": {
+        "email": "ventes@beacite.com",
+        "phone": "514-247-5151",
+        "website": "https://maisonspepin.com",
+        "linkedin": "",
+        "contact_person": ""
+      },
+      "sourceUrl": "https://maisonspepin.com/",
+      "notes": "Constructeur Rive-Sud. 230 rue Brunelle, Sainte-Julie.",
+      "_source": "qc_promoters_round2"
+    },
+    {
+      "name": "à identifier",
+      "companyName": "Espaces Lokalia",
+      "region": "QC",
+      "city": "Beloeil",
+      "subregion": "Montérégie",
+      "projectTypes": [
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "Appartements locatifs modernes"
+      ],
+      "recentProjects": "20+ villes QC; Vivaxcès et Vivacité",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 5,
+      "contactInfo": {
+        "email": "",
+        "phone": "450-446-1310",
+        "website": "https://www.espaceslokalia.ca",
+        "linkedin": "https://ca.linkedin.com/company/espaceslokalia",
+        "contact_person": ""
+      },
+      "sourceUrl": "https://www.espaceslokalia.ca/",
+      "notes": "93 employés. 20+ villes QC. 1981 rue Bernard-Pilon, Beloeil.",
+      "_source": "qc_promoters_round2"
+    },
+    {
+      "name": "Tommy Blanchet",
+      "companyName": "ConstrucTom",
+      "region": "QC",
+      "city": "Victoriaville",
+      "subregion": "Centre-du-Québec",
+      "projectTypes": [
+        "multilogement",
+        "résidentiel",
+        "commercial"
+      ],
+      "projectTypesDetail": [
+        "Multilogements",
+        "Chalets",
+        "Commercial"
+      ],
+      "recentProjects": "Projets résidentiels grande envergure",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 5,
+      "contactInfo": {
+        "email": "",
+        "phone": "",
+        "website": "https://constructom.ca",
+        "linkedin": "",
+        "contact_person": "Tommy Blanchet, Fondateur"
+      },
+      "sourceUrl": "https://constructom.ca/",
+      "notes": "RBQ certifié depuis 2015. 10 rue Jean-François, Victoriaville.",
+      "_source": "qc_promoters_round2"
+    },
+    {
+      "name": "à identifier",
+      "companyName": "Constructions G.L.",
+      "region": "QC",
+      "city": "Victoriaville",
+      "subregion": "Centre-du-Québec",
+      "projectTypes": [
+        "résidentiel",
+        "commercial"
+      ],
+      "projectTypesDetail": [
+        "Unifamiliales",
+        "Jumelées",
+        "Immeubles à revenu",
+        "Commercial"
+      ],
+      "recentProjects": "300+ maisons construites région",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 5,
+      "contactInfo": {
+        "email": "",
+        "phone": "819-357-4100",
+        "website": "https://www.constructiongl.com",
+        "linkedin": "",
+        "contact_person": ""
+      },
+      "sourceUrl": "https://www.constructiongl.com/",
+      "notes": "Fondée 1992. 90 rue Thibault, Victoriaville.",
+      "_source": "qc_promoters_round2"
+    },
+    {
+      "name": "Marco Parisien",
+      "companyName": "Parisien Construction",
+      "region": "QC",
+      "city": "Aylmer",
+      "subregion": "Outaouais",
+      "projectTypes": [
+        "multilogement",
+        "résidentiel"
+      ],
+      "projectTypesDetail": [
+        "Maisons custom",
+        "Semi-détachées",
+        "Duplex/Triplex"
+      ],
+      "recentProjects": "Zen Apartments Aylmer (590 units 10 tours, 200M$)",
+      "estimatedAnnualVolume": 200000000,
+      "relationshipStatus": "researching",
+      "score": 6,
+      "contactInfo": {
+        "email": "",
+        "phone": "",
+        "website": "https://www.parisienconstruction.com",
+        "linkedin": "",
+        "contact_person": "Marco Parisien, Propriétaire"
+      },
+      "sourceUrl": "https://www.parisienconstruction.com/",
+      "notes": "Depuis 1987. Président APCHQ Outaouais. Diamond Palm Master Builder.",
+      "_source": "qc_promoters_round2"
+    },
+    {
+      "name": "Alain Bouladier",
+      "companyName": "Habitations Bouladier",
+      "region": "QC",
+      "city": "Aylmer",
+      "subregion": "Outaouais",
+      "projectTypes": [
+        "multilogement",
+        "résidentiel"
+      ],
+      "projectTypesDetail": [
+        "Condos",
+        "Multiplex",
+        "Jumelées"
+      ],
+      "recentProjects": "Projet Allure; immeubles Aylmer-Gatineau",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 5,
+      "contactInfo": {
+        "email": "ventes@habitationsbouladier.com",
+        "phone": "819-684-0111",
+        "website": "https://habitationsbouladier.com",
+        "linkedin": "",
+        "contact_person": "Alain Bouladier"
+      },
+      "sourceUrl": "https://habitationsbouladier.com/",
+      "notes": "Établie 1990. 210 Nancy Elliott St, Aylmer.",
+      "_source": "qc_promoters_round2"
+    },
+    {
+      "name": "à identifier",
+      "companyName": "Gerik Construction",
+      "region": "QC",
+      "city": "Aylmer",
+      "subregion": "Outaouais",
+      "projectTypes": [
+        "résidentiel",
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "Maisons neuves",
+        "Multiplex"
+      ],
+      "recentProjects": "La Croisée (Aylmer); 1595+ maisons construites",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 5,
+      "contactInfo": {
+        "email": "info@gerik.ca",
+        "phone": "819-303-0968",
+        "website": "https://gerik.ca",
+        "linkedin": "",
+        "contact_person": ""
+      },
+      "sourceUrl": "https://gerik.ca/",
+      "notes": "1595+ maisons. Aylmer + Cantley + Chelsea.",
+      "_source": "qc_promoters_round2"
+    },
+    {
+      "name": "Frédéric Côté",
+      "companyName": "Investissements immobiliers Côté",
+      "region": "QC",
+      "city": "Alma",
+      "subregion": "Saguenay-Lac-Saint-Jean",
+      "projectTypes": [
+        "multilogement",
+        "commercial"
+      ],
+      "projectTypesDetail": [
+        "Immeubles multiples",
+        "Commercial"
+      ],
+      "recentProjects": "Acquisition Plaza 1 Alma (2.3M$); 53 bâtiments + terrains",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 5,
+      "contactInfo": {
+        "email": "",
+        "phone": "",
+        "website": "",
+        "linkedin": "",
+        "contact_person": "Frédéric Côté"
+      },
+      "sourceUrl": "https://ici.radio-canada.ca/nouvelle/2094887/logement-crise-investissement",
+      "notes": "Jeune promoteur 23 ans. 53 bâtiments. Mauricie/MTL/Québec.",
+      "_source": "qc_promoters_round2"
+    },
+    {
+      "name": "Matthieu Bergeron",
+      "companyName": "Lionnare",
+      "region": "QC",
+      "city": "Alma",
+      "subregion": "Saguenay-Lac-Saint-Jean",
+      "projectTypes": [
+        "résidentiel"
+      ],
+      "projectTypesDetail": [
+        "Terrains résidentiels"
+      ],
+      "recentProjects": "Quartier des Fondatrices Alma",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 5,
+      "contactInfo": {
+        "email": "",
+        "phone": "",
+        "website": "https://www.lionnare.com",
+        "linkedin": "",
+        "contact_person": "Matthieu Bergeron, Fondateur"
+      },
+      "sourceUrl": "https://www.lionnare.com/",
+      "notes": "Saguenay-Lac-Saint-Jean. Quartier des Fondatrices.",
+      "_source": "qc_promoters_round2"
+    },
+    {
+      "name": "Joël Bernier & Sébastien Tremblay & Sébastien Coll",
+      "companyName": "STB Immobilier",
+      "region": "QC",
+      "city": "Matane",
+      "subregion": "Bas-Saint-Laurent",
+      "projectTypes": [
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "Townhouses",
+        "Multilogements"
+      ],
+      "recentProjects": "Le Boisé St-Rédempteur (89 units, 19M$); Îlot Boisé",
+      "estimatedAnnualVolume": 20000000,
+      "relationshipStatus": "researching",
+      "score": 5,
+      "contactInfo": {
+        "email": "",
+        "phone": "",
+        "website": "https://www.stbimmo.com",
+        "linkedin": "",
+        "contact_person": "Joël Bernier, Sébastien Tremblay, Sébastien Coll"
+      },
+      "sourceUrl": "https://www.stbimmo.com/",
+      "notes": "Le Boisé St-Rédempteur 89 units, 19M$ investissement.",
+      "_source": "qc_promoters_round2"
+    },
+    {
+      "name": "à identifier",
+      "companyName": "Constructions Boréal Abitibi",
+      "region": "QC",
+      "city": "Val-d'Or",
+      "subregion": "Abitibi-Témiscamingue",
+      "projectTypes": [
+        "multilogement",
+        "résidentiel"
+      ],
+      "projectTypesDetail": [
+        "Locatifs",
+        "Multilogements"
+      ],
+      "recentProjects": "98 units bd Forest (en construction); 5e bâtiment rue Giguère",
+      "estimatedAnnualVolume": null,
+      "relationshipStatus": "researching",
+      "score": 5,
+      "contactInfo": {
+        "email": "info@borealabitibi.com",
+        "phone": "819-856-4418",
+        "website": "https://constructionsborealabitibi.com",
+        "linkedin": "",
+        "contact_person": ""
+      },
+      "sourceUrl": "https://constructionsborealabitibi.com/",
+      "notes": "Très active: 98-unit + 5e bâtiment. 2171 Bd Forest, Val-d'Or.",
+      "_source": "qc_promoters_round2"
+    },
+    {
+      "name": "Jean-Pierre Poulin",
+      "companyName": "Devcore (Sept-Îles)",
+      "region": "QC",
+      "city": "Sept-Îles",
+      "subregion": "Côte-Nord",
+      "projectTypes": [
+        "multilogement"
+      ],
+      "projectTypesDetail": [
+        "Condos locatifs",
+        "Immeubles résidentiels"
+      ],
+      "recentProjects": "Acquisition 555 units (Jardins Chambord, Joies de Vivre); Complexe La Baie",
+      "estimatedAnnualVolume": 50000000,
+      "relationshipStatus": "researching",
+      "score": 6,
+      "contactInfo": {
+        "email": "reception@devcore.ca",
+        "phone": "819-663-7777",
+        "website": "https://devcore.ca",
+        "linkedin": "",
+        "contact_person": "Jean-Pierre Poulin, Président"
+      },
+      "sourceUrl": "https://devcore.ca/propriete/sept-iles-1/",
+      "notes": "Devcore Gatineau étendu Sept-Îles. 20% parc immobilier Sept-Îles (555 units). 50-60k$/unit rénovation.",
+      "_source": "qc_promoters_round2"
+    }
+  ]
+}

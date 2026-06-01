@@ -1,0 +1,2098 @@
+{
+  "_meta": {
+    "description": "Recherche web publique du 6 mai 2026. Courtiers commerciaux QC (Grand MTL + régions) — toutes données issues de sources publiques (sites corporatifs, LinkedIn public, presse, OACIQ public). Yves doit valider avant chargement Firestore.",
+    "version": 1,
+    "created": "2026-05-06",
+    "researcher": "Claude (Cowork) + 2 sub-agents",
+    "status": "PUBLIC SOURCES — pour validation Yves",
+    "filtres_appliques": {
+      "tier_zero_filter": "OUI — Daoust, Boivin, Saputo (tous), Jolina, Italcan exclus",
+      "deduplication": "OUI (par nom+firme)",
+      "tier_zero_rejected_count": 0
+    },
+    "format_notes": "Champs ajoutés vs schéma existant : title, city, publicContact, sourceUrl. licenseNumber à compléter via OACIQ."
+  },
+  "brokers": [
+    {
+      "name": "Pierre Lacroix",
+      "firmName": "CBRE Canada",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "bureau"
+      ],
+      "title": "Broker / Co-Founding Member",
+      "typicalDealSize": {
+        "min": 5000000,
+        "max": 50000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "phone",
+      "publicContact": {
+        "email": "",
+        "phone": "(514) 849-6000",
+        "linkedin": "",
+        "profile_url": "https://www.cbre.ca/people/pierre-lacroix"
+      },
+      "sourceUrl": "https://www.cbre.ca/people/pierre-lacroix",
+      "notes": "Founding member CBRE Montreal, 35 ans expérience, leadership office leasing"
+    },
+    {
+      "name": "Michèle Boutet",
+      "firmName": "CBRE Canada",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "bureau"
+      ],
+      "title": "Broker / Co-Founding Member",
+      "typicalDealSize": {
+        "min": 5000000,
+        "max": 50000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "phone",
+      "publicContact": {
+        "email": "",
+        "phone": "(514) 849-6000",
+        "linkedin": "",
+        "profile_url": "https://www.cbre.ca/people/michele-boutet"
+      },
+      "sourceUrl": "https://www.cbre.ca/people/michele-boutet",
+      "notes": "Founding member, 30+ ans, office leasing tenant rep"
+    },
+    {
+      "name": "Jeremy Kenemy",
+      "firmName": "CBRE Canada",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "bureau"
+      ],
+      "title": "Senior Vice President",
+      "typicalDealSize": {
+        "min": 5000000,
+        "max": 50000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "linkedin",
+      "publicContact": {
+        "email": "",
+        "phone": "(514) 849-6000",
+        "linkedin": "https://www.linkedin.com/in/jeremykenemy/",
+        "profile_url": "https://www.cbre.ca/people/jeremy-kenemy"
+      },
+      "sourceUrl": "https://www.cbre.ca/people/jeremy-kenemy",
+      "notes": "Senior advisor Life Sciences, depuis 2002"
+    },
+    {
+      "name": "Bryan Greenberg",
+      "firmName": "CBRE Canada",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "retail"
+      ],
+      "title": "Commercial Real Estate Broker",
+      "typicalDealSize": {
+        "min": 2000000,
+        "max": 15000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "phone",
+      "publicContact": {
+        "email": "",
+        "phone": "(514) 849-6000",
+        "linkedin": "",
+        "profile_url": "https://www.cbre.ca/people/bryan-greenberg"
+      },
+      "sourceUrl": "https://www.cbre.ca/people/bryan-greenberg",
+      "notes": "Retail leasing tenant rep, deal Place-d'Armes 26.5M$"
+    },
+    {
+      "name": "David Cervantes",
+      "firmName": "CBRE Canada",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "industriel",
+        "bureau"
+      ],
+      "title": "Senior Vice President",
+      "typicalDealSize": {
+        "min": 5000000,
+        "max": 50000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "phone",
+      "publicContact": {
+        "email": "",
+        "phone": "(514) 849-6000",
+        "linkedin": "",
+        "profile_url": "https://www.cbre.ca/people/david-cervantes"
+      },
+      "sourceUrl": "https://www.cbre.ca/people/david-cervantes",
+      "notes": "Multidisciplinary lead: investor leasing, occupier rep, data centres, 20+ ans"
+    },
+    {
+      "name": "Jacob Hayon",
+      "firmName": "JLL",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "terrain",
+        "investissement"
+      ],
+      "title": "Executive Vice President",
+      "typicalDealSize": {
+        "min": 5000000,
+        "max": 50000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "linkedin",
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "profile_url": ""
+      },
+      "sourceUrl": "https://cbre.ca/en/people-and-offices/montreal/teams/pcg-montreal/pcg-montreal",
+      "notes": "Spécialiste acquisition/disposition revenue properties, ex-CBRE 13 ans"
+    },
+    {
+      "name": "Kevin Marshall",
+      "firmName": "Colliers International",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "industriel",
+        "bureau"
+      ],
+      "title": "Managing Director Montreal",
+      "typicalDealSize": {
+        "min": 5000000,
+        "max": 50000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "phone",
+      "publicContact": {
+        "email": "",
+        "phone": "(514) 866-1223",
+        "linkedin": "",
+        "profile_url": "https://www.collierscanada.com/en-ca/canada/cities/montreal"
+      },
+      "sourceUrl": "https://www.collierscanada.com/en-ca/experts",
+      "notes": "MD Montreal depuis août 2025, équipe leadership national"
+    },
+    {
+      "name": "Jean-Marc Dubé",
+      "firmName": "Colliers International",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "terrain",
+        "industriel",
+        "construction"
+      ],
+      "title": "Senior Vice President / Group Practice Lead",
+      "typicalDealSize": {
+        "min": 5000000,
+        "max": 50000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "phone",
+      "publicContact": {
+        "email": "",
+        "phone": "(514) 866-1223",
+        "linkedin": "",
+        "profile_url": "https://www.collierscanada.com/en-ca/experts/marc-dube"
+      },
+      "sourceUrl": "https://www.collierscanada.com/en-ca/experts/marc-dube",
+      "notes": "Industrial division lead, 4.5M+ pi² brokered en 3 ans, MIT, SIOR"
+    },
+    {
+      "name": "Arnold Fox",
+      "firmName": "Colliers International",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "industriel",
+        "construction"
+      ],
+      "title": "Executive Vice President",
+      "typicalDealSize": {
+        "min": 5000000,
+        "max": 50000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "linkedin",
+      "publicContact": {
+        "email": "",
+        "phone": "(514) 866-1223",
+        "linkedin": "https://www.linkedin.com/in/foxarnold/",
+        "profile_url": "https://www.collierscanada.com/en-ca/experts/arnold-fox"
+      },
+      "sourceUrl": "https://www.collierscanada.com/en-ca/experts/arnold-fox",
+      "notes": "25+ ans industrial, vente investissement"
+    },
+    {
+      "name": "Étienne Marcoux",
+      "firmName": "Colliers International",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "industriel"
+      ],
+      "title": "Senior Vice President",
+      "typicalDealSize": {
+        "min": 5000000,
+        "max": 50000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "linkedin",
+      "publicContact": {
+        "email": "",
+        "phone": "(514) 866-1223",
+        "linkedin": "https://www.linkedin.com/in/etiennemarcoux/",
+        "profile_url": "https://www.collierscanada.com/en-ca/experts/etienne-marcoux"
+      },
+      "sourceUrl": "https://www.collierscanada.com/en-ca/experts/etienne-marcoux",
+      "notes": "15+ ans, équipe 164 transactions / 300M+ depuis 2018"
+    },
+    {
+      "name": "Lloyd Cooper",
+      "firmName": "Cushman & Wakefield",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "retail",
+        "industriel",
+        "bureau"
+      ],
+      "title": "Executive Vice-Chairman",
+      "typicalDealSize": {
+        "min": 5000000,
+        "max": 50000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "phone",
+      "publicContact": {
+        "email": "",
+        "phone": "(514) 841-5011",
+        "linkedin": "",
+        "profile_url": "https://www.cushmanwakefield.com/en/canada/people/lloyd-cooper"
+      },
+      "sourceUrl": "https://www.cushmanwakefield.com/en/canada/people/lloyd-cooper",
+      "notes": "QC platform leader, #1 salesperson C&W Canada (2011, 13, 15, 20, 24)"
+    },
+    {
+      "name": "Guy Massé",
+      "firmName": "Cushman & Wakefield",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "bureau"
+      ],
+      "title": "Executive Vice President",
+      "typicalDealSize": {
+        "min": 5000000,
+        "max": 50000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "phone",
+      "publicContact": {
+        "email": "",
+        "phone": "(514) 841-5011",
+        "linkedin": "",
+        "profile_url": "https://www.cushmanwakefield.com/en/canada/people/guy-masse"
+      },
+      "sourceUrl": "https://www.cushmanwakefield.com/en/canada/people/guy-masse",
+      "notes": "29+ ans, tenant rep, mandats nationaux"
+    },
+    {
+      "name": "Erik Langburt",
+      "firmName": "Cushman & Wakefield",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "bureau"
+      ],
+      "title": "Executive Vice President",
+      "typicalDealSize": {
+        "min": 5000000,
+        "max": 50000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "phone",
+      "publicContact": {
+        "email": "",
+        "phone": "(514) 841-5011",
+        "linkedin": "",
+        "profile_url": "http://www.cushmanwakefield.ca/en/people/erik-langburt"
+      },
+      "sourceUrl": "http://www.cushmanwakefield.ca/en/people/erik-langburt",
+      "notes": "Major clients leasing, co-lead WeWork avec Cooper"
+    },
+    {
+      "name": "Brent Robinson",
+      "firmName": "Cushman & Wakefield",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "retail",
+        "industriel",
+        "bureau"
+      ],
+      "title": "Executive Managing Director & Managing Principal",
+      "typicalDealSize": {
+        "min": 5000000,
+        "max": 50000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "linkedin",
+      "publicContact": {
+        "email": "",
+        "phone": "(514) 841-5011",
+        "linkedin": "https://www.linkedin.com/in/brent-robinson-4531161a/",
+        "profile_url": "https://www.cushmanwakefield.com/en/canada/people/brent-robinson"
+      },
+      "sourceUrl": "https://www.cushmanwakefield.com/en/canada/people/brent-robinson",
+      "notes": "QC market leader depuis 2021, 55+ pros sous sa direction"
+    },
+    {
+      "name": "Sean Greenspoon",
+      "firmName": "Cushman & Wakefield",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "retail",
+        "industriel",
+        "bureau"
+      ],
+      "title": "Associate",
+      "typicalDealSize": {
+        "min": 1000000,
+        "max": 10000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "phone",
+      "publicContact": {
+        "email": "",
+        "phone": "(514) 841-5011",
+        "linkedin": "",
+        "profile_url": "https://www.cushmanwakefield.com/en/canada/people/sean-greenspoon"
+      },
+      "sourceUrl": "https://www.cushmanwakefield.com/en/canada/people/sean-greenspoon",
+      "notes": "Joined 2017, landlord rep"
+    },
+    {
+      "name": "Daniel Goodman",
+      "firmName": "Cushman & Wakefield",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "bureau"
+      ],
+      "title": "Associate",
+      "typicalDealSize": {
+        "min": 1000000,
+        "max": 10000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "phone",
+      "publicContact": {
+        "email": "",
+        "phone": "(514) 841-5011",
+        "linkedin": "",
+        "profile_url": "https://www.cushmanwakefield.com/en/canada/people/daniel-goodman"
+      },
+      "sourceUrl": "https://www.cushmanwakefield.com/en/canada/people/daniel-goodman",
+      "notes": "Joined 2022, ingénieur background, awards 2020-2021"
+    },
+    {
+      "name": "Meggie Bergevin",
+      "firmName": "Cushman & Wakefield",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "industriel",
+        "bureau"
+      ],
+      "title": "Associate Vice President",
+      "typicalDealSize": {
+        "min": 5000000,
+        "max": 50000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "linkedin",
+      "publicContact": {
+        "email": "",
+        "phone": "(514) 841-3802",
+        "linkedin": "https://www.linkedin.com/in/meggie-bergevin-43b4b8119/",
+        "profile_url": "https://www.cushmanwakefield.com/en/canada/offices/montreal"
+      },
+      "sourceUrl": "https://www.linkedin.com/in/meggie-bergevin-43b4b8119/",
+      "notes": "Joined C&W 2018, role grandissant"
+    },
+    {
+      "name": "Kevin Dopp",
+      "firmName": "Avison Young",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "industriel",
+        "bureau"
+      ],
+      "title": "Vice President",
+      "typicalDealSize": {
+        "min": 5000000,
+        "max": 50000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "phone",
+      "publicContact": {
+        "email": "",
+        "phone": "(514) 392-1330",
+        "linkedin": "",
+        "profile_url": "https://www.avisonyoung.com/professionals/-/ayp/view/kevin-dopp/in/montreal"
+      },
+      "sourceUrl": "https://www.avisonyoung.com/professionals/-/ayp/view/kevin-dopp/in/montreal",
+      "notes": "Office/industrial tenant rep, landlord rep"
+    },
+    {
+      "name": "Mark Sinnett",
+      "firmName": "Avison Young",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "bureau",
+        "multilogement"
+      ],
+      "title": "Principal / Capital Markets Lead",
+      "typicalDealSize": {
+        "min": 5000000,
+        "max": 50000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "phone",
+      "publicContact": {
+        "email": "",
+        "phone": "(514) 392-1330",
+        "linkedin": "",
+        "profile_url": "https://www.avisonyoung.com/professionals/-/ayp/view/mark-sinnett/in/montreal"
+      },
+      "sourceUrl": "https://www.avisonyoung.com/professionals/-/ayp/view/mark-sinnett/in/montreal",
+      "notes": "Lead QC Capital Markets depuis mars 2023, 20+ ans CBRE/JLL"
+    },
+    {
+      "name": "Sebastien Gatti",
+      "firmName": "Avison Young",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "investissement",
+        "bureau",
+        "multilogement"
+      ],
+      "title": "Executive Vice President / Capital Markets",
+      "typicalDealSize": {
+        "min": 5000000,
+        "max": 50000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "phone",
+      "publicContact": {
+        "email": "",
+        "phone": "(514) 392-1330",
+        "linkedin": "",
+        "profile_url": "https://www.avisonyoung.com/professionals/-/ayp/view/sebastien-gatti/in/montreal"
+      },
+      "sourceUrl": "https://www.avisonyoung.com/professionals/-/ayp/view/sebastien-gatti/in/montreal",
+      "notes": "Multifamily/office investment, 3.0B$ closed, 17000+ unités"
+    },
+    {
+      "name": "Guillaume Monast",
+      "firmName": "Avison Young",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "bureau",
+        "multilogement"
+      ],
+      "title": "Senior Associate / Capital Markets",
+      "typicalDealSize": {
+        "min": 1000000,
+        "max": 10000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "phone",
+      "publicContact": {
+        "email": "",
+        "phone": "(514) 392-1330",
+        "linkedin": "",
+        "profile_url": "https://www.avisonyoung.com/professionals/-/ayp/view/guillaume-monast/in/montreal"
+      },
+      "sourceUrl": "https://www.avisonyoung.com/professionals/-/ayp/view/guillaume-monast/in/montreal",
+      "notes": "Multifamily/office, 6500+ unités vendues / 1.4B$"
+    },
+    {
+      "name": "Yann Charles",
+      "firmName": "Avison Young",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "retail",
+        "industriel",
+        "investissement"
+      ],
+      "title": "Principal / Capital Markets",
+      "typicalDealSize": {
+        "min": 5000000,
+        "max": 50000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "phone",
+      "publicContact": {
+        "email": "",
+        "phone": "(514) 392-1330",
+        "linkedin": "",
+        "profile_url": "https://www.avisonyoung.com/professionals/-/ayp/view/yann-charles/in/montreal"
+      },
+      "sourceUrl": "https://www.avisonyoung.com/professionals/-/ayp/view/yann-charles/in/montreal",
+      "notes": "Retail/industrial investment, 1.5B$+ / 3M+ pi² depuis 2016"
+    },
+    {
+      "name": "Marie-Claire Laflamme-Sanders",
+      "firmName": "Avison Young",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "retail",
+        "bureau",
+        "multilogement"
+      ],
+      "title": "Principal / Senior Vice President / Practice Lead",
+      "typicalDealSize": {
+        "min": 5000000,
+        "max": 50000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "phone",
+      "publicContact": {
+        "email": "",
+        "phone": "(514) 392-1330",
+        "linkedin": "",
+        "profile_url": "https://www.avisonyoung.com/professionals/-/ayp/view/marie-claire-laflamme-sanders/in/montreal"
+      },
+      "sourceUrl": "https://www.avisonyoung.com/professionals/-/ayp/view/marie-claire-laflamme-sanders/in/montreal",
+      "notes": "4B$+ investment transactions, 9 ans JLL"
+    },
+    {
+      "name": "Kieran Rankin",
+      "firmName": "Avison Young",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "bureau"
+      ],
+      "title": "Vice President",
+      "typicalDealSize": {
+        "min": 5000000,
+        "max": 50000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "linkedin",
+      "publicContact": {
+        "email": "",
+        "phone": "(514) 392-1330",
+        "linkedin": "https://www.linkedin.com/in/kieran-rankin-mba-02b34a47/",
+        "profile_url": "https://www.avisonyoung.com/professionals/-/ayp/view/kieran-rankin/in/montreal"
+      },
+      "sourceUrl": "https://www.avisonyoung.com/professionals/-/ayp/view/kieran-rankin/in/montreal",
+      "notes": "MBA, top young commercial broker MTL"
+    },
+    {
+      "name": "David Major-Lapierre",
+      "firmName": "Avison Young",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "bureau",
+        "multilogement"
+      ],
+      "title": "Principal",
+      "typicalDealSize": {
+        "min": 5000000,
+        "max": 50000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "phone",
+      "publicContact": {
+        "email": "",
+        "phone": "(514) 392-1330",
+        "linkedin": "",
+        "profile_url": "https://www.avisonyoung.com/professionals/-/ayp/view/david-major-lapierre/in/montreal"
+      },
+      "sourceUrl": "https://www.avisonyoung.com/professionals/-/ayp/view/david-major-lapierre/in/montreal",
+      "notes": "Joined 2011, Principal 2024, Above and Beyond Award 2017"
+    },
+    {
+      "name": "Olivier Dufault-Gagnon",
+      "firmName": "Avison Young",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "bureau",
+        "multilogement"
+      ],
+      "title": "Capital Markets",
+      "typicalDealSize": {
+        "min": 2000000,
+        "max": 15000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "phone",
+      "publicContact": {
+        "email": "",
+        "phone": "(514) 392-1330",
+        "linkedin": "",
+        "profile_url": "https://www.avisonyoung.com/professionals/-/ayp/view/olivier-dufault-gagnon/in/montreal"
+      },
+      "sourceUrl": "https://www.avisonyoung.com/professionals/-/ayp/view/olivier-dufault-gagnon/in/montreal",
+      "notes": "Capital markets Grand Montréal et Québec"
+    },
+    {
+      "name": "Jean Laurin",
+      "firmName": "Avison Young",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "bureau",
+        "multilogement"
+      ],
+      "title": "President Quebec / Managing Director",
+      "typicalDealSize": {
+        "min": 5000000,
+        "max": 50000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "phone",
+      "publicContact": {
+        "email": "",
+        "phone": "(514) 392-1330",
+        "linkedin": "",
+        "profile_url": "https://www.avisonyoung.ca/professionals/-/ayp/view/jean-laurin/in/montreal"
+      },
+      "sourceUrl": "https://www.avisonyoung.ca/professionals/-/ayp/view/jean-laurin/in/montreal",
+      "notes": "President QC, business development, croissance stratégique"
+    },
+    {
+      "name": "Adamo Mariani",
+      "firmName": "Marcus & Millichap",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "investissement",
+        "construction",
+        "multilogement"
+      ],
+      "title": "Vice President Investments",
+      "typicalDealSize": {
+        "min": 5000000,
+        "max": 50000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "linkedin",
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "profile_url": "https://www.marcusmillichap.com/advisors/adamo-mariani"
+      },
+      "sourceUrl": "https://www.marcusmillichap.com/advisors/adamo-mariani",
+      "notes": "Co-founder Crown Real Estate Group 2011, broker depuis 2003, pre-construction condo"
+    },
+    {
+      "name": "Jesse Di Gennaro",
+      "firmName": "Marcus & Millichap",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "terrain",
+        "investissement",
+        "multilogement"
+      ],
+      "title": "Vice President Investments",
+      "typicalDealSize": {
+        "min": 5000000,
+        "max": 50000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "linkedin",
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "profile_url": "https://marcusmillichap.ca/team-member/jesse-di-gennaro/"
+      },
+      "sourceUrl": "https://marcusmillichap.ca/team-member/jesse-di-gennaro/",
+      "notes": "Broker depuis 2003, commercial 2018, land development"
+    },
+    {
+      "name": "Philippe Moisan",
+      "firmName": "Marcus & Millichap",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "investissement",
+        "multilogement"
+      ],
+      "title": "Associate Investments",
+      "typicalDealSize": {
+        "min": 1000000,
+        "max": 10000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "linkedin",
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "https://www.linkedin.com/in/philippe-moisan-665288140/",
+        "profile_url": "https://marcusmillichap.ca/team-member/philippe-moisan/"
+      },
+      "sourceUrl": "https://marcusmillichap.ca/team-member/philippe-moisan/",
+      "notes": "Comptable, ex-financial analyst, expertise property optimization"
+    },
+    {
+      "name": "Sacha Berdugo",
+      "firmName": "Marcus & Millichap",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "retail"
+      ],
+      "title": "Senior Associate",
+      "typicalDealSize": {
+        "min": 1000000,
+        "max": 10000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "linkedin",
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "profile_url": "https://marcusmillichap.ca/team-member/sacha-e-berdugo/"
+      },
+      "sourceUrl": "https://marcusmillichap.ca/team-member/sacha-e-berdugo/",
+      "notes": "Retail leasing, joined 2021"
+    },
+    {
+      "name": "Warren Grzywacz",
+      "firmName": "Marcus & Millichap",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "investissement",
+        "multilogement"
+      ],
+      "title": "Associate Investments",
+      "typicalDealSize": {
+        "min": 1000000,
+        "max": 10000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "linkedin",
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "profile_url": "https://marcusmillichap.ca/"
+      },
+      "sourceUrl": "https://marcusmillichap.ca/",
+      "notes": "Groupe Mariani Di Gennaro"
+    },
+    {
+      "name": "Paul-Éric Poitras",
+      "firmName": "NAI Terramont Commercial",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "industriel",
+        "bureau"
+      ],
+      "title": "President",
+      "typicalDealSize": {
+        "min": 5000000,
+        "max": 50000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "phone",
+      "publicContact": {
+        "email": "",
+        "phone": "(514) 866-3333",
+        "linkedin": "",
+        "profile_url": "https://www.naiterramont.ca/en_us/toute-lequipe-nai-terramont-commercial/"
+      },
+      "sourceUrl": "https://www.naiterramont.ca/en_us/toute-lequipe-nai-terramont-commercial/",
+      "notes": "President NAI Terramont, 5e plus grande firme MTL (22 courtiers)"
+    },
+    {
+      "name": "Michelle Moller",
+      "firmName": "NAI Terramont Commercial",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "industriel",
+        "bureau"
+      ],
+      "title": "Managing Partner / VP Corporate Real Estate",
+      "typicalDealSize": {
+        "min": 3000000,
+        "max": 25000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "phone",
+      "publicContact": {
+        "email": "",
+        "phone": "(514) 866-3333",
+        "linkedin": "",
+        "profile_url": "https://www.naiterramont.ca/en_us/toute-lequipe-nai-terramont-commercial/"
+      },
+      "sourceUrl": "https://www.naiglobal.com/agents/michelle-moller/",
+      "notes": "Ex-principal Terramont, Managing Partner"
+    },
+    {
+      "name": "Jérôme Le Blanc-Ducharme",
+      "firmName": "NAI Terramont Commercial",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "industriel",
+        "bureau"
+      ],
+      "title": "Vice President",
+      "typicalDealSize": {
+        "min": 5000000,
+        "max": 50000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "phone",
+      "publicContact": {
+        "email": "",
+        "phone": "(514) 866-3333",
+        "linkedin": "",
+        "profile_url": "https://www.naiterramont.ca/en_us/toute-lequipe-nai-terramont-commercial/"
+      },
+      "sourceUrl": "https://www.naiterramont.ca/en_us/toute-lequipe-nai-terramont-commercial/",
+      "notes": "Vice President, courtier commercial"
+    },
+    {
+      "name": "Richard Sauvé",
+      "firmName": "NAI Terramont Commercial",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "industriel",
+        "bureau"
+      ],
+      "title": "Senior Vice President",
+      "typicalDealSize": {
+        "min": 5000000,
+        "max": 50000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "phone",
+      "publicContact": {
+        "email": "",
+        "phone": "(514) 866-3333",
+        "linkedin": "",
+        "profile_url": "https://www.naiterramont.ca/en_us/toute-lequipe-nai-terramont-commercial/"
+      },
+      "sourceUrl": "https://www.centris.ca/en/real-estate-broker~richard-sauve~nai-terramont-commercial/a3647",
+      "notes": "CCIM et SIOR, Senior VP commercial broker"
+    },
+    {
+      "name": "Laurent Lauzon",
+      "firmName": "NAI Terramont Commercial",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "industriel",
+        "bureau"
+      ],
+      "title": "Senior Vice President",
+      "typicalDealSize": {
+        "min": 5000000,
+        "max": 50000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "phone",
+      "publicContact": {
+        "email": "",
+        "phone": "(514) 866-3333",
+        "linkedin": "",
+        "profile_url": "https://www.naiterramont.ca/en_us/toute-lequipe-nai-terramont-commercial/"
+      },
+      "sourceUrl": "https://www.centris.ca/en/real-estate-broker~laurent-lauzon~nai-terramont-commercial/b5908",
+      "notes": "Joined 1993 (Élan), merger NAI 2005"
+    },
+    {
+      "name": "Serge Marcotte",
+      "firmName": "NAI Terramont Commercial",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "industriel",
+        "bureau"
+      ],
+      "title": "Senior Vice President",
+      "typicalDealSize": {
+        "min": 5000000,
+        "max": 50000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "phone",
+      "publicContact": {
+        "email": "",
+        "phone": "(514) 866-3333",
+        "linkedin": "",
+        "profile_url": "https://www.naiterramont.ca/en_us/toute-lequipe-nai-terramont-commercial/"
+      },
+      "sourceUrl": "https://www.centris.ca/en/real-estate-broker~serge-marcotte~nai-terramont-commercial/b7754",
+      "notes": "30+ ans commercial et résidentiel"
+    },
+    {
+      "name": "Jonathan Cohen",
+      "firmName": "NAI Terramont Commercial",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "industriel",
+        "bureau"
+      ],
+      "title": "Real Estate Broker",
+      "typicalDealSize": {
+        "min": 2000000,
+        "max": 15000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "linkedin",
+      "publicContact": {
+        "email": "",
+        "phone": "(514) 866-3333",
+        "linkedin": "https://www.linkedin.com/in/jonathan-cohen-867b3116a/",
+        "profile_url": "https://www.naiterramont.ca/en_us/toute-lequipe-nai-terramont-commercial/"
+      },
+      "sourceUrl": "https://www.zoominfo.com/p/Jonathan-Cohen/2538360358",
+      "notes": "Commercial broker actif Montréal"
+    },
+    {
+      "name": "Karl Bernard",
+      "firmName": "NAI Terramont Commercial",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "industriel",
+        "bureau"
+      ],
+      "title": "Vice President",
+      "typicalDealSize": {
+        "min": 5000000,
+        "max": 50000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "phone",
+      "publicContact": {
+        "email": "",
+        "phone": "(514) 866-3333",
+        "linkedin": "",
+        "profile_url": "https://www.naiterramont.ca/en_us/toute-lequipe-nai-terramont-commercial/"
+      },
+      "sourceUrl": "https://www.naiterramont.ca/en_us/toute-lequipe-nai-terramont-commercial/",
+      "notes": "VP commercial broker NAI Terramont"
+    },
+    {
+      "name": "Martin Fournier",
+      "firmName": "NAI Terramont Commercial",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "industriel",
+        "bureau"
+      ],
+      "title": "Real Estate Broker",
+      "typicalDealSize": {
+        "min": 2000000,
+        "max": 15000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "phone",
+      "publicContact": {
+        "email": "",
+        "phone": "(514) 866-3333",
+        "linkedin": "",
+        "profile_url": "https://www.naiterramont.ca/en_us/toute-lequipe-nai-terramont-commercial/"
+      },
+      "sourceUrl": "https://www.naiglobal.com/agents/martin-fournier/",
+      "notes": "Commercial broker NAI Terramont"
+    },
+    {
+      "name": "Patrice Ménard",
+      "firmName": "PMML (Patrice Ménard Multi-Logements)",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "terrain",
+        "multilogement"
+      ],
+      "title": "Co-fondateur, Président & Courtier Commercial",
+      "typicalDealSize": {
+        "min": 2000000,
+        "max": 15000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "email",
+      "publicContact": {
+        "email": "info@pmml.ca",
+        "phone": "514-360-3603",
+        "linkedin": "https://www.linkedin.com/in/patricemenardpmml/",
+        "profile_url": "https://pmml.ca/en/"
+      },
+      "sourceUrl": "https://pmml.ca/en/",
+      "notes": "1700+ bâtiments sous mandat, 160+ pros, leader provincial multilogement 20+ ans"
+    },
+    {
+      "name": "Daniel Bergeron",
+      "firmName": "DB Multilogement (TRILLION)",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Laval",
+      "specialty": [
+        "commercial",
+        "multilogement"
+      ],
+      "title": "Courtier Commercial Multilogement",
+      "typicalDealSize": {
+        "min": 2000000,
+        "max": 15000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "email",
+      "publicContact": {
+        "email": "info@dbmultilogement.com",
+        "phone": "514-743-9638",
+        "linkedin": "",
+        "profile_url": "https://dbmultilogement.com/en/"
+      },
+      "sourceUrl": "https://dbmultilogement.com/en/about/",
+      "notes": "Spécialisé immeubles 6+ unités, 15+ ans"
+    },
+    {
+      "name": "Denis Gagné Nadeau",
+      "firmName": "Multilogements",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "financement",
+        "commercial",
+        "multilogement"
+      ],
+      "title": "Courtier Hypothécaire Commercial Multilogement",
+      "typicalDealSize": {
+        "min": 2000000,
+        "max": 15000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "email",
+      "publicContact": {
+        "email": "denis@multilogements.ca",
+        "phone": "1-800-780-3145",
+        "linkedin": "",
+        "profile_url": "https://multilogements.ca/en/"
+      },
+      "sourceUrl": "https://multilogements.ca/en/our-brokers/denis-gagne-nadeau/",
+      "notes": "8+ ans construction, accès 20+ institutions financières"
+    },
+    {
+      "name": "Jean-François Morin",
+      "firmName": "Équipe Jean-François Morin",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Lévis",
+      "specialty": [
+        "commercial",
+        "industriel",
+        "residentiel",
+        "multilogement"
+      ],
+      "title": "Courtier Commercial & Multilogement",
+      "typicalDealSize": {
+        "min": 2000000,
+        "max": 15000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "email",
+      "publicContact": {
+        "email": "info@jeanfrancoismorin.ca",
+        "phone": "418-801-8011",
+        "linkedin": "https://ca.linkedin.com/company/equipe-jean-francois-morin",
+        "profile_url": "https://jeanfrancoismorin.ca/"
+      },
+      "sourceUrl": "https://jeanfrancoismorin.ca/equipe-jean-francois-morin/jean-francois-morin/",
+      "notes": "Actif depuis 2011, Lévis-Québec, multilogement"
+    },
+    {
+      "name": "Yanick Sarrazin",
+      "firmName": "RE/MAX (YE/SARRAZIN)",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "residentiel",
+        "multilogement"
+      ],
+      "title": "Courtier Certifié AEO",
+      "typicalDealSize": {
+        "min": 2000000,
+        "max": 15000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "linkedin",
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "profile_url": "https://yanicksarrazin.com/en/"
+      },
+      "sourceUrl": "https://yanicksarrazin.com/en/",
+      "notes": "Plateau-Rosemont spécialisé, 5e RE/MAX QC 2023"
+    },
+    {
+      "name": "Guillaume Dallaire-Clavet",
+      "firmName": "RE/MAX Fortin Delage / GDC Immobilier",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Québec",
+      "specialty": [
+        "commercial",
+        "terrain",
+        "industriel",
+        "multilogement"
+      ],
+      "title": "Courtier Commercial Certifié",
+      "typicalDealSize": {
+        "min": 2000000,
+        "max": 15000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "linkedin",
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "profile_url": "https://www.gdcimmobilier.com/"
+      },
+      "sourceUrl": "https://www.gdcimmobilier.com/",
+      "notes": "Capitale-Nationale, ex-PMML, 20+ ans commercial"
+    },
+    {
+      "name": "François Robitaille",
+      "firmName": "RE/MAX du Cartier",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Laval",
+      "specialty": [
+        "commercial",
+        "residentiel",
+        "multilogement"
+      ],
+      "title": "Courtier Résidentiel & Commercial",
+      "typicalDealSize": {
+        "min": 2000000,
+        "max": 15000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "email",
+      "publicContact": {
+        "email": "francois.robitaille@remax-quebec.com",
+        "phone": "514-816-4756",
+        "linkedin": "",
+        "profile_url": "https://francoisrobitaille.com/"
+      },
+      "sourceUrl": "https://remaxducartier.com/en/brokers/francois-robitaille",
+      "notes": "Laval-Duvernay, RE/MAX du Cartier 600+ courtiers"
+    },
+    {
+      "name": "Pierre Brunet",
+      "firmName": "Sotheby's International Realty Quebec",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "residentiel",
+        "multilogement"
+      ],
+      "title": "Courtier Résidentiel & Commercial Certifié",
+      "typicalDealSize": {
+        "min": 2000000,
+        "max": 15000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "email",
+      "publicContact": {
+        "email": "pbrunet@sothebysrealty.ca",
+        "phone": "514-248-8032",
+        "linkedin": "https://www.linkedin.com/in/pierre-brunet-4b7b0319/",
+        "profile_url": "https://sothebysrealty.ca/en/real-estate-agent/pierre-brunet/"
+      },
+      "sourceUrl": "https://sothebysrealty.ca/en/real-estate-agent/pierre-brunet/",
+      "notes": "20+ ans, 25+ unités condo converties 2010-2017, directeur CIGM"
+    },
+    {
+      "name": "Stéphane Bisson",
+      "firmName": "Keller Williams Distinction",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Gatineau",
+      "specialty": [
+        "commercial",
+        "terrain",
+        "industriel",
+        "multilogement"
+      ],
+      "title": "Courtier Certifié AEO, MBA, FRI",
+      "typicalDealSize": {
+        "min": 2000000,
+        "max": 15000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "linkedin",
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "profile_url": "https://stephanebisson.com/en"
+      },
+      "sourceUrl": "https://stephanebisson.com/en/team-stephane-bisson-real-estate-brokers",
+      "notes": "30+ ans, KW Commercial, Outaouais"
+    },
+    {
+      "name": "Claire Gauthier",
+      "firmName": "Royal LePage Vallée de l'Outaouais",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Gatineau",
+      "specialty": [
+        "commercial",
+        "residentiel"
+      ],
+      "title": "Courtier Résidentiel & Commercial",
+      "typicalDealSize": {
+        "min": 2000000,
+        "max": 15000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "email",
+      "publicContact": {
+        "email": "clairegauthier@me.com",
+        "phone": "613-292-8267",
+        "linkedin": "",
+        "profile_url": "https://clairegauthier.ca/"
+      },
+      "sourceUrl": "https://www.royallepage.ca/en/agent/quebec/gatineau-aylmer/claire-gauthier/91992/",
+      "notes": "16 ans Royal LePage, top team Outaouais 2020"
+    },
+    {
+      "name": "Jérôme Caron",
+      "firmName": "JME Courtiers / RE/MAX de Francheville",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Trois-Rivières",
+      "specialty": [
+        "commercial",
+        "residentiel",
+        "multilogement"
+      ],
+      "title": "Courtier Résidentiel & Commercial",
+      "typicalDealSize": {
+        "min": 2000000,
+        "max": 15000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "email",
+      "publicContact": {
+        "email": "jerome.caron@remax-quebec.com",
+        "phone": "819-373-7140",
+        "linkedin": "",
+        "profile_url": "https://jmecourtiers.com/en/"
+      },
+      "sourceUrl": "https://jmecourtiers.com/en/",
+      "notes": "14+ ans courtier, JME depuis 2023, Mauricie"
+    },
+    {
+      "name": "Marie-Eve St-Cyr Lacroix",
+      "firmName": "JME Courtiers / RE/MAX de Francheville",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Trois-Rivières",
+      "specialty": [
+        "commercial",
+        "residentiel",
+        "multilogement"
+      ],
+      "title": "Courtière Résidentielle & Commerciale",
+      "typicalDealSize": {
+        "min": 2000000,
+        "max": 15000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "phone",
+      "publicContact": {
+        "email": "",
+        "phone": "819-373-7140",
+        "linkedin": "",
+        "profile_url": "https://jmecourtiers.com/en/"
+      },
+      "sourceUrl": "https://jmecourtiers.com/en/",
+      "notes": "15+ ans, partenaire Jérôme Caron, Trois-Rivières"
+    },
+    {
+      "name": "Maxime Lefebvre",
+      "firmName": "RE/MAX de Francheville",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Trois-Rivières",
+      "specialty": [
+        "commercial",
+        "residentiel"
+      ],
+      "title": "Courtier Immobilier",
+      "typicalDealSize": {
+        "min": 2000000,
+        "max": 15000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "phone",
+      "publicContact": {
+        "email": "",
+        "phone": "819-373-7140",
+        "linkedin": "",
+        "profile_url": "https://remaxdefrancheville.com/en/"
+      },
+      "sourceUrl": "https://www.remax-quebec.com/en/real-estate-brokers/maxime.lefebvre",
+      "notes": "RE/MAX Francheville, leader Mauricie & Centre-QC"
+    },
+    {
+      "name": "Steve Gaudet",
+      "firmName": "Century 21 Expert",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Sherbrooke",
+      "specialty": [
+        "commercial",
+        "residentiel"
+      ],
+      "title": "Courtier Résidentiel & Commercial",
+      "typicalDealSize": {
+        "min": 2000000,
+        "max": 15000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "email",
+      "publicContact": {
+        "email": "steve.gaudet@century21.ca",
+        "phone": "",
+        "linkedin": "",
+        "profile_url": "https://www.stevegaudet.ca/"
+      },
+      "sourceUrl": "https://www.stevegaudet.ca/",
+      "notes": "Sherbrooke-Magog-Coaticook-East Angus"
+    },
+    {
+      "name": "Pierre-Olivier Chiasson",
+      "firmName": "RE/MAX D'Abord",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Sherbrooke",
+      "specialty": [
+        "commercial",
+        "residentiel",
+        "multilogement"
+      ],
+      "title": "Courtier Résidentiel & Commercial",
+      "typicalDealSize": {
+        "min": 2000000,
+        "max": 15000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "phone",
+      "publicContact": {
+        "email": "",
+        "phone": "819-822-2222",
+        "linkedin": "",
+        "profile_url": "https://chiassondefrancesco.ca/"
+      },
+      "sourceUrl": "https://chiassondefrancesco.ca/",
+      "notes": "Depuis 2013 Sherbrooke, commercial depuis 2021"
+    },
+    {
+      "name": "Marco De Francesco",
+      "firmName": "RE/MAX D'Abord",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Sherbrooke",
+      "specialty": [
+        "commercial",
+        "residentiel",
+        "multilogement"
+      ],
+      "title": "Courtier Résidentiel & Commercial",
+      "typicalDealSize": {
+        "min": 2000000,
+        "max": 15000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "phone",
+      "publicContact": {
+        "email": "",
+        "phone": "819-822-2222",
+        "linkedin": "",
+        "profile_url": "https://chiassondefrancesco.ca/"
+      },
+      "sourceUrl": "https://chiassondefrancesco.ca/",
+      "notes": "Partenaire Chiasson, couverture Magog-Lac-Mégantic"
+    },
+    {
+      "name": "Tristan Savard",
+      "firmName": "Royal LePage Évolution",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Sherbrooke",
+      "specialty": [
+        "commercial",
+        "residentiel",
+        "multilogement"
+      ],
+      "title": "Courtier Résidentiel & Commercial",
+      "typicalDealSize": {
+        "min": 2000000,
+        "max": 15000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "email",
+      "publicContact": {
+        "email": "info@savardtran.ca",
+        "phone": "819-300-7387",
+        "linkedin": "https://www.linkedin.com/in/%C3%A9quipe-savard-tran-097439210/",
+        "profile_url": "https://www.savardtran.ca/"
+      },
+      "sourceUrl": "https://www.savardtran.ca/",
+      "notes": "Top 1% courtiers QC, duplex-triplex-multilogement, Estrie"
+    },
+    {
+      "name": "Martin Savard",
+      "firmName": "Royal LePage Évolution",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Sherbrooke",
+      "specialty": [
+        "commercial",
+        "residentiel",
+        "multilogement"
+      ],
+      "title": "Courtier Résidentiel & Commercial",
+      "typicalDealSize": {
+        "min": 2000000,
+        "max": 15000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "email",
+      "publicContact": {
+        "email": "info@savardtran.ca",
+        "phone": "819-300-7387",
+        "linkedin": "",
+        "profile_url": "https://www.savardtran.ca/"
+      },
+      "sourceUrl": "https://www.savardtran.ca/",
+      "notes": "Équipe Savard & Tran, Estrie multilogement"
+    },
+    {
+      "name": "Rodrigue Côté",
+      "firmName": "Groupe RCCI",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Sherbrooke",
+      "specialty": [
+        "commercial",
+        "terrain",
+        "industriel"
+      ],
+      "title": "Courtier Commercial & Industriel Certifié AEO",
+      "typicalDealSize": {
+        "min": 2000000,
+        "max": 15000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "phone",
+      "publicContact": {
+        "email": "",
+        "phone": "819-563-9119",
+        "linkedin": "",
+        "profile_url": "https://legroupercci.com/fr/"
+      },
+      "sourceUrl": "https://legroupercci.com/fr/",
+      "notes": "30+ ans, fondateur, Sherbrooke-Drummondville-Estrie"
+    },
+    {
+      "name": "Ghislain Cloutier",
+      "firmName": "Prisme Immobilier",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Sherbrooke",
+      "specialty": [
+        "commercial",
+        "residentiel"
+      ],
+      "title": "Courtier Résidentiel & Commercial Certifié AEO",
+      "typicalDealSize": {
+        "min": 2000000,
+        "max": 15000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "phone",
+      "publicContact": {
+        "email": "",
+        "phone": "819-821-0000",
+        "linkedin": "",
+        "profile_url": "https://prismeimmobilier.com/"
+      },
+      "sourceUrl": "https://prismeimmobilier.com/",
+      "notes": "Sherbrooke-Magog-Orford"
+    },
+    {
+      "name": "Caroline Nadeau",
+      "firmName": "Prisme Immobilier",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Sherbrooke",
+      "specialty": [
+        "commercial",
+        "residentiel"
+      ],
+      "title": "Courtière Résidentielle & Commerciale Certifiée AEO",
+      "typicalDealSize": {
+        "min": 2000000,
+        "max": 15000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "phone",
+      "publicContact": {
+        "email": "",
+        "phone": "819-821-0000",
+        "linkedin": "",
+        "profile_url": "https://prismeimmobilier.com/"
+      },
+      "sourceUrl": "https://prismeimmobilier.com/",
+      "notes": "Sherbrooke-Magog-Orford, partenaire Cloutier"
+    },
+    {
+      "name": "Domenic Vincenti",
+      "firmName": "Intella Inc.",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "terrain",
+        "industriel",
+        "multilogement"
+      ],
+      "title": "Courtier Commercial",
+      "typicalDealSize": {
+        "min": 2000000,
+        "max": 15000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "linkedin",
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "profile_url": "https://intellarealestate.com/"
+      },
+      "sourceUrl": "https://intellarealestate.com/team/",
+      "notes": "Intella, 100+ ans expérience combinée équipe"
+    },
+    {
+      "name": "Marcel Blouin",
+      "firmName": "Intella Inc.",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "terrain",
+        "industriel",
+        "multilogement"
+      ],
+      "title": "Courtier Commercial",
+      "typicalDealSize": {
+        "min": 2000000,
+        "max": 15000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "linkedin",
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "profile_url": "https://intellarealestate.com/"
+      },
+      "sourceUrl": "https://intellarealestate.com/team/",
+      "notes": "Intella commercial, 5 spécialités"
+    },
+    {
+      "name": "Jeff Candib",
+      "firmName": "Intella Inc.",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "terrain",
+        "industriel",
+        "multilogement"
+      ],
+      "title": "Courtier Commercial",
+      "typicalDealSize": {
+        "min": 2000000,
+        "max": 15000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "linkedin",
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "profile_url": "https://intellarealestate.com/"
+      },
+      "sourceUrl": "https://intellarealestate.com/team/",
+      "notes": "Intella commercial broker"
+    },
+    {
+      "name": "Dario Pala",
+      "firmName": "Intella Inc.",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "terrain",
+        "industriel",
+        "multilogement"
+      ],
+      "title": "Courtier Commercial",
+      "typicalDealSize": {
+        "min": 2000000,
+        "max": 15000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "linkedin",
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "profile_url": "https://intellarealestate.com/"
+      },
+      "sourceUrl": "https://intellarealestate.com/team/",
+      "notes": "Intella commercial broker"
+    },
+    {
+      "name": "Équipe TRIMONT",
+      "firmName": "TRIMONT Commercial",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Mont-Royal",
+      "specialty": [
+        "industriel",
+        "retail",
+        "commercial",
+        "terrain",
+        "multilogement"
+      ],
+      "title": "Courtiers Commerciaux",
+      "typicalDealSize": {
+        "min": 2000000,
+        "max": 15000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "email",
+      "publicContact": {
+        "email": "info@trimontcanada.com",
+        "phone": "514-736-0511",
+        "linkedin": "https://ca.linkedin.com/company/trimontcanada",
+        "profile_url": "https://www.trimontquebec.com"
+      },
+      "sourceUrl": "https://www.trimontquebec.com",
+      "notes": "20+ ans, industriel-bureau-retail-terrain-multilogement"
+    },
+    {
+      "name": "Équipe KW Commercial Montréal",
+      "firmName": "KW Commercial Montréal (KWC)",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "bureau",
+        "industriel",
+        "retail"
+      ],
+      "title": "Courtiers Commerciaux",
+      "typicalDealSize": {
+        "min": 2000000,
+        "max": 15000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "linkedin",
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "profile_url": "https://www.kwcmontreal.com/en/"
+      },
+      "sourceUrl": "https://www.kwcmontreal.com/en/",
+      "notes": "20+ ans Grand MTL, KW Urbain division"
+    },
+    {
+      "name": "Équipe FBG Commercial",
+      "firmName": "FBG Commercial (Fortin Brothers)",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "industriel",
+        "multilogement"
+      ],
+      "title": "Courtiers Commerciaux & Investment",
+      "typicalDealSize": {
+        "min": 2000000,
+        "max": 15000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "linkedin",
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "profile_url": "https://www.fbgcommercial.com/"
+      },
+      "sourceUrl": "https://www.fbgcommercial.com/about",
+      "notes": "Frères Fortin, off-market deals, multilogement & shopping"
+    },
+    {
+      "name": "Équipe Tardif (Endurance)",
+      "firmName": "Endurance Real Estate Group / eXp Realty",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "residentiel",
+        "multilogement"
+      ],
+      "title": "Courtiers Résidentiels & Commerciaux",
+      "typicalDealSize": {
+        "min": 2000000,
+        "max": 15000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "phone",
+      "publicContact": {
+        "email": "",
+        "phone": "514-826-4542",
+        "linkedin": "",
+        "profile_url": "https://www.equipetardif.com/en/"
+      },
+      "sourceUrl": "https://renxhomes.ca/equipe-tardif-becomes-endurance-real-estate-group-montreal-exp-realty",
+      "notes": "#1 Royal LePage Canada 2025, 600+ transactions/an, eXp depuis 2026"
+    },
+    {
+      "name": "Équipe MPLEX",
+      "firmName": "M-plex Courtiers Immobiliers",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "multilogement"
+      ],
+      "title": "Courtiers Spécialisés Multiplex",
+      "typicalDealSize": {
+        "min": 2000000,
+        "max": 15000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "linkedin",
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "https://ca.linkedin.com/company/m-plex-courtiers-immobiliers",
+        "profile_url": "https://mplex.ca/"
+      },
+      "sourceUrl": "https://mplex.ca/",
+      "notes": "Fondée 2017, 2-8 units multiplex, financement intégré"
+    },
+    {
+      "name": "Équipe CCI Real Estate",
+      "firmName": "CCI Real Estate Group",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Gatineau",
+      "specialty": [
+        "commercial",
+        "terrain",
+        "industriel",
+        "multilogement"
+      ],
+      "title": "Courtiers Commerciaux & Industriels",
+      "typicalDealSize": {
+        "min": 2000000,
+        "max": 15000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "linkedin",
+      "publicContact": {
+        "email": "",
+        "phone": "819-770-2929",
+        "linkedin": "https://www.linkedin.com/company/cci-real-estate-group",
+        "profile_url": "https://groupecci.ca/en/"
+      },
+      "sourceUrl": "https://groupecci.ca/en/",
+      "notes": "Depuis 1992, fondateurs 1ère firme Ottawa-Gatineau, 65+ ans combiné"
+    }
+  ]
+}

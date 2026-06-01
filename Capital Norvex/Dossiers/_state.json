@@ -1,0 +1,16 @@
+{
+  "processed": [
+    "25"
+  ],
+  "dossiers": {
+    "yvesbarrette33@gmail.com": {
+      "id": "202604-yvesbarrette33",
+      "sender_name": "Yves",
+      "sender_email": "yvesbarrette33@gmail.com",
+      "subject": "Alliston",
+      "docs_recus": [],
+      "status": "en_attente_docs",
+      "created": "2026-04-05T11:49:45.115833"
+    }
+  }
+}

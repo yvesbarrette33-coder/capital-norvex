@@ -1,0 +1,149 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ─────────────────────────────────────────────────────────────
+    // COLLECTIONS EXISTANTES (inchangées) — pipeline protégé localement
+    // ─────────────────────────────────────────────────────────────
+
+    // Utilisateurs — chacun peut lire/écrire son propre doc
+    // Les admins peuvent lire/écrire n'importe quel doc utilisateur
+    match /utilisateurs/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+      allow read, write: if request.auth != null &&
+        get(/databases/$(database)/documents/utilisateurs/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    // Dossiers pipeline — accès complet (pipeline protégé par mot de passe local)
+    match /dossiers/{docId} {
+      allow read, write: if true;
+    }
+
+    // Transactions Brain — protégé par mot de passe local
+    match /transactions/{docId} {
+      allow read, write: if true;
+    }
+
+    // Factures Brain — protégé par mot de passe local
+    match /factures/{docId} {
+      allow read, write: if true;
+    }
+
+    // Factures clients émises — protégé par mot de passe local
+    match /invoices_clients/{docId} {
+      allow read, write: if true;
+    }
+
+    // Paie — protégé par mot de passe local
+    match /paie_records/{docId} {
+      allow read, write: if true;
+    }
+
+    // Dossiers clients — accessible à tout utilisateur connecté
+    match /dossiers_clients/{docId} {
+      allow write: if true;
+      allow read, update, delete: if request.auth != null;
+    }
+
+    // Dossiers partenaires — accessible à tout utilisateur connecté
+    match /dossiers_partenaires/{docId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // ─────────────────────────────────────────────────────────────
+    // NOUVELLES COLLECTIONS — NORVEX AGENTS™ (2026-04-30)
+    // Accès restreint : admin authentifié OU service account (Admin SDK
+    // bypass automatiquement les règles côté serveur).
+    // ─────────────────────────────────────────────────────────────
+
+    // isAdmin() accepte deux modes :
+    //  1. Liste blanche d'emails (Yves) — simple, immédiat
+    //  2. Doc utilisateurs/{uid}.role == 'admin' — extensible plus tard
+    function isAdmin() {
+      return request.auth != null && (
+        request.auth.token.email == 'yves@capitalnorvex.com' ||
+        request.auth.token.email == 'info@capitalnorvex.com' ||
+        request.auth.token.email == 'suzanne@capitalnorvex.com' ||
+        (
+          exists(/databases/$(database)/documents/utilisateurs/$(request.auth.uid)) &&
+          get(/databases/$(database)/documents/utilisateurs/$(request.auth.uid)).data.role == 'admin'
+        )
+      );
+    }
+
+    // AGENT CAPITAL — cibles family offices QC + ON
+    match /capitalTargets/{docId} {
+      allow read, write: if isAdmin();
+    }
+
+    // AGENT CAPITAL — touchpoints (lettres, vidéos, courriels, appels)
+    match /capitalApproaches/{docId} {
+      allow read, write: if isAdmin();
+    }
+
+    // AGENT CAPITAL — recherche profonde sur cibles
+    match /capitalResearch/{docId} {
+      allow read, write: if isAdmin();
+    }
+
+    // AGENT COURTIERS — courtiers commerciaux
+    match /brokers/{docId} {
+      allow read, write: if isAdmin();
+    }
+
+    // AGENT COURTIERS — communications avec courtiers
+    match /brokerCommunications/{docId} {
+      allow read, write: if isAdmin();
+    }
+
+    // AGENT PROMOTEURS — promoteurs immobiliers
+    match /promoters/{docId} {
+      allow read, write: if isAdmin();
+    }
+
+    // AGENT PROMOTEURS — communications avec promoteurs
+    match /promoterApproaches/{docId} {
+      allow read, write: if isAdmin();
+    }
+
+    // AUDIT — journal central des actions des 3 agents
+    match /agentAuditLog/{docId} {
+      allow read: if isAdmin();
+      allow write: if false; // écriture seulement via Admin SDK
+    }
+
+    // ─────────────────────────────────────────────────────────────
+    // NORAH V2 — Assistante téléphonique IA (2026-05-02)
+    // Toutes les écritures se font via Netlify Functions avec service
+    // account (Admin SDK bypasse les règles). Ces rules empêchent
+    // tout accès direct depuis le browser.
+    // ─────────────────────────────────────────────────────────────
+
+    // PARTENAIRES VIP — co-prêteurs (Robitaille, Daoust, Boivin, etc.)
+    // Schéma: { phone, email, fullName, prenom, nom, organisation,
+    //           categorie ('co-preteur'|'notaire'|'avocat'|'autre'),
+    //           dossiers_conjoints: string[], notes, createdAt }
+    match /partenaires/{docId} {
+      allow read: if isAdmin();
+      allow write: if isAdmin();
+    }
+
+    // APPELS — logs téléphoniques Norah
+    // Schéma: { caller_phone, caller_role, caller_identified, dossier_id,
+    //           scenario, started_at, ended_at, duration_sec, transcript_url,
+    //           summary, action_taken, sms_sent, email_sent, vip_alert,
+    //           qualified (bool), notes }
+    match /appels/{docId} {
+      allow read: if isAdmin();
+      allow write: if false; // écriture seulement via service account (Norah backend)
+    }
+
+    // SESSIONS NORAH — état temporaire d'un appel en cours
+    // Schéma: { caller_phone, role, identified, dossier_id, expires_at }
+    // Auto-purge après 1h via TTL Firestore (à configurer côté console)
+    match /norahSessions/{docId} {
+      allow read, write: if false; // service account only
+    }
+
+  }
+}

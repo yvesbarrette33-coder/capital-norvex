@@ -1,0 +1,75 @@
+{
+  "_meta": {
+    "description": "Courtiers commerciaux fictifs pour tester la structure. À remplacer par 30-50 courtiers réels validés par Yves.",
+    "version": 0,
+    "created": "2026-04-30",
+    "status": "FICTIFS — pour validation de structure uniquement"
+  },
+  "brokers": [
+    {
+      "name": "Marie-Ève Tremblay (FICTIF)",
+      "firmName": "Tremblay Commercial Inc. (FICTIF)",
+      "licenseNumber": "QC-FICTIF-001",
+      "region": "QC",
+      "specialty": ["multilogement", "construction"],
+      "typicalDealSize": {"min": 3000000, "max": 12000000},
+      "relationshipStatus": "warm",
+      "dealsReceived": 2,
+      "dealsClosed": 0,
+      "preferredChannel": "email",
+      "notes": "Recommandée par CMBA-Québec, intéressée par Norvex"
+    },
+    {
+      "name": "Jean-Philippe Côté (FICTIF)",
+      "firmName": "JPC Real Estate Brokerage (FICTIF)",
+      "licenseNumber": "QC-FICTIF-002",
+      "region": "QC",
+      "specialty": ["terrain", "commercial"],
+      "typicalDealSize": {"min": 5000000, "max": 25000000},
+      "relationshipStatus": "active",
+      "dealsReceived": 5,
+      "dealsClosed": 1,
+      "preferredChannel": "phone",
+      "notes": "Champion régional Montréal, deal carte mensuelle"
+    },
+    {
+      "name": "Sandra Patel (FICTIF)",
+      "firmName": "Patel Commercial Group (FICTIF)",
+      "licenseNumber": "ON-FICTIF-001",
+      "region": "ON",
+      "specialty": ["multilogement", "commercial"],
+      "typicalDealSize": {"min": 4000000, "max": 18000000},
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "linkedin",
+      "notes": "Identifiée via CMBA-ON, à approcher avec deal card EN"
+    },
+    {
+      "name": "Carlos Mendes (FICTIF)",
+      "firmName": "Mendes Realty Advisors (FICTIF)",
+      "licenseNumber": "ON-FICTIF-002",
+      "region": "ON",
+      "specialty": ["construction"],
+      "typicalDealSize": {"min": 6000000, "max": 30000000},
+      "relationshipStatus": "warm",
+      "dealsReceived": 1,
+      "dealsClosed": 0,
+      "preferredChannel": "email",
+      "notes": "A déjà soumis 1 dossier, suivi requis"
+    },
+    {
+      "name": "Sophie Lévesque (FICTIF)",
+      "firmName": "Lévesque & Associés Courtage (FICTIF)",
+      "licenseNumber": "QC-FICTIF-003",
+      "region": "QC",
+      "specialty": ["multilogement"],
+      "typicalDealSize": {"min": 2500000, "max": 8000000},
+      "relationshipStatus": "warm",
+      "dealsReceived": 1,
+      "dealsClosed": 1,
+      "preferredChannel": "email",
+      "notes": "1er deal fermé, candidate champion"
+    }
+  ]
+}

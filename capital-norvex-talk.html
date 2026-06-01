@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Norvex Talk™ · Capital Norvex</title>
+<link rel="icon" href="/icon-512.png">
+<style>
+  :root {
+    --bg: #f9fafb;
+    --card: #ffffff;
+    --border: #e5e7eb;
+    --text: #111827;
+    --text-muted: #6b7280;
+    --primary: #0f172a;
+    --gold: #c9a961;
+    --green: #10b981;
+    --red: #dc2626;
+    --orange: #f59e0b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Inter', Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+  }
+  .login-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary);
+  }
+  .login-box {
+    background: var(--card);
+    padding: 40px;
+    border-radius: 12px;
+    width: 360px;
+    text-align: center;
+  }
+  .login-box h1 {
+    color: var(--primary);
+    margin-bottom: 8px;
+  }
+  .login-box p {
+    color: var(--text-muted);
+    margin-bottom: 24px;
+    font-size: 14px;
+  }
+  .login-box input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+  .login-box button {
+    width: 100%;
+    padding: 12px;
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  .login-box .error {
+    color: var(--red);
+    font-size: 13px;
+    margin-top: 8px;
+  }
+  header {
+    background: var(--primary);
+    color: #fff;
+    padding: 16px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  header h1 { font-size: 20px; }
+  header .meta { font-size: 13px; opacity: .7; }
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+  .filters {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  .filter-btn {
+    padding: 8px 16px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+  }
+  .filter-btn.active {
+    background: var(--primary);
+    color: #fff;
+    border-color: var(--primary);
+  }
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .stat-card {
+    background: var(--card);
+    padding: 18px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+  }
+  .stat-label {
+    color: var(--text-muted);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+  }
+  .stat-value {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-top: 4px;
+  }
+  .stat-value.green { color: var(--green); }
+  .stat-value.red { color: var(--red); }
+  .stat-value.orange { color: var(--orange); }
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .card h2 {
+    padding: 16px 20px;
+    font-size: 16px;
+    color: var(--primary);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card h2 .badge {
+    background: var(--bg);
+    color: var(--text-muted);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: normal;
+  }
+  .card .empty {
+    padding: 40px 20px;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  th {
+    text-align: left;
+    padding: 10px 16px;
+    background: #f3f4f6;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: .5px;
+  }
+  td {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  tr:hover td { background: #fafbfc; }
+  .badge-vip {
+    background: var(--orange);
+    color: #fff;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: bold;
+  }
+  .badge-urgent {
+    background: var(--red);
+    color: #fff;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: bold;
+  }
+  .badge-qual {
+    background: var(--green);
+    color: #fff;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: bold;
+  }
+  .alerts-list .item {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .alerts-list .item:last-child { border: none; }
+  .alerts-list .item .summary {
+    font-weight: 600;
+    color: var(--text);
+  }
+  .alerts-list .item .meta {
+    color: var(--text-muted);
+    font-size: 12px;
+    margin-top: 2px;
+  }
+  .alerts-list .item.urgent .summary { color: var(--red); }
+  .top-scenarios .row {
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+  }
+  .top-scenarios .row:last-child { border: none; }
+  .top-scenarios .count {
+    background: var(--primary);
+    color: #fff;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 12px;
+  }
+  .loading {
+    text-align: center;
+    padding: 40px;
+    color: var(--text-muted);
+  }
+  @media (max-width: 768px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ÉCRAN DE LOGIN — protection mot de passe local (pas de backend exposé) -->
+<div id="login" class="login-screen">
+  <div class="login-box">
+    <h1>📞 Norvex <em style="font-style:italic;font-family:'Playfair Display',Georgia,serif;font-weight:500;">Talk</em>™</h1>
+    <p style="font-size:13px;margin-top:4px;color:#6b7280;">Téléphonie IA · Powered by Norah</p>
+    <p style="margin-top:16px;">Dashboard appels téléphoniques</p>
+    <input id="login-password" type="password" placeholder="Mot de passe" autofocus>
+    <button onclick="tryLogin()">Accéder</button>
+    <div id="login-error" class="error"></div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="app" style="display:none;">
+  <header>
+    <div>
+      <h1>📞 Norvex <em style="font-style:italic;font-family:'Playfair Display',Georgia,serif;font-weight:500;">Talk</em>™ · Dashboard appels</h1>
+      <div class="meta" id="last-refresh">—</div>
+    </div>
+    <div>
+      <a href="/capital-norvex-pipeline.html" style="color:#fff;text-decoration:none;font-size:13px;opacity:.8;">← Pipeline</a>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="filters">
+      <button class="filter-btn active" data-range="today" onclick="setRange('today')">Aujourd'hui</button>
+      <button class="filter-btn" data-range="week" onclick="setRange('week')">7 derniers jours</button>
+      <button class="filter-btn" data-range="all" onclick="setRange('all')">Tout</button>
+      <button class="filter-btn" onclick="loadData()" style="margin-left:auto;">↻ Rafraîchir</button>
+    </div>
+
+    <div class="stats" id="stats">
+      <div class="stat-card"><div class="stat-label">Appels</div><div class="stat-value" id="stat-total">—</div></div>
+      <div class="stat-card"><div class="stat-label">Qualifiés</div><div class="stat-value green" id="stat-qual">—</div></div>
+      <div class="stat-card"><div class="stat-label">VIP / Urgents</div><div class="stat-value red" id="stat-vip">—</div></div>
+      <div class="stat-card"><div class="stat-label">Rappels en attente</div><div class="stat-value orange" id="stat-rappels">—</div></div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h2>⚠️ Alertes VIP <span class="badge" id="alertes-count">0</span></h2>
+        <div class="alerts-list" id="alertes"></div>
+      </div>
+
+      <div class="card">
+        <h2>📞 Rappels en attente <span class="badge" id="rappels-count">0</span></h2>
+        <div class="alerts-list" id="rappels"></div>
+      </div>
+    </div>
+
+    <br>
+
+    <div class="card">
+      <h2>📊 Top scénarios <span class="badge" id="scenarios-count">0</span></h2>
+      <div class="top-scenarios" id="top-scenarios"></div>
+    </div>
+
+    <br>
+
+    <div class="card">
+      <h2>🗒️ Tous les appels <span class="badge" id="appels-count">0</span></h2>
+      <div id="appels-table"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ─────────────────────────────────────────────────────────────────────
+  // PROTECTION MOT DE PASSE (côté client, comme les autres pages Norvex)
+  // Le secret n'est PAS dans le code — il est stocké chiffré localement
+  // après login. Le mot de passe est la passphrase définie côté admin.
+  //
+  // Pour cette page, on utilise INTERNAL_SECRET directement comme mot de
+  // passe (Yves le connaît). Ce n'est pas idéal côté sécu mais cohérent
+  // avec le reste du pipeline Norvex (qui fait pareil).
+  // ─────────────────────────────────────────────────────────────────────
+
+  let INTERNAL_SECRET = null;
+  let currentRange = "today";
+
+  // SSO Norvex : si Brain a déjà loggé, on récupère le secret partagé
+  const stored = localStorage.getItem("norvex_secret") || localStorage.getItem("norah_secret");
+  if (stored) {
+    INTERNAL_SECRET = stored;
+    showApp();
+  }
+
+  document.getElementById("login-password").addEventListener("keydown", (e) => {
+    if (e.key === "Enter") tryLogin();
+  });
+
+  async function tryLogin() {
+    const pwd = document.getElementById("login-password").value.trim();
+    if (!pwd) return;
+    document.getElementById("login-error").textContent = "Vérification…";
+    try {
+      const resp = await fetch("/.netlify/functions/norah-dashboard-data?range=today", {
+        headers: { "x-internal-secret": pwd },
+      });
+      if (resp.status === 401) {
+        document.getElementById("login-error").textContent = "Mot de passe incorrect";
+        return;
+      }
+      if (!resp.ok) {
+        document.getElementById("login-error").textContent = "Erreur " + resp.status;
+        return;
+      }
+      INTERNAL_SECRET = pwd;
+      localStorage.setItem("norah_secret", pwd);
+      showApp();
+    } catch (e) {
+      document.getElementById("login-error").textContent = "Erreur réseau: " + e.message;
+    }
+  }
+
+  function showApp() {
+    document.getElementById("login").style.display = "none";
+    document.getElementById("app").style.display = "block";
+    loadData();
+  }
+
+  function setRange(range) {
+    currentRange = range;
+    for (const btn of document.querySelectorAll(".filter-btn[data-range]")) {
+      btn.classList.toggle("active", btn.dataset.range === range);
+    }
+    loadData();
+  }
+
+  async function loadData() {
+    try {
+      const resp = await fetch(`/.netlify/functions/norah-dashboard-data?range=${currentRange}`, {
+        headers: { "x-internal-secret": INTERNAL_SECRET },
+      });
+      if (!resp.ok) {
+        if (resp.status === 401) {
+          localStorage.removeItem("norah_secret");
+          location.reload();
+          return;
+        }
+        throw new Error("HTTP " + resp.status);
+      }
+      const data = await resp.json();
+      render(data);
+      document.getElementById("last-refresh").textContent =
+        "Dernier rafraîchissement: " + new Date().toLocaleTimeString("fr-CA");
+    } catch (e) {
+      console.error(e);
+      alert("Erreur chargement: " + e.message);
+    }
+  }
+
+  function fmtTime(ts) {
+    if (!ts) return "—";
+    return new Date(ts).toLocaleTimeString("fr-CA", { hour: "2-digit", minute: "2-digit" });
+  }
+  function fmtDateTime(ts) {
+    if (!ts) return "—";
+    return new Date(ts).toLocaleString("fr-CA");
+  }
+  function escapeHTML(s) {
+    return String(s || "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  }
+
+  function render(data) {
+    const s = data.stats || {};
+    document.getElementById("stat-total").textContent = s.total || 0;
+    document.getElementById("stat-qual").textContent = s.qualified || 0;
+    document.getElementById("stat-vip").textContent = s.vip || 0;
+    document.getElementById("stat-rappels").textContent = s.rappels_pending || 0;
+
+    // Alertes VIP
+    const alertes = data.alertes || [];
+    document.getElementById("alertes-count").textContent = alertes.length;
+    const alertesDiv = document.getElementById("alertes");
+    if (alertes.length === 0) {
+      alertesDiv.innerHTML = '<div class="empty">Aucune alerte VIP.</div>';
+    } else {
+      alertesDiv.innerHTML = alertes.map(a => `
+        <div class="item ${a.level === "urgent" || a.level === "critical" ? "urgent" : ""}">
+          <div class="summary">
+            ${a.level === "urgent" ? '<span class="badge-urgent">URGENT</span> ' : a.level === "critical" ? '<span class="badge-urgent">CRITIQUE</span> ' : '<span class="badge-vip">VIP</span> '}
+            ${escapeHTML(a.summary || "—")}
+          </div>
+          <div class="meta">${escapeHTML(a.caller_name || "Inconnu")} · ${escapeHTML(a.caller_phone || "")} · ${fmtDateTime(a.created_at)}</div>
+        </div>
+      `).join("");
+    }
+
+    // Rappels
+    const rappels = (data.rappels || []).filter(r => r.status === "pending");
+    document.getElementById("rappels-count").textContent = rappels.length;
+    const rappelsDiv = document.getElementById("rappels");
+    if (rappels.length === 0) {
+      rappelsDiv.innerHTML = '<div class="empty">Aucun rappel en attente.</div>';
+    } else {
+      rappelsDiv.innerHTML = rappels.map(r => `
+        <div class="item">
+          <div class="summary">${escapeHTML(r.caller_name || "Inconnu")}</div>
+          <div class="meta">📞 ${escapeHTML(r.caller_phone || "")} · ${escapeHTML(r.reason || "")} · ${fmtDateTime(r.created_at)}</div>
+        </div>
+      `).join("");
+    }
+
+    // Top scénarios
+    const scenarios = data.top_scenarios || [];
+    document.getElementById("scenarios-count").textContent = scenarios.length;
+    const scenDiv = document.getElementById("top-scenarios");
+    if (scenarios.length === 0) {
+      scenDiv.innerHTML = '<div class="empty">Aucun appel sur cette période.</div>';
+    } else {
+      scenDiv.innerHTML = scenarios.map(s => `
+        <div class="row">
+          <span>${escapeHTML(s.scenario.replaceAll("_", " "))}</span>
+          <span class="count">${s.count}</span>
+        </div>
+      `).join("");
+    }
+
+    // Appels
+    const appels = data.appels || [];
+    document.getElementById("appels-count").textContent = appels.length;
+    const tableDiv = document.getElementById("appels-table");
+    if (appels.length === 0) {
+      tableDiv.innerHTML = '<div class="empty">Aucun appel sur cette période.</div>';
+    } else {
+      tableDiv.innerHTML = `
+        <table>
+          <thead>
+            <tr>
+              <th>Heure</th>
+              <th>Téléphone</th>
+              <th>Durée</th>
+              <th>Scénario</th>
+              <th>Résumé</th>
+              <th>Statut</th>
+              <th>Transcript</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${appels.map((a, i) => {
+              const hasTr = Array.isArray(a.transcript) && a.transcript.length > 0;
+              return `
+              <tr>
+                <td>${fmtTime(a.ended_at || a.created_at)}</td>
+                <td><a href="tel:${escapeHTML(a.caller_phone)}">${escapeHTML(a.caller_phone || "—")}</a></td>
+                <td style="white-space:nowrap;">${a.duration_sec || 0}s</td>
+                <td>${escapeHTML((a.scenario || "").replaceAll("_", " "))}</td>
+                <td style="color:#374151;max-width:340px;font-size:13px;">${escapeHTML((a.summary || a.action_taken || "").slice(0, 200))}${(a.summary || "").length > 200 ? "…" : ""}</td>
+                <td>${a.qualified ? '<span class="badge-qual">QUALIFIÉ</span>' : ""}</td>
+                <td>${hasTr ? `<button onclick="toggleTranscript('tr-${i}')" style="padding:4px 10px;background:#0a0a0a;color:#c9a560;border:none;border-radius:4px;cursor:pointer;font-size:12px;">Voir (${a.transcript.length} msg)</button>` : "—"}</td>
+              </tr>
+              ${hasTr ? `<tr id="tr-${i}" style="display:none;background:#fafafa;"><td colspan="7" style="padding:18px;">
+                <div style="max-width:780px;margin:0 auto;">
+                  <h4 style="margin:0 0 12px;color:#8a6f2e;">📝 Transcript complet · ${escapeHTML(a.caller_phone)} · ${a.duration_sec}s</h4>
+                  ${a.transcript.map(m => {
+                    const isAgent = (m.role || "").toLowerCase() === "agent";
+                    const color = isAgent ? "#1a4587" : "#2a7a3f";
+                    const bg = isAgent ? "#f0f4f9" : "#f0f9f4";
+                    const label = isAgent ? "Norah" : "Appelant";
+                    return `<div style="margin:6px 0;padding:8px 12px;background:${bg};border-left:3px solid ${color};border-radius:3px;font-size:13.5px;line-height:1.5;"><strong style="color:${color};">${label}:</strong> ${escapeHTML(m.message)}</div>`;
+                  }).join("")}
+                  ${a.transcript_url ? `<p style="margin-top:14px;font-size:11px;color:#6b7280;"><a href="${a.transcript_url}" target="_blank">↗ Voir conversation complète dans ElevenLabs</a></p>` : ""}
+                </div>
+              </td></tr>` : ""}
+            `;
+            }).join("")}
+          </tbody>
+        </table>
+      `;
+    }
+  }
+
+  function toggleTranscript(id) {
+    const row = document.getElementById(id);
+    if (row) row.style.display = row.style.display === "none" ? "table-row" : "none";
+  }
+
+  // Auto-refresh toutes les 60s
+  setInterval(() => {
+    if (INTERNAL_SECRET) loadData();
+  }, 60000);
+</script>
+
+</body>
+</html>

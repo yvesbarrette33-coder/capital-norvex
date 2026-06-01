@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Partner Broker Agreement — Capital Norvex</title>
+<meta name="robots" content="noindex,nofollow">
+<!--
+  ⚠ LEGAL DRAFT — TO BE VALIDATED BY COUNSEL BEFORE PRODUCTION
+  Mirrors the FR design (Convention_Pret_CapitalNorvex.pdf style)
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0A0A0A;
+    --ink-soft: #1a1a1a;
+    --gold: #C8B070;
+    --gold-bright: #D4B776;
+    --gold-dark: #9A8554;
+    --cream: #FBF7EB;
+    --cream-warm: #F2E8D0;
+    --cream-band: #ECDFB8;
+    --stone: #d6cdb8;
+    --muted: #6a6a6a;
+    --green: #4a7c4a;
+    --green-bg: #eef3ee;
+    --red: #b03030;
+    --red-bg: #fdecec;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', -apple-system, system-ui, sans-serif;
+    background: #fff;
+    color: var(--ink);
+    line-height: 1.55;
+    font-size: 13.5px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page {
+    max-width: 820px;
+    margin: 0 auto;
+    background: #fff;
+    border-bottom: 3px solid var(--gold);
+    page-break-after: always;
+  }
+  .doc-header {
+    background: var(--ink);
+    color: #fff;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 24px;
+    padding: 14px 24px;
+    align-items: center;
+    border-bottom: 3px solid var(--gold);
+  }
+  .doc-header-logo { display: flex; align-items: center; gap: 14px; }
+  .doc-header-logo img { width: 48px; height: 48px; object-fit: contain; }
+  .doc-header-brand { font-weight: 700; font-size: 16px; letter-spacing: 1.2px; line-height: 1.1; color: #fff; }
+  .doc-header-tagline { color: var(--gold); font-size: 10.5px; margin-top: 3px; letter-spacing: 0.3px; }
+  .doc-header-right { text-align: right; color: var(--gold); }
+  .doc-header-doctype { font-weight: 700; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; }
+  .doc-header-subtype { font-size: 10.5px; letter-spacing: 1px; margin-top: 2px; color: var(--gold); opacity: 0.9; }
+  .doc-header-pageno { font-size: 9.5px; color: #888; margin-top: 4px; }
+  .doc-footer {
+    background: var(--ink); color: #aaa;
+    padding: 11px 24px;
+    display: grid; grid-template-columns: 1fr auto;
+    font-size: 10.5px; letter-spacing: 0.3px;
+    border-top: 3px solid var(--gold);
+  }
+  .doc-footer-right { text-align: right; color: #aaa; }
+  .doc-footer-right a { color: #aaa; text-decoration: none; }
+  .doc-body { padding: 36px 44px 50px 44px; background: #fff; min-height: 800px; }
+  @media (max-width: 700px) { .doc-body { padding: 28px 22px 36px 22px; } }
+  .cover-logo-block { text-align: center; margin: 60px 0 32px 0; }
+  .cover-logo-block img { max-width: 180px; height: auto; }
+  .cover-title-band {
+    background: var(--ink); color: var(--gold);
+    padding: 22px 24px; text-align: center;
+    border-top: 2px solid var(--gold); border-bottom: 2px solid var(--gold);
+    margin: 24px 0 0 0;
+  }
+  .cover-title-band h1 { font-size: 32px; font-weight: 700; letter-spacing: 2px; color: var(--gold); line-height: 1.1; }
+  .cover-subtitle { text-align: center; margin: 22px 0 8px 0; font-size: 22px; font-weight: 700; letter-spacing: 1px; color: var(--ink); }
+  .cover-edition { text-align: center; color: #aaa; font-size: 13px; margin-bottom: 38px; font-style: italic; }
+  .cover-fields { margin: 0 auto; max-width: 600px; border: 1px solid var(--cream-warm); }
+  .cover-field {
+    display: grid; grid-template-columns: 180px 1fr;
+    background: var(--cream-warm);
+    border-bottom: 1px solid #e0d0a0; align-items: center;
+  }
+  .cover-field:nth-child(even) { background: var(--cream); }
+  .cover-field:last-child { border-bottom: none; }
+  .cover-field-label { padding: 10px 16px; font-weight: 700; font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--ink); }
+  .cover-field-value { padding: 10px 16px; font-size: 13.5px; color: var(--ink); border-left: 1px solid #e0d0a0; }
+  .cover-tagline { text-align: center; margin-top: 38px; color: var(--gold-dark); font-style: italic; font-size: 14px; }
+  .cover-confidential { text-align: center; margin-top: 8px; color: #999; font-size: 11.5px; font-style: italic; }
+  .section-banner {
+    background: var(--ink); color: var(--gold);
+    padding: 11px 18px; font-weight: 700; font-size: 12.5px;
+    letter-spacing: 1.2px; text-transform: uppercase;
+    border-top: 1px solid var(--gold); border-bottom: 1px solid var(--gold);
+    margin: 28px 0 14px 0;
+  }
+  .subsection-banner {
+    background: var(--cream-warm); color: var(--ink);
+    padding: 7px 14px; font-weight: 700; font-size: 11.5px;
+    margin: 18px 0 10px 0; border-left: 2px solid var(--gold);
+  }
+  article p { margin-bottom: 9px; }
+  article ul { padding-left: 22px; margin: 8px 0 12px 0; }
+  article li { margin-bottom: 4px; }
+  .field-row { margin: 10px 0; }
+  .field-row-label { font-weight: 600; font-size: 11.5px; color: var(--gold-dark); margin-bottom: 4px; }
+  .field-row-value { border-bottom: 1px solid var(--ink); padding: 4px 0; min-height: 22px; font-weight: 500; }
+  table.fancy-table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 12.5px; }
+  table.fancy-table thead th {
+    background: var(--ink); color: var(--gold);
+    padding: 10px 14px; text-align: left;
+    font-weight: 700; font-size: 11px; letter-spacing: 0.8px; text-transform: uppercase;
+  }
+  table.fancy-table tbody td { padding: 9px 14px; border-bottom: 1px solid var(--cream); }
+  table.fancy-table tbody tr:nth-child(even) td { background: var(--cream); }
+  table.fancy-table tbody tr:nth-child(odd) td { background: #fff; }
+  .legal-warn {
+    margin: 22px 0; padding: 14px 18px;
+    background: #fff8e6; border-left: 3px solid #d4a017;
+    font-size: 12.5px; color: #6a4f00; font-style: italic;
+  }
+  .signature-section { background: var(--ink); color: var(--cream); padding: 42px 44px; }
+  @media (max-width: 700px) { .signature-section { padding: 28px 22px; } }
+  .signature-section h2 {
+    color: var(--gold); font-size: 18px; letter-spacing: 1.5px;
+    text-transform: uppercase; margin-bottom: 8px; font-weight: 700;
+  }
+  .signature-section .signature-tagline { color: #ccc; font-size: 13px; margin-bottom: 20px; }
+  .sig-canvas-wrap { background: #fff; border: 1px solid var(--gold); padding: 6px; margin-bottom: 12px; position: relative; }
+  #sig-canvas { display: block; width: 100%; height: 180px; background: #fff; cursor: crosshair; touch-action: none; }
+  .sig-placeholder { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #bbb; font-style: italic; font-size: 13px; pointer-events: none; }
+  .sig-placeholder.is-hidden { display: none; }
+  .sig-tools { display: flex; justify-content: space-between; align-items: center; font-size: 11.5px; color: #999; margin-bottom: 18px; }
+  .clear-btn { background: transparent; border: 1px solid #555; color: #ccc; padding: 5px 12px; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; font-family: inherit; }
+  .clear-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .accept-row { margin: 16px 0 22px 0; display: flex; align-items: flex-start; gap: 10px; color: #ddd; font-size: 13px; line-height: 1.55; }
+  .accept-row input[type="checkbox"] { margin-top: 3px; accent-color: var(--gold); transform: scale(1.15); }
+  .full-name-input { width: 100%; padding: 12px 14px; background: rgba(255,255,255,0.05); border: 1px solid rgba(184,151,90,0.4); color: var(--cream); font-family: inherit; font-size: 14px; margin-bottom: 18px; }
+  .full-name-input:focus { outline: none; border-color: var(--gold); }
+  .submit-btn { width: 100%; background: var(--gold); color: var(--ink); border: none; padding: 16px; font-family: inherit; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; cursor: pointer; transition: background 0.2s; }
+  .submit-btn:hover:not(:disabled) { background: var(--gold-bright); }
+  .submit-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .submit-note { margin-top: 12px; font-size: 11.5px; color: #888; font-style: italic; text-align: center; }
+  .status-msg { margin-top: 24px; padding: 16px 20px; text-align: center; font-size: 14px; display: none; }
+  .status-msg.is-success { display: block; background: var(--green-bg); border: 1px solid var(--green); color: var(--green); }
+  .status-msg.is-error { display: block; background: var(--red-bg); border: 1px solid var(--red); color: var(--red); }
+  .state-screen { background: #fff; text-align: center; padding: 100px 24px; color: var(--muted); }
+  .state-screen h2 { font-size: 24px; margin-bottom: 14px; color: var(--ink); font-weight: 700; }
+  .state-screen .icon { font-size: 40px; margin-bottom: 16px; }
+  .state-screen .icon.ok { color: var(--green); }
+  .state-screen .icon.bad { color: var(--red); }
+</style>
+</head>
+<body>
+
+<div id="loading-screen" class="state-screen">Loading the agreement…</div>
+
+<div id="invalid-screen" class="state-screen" hidden>
+  <div class="icon bad">✗</div>
+  <h2>Invalid or expired link</h2>
+  <p>This agreement cannot be opened. The link may have expired or already been used.</p>
+  <p style="margin-top:14px;">For a new link, please contact <a href="mailto:info@capitalnorvex.com" style="color:var(--gold-dark);">info@capitalnorvex.com</a>.</p>
+</div>
+
+<div id="signed-screen" class="state-screen" hidden>
+  <div class="icon ok">✓</div>
+  <h2>Agreement already signed</h2>
+  <p>You have already signed this agreement. Welcome to the Capital Norvex Partner Broker circle.</p>
+  <p style="margin-top:14px;">A copy of the signed agreement has been sent to your email.</p>
+</div>
+
+<div id="main-screen" hidden>
+
+  <!-- ───── PAGE 1 — COVER ───── -->
+  <div class="page">
+    <header class="doc-header">
+      <div class="doc-header-logo">
+        <img src="assets/logo-norvex-officiel.png" alt="Capital Norvex">
+        <div>
+          <div class="doc-header-brand">CAPITAL NORVEX</div>
+          <div class="doc-header-tagline">Institutional Private Financing | Quebec &amp; Ontario</div>
+        </div>
+      </div>
+      <div class="doc-header-right">
+        <div class="doc-header-doctype">Partner Agreement</div>
+        <div class="doc-header-subtype">Mortgage Broker</div>
+        <div class="doc-header-pageno">p. 1</div>
+      </div>
+    </header>
+
+    <div class="doc-body" style="padding-top:30px;">
+      <div class="cover-logo-block">
+        <img src="assets/logo-norvex-officiel.png" alt="Capital Norvex">
+      </div>
+
+      <div class="cover-title-band">
+        <h1>PARTNER BROKER AGREEMENT</h1>
+      </div>
+      <div class="cover-subtitle">MORTGAGE BROKER</div>
+      <div class="cover-edition">Capital Norvex Inc. — Exclusive Program — Quebec &amp; Ontario</div>
+
+      <div class="cover-fields">
+        <div class="cover-field"><div class="cover-field-label">BROKER</div><div class="cover-field-value" id="cv-name">—</div></div>
+        <div class="cover-field"><div class="cover-field-label">FIRM / AGENCY</div><div class="cover-field-value" id="cv-agency">—</div></div>
+        <div class="cover-field"><div class="cover-field-label">BROKER NUMBER</div><div class="cover-field-value" id="cv-broker-number">—</div></div>
+        <div class="cover-field"><div class="cover-field-label">LICENSE NO.</div><div class="cover-field-value" id="cv-license">—</div></div>
+        <div class="cover-field"><div class="cover-field-label">PROVINCE</div><div class="cover-field-value" id="cv-province">—</div></div>
+        <div class="cover-field"><div class="cover-field-label">DATE</div><div class="cover-field-value" id="cv-date">—</div></div>
+      </div>
+
+      <div class="cover-tagline">Structured capital. Measured ambition.</div>
+      <div class="cover-confidential">CONFIDENTIAL — Reserved for the signing parties and their legal counsel</div>
+    </div>
+
+    <footer class="doc-footer">
+      <div>CAPITAL NORVEX | Confidential – For the exclusive use of the signing parties</div>
+      <div class="doc-footer-right">capitalnorvex.com | info@capitalnorvex.com</div>
+    </footer>
+  </div>
+
+  <!-- ───── PAGE 2 — Articles 1 to 4 ───── -->
+  <div class="page">
+    <header class="doc-header">
+      <div class="doc-header-logo">
+        <img src="assets/logo-norvex-officiel.png" alt="Capital Norvex">
+        <div><div class="doc-header-brand">CAPITAL NORVEX</div><div class="doc-header-tagline">Institutional Private Financing | Quebec &amp; Ontario</div></div>
+      </div>
+      <div class="doc-header-right">
+        <div class="doc-header-doctype">Partner Agreement</div>
+        <div class="doc-header-subtype">Mortgage Broker</div>
+        <div class="doc-header-pageno">p. 2</div>
+      </div>
+    </header>
+
+    <div class="doc-body">
+
+      <div class="section-banner">1. PARTIES</div>
+
+      <div class="subsection-banner">1.1 Lender — Capital Norvex Inc.</div>
+      <article>
+        <div class="field-row"><div class="field-row-label">LEGAL NAME</div><div class="field-row-value">CAPITAL NORVEX INC.</div></div>
+        <div class="field-row"><div class="field-row-label">HEAD OFFICE</div><div class="field-row-value">2705-1000 André-Prévost, Île-des-Sœurs (Verdun), Montréal, Quebec, H3E 0G2</div></div>
+        <div class="field-row"><div class="field-row-label">JURISDICTIONS</div><div class="field-row-value">Quebec &amp; Ontario, Canada</div></div>
+        <div class="field-row"><div class="field-row-label">AUTHORIZED REPRESENTATIVE</div><div class="field-row-value">Yves Barrette, Founder &amp; Director</div></div>
+      </article>
+
+      <div class="subsection-banner">1.2 Partner Broker</div>
+      <article>
+        <div class="field-row"><div class="field-row-label">FULL NAME</div><div class="field-row-value" id="art-name">—</div></div>
+        <div class="field-row"><div class="field-row-label">FIRM / AGENCY</div><div class="field-row-value" id="art-agency">—</div></div>
+        <div class="field-row"><div class="field-row-label">LICENSE NO. (OACIQ / FSRA)</div><div class="field-row-value" id="art-license">—</div></div>
+        <div class="field-row"><div class="field-row-label">PROVINCE OF PRACTICE</div><div class="field-row-value" id="art-province">—</div></div>
+        <div class="field-row"><div class="field-row-label">ASSIGNED PARTNER BROKER NUMBER</div><div class="field-row-value" id="art-broker-number">—</div></div>
+      </article>
+
+      <div class="section-banner">2. PURPOSE OF THE AGREEMENT</div>
+      <article>
+        <p>This agreement (the "<strong>Agreement</strong>") sets out the terms under which the Broker may, as a referral partner, submit private real-estate financing files to Capital Norvex on behalf of his or her clients.</p>
+        <p>Capital Norvex remains the sole judge of the acceptance, refusal, structure and terms of any financing granted to a client referred by the Broker. This Agreement does not create an exclusive book-of-business arrangement nor a representation mandate.</p>
+      </article>
+
+      <div class="section-banner">3. PARTNER BROKER NUMBER</div>
+      <article>
+        <p>Capital Norvex assigns the Broker a personal and unique <strong>partner broker number</strong> in the format <code>CN-YYYY-NNN</code>. This number is <strong>mandatory</strong> for any client file submission to the Capital Norvex platform.</p>
+        <p>Any submission made without a valid broker number will be <strong>rejected</strong>, and the analysis fees paid by the client will not be refunded. The Broker undertakes to keep the number confidential and not to share it with any third party.</p>
+      </article>
+
+      <div class="section-banner">4. BROKER COMPENSATION</div>
+      <article>
+        <p>Capital Norvex's file fees (3% to 3.5% of the financed amount) are collected by <strong>the notary (in Quebec) or the closing lawyer (in other applicable Canadian jurisdictions)</strong> at closing and paid <strong>exclusively to Capital Norvex</strong>. These fees do not cover the Broker's compensation.</p>
+        <p>The Broker's compensation is <strong>negotiated on a case-by-case basis for each referred file</strong>, based on the size of the loan, complexity, file quality, and value brought by the Broker, in addition to Capital Norvex's fees. The Broker submits an invoice to Capital Norvex prior to closing. At closing, <strong>the closing officer (notary or lawyer, depending on the jurisdiction) deducts this compensation from the proceeds of the approved financing and pays it directly to the Broker</strong>, with no separate disbursement required from the client beyond the financing itself.</p>
+        <p>The percentage retained for a given file is agreed upon between Capital Norvex and the Broker prior to the issuance of the letter of intent (LOI), disclosed in the LOI signed by the client who confirms acceptance. No compensation is owed to the Broker if the financing is not closed at the closing officer designated by Capital Norvex. Neither party is obligated to continue the relationship: neither the Broker nor Capital Norvex is required to accept or refer any given file.</p>
+      </article>
+
+    </div>
+
+    <footer class="doc-footer">
+      <div>CAPITAL NORVEX | Confidential – For the exclusive use of the signing parties</div>
+      <div class="doc-footer-right">capitalnorvex.com | info@capitalnorvex.com</div>
+    </footer>
+  </div>
+
+  <!-- ───── PAGE 3 — Articles 5 to 10 ───── -->
+  <div class="page">
+    <header class="doc-header">
+      <div class="doc-header-logo">
+        <img src="assets/logo-norvex-officiel.png" alt="Capital Norvex">
+        <div><div class="doc-header-brand">CAPITAL NORVEX</div><div class="doc-header-tagline">Institutional Private Financing | Quebec &amp; Ontario</div></div>
+      </div>
+      <div class="doc-header-right">
+        <div class="doc-header-doctype">Partner Agreement</div>
+        <div class="doc-header-subtype">Mortgage Broker</div>
+        <div class="doc-header-pageno">p. 3</div>
+      </div>
+    </header>
+
+    <div class="doc-body">
+
+      <div class="section-banner">5. FILE FEES — EXCLUSIVE TO CAPITAL NORVEX</div>
+      <article>
+        <p>Capital Norvex collects, from the notary at closing, file fees of <strong>3% to 3.5%</strong> of the financed amount. These fees are paid <strong>exclusively to Capital Norvex</strong> and may under no circumstance be charged against the Broker's commission or shared with the Broker.</p>
+      </article>
+
+      <div class="section-banner">6. NO ADDITIONAL COMMISSION</div>
+      <article>
+        <p>The Broker acknowledges that he or she is compensated solely under the grid set out in Article 4. On the same file, the Broker <strong>will not add any additional fee</strong> to the client (referral fee, administrative fee, premium, management fee, etc.) — the Article 4 grid is complete and final.</p>
+        <p>This pricing transparency is one of the strong commitments of the Capital Norvex broker program toward clients. The Broker may discuss this at any time with his or her dedicated agent if needed.</p>
+      </article>
+
+      <div class="section-banner">7. EXCLUSIVITY — ONLY AFTER THE COMMITMENT LETTER IS SIGNED</div>
+      <article>
+        <p><strong>Before the commitment letter is signed:</strong> no exclusivity is imposed. The Broker, like the client, remains free to shop around and compare our offer with that of other lenders. Our goal is to earn your trust through the quality and speed of our analysis — not through a restrictive clause.</p>
+        <p><strong>Once the commitment letter has been signed by the client</strong>, and to allow Capital Norvex to mobilize its notarial resources and structure the final financing, the file is handled <strong>exclusively by Capital Norvex for a period of thirty (30) days</strong>. During this period, the Broker agrees not to submit the same file to another private lender. After 30 days, if closing has not occurred for reasons beyond the Broker's or the client's control, the exclusivity ends automatically.</p>
+        <p>If any difficulty arises during this exclusivity period, Capital Norvex and the Broker will discuss it openly to find a fair resolution. The objective remains collaboration and clarity between the parties.</p>
+      </article>
+
+      <div class="section-banner">8. BROKER WORKSPACE 24/7 &amp; CONFIDENTIALITY</div>
+      <article>
+        <p>The Broker has access to a personal <strong>Broker Workspace</strong>, available 24/7 on desktop and mobile (installable application). It provides real-time tracking of each referred file (stage, status, approved amount, expected commission, estimated disbursement date) and delivers the Letter of Intent (LOI) ready to present to the client.</p>
+        <p>To respect client confidentiality, <strong>internal analyses</strong> (Score Norvex, Norvex Intel, credit committee reports, management notes) remain for the exclusive use of Capital Norvex. They are never shared automatically with the Broker, except when management specifically decides to forward a particular report for the needs of the file.</p>
+        <p>The Broker undertakes not to disclose to any third party the information communicated by Capital Norvex regarding an active file, except with the prior written consent of the client concerned.</p>
+      </article>
+
+      <div class="section-banner">9. DEDICATED COMMUNICATION CHANNEL</div>
+      <article>
+        <p>The <strong>Broker Workspace</strong> is the primary channel for tracking files: dashboard, submission of new clients, download of LOIs, real-time status. For any complex question or specific request, the Broker also benefits from a <strong>dedicated follow-up agent</strong>, a human point of contact for tailored exchanges.</p>
+        <p><strong>Before notarial signing</strong>, all file-related exchanges (instructions, documents, disbursements, releases, schedule) are centralized between Capital Norvex and the notary. The Broker addresses questions to his or her dedicated agent, who responds promptly; the Broker does not need to communicate directly with the notary during this phase.</p>
+        <p>The Broker submits the <strong>commission invoice</strong> through the Broker Workspace or to the dedicated agent. Capital Norvex then forwards the invoice to the notary together with the complete financing file, so that payment is ready at the time of signing.</p>
+        <p>The Broker is <strong>welcome at the notarial signing</strong> to collect his or her commission payment in person; at that point the Broker may interact freely with the notary in the usual manner.</p>
+      </article>
+
+      <div class="section-banner">10. GOOD FAITH AND COMPLIANCE OBLIGATIONS</div>
+      <article>
+        <p>The Broker undertakes to:</p>
+        <ul>
+          <li>Submit only complete, accurate and good-faith files;</li>
+          <li>Maintain a valid practice license at all times (OACIQ — Quebec or FSRA — Ontario);</li>
+          <li>Comply with all applicable laws and regulations, including those governing mortgage brokerage and consumer protection;</li>
+          <li>Promptly notify Capital Norvex of any suspension, revocation, modification or expiry of the license;</li>
+          <li>Refrain from any representation that could mislead a client as to the financing terms, review timelines or chances of acceptance.</li>
+        </ul>
+      </article>
+
+    </div>
+
+    <footer class="doc-footer">
+      <div>CAPITAL NORVEX | Confidential – For the exclusive use of the signing parties</div>
+      <div class="doc-footer-right">capitalnorvex.com | info@capitalnorvex.com</div>
+    </footer>
+  </div>
+
+  <!-- ───── PAGE 4 — Articles 11 to 14 ───── -->
+  <div class="page">
+    <header class="doc-header">
+      <div class="doc-header-logo">
+        <img src="assets/logo-norvex-officiel.png" alt="Capital Norvex">
+        <div><div class="doc-header-brand">CAPITAL NORVEX</div><div class="doc-header-tagline">Institutional Private Financing | Quebec &amp; Ontario</div></div>
+      </div>
+      <div class="doc-header-right">
+        <div class="doc-header-doctype">Partner Agreement</div>
+        <div class="doc-header-subtype">Mortgage Broker</div>
+        <div class="doc-header-pageno">p. 4</div>
+      </div>
+    </header>
+
+    <div class="doc-body">
+
+      <div class="section-banner">11. TERM AND TERMINATION</div>
+      <article>
+        <p>The Agreement takes effect on the date of electronic signature and remains in force for an initial term of <strong>twenty-four (24) months</strong>, automatically renewable for successive periods of twenty-four (24) months.</p>
+        <p>Either party may <strong>withdraw at any time</strong> upon a simple written notice of <strong>thirty (30) days</strong>, without justification or penalty. Files in progress at the date of withdrawal are carried through to closing under the terms of the Agreement, in order to protect the clients and the commission already earned by the Broker.</p>
+        <p>In the event of a serious breach of the obligations under the Agreement (notably Articles 5, 6, 7, 8, 9 or 10), Capital Norvex may terminate the Agreement early, after a prior discussion with the Broker where circumstances permit.</p>
+      </article>
+
+      <div class="section-banner">12. AMENDMENT</div>
+      <article>
+        <p>Capital Norvex may amend the terms of the Agreement (notably the commission grid) upon thirty (30) days' written notice. Failing written objection from the Broker within that period, the amendments are deemed accepted and binding on the Broker.</p>
+      </article>
+
+      <div class="section-banner">13. GOVERNING LAW AND COMPETENT COURTS</div>
+      <article>
+        <table class="fancy-table">
+          <tbody>
+            <tr><td style="width:35%;font-weight:600;">Governing law</td><td>Laws of the Province of Quebec (Canada) and applicable federal Canadian laws</td></tr>
+            <tr><td style="font-weight:600;">Competent courts</td><td>Judicial District of Montreal, Quebec</td></tr>
+            <tr><td style="font-weight:600;">Notices</td><td>In writing, including email to info@capitalnorvex.com</td></tr>
+            <tr><td style="font-weight:600;">Assignment</td><td>Prohibited without the prior written consent of Capital Norvex</td></tr>
+            <tr><td style="font-weight:600;">Entire agreement</td><td>This document constitutes the complete agreement between the parties</td></tr>
+            <tr><td style="font-weight:600;">Severability</td><td>Any invalid clause does not affect the remainder of the Agreement</td></tr>
+          </tbody>
+        </table>
+      </article>
+
+      <div class="section-banner">14. ELECTRONIC SIGNATURE</div>
+      <article>
+        <p>Pursuant to the <em>Act to establish a legal framework for information technology</em> (CQLR, c. C-1.1) and the <em>Canada Evidence Act</em>, the parties acknowledge the full legal value of the electronic signature affixed to this document.</p>
+        <p>The signature, time-stamp and signing IP address are retained by Capital Norvex for evidentiary and audit purposes, in accordance with the <em>Act respecting the protection of personal information in the private sector</em> (Law 25 — Quebec).</p>
+        <div class="legal-warn">
+          ⚠ By signing below, you acknowledge that you have read, understood and accepted in full the terms of this Mortgage Broker Partner Agreement with Capital Norvex Inc.
+        </div>
+      </article>
+
+    </div>
+
+    <footer class="doc-footer">
+      <div>CAPITAL NORVEX | Confidential – For the exclusive use of the signing parties</div>
+      <div class="doc-footer-right">capitalnorvex.com | info@capitalnorvex.com</div>
+    </footer>
+  </div>
+
+  <!-- ───── PAGE 5 — SIGNATURE ───── -->
+  <div class="page">
+    <header class="doc-header">
+      <div class="doc-header-logo">
+        <img src="assets/logo-norvex-officiel.png" alt="Capital Norvex">
+        <div><div class="doc-header-brand">CAPITAL NORVEX</div><div class="doc-header-tagline">Institutional Private Financing | Quebec &amp; Ontario</div></div>
+      </div>
+      <div class="doc-header-right">
+        <div class="doc-header-doctype">Partner Agreement</div>
+        <div class="doc-header-subtype">Mortgage Broker</div>
+        <div class="doc-header-pageno">p. 5</div>
+      </div>
+    </header>
+
+    <div class="signature-section">
+      <h2>Broker electronic signature</h2>
+      <p class="signature-tagline">Sign in the box below (mouse or finger on touch screen), enter your full name and confirm your acceptance of the Agreement.</p>
+
+      <div class="sig-canvas-wrap">
+        <canvas id="sig-canvas" width="700" height="180"></canvas>
+        <div class="sig-placeholder" id="sig-placeholder">Sign here</div>
+      </div>
+      <div class="sig-tools">
+        <span>Draw your signature as you would on paper</span>
+        <button type="button" class="clear-btn" id="sig-clear">Clear</button>
+      </div>
+
+      <input type="text" class="full-name-input" id="full-name" placeholder="Enter your full name" autocomplete="name" required>
+
+      <div class="accept-row">
+        <input type="checkbox" id="accept-checkbox">
+        <label for="accept-checkbox">
+          I declare that I have read and understood the entire Agreement above, and I consent to be bound by all of its terms, in particular the articles relating to compensation (art. 4), the file fees exclusive to Capital Norvex (art. 5), the absence of additional commission (art. 6), file exclusivity (art. 7) and client confidentiality (art. 8).
+        </label>
+      </div>
+
+      <button type="button" class="submit-btn" id="sign-btn" disabled>
+        Sign and finalize the partnership
+      </button>
+      <p class="submit-note">
+        Time-stamp and IP address recorded for evidentiary purposes · A copy will be sent to your email
+      </p>
+
+      <div class="status-msg" id="status-msg" role="status"></div>
+    </div>
+
+    <footer class="doc-footer">
+      <div>CAPITAL NORVEX | Confidential – For the exclusive use of the signing parties</div>
+      <div class="doc-footer-right">capitalnorvex.com | info@capitalnorvex.com</div>
+    </footer>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  var params = new URLSearchParams(window.location.search);
+  var token = params.get('token') || '';
+
+  var loadingEl  = document.getElementById('loading-screen');
+  var invalidEl  = document.getElementById('invalid-screen');
+  var signedEl   = document.getElementById('signed-screen');
+  var mainEl     = document.getElementById('main-screen');
+
+  function showOnly(el){
+    [loadingEl, invalidEl, signedEl, mainEl].forEach(function(e){ e.hidden = true; });
+    el.hidden = false;
+  }
+
+  if (params.get('preview') === '1') {
+    var dateStr = new Date().toLocaleDateString('en-CA', { year: 'numeric', month: 'long', day: 'numeric' });
+    var demo = {
+      name: 'Marie-Claude Dion',
+      agency: 'Multi-Prêts Mortgages',
+      brokerNumber: 'CN-2026-001',
+      licenseNo: 'OACIQ-12345',
+      province: 'Quebec'
+    };
+    document.getElementById('cv-name').textContent = demo.name;
+    document.getElementById('cv-agency').textContent = demo.agency;
+    document.getElementById('cv-broker-number').textContent = demo.brokerNumber;
+    document.getElementById('cv-license').textContent = demo.licenseNo;
+    document.getElementById('cv-province').textContent = demo.province;
+    document.getElementById('cv-date').textContent = dateStr;
+    document.getElementById('art-name').textContent = demo.name;
+    document.getElementById('art-agency').textContent = demo.agency;
+    document.getElementById('art-license').textContent = demo.licenseNo;
+    document.getElementById('art-province').textContent = demo.province;
+    document.getElementById('art-broker-number').textContent = demo.brokerNumber;
+    document.getElementById('full-name').value = demo.name;
+    showOnly(mainEl);
+    initSignaturePad();
+    return;
+  }
+
+  if (!token) { showOnly(invalidEl); return; }
+
+  fetch('/api/courtier-convention-info?token=' + encodeURIComponent(token))
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      if (!data.ok) { showOnly(invalidEl); return; }
+      if (data.alreadySigned) { showOnly(signedEl); return; }
+      var dateStr = new Date().toLocaleDateString('en-CA', { year: 'numeric', month: 'long', day: 'numeric' });
+      document.getElementById('cv-name').textContent = data.name || '—';
+      document.getElementById('cv-agency').textContent = data.agency || '—';
+      document.getElementById('cv-broker-number').textContent = data.brokerNumber || '—';
+      document.getElementById('cv-license').textContent = data.licenseNo || '—';
+      document.getElementById('cv-province').textContent = data.province || '—';
+      document.getElementById('cv-date').textContent = dateStr;
+      document.getElementById('art-name').textContent = data.name || '—';
+      document.getElementById('art-agency').textContent = data.agency || '—';
+      document.getElementById('art-license').textContent = data.licenseNo || '—';
+      document.getElementById('art-province').textContent = data.province || '—';
+      document.getElementById('art-broker-number').textContent = data.brokerNumber || '—';
+      if (data.name) document.getElementById('full-name').value = data.name;
+      showOnly(mainEl);
+      initSignaturePad();
+    })
+    .catch(function(){ showOnly(invalidEl); });
+
+  function initSignaturePad(){
+    var canvas = document.getElementById('sig-canvas');
+    var placeholder = document.getElementById('sig-placeholder');
+    var clearBtn = document.getElementById('sig-clear');
+    var fullName = document.getElementById('full-name');
+    var checkbox = document.getElementById('accept-checkbox');
+    var submitBtn = document.getElementById('sign-btn');
+    var statusMsg = document.getElementById('status-msg');
+
+    function resize(){
+      var rect = canvas.getBoundingClientRect();
+      var ratio = window.devicePixelRatio || 1;
+      canvas.width = rect.width * ratio;
+      canvas.height = rect.height * ratio;
+      var ctx = canvas.getContext('2d');
+      ctx.scale(ratio, ratio);
+      ctx.lineWidth = 2;
+      ctx.lineCap = 'round';
+      ctx.strokeStyle = '#0a0a0a';
+    }
+    resize();
+    window.addEventListener('resize', function(){ clear(); resize(); });
+
+    var drawing = false, hasInk = false, lastX = 0, lastY = 0;
+    function getXY(e){
+      var rect = canvas.getBoundingClientRect();
+      var pt = e.touches ? e.touches[0] : e;
+      return { x: pt.clientX - rect.left, y: pt.clientY - rect.top };
+    }
+    function start(e){ e.preventDefault(); drawing = true; var p = getXY(e); lastX = p.x; lastY = p.y; }
+    function move(e){
+      if (!drawing) return;
+      e.preventDefault();
+      var ctx = canvas.getContext('2d');
+      var p = getXY(e);
+      ctx.beginPath(); ctx.moveTo(lastX, lastY); ctx.lineTo(p.x, p.y); ctx.stroke();
+      lastX = p.x; lastY = p.y;
+      if (!hasInk) { hasInk = true; placeholder.classList.add('is-hidden'); updateBtn(); }
+    }
+    function end(){ drawing = false; }
+
+    canvas.addEventListener('mousedown', start);
+    canvas.addEventListener('mousemove', move);
+    canvas.addEventListener('mouseup', end);
+    canvas.addEventListener('mouseleave', end);
+    canvas.addEventListener('touchstart', start);
+    canvas.addEventListener('touchmove', move);
+    canvas.addEventListener('touchend', end);
+
+    function clear(){
+      var ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      hasInk = false; placeholder.classList.remove('is-hidden'); updateBtn();
+    }
+    clearBtn.addEventListener('click', clear);
+
+    function updateBtn(){
+      submitBtn.disabled = !(hasInk && fullName.value.trim().length >= 2 && checkbox.checked);
+    }
+    fullName.addEventListener('input', updateBtn);
+    checkbox.addEventListener('change', updateBtn);
+
+    submitBtn.addEventListener('click', function(){
+      if (submitBtn.disabled) return;
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Signing…';
+      statusMsg.className = 'status-msg'; statusMsg.textContent = '';
+      var payload = {
+        token: token,
+        signatureDataUrl: canvas.toDataURL('image/png'),
+        signerName: fullName.value.trim(),
+        accepted: checkbox.checked,
+        signedAt: new Date().toISOString()
+      };
+      fetch('/api/courtier-convention-sign', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(function(r){ return r.json().then(function(d){ return { ok: r.ok, data: d }; }); })
+      .then(function(res){
+        if (res.ok && res.data.ok) {
+          statusMsg.className = 'status-msg is-success';
+          statusMsg.textContent = '✓ Agreement signed. Welcome to Capital Norvex. A copy is on its way to your email.';
+          setTimeout(function(){ showOnly(signedEl); }, 1800);
+        } else {
+          statusMsg.className = 'status-msg is-error';
+          statusMsg.textContent = (res.data && res.data.error) || 'An error occurred. Please try again.';
+          submitBtn.disabled = false; submitBtn.textContent = 'Sign and finalize the partnership';
+        }
+      })
+      .catch(function(){
+        statusMsg.className = 'status-msg is-error';
+        statusMsg.textContent = 'Network error. Please try again in a moment.';
+        submitBtn.disabled = false; submitBtn.textContent = 'Sign and finalize the partnership';
+      });
+    });
+  }
+})();
+</script>
+</body>
+</html>

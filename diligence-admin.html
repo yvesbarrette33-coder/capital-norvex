@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Norvex Diligence™ — Capital Norvex</title>
+  <!-- PWA Admin (Suzanne+Yves installable) - 2026-05-20 -->
+  <link rel="manifest" href="/manifest-admin.json">
+  <meta name="theme-color" content="#0a0a0a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Norvex Admin">
+  <link rel="apple-touch-icon" href="/icon-192.png">
+<style>
+  :root {
+    --gold: #c9a227;
+    --gold-dark: #a88817;
+    --ink: #1a1a1a;
+    --cream: #fdfcf6;
+    --cream2: #fefef9;
+    --border: #d4c89a;
+    --muted: #8a7d5f;
+    --green: #2d8a3e;
+    --yellow: #d4a017;
+    --red: #c0392b;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--cream);
+    color: var(--ink);
+    font-family: Georgia, "Times New Roman", serif;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  header {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 18px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 3px solid var(--gold);
+  }
+  .logo {
+    font-family: Georgia, serif;
+    font-size: 22px;
+    letter-spacing: 2px;
+    font-weight: bold;
+    color: var(--gold);
+  }
+  .logo em {
+    font-style: italic;
+    font-weight: normal;
+    color: var(--cream);
+  }
+  main { max-width: 980px; margin: 24px auto; padding: 0 20px; }
+  h1 {
+    font-family: Georgia, serif;
+    font-size: 28px;
+    margin: 0 0 4px 0;
+  }
+  h1 em { color: var(--gold); font-style: italic; }
+  .tag {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .intro {
+    color: #555;
+    font-size: 14px;
+    max-width: 720px;
+    margin-bottom: 28px;
+  }
+  .card {
+    background: var(--cream2);
+    border: 1px solid var(--border);
+    padding: 24px;
+    margin-bottom: 22px;
+  }
+  .card-title {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 8px;
+  }
+  label {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 12px 0 4px 0;
+  }
+  input[type="text"], input[type="number"], select, textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    background: white;
+    font-size: 14px;
+    font-family: Georgia, serif;
+    border-radius: 2px;
+  }
+  input[type="file"] {
+    padding: 8px 0;
+    font-size: 13px;
+  }
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+  }
+  button {
+    background: var(--gold);
+    color: var(--ink);
+    border: none;
+    padding: 12px 24px;
+    font-family: Georgia, serif;
+    font-size: 14px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 2px;
+  }
+  button:hover { background: var(--gold-dark); }
+  button:disabled { opacity: 0.5; cursor: wait; }
+  button.secondary {
+    background: white;
+    color: var(--ink);
+    border: 1px solid var(--border);
+  }
+
+  .verdict-badge {
+    display: inline-block;
+    padding: 6px 14px;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    border-radius: 2px;
+  }
+  .verdict-green { background: #d4f4dc; color: var(--green); border: 1px solid var(--green); }
+  .verdict-yellow { background: #fdf2cf; color: var(--yellow); border: 1px solid var(--yellow); }
+  .verdict-red { background: #fadcd6; color: var(--red); border: 1px solid var(--red); }
+  .verdict-gray { background: #eee; color: #666; border: 1px solid #999; }
+
+  .result-section { margin-top: 24px; }
+  .result-section h3 {
+    font-size: 14px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    border-bottom: 2px solid var(--gold);
+    padding-bottom: 6px;
+    margin: 22px 0 12px 0;
+  }
+  .red-flags li { color: var(--red); margin-bottom: 4px; }
+  .yellow-flags li { color: #b88e10; margin-bottom: 4px; }
+  pre {
+    background: #f5efd9;
+    padding: 12px;
+    border: 1px solid var(--border);
+    font-family: 'DM Mono', Menlo, monospace;
+    font-size: 11px;
+    overflow-x: auto;
+    line-height: 1.4;
+  }
+  .login-screen {
+    max-width: 420px;
+    margin: 100px auto;
+    padding: 32px;
+    background: var(--cream2);
+    border: 1px solid var(--border);
+  }
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--ink);
+    color: var(--cream);
+    padding: 14px 20px;
+    border-left: 4px solid var(--gold);
+    font-size: 13px;
+    max-width: 360px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+    z-index: 100;
+  }
+  .toast.error { border-left-color: var(--red); }
+  .toast.success { border-left-color: var(--green); }
+  .spinner {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(0,0,0,0.18);
+    border-top-color: var(--ink);
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">CAPITAL <em>NORVEX</em></div>
+  <div style="font-size:11px;letter-spacing:2px;color:var(--gold)">NORVEX DILIGENCE™</div>
+</header>
+
+<!-- LOGIN -->
+<div id="loginScreen" class="login-screen">
+  <h1 style="margin-top:0;font-size:22px">Accès interne</h1>
+  <p style="color:#555;font-size:13px">Mot de passe administrateur Capital Norvex.</p>
+  <input type="password" id="secretInput" placeholder="Secret interne" autocomplete="current-password" style="margin-bottom:14px"/>
+  <button onclick="doLogin()">Se connecter</button>
+</div>
+
+<!-- APP -->
+<main id="appContainer" style="display:none">
+  <div class="tag">Avocat senior IA · Due diligence pré-engagement</div>
+  <h1>Norvex <em>Diligence</em>™</h1>
+  <p class="intro">
+    Vérification multi-registres avant la lettre d'engagement : Registre des entreprises (REQ),
+    Régie du bâtiment (RBQ), OACIQ, AMF, et Registre foncier (RFQ — analyse PDF). Verdict 🟢/🟡/🔴
+    avec recommandation niveau cabinet.
+  </p>
+
+  <!-- FORMULAIRE -->
+  <form id="diligenceForm" onsubmit="event.preventDefault(); runDiligence();">
+
+    <div class="card">
+      <div class="card-title">Dossier</div>
+      <label>ID dossier Firestore *</label>
+      <input type="text" id="dossierId" placeholder="CNV-2026-XXXX" required/>
+    </div>
+
+    <div class="card">
+      <div class="card-title">REQ — Entreprise emprunteuse (au moins un champ)</div>
+      <div class="grid-2">
+        <div>
+          <label>NEQ (10 chiffres)</label>
+          <input type="text" id="emprunteurNeq" placeholder="1234567890"/>
+        </div>
+        <div>
+          <label>Ou nom légal de l'entreprise</label>
+          <input type="text" id="emprunteurNom" placeholder="9999-1234 Québec inc."/>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">RBQ — Entrepreneur (si construction)</div>
+      <div class="grid-3">
+        <div>
+          <label>Numéro licence RBQ</label>
+          <input type="text" id="rbqLicence" placeholder="1234-5678-90"/>
+        </div>
+        <div>
+          <label>Ou nom de l'entrepreneur</label>
+          <input type="text" id="rbqNom" placeholder="Construction Untel inc."/>
+        </div>
+        <div>
+          <label>Type de projet</label>
+          <select id="typeProjet">
+            <option value="">— sans précision —</option>
+            <option value="residentiel">Résidentiel</option>
+            <option value="commercial">Commercial</option>
+            <option value="industriel">Industriel</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">OACIQ — Courtier immobilier référent</div>
+      <div class="grid-2">
+        <div>
+          <label>Nom du courtier</label>
+          <input type="text" id="oaciqNom" placeholder="Jean Dupont"/>
+        </div>
+        <div>
+          <label>Ou numéro de permis</label>
+          <input type="text" id="oaciqPermis" placeholder="A1234"/>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">AMF — Courtier hypothécaire référent</div>
+      <div class="grid-2">
+        <div>
+          <label>Nom</label>
+          <input type="text" id="amfNom" placeholder="Marie Tremblay"/>
+        </div>
+        <div>
+          <label>Ou numéro d'inscription</label>
+          <input type="text" id="amfInscription" placeholder="123456"/>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">⚖ RFQ — Index Registre foncier (le plus important)</div>
+      <p style="font-size:12.5px;color:#666;margin:0 0 12px 0">
+        Téléverse l'index PDF du lot (téléchargé depuis ton compte clicSÉQUR Entreprise au RFQ).
+        L'analyse niveau avocat senior identifie hypothèques, rangs, saisies, servitudes et calcule
+        la marge libre disponible.
+      </p>
+      <label>Fichier PDF index</label>
+      <input type="file" id="rfqPdfFile" accept="application/pdf"/>
+
+      <div class="grid-3" style="margin-top:14px">
+        <div>
+          <label>Montant prêt demandé ($)</label>
+          <input type="number" id="rfqLoanAmount" placeholder="5500000"/>
+        </div>
+        <div>
+          <label>Valeur estimée immeuble ($)</label>
+          <input type="number" id="rfqPropertyValue" placeholder="9000000"/>
+        </div>
+        <div>
+          <label>Adresse de l'immeuble</label>
+          <input type="text" id="rfqPropertyAddress" placeholder="1234 boul. Industriel, Laval"/>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:32px">
+      <button type="submit" id="runBtn">⚖ Lancer la diligence</button>
+      <button type="button" class="secondary" onclick="loadExisting()">Charger rapport existant</button>
+      <span id="statusText" style="color:#666;font-size:12.5px"></span>
+    </div>
+  </form>
+
+  <!-- RÉSULTAT -->
+  <div id="resultContainer" style="display:none"></div>
+
+</main>
+
+<script>
+  const STORAGE_KEY = "diligence_admin_secret";
+
+  function getSecret() {
+    return (
+      localStorage.getItem("norvex_secret") ||
+      localStorage.getItem(STORAGE_KEY) ||
+      ""
+    );
+  }
+
+  function doLogin() {
+    const v = document.getElementById("secretInput").value.trim();
+    if (!v) { showToast("Mot de passe requis", "error"); return; }
+    localStorage.setItem(STORAGE_KEY, v);
+    showApp();
+  }
+
+  function showApp() {
+    document.getElementById("loginScreen").style.display = "none";
+    document.getElementById("appContainer").style.display = "block";
+  }
+
+  function showToast(msg, type) {
+    const old = document.querySelector(".toast"); if (old) old.remove();
+    const el = document.createElement("div");
+    el.className = "toast " + (type || "");
+    el.textContent = msg;
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 5000);
+  }
+
+  function escapeHtml(s) {
+    if (s === null || s === undefined) return "";
+    return String(s).replace(/[&<>"']/g, c => ({
+      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+    }[c]));
+  }
+
+  async function fileToBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const result = reader.result;
+        const idx = result.indexOf(",");
+        resolve(idx >= 0 ? result.substring(idx + 1) : result);
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  async function runDiligence() {
+    const dossierId = document.getElementById("dossierId").value.trim();
+    if (!dossierId) { showToast("ID dossier requis", "error"); return; }
+
+    const payload = { dossierId };
+    const get = id => document.getElementById(id).value.trim();
+
+    if (get("emprunteurNeq")) payload.emprunteurNeq = get("emprunteurNeq");
+    if (get("emprunteurNom")) payload.emprunteurNom = get("emprunteurNom");
+    if (get("rbqLicence")) payload.rbqLicence = get("rbqLicence");
+    if (get("rbqNom")) payload.rbqNom = get("rbqNom");
+    if (get("typeProjet")) payload.typeProjet = get("typeProjet");
+    if (get("oaciqNom")) payload.oaciqNom = get("oaciqNom");
+    if (get("oaciqPermis")) payload.oaciqPermis = get("oaciqPermis");
+    if (get("amfNom")) payload.amfNom = get("amfNom");
+    if (get("amfInscription")) payload.amfInscription = get("amfInscription");
+
+    const rfqLoan = get("rfqLoanAmount");
+    const rfqValue = get("rfqPropertyValue");
+    const rfqAddr = get("rfqPropertyAddress");
+    if (rfqLoan) payload.rfqLoanAmount = Number(rfqLoan);
+    if (rfqValue) payload.rfqPropertyValue = Number(rfqValue);
+    if (rfqAddr) payload.rfqPropertyAddress = rfqAddr;
+
+    const file = document.getElementById("rfqPdfFile").files[0];
+    if (file) {
+      try { payload.rfqPdfBase64 = await fileToBase64(file); }
+      catch (e) { showToast("Erreur lecture PDF : " + e.message, "error"); return; }
+    }
+
+    const hasSource = payload.emprunteurNeq || payload.emprunteurNom ||
+                      payload.rbqLicence || payload.rbqNom ||
+                      payload.oaciqNom || payload.oaciqPermis ||
+                      payload.amfNom || payload.amfInscription ||
+                      payload.rfqPdfBase64;
+    if (!hasSource) {
+      showToast("Au moins une source (REQ/RBQ/OACIQ/AMF/RFQ) requise", "error");
+      return;
+    }
+
+    const btn = document.getElementById("runBtn");
+    const status = document.getElementById("statusText");
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span>Diligence en cours…';
+    status.textContent = "Cela peut prendre 30-90 secondes (5 sources en parallèle + synthèse Opus 4.6)…";
+
+    try {
+      const r = await fetch("/api/diligence-run", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "X-Internal-Secret": getSecret() },
+        body: JSON.stringify(payload),
+      });
+      const data = await r.json();
+      if (!r.ok || !data.ok) throw new Error(data.error || `HTTP ${r.status}`);
+      renderReport(data.report);
+      showToast("✅ Diligence terminée : verdict " + data.verdict_global, "success");
+      status.textContent = "";
+    } catch (e) {
+      showToast("Erreur : " + e.message, "error");
+      status.textContent = "";
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = "⚖ Lancer la diligence";
+    }
+  }
+
+  async function loadExisting() {
+    const dossierId = document.getElementById("dossierId").value.trim();
+    if (!dossierId) { showToast("ID dossier requis", "error"); return; }
+    try {
+      const r = await fetch("/api/diligence-report?dossierId=" + encodeURIComponent(dossierId), {
+        headers: { "X-Internal-Secret": getSecret() },
+      });
+      const data = await r.json();
+      if (!r.ok || !data.ok) {
+        showToast(data.error || "Aucun rapport", "error");
+        return;
+      }
+      renderReport(data.report);
+    } catch (e) {
+      showToast("Erreur : " + e.message, "error");
+    }
+  }
+
+  function renderReport(report) {
+    const container = document.getElementById("resultContainer");
+    const verdict = report.verdict_global || "gray";
+    const verdictLabel = {
+      green: "🟢 GO — Tout est en règle",
+      yellow: "🟡 À VÉRIFIER — Points de vigilance",
+      red: "🔴 STOP — Problèmes confirmés",
+      gray: "⚪ Non concluant",
+    }[verdict] || verdict;
+
+    let html = `
+      <div class="card" style="border-left:6px solid ${verdict === 'green' ? 'var(--green)' : verdict === 'yellow' ? 'var(--yellow)' : verdict === 'red' ? 'var(--red)' : '#999'}">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+          <div>
+            <div class="tag">Verdict global · ${escapeHtml(report.dossierId || '—')}</div>
+            <span class="verdict-badge verdict-${verdict}">${escapeHtml(verdictLabel)}</span>
+          </div>
+          <div style="font-size:11px;color:var(--muted)">
+            Généré : ${report.generatedAt ? new Date(report.generatedAt).toLocaleString("fr-CA") : '—'}
+          </div>
+        </div>
+        ${report.synthese ? `<p style="font-size:14px;line-height:1.7;color:var(--ink);margin:0 0 6px 0"><strong>Synthèse :</strong> ${escapeHtml(report.synthese)}</p>` : ''}
+        ${report.recommandation_finale ? `<p style="font-size:14px;line-height:1.7;color:var(--gold-dark);font-style:italic;margin:6px 0 0 0"><strong>Recommandation :</strong> ${escapeHtml(report.recommandation_finale)}</p>` : ''}
+      </div>
+    `;
+
+    // Points forts / vigilance
+    if ((report.points_forts || []).length || (report.points_vigilance || []).length) {
+      html += `<div class="grid-2">`;
+      if ((report.points_forts || []).length) {
+        html += `<div class="card"><div class="card-title">🟢 Points forts</div><ul>${
+          report.points_forts.map(p => `<li>${escapeHtml(p)}</li>`).join("")
+        }</ul></div>`;
+      }
+      if ((report.points_vigilance || []).length) {
+        html += `<div class="card"><div class="card-title">🟡 Points de vigilance</div><ul>${
+          report.points_vigilance.map(p => `<li>${escapeHtml(p)}</li>`).join("")
+        }</ul></div>`;
+      }
+      html += `</div>`;
+    }
+
+    // Drapeaux rouges
+    if ((report.drapeaux_rouges || []).length) {
+      html += `<div class="card" style="border-left:4px solid var(--red)"><div class="card-title">⚠ Drapeaux rouges</div><ul class="red-flags">${
+        report.drapeaux_rouges.map(d => {
+          if (typeof d === 'string') return `<li>${escapeHtml(d)}</li>`;
+          return `<li><strong>[${escapeHtml(d.severite || '')}]</strong> ${escapeHtml(d.description || '')}</li>`;
+        }).join("")
+      }</ul></div>`;
+    }
+
+    // Conditions engagement
+    if ((report.conditions_engagement || []).length) {
+      html += `<div class="card"><div class="card-title">Conditions à inclure dans la lettre d'engagement</div><ul>${
+        report.conditions_engagement.map(c => `<li>${escapeHtml(c)}</li>`).join("")
+      }</ul></div>`;
+    }
+
+    // Prochaines étapes
+    if ((report.prochaines_etapes || []).length) {
+      html += `<div class="card"><div class="card-title">Prochaines étapes</div><ol>${
+        report.prochaines_etapes.map(e => `<li>${escapeHtml(e)}</li>`).join("")
+      }</ol></div>`;
+    }
+
+    // Détails par source (collapsible)
+    if (report.searchers) {
+      html += `<div class="card"><div class="card-title">Détails par source</div>`;
+      for (const [src, res] of Object.entries(report.searchers)) {
+        const v = res.verdict || 'gray';
+        html += `
+          <details style="margin-bottom:14px">
+            <summary style="cursor:pointer;padding:8px 0;font-weight:bold">
+              <span class="verdict-badge verdict-${v}" style="margin-right:8px">${src.toUpperCase()}</span>
+              ${escapeHtml(res.verdict_explication || '')}
+            </summary>
+            <pre>${escapeHtml(JSON.stringify(res, null, 2))}</pre>
+          </details>
+        `;
+      }
+      html += `</div>`;
+    }
+
+    container.innerHTML = html;
+    container.style.display = "block";
+    container.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  // Init
+  if (getSecret()) showApp();
+</script>
+</body>
+</html>

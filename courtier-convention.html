@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Convention de partenariat courtier — Capital Norvex</title>
+<meta name="robots" content="noindex,nofollow">
+<!--
+  ⚠ DRAFT JURIDIQUE — À VALIDER PAR UN AVOCAT AVANT PRODUCTION
+  Design aligné sur Convention_Pret_CapitalNorvex.pdf (version institutionnelle)
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0A0A0A;
+    --ink-soft: #1a1a1a;
+    --gold: #C8B070;
+    --gold-bright: #D4B776;
+    --gold-dark: #9A8554;
+    --cream: #FBF7EB;
+    --cream-warm: #F2E8D0;
+    --cream-band: #ECDFB8;
+    --stone: #d6cdb8;
+    --muted: #6a6a6a;
+    --green: #4a7c4a;
+    --green-bg: #eef3ee;
+    --red: #b03030;
+    --red-bg: #fdecec;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', -apple-system, system-ui, sans-serif;
+    background: #fff;
+    color: var(--ink);
+    line-height: 1.55;
+    font-size: 13.5px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ─── Page wrapper qui imite une page A4 ─────────────────────── */
+  .page {
+    max-width: 820px;
+    margin: 0 auto;
+    background: #fff;
+    border-bottom: 3px solid var(--gold);
+    page-break-after: always;
+  }
+
+  /* Top bandeau noir avec logo gauche + titre droit */
+  .doc-header {
+    background: var(--ink);
+    color: #fff;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 24px;
+    padding: 14px 24px;
+    align-items: center;
+    border-bottom: 3px solid var(--gold);
+  }
+  .doc-header-logo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .doc-header-logo img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+  }
+  .doc-header-brand {
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 1.2px;
+    line-height: 1.1;
+    color: #fff;
+  }
+  .doc-header-tagline {
+    color: var(--gold);
+    font-size: 10.5px;
+    margin-top: 3px;
+    letter-spacing: 0.3px;
+  }
+  .doc-header-right {
+    text-align: right;
+    color: var(--gold);
+  }
+  .doc-header-doctype {
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+  .doc-header-subtype {
+    font-size: 10.5px;
+    letter-spacing: 1px;
+    margin-top: 2px;
+    color: var(--gold);
+    opacity: 0.9;
+  }
+  .doc-header-pageno {
+    font-size: 9.5px;
+    color: #888;
+    margin-top: 4px;
+  }
+
+  /* Footer noir */
+  .doc-footer {
+    background: var(--ink);
+    color: #aaa;
+    padding: 11px 24px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    font-size: 10.5px;
+    letter-spacing: 0.3px;
+    border-top: 3px solid var(--gold);
+  }
+  .doc-footer-right {
+    text-align: right;
+    color: #aaa;
+  }
+  .doc-footer-right a {
+    color: #aaa;
+    text-decoration: none;
+  }
+
+  /* Content area */
+  .doc-body {
+    padding: 36px 44px 50px 44px;
+    background: #fff;
+    min-height: 800px;
+  }
+  @media (max-width: 700px) {
+    .doc-body { padding: 28px 22px 36px 22px; }
+  }
+
+  /* ─── Cover page ─────────────────────────────────────────────── */
+  .cover-logo-block {
+    text-align: center;
+    margin: 60px 0 32px 0;
+  }
+  .cover-logo-block img {
+    max-width: 180px;
+    height: auto;
+  }
+  .cover-title-band {
+    background: var(--ink);
+    color: var(--gold);
+    padding: 22px 24px;
+    text-align: center;
+    border-top: 2px solid var(--gold);
+    border-bottom: 2px solid var(--gold);
+    margin: 24px 0 0 0;
+  }
+  .cover-title-band h1 {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--gold);
+    line-height: 1.1;
+  }
+  .cover-subtitle {
+    text-align: center;
+    margin: 22px 0 8px 0;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--ink);
+  }
+  .cover-edition {
+    text-align: center;
+    color: #aaa;
+    font-size: 13px;
+    margin-bottom: 38px;
+    font-style: italic;
+  }
+  .cover-fields {
+    margin: 0 auto;
+    max-width: 600px;
+    border: 1px solid var(--cream-warm);
+  }
+  .cover-field {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    background: var(--cream-warm);
+    border-bottom: 1px solid #e0d0a0;
+    align-items: center;
+  }
+  .cover-field:nth-child(even) { background: var(--cream); }
+  .cover-field:last-child { border-bottom: none; }
+  .cover-field-label {
+    padding: 10px 16px;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .cover-field-value {
+    padding: 10px 16px;
+    font-size: 13.5px;
+    color: var(--ink);
+    border-left: 1px solid #e0d0a0;
+  }
+  .cover-tagline {
+    text-align: center;
+    margin-top: 38px;
+    color: var(--gold-dark);
+    font-style: italic;
+    font-size: 14px;
+  }
+  .cover-confidential {
+    text-align: center;
+    margin-top: 8px;
+    color: #999;
+    font-size: 11.5px;
+    font-style: italic;
+  }
+
+  /* ─── Section banners (gold/black) ───────────────────────────── */
+  .section-banner {
+    background: var(--ink);
+    color: var(--gold);
+    padding: 11px 18px;
+    font-weight: 700;
+    font-size: 12.5px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    border-top: 1px solid var(--gold);
+    border-bottom: 1px solid var(--gold);
+    margin: 28px 0 14px 0;
+  }
+  .subsection-banner {
+    background: var(--cream-warm);
+    color: var(--ink);
+    padding: 7px 14px;
+    font-weight: 700;
+    font-size: 11.5px;
+    margin: 18px 0 10px 0;
+    border-left: 2px solid var(--gold);
+  }
+  article p { margin-bottom: 9px; }
+  article ul { padding-left: 22px; margin: 8px 0 12px 0; }
+  article li { margin-bottom: 4px; }
+
+  /* Field rows inside articles */
+  .field-row {
+    margin: 10px 0;
+  }
+  .field-row-label {
+    font-weight: 600;
+    font-size: 11.5px;
+    color: var(--gold-dark);
+    margin-bottom: 4px;
+  }
+  .field-row-value {
+    border-bottom: 1px solid var(--ink);
+    padding: 4px 0;
+    min-height: 22px;
+    font-weight: 500;
+  }
+
+  /* Tables (commission grid, etc.) */
+  table.fancy-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0;
+    font-size: 12.5px;
+  }
+  table.fancy-table thead th {
+    background: var(--ink);
+    color: var(--gold);
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+  }
+  table.fancy-table tbody td {
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--cream);
+  }
+  table.fancy-table tbody tr:nth-child(even) td { background: var(--cream); }
+  table.fancy-table tbody tr:nth-child(odd) td { background: #fff; }
+
+  /* Legal warning callout */
+  .legal-warn {
+    margin: 22px 0;
+    padding: 14px 18px;
+    background: #fff8e6;
+    border-left: 3px solid #d4a017;
+    font-size: 12.5px;
+    color: #6a4f00;
+    font-style: italic;
+  }
+
+  /* ─── Signature section ──────────────────────────────────────── */
+  .signature-section {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 42px 44px;
+  }
+  @media (max-width: 700px) { .signature-section { padding: 28px 22px; } }
+  .signature-section h2 {
+    color: var(--gold);
+    font-size: 18px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+  .signature-section .signature-tagline {
+    color: #ccc;
+    font-size: 13px;
+    margin-bottom: 20px;
+  }
+  .sig-canvas-wrap {
+    background: #fff;
+    border: 1px solid var(--gold);
+    padding: 6px;
+    margin-bottom: 12px;
+    position: relative;
+  }
+  #sig-canvas {
+    display: block;
+    width: 100%;
+    height: 180px;
+    background: #fff;
+    cursor: crosshair;
+    touch-action: none;
+  }
+  .sig-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #bbb;
+    font-style: italic;
+    font-size: 13px;
+    pointer-events: none;
+  }
+  .sig-placeholder.is-hidden { display: none; }
+  .sig-tools {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11.5px;
+    color: #999;
+    margin-bottom: 18px;
+  }
+  .clear-btn {
+    background: transparent;
+    border: 1px solid #555;
+    color: #ccc;
+    padding: 5px 12px;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .clear-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .accept-row {
+    margin: 16px 0 22px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    color: #ddd;
+    font-size: 13px;
+    line-height: 1.55;
+  }
+  .accept-row input[type="checkbox"] {
+    margin-top: 3px;
+    accent-color: var(--gold);
+    transform: scale(1.15);
+  }
+  .full-name-input {
+    width: 100%;
+    padding: 12px 14px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(184,151,90,0.4);
+    color: var(--cream);
+    font-family: inherit;
+    font-size: 14px;
+    margin-bottom: 18px;
+  }
+  .full-name-input:focus { outline: none; border-color: var(--gold); }
+  .submit-btn {
+    width: 100%;
+    background: var(--gold);
+    color: var(--ink);
+    border: none;
+    padding: 16px;
+    font-family: inherit;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .submit-btn:hover:not(:disabled) { background: var(--gold-bright); }
+  .submit-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .submit-note {
+    margin-top: 12px;
+    font-size: 11.5px;
+    color: #888;
+    font-style: italic;
+    text-align: center;
+  }
+  .status-msg {
+    margin-top: 24px;
+    padding: 16px 20px;
+    text-align: center;
+    font-size: 14px;
+    display: none;
+  }
+  .status-msg.is-success { display: block; background: var(--green-bg); border: 1px solid var(--green); color: var(--green); }
+  .status-msg.is-error { display: block; background: var(--red-bg); border: 1px solid var(--red); color: var(--red); }
+
+  /* Loading / invalid / signed states */
+  .state-screen {
+    background: #fff;
+    text-align: center;
+    padding: 100px 24px;
+    color: var(--muted);
+  }
+  .state-screen h2 {
+    font-size: 24px;
+    margin-bottom: 14px;
+    color: var(--ink);
+    font-weight: 700;
+  }
+  .state-screen .icon { font-size: 40px; margin-bottom: 16px; }
+  .state-screen .icon.ok { color: var(--green); }
+  .state-screen .icon.bad { color: var(--red); }
+
+  /* Reusable header for repeated pages */
+  .page-frame {
+    border-bottom: 1px solid #eee;
+  }
+</style>
+</head>
+<body>
+
+<!-- Loading / Invalid / Signed states -->
+<div id="loading-screen" class="state-screen">Chargement de la convention…</div>
+
+<div id="invalid-screen" class="state-screen" hidden>
+  <div class="icon bad">✗</div>
+  <h2>Lien invalide ou expiré</h2>
+  <p>Cette convention ne peut être ouverte. Le lien est peut-être expiré ou déjà utilisé.</p>
+  <p style="margin-top:14px;">Pour obtenir un nouveau lien, contactez <a href="mailto:info@capitalnorvex.com" style="color:var(--gold-dark);">info@capitalnorvex.com</a>.</p>
+</div>
+
+<div id="signed-screen" class="state-screen" hidden>
+  <div class="icon ok">✓</div>
+  <h2>Convention déjà signée</h2>
+  <p>Vous avez déjà signé cette convention. Bienvenue parmi les courtiers partenaires de Capital Norvex.</p>
+  <p style="margin-top:14px;">Une copie de la convention signée vous a été envoyée par courriel.</p>
+</div>
+
+<!-- ═══════════ MAIN DOCUMENT ═══════════ -->
+<div id="main-screen" hidden>
+
+  <!-- ───── PAGE 1 — COVER ───── -->
+  <div class="page">
+    <header class="doc-header">
+      <div class="doc-header-logo">
+        <img src="assets/logo-norvex-officiel.png" alt="Capital Norvex">
+        <div>
+          <div class="doc-header-brand">CAPITAL NORVEX</div>
+          <div class="doc-header-tagline">Financement Privé Institutionnel | Québec &amp; Ontario</div>
+        </div>
+      </div>
+      <div class="doc-header-right">
+        <div class="doc-header-doctype">Convention de partenariat</div>
+        <div class="doc-header-subtype">Courtier hypothécaire</div>
+        <div class="doc-header-pageno">p. 1</div>
+      </div>
+    </header>
+
+    <div class="doc-body" style="padding-top:30px;">
+      <div class="cover-logo-block">
+        <img src="assets/logo-norvex-officiel.png" alt="Capital Norvex">
+      </div>
+
+      <div class="cover-title-band">
+        <h1>CONVENTION DE PARTENARIAT</h1>
+      </div>
+      <div class="cover-subtitle">COURTIER HYPOTHÉCAIRE</div>
+      <div class="cover-edition">Capital Norvex Inc. — Programme exclusif — Québec &amp; Ontario</div>
+
+      <div class="cover-fields">
+        <div class="cover-field">
+          <div class="cover-field-label">COURTIER</div>
+          <div class="cover-field-value" id="cv-name">—</div>
+        </div>
+        <div class="cover-field">
+          <div class="cover-field-label">CABINET / AGENCE</div>
+          <div class="cover-field-value" id="cv-agency">—</div>
+        </div>
+        <div class="cover-field">
+          <div class="cover-field-label">N° COURTIER</div>
+          <div class="cover-field-value" id="cv-broker-number">—</div>
+        </div>
+        <div class="cover-field">
+          <div class="cover-field-label">N° LICENCE</div>
+          <div class="cover-field-value" id="cv-license">—</div>
+        </div>
+        <div class="cover-field">
+          <div class="cover-field-label">PROVINCE</div>
+          <div class="cover-field-value" id="cv-province">—</div>
+        </div>
+        <div class="cover-field">
+          <div class="cover-field-label">DATE</div>
+          <div class="cover-field-value" id="cv-date">—</div>
+        </div>
+      </div>
+
+      <div class="cover-tagline">Capital structuré. Ambition maîtrisée.</div>
+      <div class="cover-confidential">CONFIDENTIEL — Réservé aux parties signataires et à leurs conseillers juridiques</div>
+    </div>
+
+    <footer class="doc-footer">
+      <div>CAPITAL NORVEX | Confidentiel – Usage exclusif des parties signataires</div>
+      <div class="doc-footer-right">capitalnorvex.com | info@capitalnorvex.com</div>
+    </footer>
+  </div>
+
+  <!-- ───── PAGE 2 — Articles 1 à 4 ───── -->
+  <div class="page">
+    <header class="doc-header">
+      <div class="doc-header-logo">
+        <img src="assets/logo-norvex-officiel.png" alt="Capital Norvex">
+        <div>
+          <div class="doc-header-brand">CAPITAL NORVEX</div>
+          <div class="doc-header-tagline">Financement Privé Institutionnel | Québec &amp; Ontario</div>
+        </div>
+      </div>
+      <div class="doc-header-right">
+        <div class="doc-header-doctype">Convention de partenariat</div>
+        <div class="doc-header-subtype">Courtier hypothécaire</div>
+        <div class="doc-header-pageno">p. 2</div>
+      </div>
+    </header>
+
+    <div class="doc-body">
+
+      <div class="section-banner">1. PARTIES</div>
+
+      <div class="subsection-banner">1.1 Prêteur — Capital Norvex Inc.</div>
+      <article>
+        <div class="field-row">
+          <div class="field-row-label">DÉNOMINATION SOCIALE</div>
+          <div class="field-row-value">CAPITAL NORVEX INC.</div>
+        </div>
+        <div class="field-row">
+          <div class="field-row-label">SIÈGE SOCIAL</div>
+          <div class="field-row-value">2705-1000 André-Prévost, Île-des-Sœurs (Verdun), Montréal, Québec, H3E 0G2</div>
+        </div>
+        <div class="field-row">
+          <div class="field-row-label">JURIDICTIONS</div>
+          <div class="field-row-value">Québec &amp; Ontario, Canada</div>
+        </div>
+        <div class="field-row">
+          <div class="field-row-label">REPRÉSENTANT AUTORISÉ</div>
+          <div class="field-row-value">Yves Barrette, Directeur-fondateur</div>
+        </div>
+      </article>
+
+      <div class="subsection-banner">1.2 Courtier partenaire</div>
+      <article>
+        <div class="field-row">
+          <div class="field-row-label">NOM COMPLET</div>
+          <div class="field-row-value" id="art-name">—</div>
+        </div>
+        <div class="field-row">
+          <div class="field-row-label">CABINET / AGENCE</div>
+          <div class="field-row-value" id="art-agency">—</div>
+        </div>
+        <div class="field-row">
+          <div class="field-row-label">N° LICENCE (OACIQ / FSRA)</div>
+          <div class="field-row-value" id="art-license">—</div>
+        </div>
+        <div class="field-row">
+          <div class="field-row-label">PROVINCE DE PRATIQUE</div>
+          <div class="field-row-value" id="art-province">—</div>
+        </div>
+        <div class="field-row">
+          <div class="field-row-label">N° COURTIER PARTENAIRE ATTRIBUÉ</div>
+          <div class="field-row-value" id="art-broker-number">—</div>
+        </div>
+      </article>
+
+      <div class="section-banner">2. OBJET DE LA CONVENTION</div>
+      <article>
+        <p>La présente convention (ci-après la « <strong>Convention</strong> ») a pour objet de définir les conditions selon lesquelles le Courtier peut, à titre de partenaire de référence, soumettre à Capital Norvex des dossiers de financement immobilier privé pour le compte de ses clients.</p>
+        <p>Capital Norvex demeure seul juge de l'acceptation, du refus, de la structure et des conditions de tout financement consenti à un client référé par le Courtier. La présente Convention ne constitue pas une exclusivité d'achalandage ni un mandat de représentation.</p>
+      </article>
+
+      <div class="section-banner">3. NUMÉRO DE COURTIER PARTENAIRE</div>
+      <article>
+        <p>Capital Norvex attribue au Courtier un <strong>numéro de courtier partenaire</strong> personnel et unique, au format <code>CN-AAAA-NNN</code>. Ce numéro est <strong>obligatoire</strong> pour toute soumission de dossier client à la plateforme de Capital Norvex.</p>
+        <p>Toute soumission effectuée sans numéro de courtier valide sera <strong>refusée</strong>, et les frais d'analyse acquittés par le client ne seront pas remboursés. Le Courtier s'engage à conserver son numéro confidentiel et à ne pas le partager avec un tiers.</p>
+      </article>
+
+      <div class="section-banner">4. RÉMUNÉRATION DU COURTIER</div>
+      <article>
+        <p>Les frais de dossier de Capital Norvex (3 % à 3,5 % du montant financé) sont prélevés par <strong>le notaire instrumentant (au Québec) ou l'avocat instrumentant (dans les autres juridictions canadiennes applicables)</strong> à la clôture du financement et versés <strong>exclusivement à Capital Norvex</strong>. Ces frais ne couvrent pas la rémunération du Courtier.</p>
+        <p>La rémunération du Courtier est <strong>négociée au cas par cas pour chaque dossier référé</strong>, en fonction de la taille du prêt, de la complexité, de la qualité du dossier et de la valeur apportée par le Courtier, en sus des frais de Capital Norvex. Le Courtier transmet sa facture à Capital Norvex avant la clôture. À la clôture du financement, <strong>l'officier instrumentant (notaire ou avocat, selon la juridiction) prélève cette rémunération à même les fonds du financement accepté et la verse directement au Courtier</strong>, sans déboursé séparé exigé du client en sus du financement.</p>
+        <p>Le pourcentage retenu pour un dossier donné est convenu entre Capital Norvex et le Courtier avant l'émission de la lettre d'intention (LOI), divulgué dans la LOI signée par le client qui en confirme l'acceptation. Aucune rémunération n'est due au Courtier si le financement n'est pas clôturé chez l'officier instrumentant désigné par Capital Norvex. Aucune des parties n'est tenue de poursuivre la relation : ni le Courtier ni Capital Norvex n'est obligé d'accepter ou de référer un dossier donné.</p>
+      </article>
+
+    </div>
+
+    <footer class="doc-footer">
+      <div>CAPITAL NORVEX | Confidentiel – Usage exclusif des parties signataires</div>
+      <div class="doc-footer-right">capitalnorvex.com | info@capitalnorvex.com</div>
+    </footer>
+  </div>
+
+  <!-- ───── PAGE 3 — Articles 5 à 9 ───── -->
+  <div class="page">
+    <header class="doc-header">
+      <div class="doc-header-logo">
+        <img src="assets/logo-norvex-officiel.png" alt="Capital Norvex">
+        <div>
+          <div class="doc-header-brand">CAPITAL NORVEX</div>
+          <div class="doc-header-tagline">Financement Privé Institutionnel | Québec &amp; Ontario</div>
+        </div>
+      </div>
+      <div class="doc-header-right">
+        <div class="doc-header-doctype">Convention de partenariat</div>
+        <div class="doc-header-subtype">Courtier hypothécaire</div>
+        <div class="doc-header-pageno">p. 3</div>
+      </div>
+    </header>
+
+    <div class="doc-body">
+
+      <div class="section-banner">5. FRAIS DE DOSSIER — EXCLUSIFS À CAPITAL NORVEX</div>
+      <article>
+        <p>Capital Norvex prélève au notaire, à la clôture, des frais de dossier de <strong>3 % à 3,5 %</strong> du montant financé. Ces frais sont versés <strong>exclusivement à Capital Norvex</strong> et ne peuvent en aucun cas être imputés à la commission du Courtier ni partagés avec celui-ci.</p>
+      </article>
+
+      <div class="section-banner">6. AUCUNE COMMISSION ADDITIONNELLE</div>
+      <article>
+        <p>Le Courtier reconnaît qu'il est rémunéré exclusivement selon la grille prévue à l'article 4. Sur le même dossier, le Courtier <strong>n'ajoute pas de frais additionnels</strong> au client (frais de référencement, frais administratifs, prime, honoraires de gestion, etc.) — la grille de l'article 4 est complète et finale.</p>
+        <p>Cette transparence tarifaire est l'un des engagements forts du programme courtier de Capital Norvex envers les clients. Au besoin, le Courtier peut en discuter en tout temps avec son agent dédié.</p>
+      </article>
+
+      <div class="section-banner">7. EXCLUSIVITÉ — UNIQUEMENT APRÈS SIGNATURE DE LA LETTRE D'ENGAGEMENT</div>
+      <article>
+        <p><strong>Avant la signature de la lettre d'engagement :</strong> aucune exclusivité n'est imposée. Vous demeurez libre, comme votre client, de magasiner et de comparer notre offre à celle d'autres prêteurs. Notre objectif est de gagner votre confiance par la qualité et la rapidité de notre analyse, pas par une clause restrictive.</p>
+        <p><strong>Après la signature de la lettre d'engagement par le client</strong>, et pour permettre à Capital Norvex de mobiliser ses ressources notariales et de structurer le financement final, le dossier est traité en <strong>exclusivité chez Capital Norvex pour une période de trente (30) jours</strong>. Pendant cette période, le Courtier s'engage à ne pas soumettre le même dossier auprès d'un autre prêteur privé. Au-delà de 30 jours, si la clôture n'a pas eu lieu pour des raisons indépendantes du Courtier ou du client, l'exclusivité prend fin automatiquement.</p>
+        <p>Si une difficulté survient durant cette période d'exclusivité, Capital Norvex et le Courtier en discuteront ouvertement afin de trouver une solution équitable. L'objectif demeure la collaboration et la clarté entre les parties.</p>
+      </article>
+
+      <div class="section-banner">8. ESPACE COURTIER 24/7 &amp; CONFIDENTIALITÉ</div>
+      <article>
+        <p>Le Courtier dispose d'un <strong>Espace Courtier personnel</strong>, accessible 24/7 sur ordinateur et sur téléphone (application installable). Il y suit en temps réel l'avancement de chacun de ses dossiers référés (étape, statut, montant approuvé, commission attendue, date estimée de débours) et reçoit directement la lettre d'intention (LOI) prête à présenter à son client.</p>
+        <p>Pour respecter la confidentialité du client, les <strong>analyses internes</strong> (Score Norvex, Norvex Intel, rapports du comité de crédit, notes de la direction) demeurent à l'usage exclusif de Capital Norvex. Elles ne sont jamais partagées automatiquement avec le Courtier, sauf si la direction décide expressément de lui transmettre un rapport spécifique pour les besoins du dossier.</p>
+        <p>Le Courtier s'engage à ne divulguer à aucun tiers les informations communiquées par Capital Norvex au sujet d'un dossier en cours, sauf consentement écrit préalable du client concerné.</p>
+      </article>
+
+      <div class="section-banner">9. CANAL DE COMMUNICATION DÉDIÉ</div>
+      <article>
+        <p>L'<strong>Espace Courtier</strong> est le canal principal de suivi des dossiers&nbsp;: tableau de bord, soumission de nouveaux clients, téléchargement des LOI, statut en temps réel. Pour toute question complexe ou demande particulière, le Courtier dispose en complément d'un <strong>agent de suivi dédié</strong>, point de contact humain pour les échanges sur mesure.</p>
+        <p><strong>Avant la signature notariale</strong>, l'ensemble des échanges relatifs au dossier (instructions, documents, déboursés, quittances, calendrier) est centralisé entre Capital Norvex et le notaire. Le Courtier adresse ses questions à son agent dédié, lequel répond avec diligence&nbsp;; il n'a pas à communiquer directement avec le notaire durant cette phase.</p>
+        <p>Le Courtier soumet sa <strong>facture de commission</strong> via son Espace Courtier ou à son agent dédié. Capital Norvex transmet ensuite cette facture au notaire en même temps que le dossier complet de financement, afin que le règlement soit prêt au moment de la signature.</p>
+        <p>Le Courtier est <strong>bienvenu à la signature notariale</strong> pour récupérer en mains propres le règlement de sa commission&nbsp;; il peut alors interagir librement avec le notaire selon les usages habituels.</p>
+      </article>
+
+      <div class="section-banner">10. OBLIGATIONS DE BONNE FOI ET CONFORMITÉ</div>
+      <article>
+        <p>Le Courtier s'engage à :</p>
+        <ul>
+          <li>Soumettre uniquement des dossiers complets, exacts et de bonne foi ;</li>
+          <li>Maintenir en tout temps un permis valide d'exercer (OACIQ — Québec ou FSRA — Ontario) ;</li>
+          <li>Respecter les lois et règlements applicables, notamment ceux en matière de courtage hypothécaire et de protection du consommateur ;</li>
+          <li>Notifier sans délai Capital Norvex de toute suspension, révocation, modification ou expiration de son permis ;</li>
+          <li>S'abstenir de toute représentation pouvant induire en erreur un client sur les conditions de financement, les délais d'analyse ou les chances d'acceptation.</li>
+        </ul>
+      </article>
+
+    </div>
+
+    <footer class="doc-footer">
+      <div>CAPITAL NORVEX | Confidentiel – Usage exclusif des parties signataires</div>
+      <div class="doc-footer-right">capitalnorvex.com | info@capitalnorvex.com</div>
+    </footer>
+  </div>
+
+  <!-- ───── PAGE 4 — Articles 10 à 13 + résiliation + droit ───── -->
+  <div class="page">
+    <header class="doc-header">
+      <div class="doc-header-logo">
+        <img src="assets/logo-norvex-officiel.png" alt="Capital Norvex">
+        <div>
+          <div class="doc-header-brand">CAPITAL NORVEX</div>
+          <div class="doc-header-tagline">Financement Privé Institutionnel | Québec &amp; Ontario</div>
+        </div>
+      </div>
+      <div class="doc-header-right">
+        <div class="doc-header-doctype">Convention de partenariat</div>
+        <div class="doc-header-subtype">Courtier hypothécaire</div>
+        <div class="doc-header-pageno">p. 4</div>
+      </div>
+    </header>
+
+    <div class="doc-body">
+
+      <div class="section-banner">11. DURÉE ET RÉSILIATION</div>
+      <article>
+        <p>La Convention prend effet à la date de signature électronique et demeure en vigueur pour une durée initiale de <strong>vingt-quatre (24) mois</strong>, renouvelable tacitement pour des périodes successives de vingt-quatre (24) mois.</p>
+        <p>L'une ou l'autre des parties peut <strong>se retirer en tout temps</strong> moyennant un simple préavis écrit de <strong>trente (30) jours</strong>, sans justification ni pénalité. Les dossiers en cours à la date du retrait sont menés à terme selon les conditions de la Convention, afin de protéger les clients et la commission acquise au Courtier.</p>
+        <p>En cas de manquement sérieux aux engagements de la Convention (notamment aux articles 5, 6, 7, 8, 9 ou 10), Capital Norvex pourra y mettre fin de façon anticipée, après un échange préalable avec le Courtier lorsque les circonstances le permettent.</p>
+      </article>
+
+      <div class="section-banner">12. MODIFICATION</div>
+      <article>
+        <p>Capital Norvex peut modifier les conditions de la Convention (notamment la grille de commissions) moyennant un préavis écrit de trente (30) jours. À défaut d'objection écrite du Courtier dans ce délai, les modifications sont réputées acceptées et opposables au Courtier.</p>
+      </article>
+
+      <div class="section-banner">13. DROIT APPLICABLE ET TRIBUNAUX COMPÉTENTS</div>
+      <article>
+        <table class="fancy-table">
+          <tbody>
+            <tr><td style="width:35%;font-weight:600;">Droit applicable</td><td>Lois de la province de Québec (Canada) et lois fédérales canadiennes applicables</td></tr>
+            <tr><td style="font-weight:600;">Tribunaux compétents</td><td>District judiciaire de Montréal, Québec</td></tr>
+            <tr><td style="font-weight:600;">Avis</td><td>Par écrit, incluant courriel à info@capitalnorvex.com</td></tr>
+            <tr><td style="font-weight:600;">Cession</td><td>Interdite sans consentement écrit préalable de Capital Norvex</td></tr>
+            <tr><td style="font-weight:600;">Intégralité</td><td>Le présent document constitue l'entente complète des parties</td></tr>
+            <tr><td style="font-weight:600;">Divisibilité</td><td>Toute clause invalide n'affecte pas le reste de la Convention</td></tr>
+          </tbody>
+        </table>
+      </article>
+
+      <div class="section-banner">14. SIGNATURE ÉLECTRONIQUE</div>
+      <article>
+        <p>Conformément à la <em>Loi concernant le cadre juridique des technologies de l'information</em> (RLRQ, c. C-1.1) et à la <em>Loi sur la preuve au Canada</em>, les parties reconnaissent la pleine valeur juridique de la signature électronique apposée au présent document.</p>
+        <p>La signature, l'horodatage et l'adresse IP de signature sont conservés par Capital Norvex à des fins de preuve et d'audit, dans le respect de la <em>Loi sur la protection des renseignements personnels dans le secteur privé</em> (Loi 25 — Québec).</p>
+        <div class="legal-warn">
+          ⚠ En signant ci-dessous, vous reconnaissez avoir lu, compris et accepté l'intégralité des conditions de la présente Convention de partenariat courtier hypothécaire avec Capital Norvex Inc.
+        </div>
+      </article>
+
+    </div>
+
+    <footer class="doc-footer">
+      <div>CAPITAL NORVEX | Confidentiel – Usage exclusif des parties signataires</div>
+      <div class="doc-footer-right">capitalnorvex.com | info@capitalnorvex.com</div>
+    </footer>
+  </div>
+
+  <!-- ───── PAGE 5 — SIGNATURE ───── -->
+  <div class="page">
+    <header class="doc-header">
+      <div class="doc-header-logo">
+        <img src="assets/logo-norvex-officiel.png" alt="Capital Norvex">
+        <div>
+          <div class="doc-header-brand">CAPITAL NORVEX</div>
+          <div class="doc-header-tagline">Financement Privé Institutionnel | Québec &amp; Ontario</div>
+        </div>
+      </div>
+      <div class="doc-header-right">
+        <div class="doc-header-doctype">Convention de partenariat</div>
+        <div class="doc-header-subtype">Courtier hypothécaire</div>
+        <div class="doc-header-pageno">p. 5</div>
+      </div>
+    </header>
+
+    <div class="signature-section">
+      <h2>Signature électronique du courtier</h2>
+      <p class="signature-tagline">Signez dans le cadre ci-dessous (souris ou doigt sur écran tactile), saisissez votre nom complet et confirmez l'acceptation de la Convention.</p>
+
+      <div class="sig-canvas-wrap">
+        <canvas id="sig-canvas" width="700" height="180"></canvas>
+        <div class="sig-placeholder" id="sig-placeholder">Signez ici</div>
+      </div>
+      <div class="sig-tools">
+        <span>Tracez votre signature comme sur papier</span>
+        <button type="button" class="clear-btn" id="sig-clear">Effacer</button>
+      </div>
+
+      <input type="text" class="full-name-input" id="full-name" placeholder="Saisissez votre nom complet" autocomplete="name" required>
+
+      <div class="accept-row">
+        <input type="checkbox" id="accept-checkbox">
+        <label for="accept-checkbox">
+          Je déclare avoir lu et compris l'intégralité de la Convention ci-dessus, et je consens à être lié·e par toutes ses conditions, en particulier les articles relatifs à la rémunération (art. 4), aux frais exclusifs à Capital Norvex (art. 5), à l'absence de commission additionnelle (art. 6), à l'exclusivité des dossiers (art. 7) et à la confidentialité du client (art. 8).
+        </label>
+      </div>
+
+      <button type="button" class="submit-btn" id="sign-btn" disabled>
+        Signer et finaliser le partenariat
+      </button>
+      <p class="submit-note">
+        Horodatage et adresse IP enregistrés à des fins de preuve · Une copie sera envoyée à votre courriel
+      </p>
+
+      <div class="status-msg" id="status-msg" role="status"></div>
+    </div>
+
+    <footer class="doc-footer">
+      <div>CAPITAL NORVEX | Confidentiel – Usage exclusif des parties signataires</div>
+      <div class="doc-footer-right">capitalnorvex.com | info@capitalnorvex.com</div>
+    </footer>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  var params = new URLSearchParams(window.location.search);
+  var token = params.get('token') || '';
+
+  var loadingEl  = document.getElementById('loading-screen');
+  var invalidEl  = document.getElementById('invalid-screen');
+  var signedEl   = document.getElementById('signed-screen');
+  var mainEl     = document.getElementById('main-screen');
+
+  function showOnly(el){
+    [loadingEl, invalidEl, signedEl, mainEl].forEach(function(e){ e.hidden = true; });
+    el.hidden = false;
+  }
+
+  // Mode preview ?preview=1 : affiche la convention avec données fictives (sans token)
+  if (params.get('preview') === '1') {
+    var dateStr = new Date().toLocaleDateString('fr-CA', { year: 'numeric', month: 'long', day: 'numeric' });
+    var demo = {
+      name: 'Marie-Claude Dion',
+      agency: 'Multi-Prêts Hypothèques',
+      brokerNumber: 'CN-2026-001',
+      licenseNo: 'OACIQ-12345',
+      province: 'Québec'
+    };
+    document.getElementById('cv-name').textContent = demo.name;
+    document.getElementById('cv-agency').textContent = demo.agency;
+    document.getElementById('cv-broker-number').textContent = demo.brokerNumber;
+    document.getElementById('cv-license').textContent = demo.licenseNo;
+    document.getElementById('cv-province').textContent = demo.province;
+    document.getElementById('cv-date').textContent = dateStr;
+    document.getElementById('art-name').textContent = demo.name;
+    document.getElementById('art-agency').textContent = demo.agency;
+    document.getElementById('art-license').textContent = demo.licenseNo;
+    document.getElementById('art-province').textContent = demo.province;
+    document.getElementById('art-broker-number').textContent = demo.brokerNumber;
+    document.getElementById('full-name').value = demo.name;
+    showOnly(mainEl);
+    initSignaturePad();
+    return;
+  }
+
+  if (!token) {
+    showOnly(invalidEl);
+    return;
+  }
+
+  fetch('/api/courtier-convention-info?token=' + encodeURIComponent(token))
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      if (!data.ok) { showOnly(invalidEl); return; }
+      if (data.alreadySigned) { showOnly(signedEl); return; }
+      var dateStr = new Date().toLocaleDateString('fr-CA', { year: 'numeric', month: 'long', day: 'numeric' });
+      // Cover
+      document.getElementById('cv-name').textContent = data.name || '—';
+      document.getElementById('cv-agency').textContent = data.agency || '—';
+      document.getElementById('cv-broker-number').textContent = data.brokerNumber || '—';
+      document.getElementById('cv-license').textContent = data.licenseNo || '—';
+      document.getElementById('cv-province').textContent = data.province || '—';
+      document.getElementById('cv-date').textContent = dateStr;
+      // Article 1.2
+      document.getElementById('art-name').textContent = data.name || '—';
+      document.getElementById('art-agency').textContent = data.agency || '—';
+      document.getElementById('art-license').textContent = data.licenseNo || '—';
+      document.getElementById('art-province').textContent = data.province || '—';
+      document.getElementById('art-broker-number').textContent = data.brokerNumber || '—';
+
+      if (data.name) document.getElementById('full-name').value = data.name;
+      showOnly(mainEl);
+      initSignaturePad();
+    })
+    .catch(function(){ showOnly(invalidEl); });
+
+  function initSignaturePad(){
+    var canvas = document.getElementById('sig-canvas');
+    var placeholder = document.getElementById('sig-placeholder');
+    var clearBtn = document.getElementById('sig-clear');
+    var fullName = document.getElementById('full-name');
+    var checkbox = document.getElementById('accept-checkbox');
+    var submitBtn = document.getElementById('sign-btn');
+    var statusMsg = document.getElementById('status-msg');
+
+    function resize(){
+      var rect = canvas.getBoundingClientRect();
+      var ratio = window.devicePixelRatio || 1;
+      canvas.width = rect.width * ratio;
+      canvas.height = rect.height * ratio;
+      var ctx = canvas.getContext('2d');
+      ctx.scale(ratio, ratio);
+      ctx.lineWidth = 2;
+      ctx.lineCap = 'round';
+      ctx.strokeStyle = '#0a0a0a';
+    }
+    resize();
+    window.addEventListener('resize', function(){ clear(); resize(); });
+
+    var drawing = false, hasInk = false, lastX = 0, lastY = 0;
+
+    function getXY(e){
+      var rect = canvas.getBoundingClientRect();
+      var pt = e.touches ? e.touches[0] : e;
+      return { x: pt.clientX - rect.left, y: pt.clientY - rect.top };
+    }
+    function start(e){ e.preventDefault(); drawing = true; var p = getXY(e); lastX = p.x; lastY = p.y; }
+    function move(e){
+      if (!drawing) return;
+      e.preventDefault();
+      var ctx = canvas.getContext('2d');
+      var p = getXY(e);
+      ctx.beginPath(); ctx.moveTo(lastX, lastY); ctx.lineTo(p.x, p.y); ctx.stroke();
+      lastX = p.x; lastY = p.y;
+      if (!hasInk) { hasInk = true; placeholder.classList.add('is-hidden'); updateBtn(); }
+    }
+    function end(){ drawing = false; }
+
+    canvas.addEventListener('mousedown', start);
+    canvas.addEventListener('mousemove', move);
+    canvas.addEventListener('mouseup', end);
+    canvas.addEventListener('mouseleave', end);
+    canvas.addEventListener('touchstart', start);
+    canvas.addEventListener('touchmove', move);
+    canvas.addEventListener('touchend', end);
+
+    function clear(){
+      var ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      hasInk = false; placeholder.classList.remove('is-hidden'); updateBtn();
+    }
+    clearBtn.addEventListener('click', clear);
+
+    function updateBtn(){
+      submitBtn.disabled = !(hasInk && fullName.value.trim().length >= 2 && checkbox.checked);
+    }
+    fullName.addEventListener('input', updateBtn);
+    checkbox.addEventListener('change', updateBtn);
+
+    submitBtn.addEventListener('click', function(){
+      if (submitBtn.disabled) return;
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Signature en cours…';
+      statusMsg.className = 'status-msg'; statusMsg.textContent = '';
+      var payload = {
+        token: token,
+        signatureDataUrl: canvas.toDataURL('image/png'),
+        signerName: fullName.value.trim(),
+        accepted: checkbox.checked,
+        signedAt: new Date().toISOString()
+      };
+      fetch('/api/courtier-convention-sign', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(function(r){ return r.json().then(function(d){ return { ok: r.ok, data: d }; }); })
+      .then(function(res){
+        if (res.ok && res.data.ok) {
+          statusMsg.className = 'status-msg is-success';
+          statusMsg.textContent = '✓ Convention signée. Bienvenue chez Capital Norvex. Une copie vous est envoyée par courriel.';
+          setTimeout(function(){ showOnly(signedEl); }, 1800);
+        } else {
+          statusMsg.className = 'status-msg is-error';
+          statusMsg.textContent = (res.data && res.data.error) || 'Une erreur est survenue. Réessayez.';
+          submitBtn.disabled = false; submitBtn.textContent = 'Signer et finaliser le partenariat';
+        }
+      })
+      .catch(function(){
+        statusMsg.className = 'status-msg is-error';
+        statusMsg.textContent = 'Erreur réseau. Réessayez dans un instant.';
+        submitBtn.disabled = false; submitBtn.textContent = 'Signer et finaliser le partenariat';
+      });
+    });
+  }
+})();
+</script>
+</body>
+</html>

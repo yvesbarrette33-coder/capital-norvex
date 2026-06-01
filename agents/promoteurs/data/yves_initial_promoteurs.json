@@ -1,0 +1,44 @@
+{
+  "_meta": {
+    "source": "Liste fournie par Yves le 2026-05-01 (recherche Chat GPT)",
+    "language_default": "fr",
+    "region_default": "QC"
+  },
+  "groups": [
+    {
+      "category": "Promoteurs Immobiliers (Donneurs d'ordres)",
+      "promoteurs": [
+        {"companyName": "Mondev", "principalContact": "David Owen, Président", "email": "info@mondev.ca"},
+        {"companyName": "Devimco Immobilier", "principalContact": "Serge Goulet, Président", "email": "info@devimco.com"},
+        {"companyName": "Brivia Group", "principalContact": "Kheng Ly, Président", "email": "info@briviagroup.ca"},
+        {"companyName": "Prével", "principalContact": "Laurence Vincent, Présidente", "email": "info@prevel.ca"},
+        {"companyName": "Groupe Quorum", "principalContact": "Peter Malouf, Président", "email": "info@constructionsquorum.com"},
+        {"companyName": "S.D. Bertone", "principalContact": "Michael Bertone, Co-fondateur", "email": "info@bertone.ca"},
+        {"companyName": "Jadco Inc.", "principalContact": "André de Bellefeuille, Président", "email": "info@jadco.ca"},
+        {"companyName": "Canderel", "principalContact": "Ben Rogowski, COO", "email": "montreal@canderel.com"},
+        {"companyName": "Groupe Petra", "principalContact": "Giuseppe Maniatis, VP", "email": "info@groupepetra.com"},
+        {"companyName": "Carbonleo", "principalContact": "Andrew Lutfy, Président", "email": "info@carbonleo.com"},
+        {"companyName": "Broccolini", "principalContact": "Anthony Broccolini, COO", "email": "info@broccolini.com"},
+        {"companyName": "Groupe Mach", "principalContact": "Vincent Chiara, Président", "email": "info@groupemach.com"},
+        {"companyName": "Rosefellow", "principalContact": "Sam Scalia, Co-fondateur", "email": "info@rosefellow.com"},
+        {"companyName": "Cogir Immobilier", "principalContact": "Mathieu Duguay, PDG", "email": "info@cogir.net"},
+        {"companyName": "Groupe Maurice", "principalContact": "Luc Maurice, Fondateur", "email": "info@legroupemaurice.com"}
+      ]
+    },
+    {
+      "category": "Entrepreneurs Généraux (Construction Multi-résidentielle)",
+      "promoteurs": [
+        {"companyName": "Pomerleau", "principalContact": "Philippe Adam, PDG", "email": "info@pomerleau.ca"},
+        {"companyName": "EBC Inc.", "principalContact": "Marie-Claude Houle, Présidente", "email": "montreal@ebcinc.com"},
+        {"companyName": "Reliance Construction", "principalContact": "Stephen Kaplan, Président", "email": "info@relianceconstruction.com"},
+        {"companyName": "Groupe Axxys", "principalContact": "John Tartaglia, Président", "email": "info@axxys.com"},
+        {"companyName": "Construgep", "principalContact": "Stéphane L'Espérance, Président", "email": "info@construgep.com"},
+        {"companyName": "Borea Construction", "principalContact": "Direction", "email": "info@boreaconstruction.com"},
+        {"companyName": "Aldo Construction", "principalContact": "Direction", "email": "aldo@aldoconstruction.ca"},
+        {"companyName": "Divco", "principalContact": "Guy Rouleau, VP", "email": "info@divco.ca"},
+        {"companyName": "Magil Construction", "principalContact": "John Marcovecchio, PDG", "email": "info@magil.com"},
+        {"companyName": "Sintra", "principalContact": "Direction", "email": "info@sintra.ca"}
+      ]
+    }
+  ]
+}

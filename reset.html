@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reset — Capital Norvex</title>
+<meta name="robots" content="noindex,nofollow">
+<style>
+  body{font-family:Georgia,serif;background:#fcfaf6;color:#1a1a1a;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;padding:24px}
+  .card{background:#fff;border:2px solid #C8A862;border-radius:12px;padding:48px;max-width:560px;text-align:center;box-shadow:0 8px 32px rgba(0,0,0,0.08)}
+  h1{margin:0 0 12px;font-size:24px;color:#1a1a1a}
+  .sub{color:#666;font-size:14px;margin-bottom:32px}
+  .status{font-family:Menlo,monospace;font-size:13px;text-align:left;background:#1a1a1a;color:#C8A862;padding:16px;border-radius:8px;margin:24px 0;min-height:120px;white-space:pre-wrap;overflow-x:auto}
+  .btn{display:inline-block;padding:14px 32px;background:#1a1a1a;color:#fff;text-decoration:none;border-radius:8px;font-family:Arial,sans-serif;font-size:14px;font-weight:600;border:none;cursor:pointer}
+  .btn:hover{background:#333}
+  .btn[disabled]{opacity:0.5;cursor:not-allowed}
+  .target{margin-top:20px;font-size:13px;color:#888}
+  .target select{font-family:Arial,sans-serif;font-size:13px;padding:6px 10px;border:1px solid #ddd;border-radius:6px;margin-left:8px}
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>🧹 Reset complet — Capital Norvex</h1>
+  <p class="sub">Cette page efface tout le cache navigateur, désinscrit le Service Worker, vide localStorage/sessionStorage, et te redirige vers le dashboard de ton choix avec une session propre.</p>
+
+  <div class="status" id="status">En attente…</div>
+
+  <div class="target">
+    Redirection :
+    <select id="target">
+      <option value="/beatrice-admin.html">Béatrice — Dashboard</option>
+      <option value="/camille-admin.html">Camille — Dashboard</option>
+      <option value="/sophie-admin.html">Sophie — Dashboard</option>
+      <option value="/hugo-admin.html">Hugo — Dashboard</option>
+      <option value="/capital-norvex-brain.html">Norvex Brain</option>
+      <option value="/capital-norvex-agents.html">Norvex Agents</option>
+      <option value="/capital-norvex-pipeline.html">Pipeline</option>
+      <option value="/maestro-admin.html">Maestro</option>
+      <option value="/">Accueil</option>
+    </select>
+  </div>
+
+  <p style="margin-top:32px"><button class="btn" id="goBtn" onclick="doReset()">Lancer le reset complet</button></p>
+</div>
+
+<script>
+const statusEl = document.getElementById('status');
+const btn = document.getElementById('goBtn');
+
+function log(msg, type='info'){
+  const icon = type === 'ok' ? '✅' : type === 'warn' ? '⚠️ ' : type === 'err' ? '❌' : '▸ ';
+  statusEl.textContent += `${icon} ${msg}\n`;
+}
+
+async function doReset(){
+  btn.disabled = true;
+  btn.textContent = 'Reset en cours…';
+  statusEl.textContent = '';
+
+  // 1) Unregister all Service Workers
+  try {
+    if ('serviceWorker' in navigator) {
+      const regs = await navigator.serviceWorker.getRegistrations();
+      if (regs.length === 0) {
+        log('Aucun Service Worker actif', 'ok');
+      } else {
+        for (const r of regs){
+          await r.unregister();
+          log(`SW désinscrit: ${r.scope}`, 'ok');
+        }
+      }
+    } else {
+      log('Service Workers non supportés (navigateur)', 'warn');
+    }
+  } catch (e) { log(`Erreur SW: ${e.message}`, 'err'); }
+
+  // 2) Clear all Cache Storage
+  try {
+    if ('caches' in self){
+      const keys = await caches.keys();
+      if (keys.length === 0) { log('Aucun cache à vider', 'ok'); }
+      else {
+        for (const k of keys){ await caches.delete(k); log(`Cache supprimé: ${k}`, 'ok'); }
+      }
+    }
+  } catch (e) { log(`Erreur Cache: ${e.message}`, 'err'); }
+
+  // 3) Clear localStorage entirely
+  try {
+    const count = localStorage.length;
+    localStorage.clear();
+    log(`localStorage vidé (${count} entrées)`, 'ok');
+  } catch (e) { log(`Erreur localStorage: ${e.message}`, 'err'); }
+
+  // 4) Clear sessionStorage
+  try {
+    const count = sessionStorage.length;
+    sessionStorage.clear();
+    log(`sessionStorage vidé (${count} entrées)`, 'ok');
+  } catch (e) { log(`Erreur sessionStorage: ${e.message}`, 'err'); }
+
+  // 5) Clear cookies for this domain (best-effort, non-HttpOnly only)
+  try {
+    const cookies = document.cookie.split(';').filter(c => c.trim());
+    let cleared = 0;
+    for (const c of cookies){
+      const name = c.split('=')[0].trim();
+      document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
+      document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; domain=${location.hostname}`;
+      cleared++;
+    }
+    log(`Cookies effacés (${cleared})`, 'ok');
+  } catch (e) { log(`Erreur cookies: ${e.message}`, 'err'); }
+
+  log('', 'info');
+  log('Reset complet terminé ✓', 'ok');
+  log('Redirection dans 2 secondes…', 'info');
+
+  setTimeout(() => {
+    const target = document.getElementById('target').value;
+    // Force fresh load with cache buster query string
+    const buster = `?v=${Date.now()}`;
+    location.href = target + buster;
+  }, 2000);
+}
+</script>
+</body>
+</html>

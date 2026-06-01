@@ -1,0 +1,1455 @@
+{
+  "_meta": {
+    "description": "Courtiers HYPOTHÉCAIRES commerciaux QC — recherche web publique 6 mai 2026. Cible : pros qui réfèrent du financement multilogement / construction / commercial à Capital Norvex (1M-30M$+). REMPLACE le fichier seed_brokers_RECHERCHE_2026-05-06.json (recherche initiale erronée — courtiers de vente).",
+    "version": 2,
+    "created": "2026-05-06",
+    "researcher": "Claude (Cowork) + 2 sub-agents",
+    "status": "PUBLIC SOURCES — pour validation Yves",
+    "filtres_appliques": {
+      "tier_zero_filter": "OUI",
+      "deduplication": "OUI (par nom+firme)",
+      "tier_zero_rejected": 0
+    },
+    "categories": [
+      "Réseaux franchisés commerciaux (Multi-Prêts, Planiprêt, Intelligence Hypothécaire, DLC, IMERIS)",
+      "Boutiques indépendantes (PMML, MCommercial, VA Capital, Performance, Multilogements.ca, Orbis Commercial, Lévesque & Cie)",
+      "Debt Advisory / Capital Markets (CBRE, JLL, Cushman & Wakefield, Colliers, Avison Young, Newmark, Marcus & Millichap MMCC, Largo Capital, Canada ICI)"
+    ]
+  },
+  "brokers": [
+    {
+      "name": "Peter Quinn",
+      "firmName": "Multi-Prêts Commercial",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "multilogement",
+        "construction",
+        "commercial",
+        "industriel"
+      ],
+      "title": "Directeur, Équipe Élite",
+      "typicalDealSize": {
+        "min": 1000000,
+        "max": 30000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "email",
+      "publicContact": {
+        "email": "pquinn@multi-prets.ca",
+        "phone": "514-867-8340",
+        "linkedin": "https://www.linkedin.com/in/peterquinn72/",
+        "profile_url": "https://www.courtierhypothecairecommercial.com/en/your-team/peter-quinn"
+      },
+      "sourceUrl": "https://www.courtierhypothecairecommercial.com/en",
+      "notes": "32+ ans d'expérience. Best Commercial Mortgage Broker Canada 2020 et 2023. Directeur Équipe Élite Multi-Prêts."
+    },
+    {
+      "name": "Cédric Lévesque",
+      "firmName": "Lévesque & Cie / Multi-Prêts Commercial",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "multilogement",
+        "commercial",
+        "construction",
+        "hotel"
+      ],
+      "title": "Courtier hypothécaire commercial",
+      "typicalDealSize": {
+        "min": 2000000,
+        "max": 50000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "email",
+      "publicContact": {
+        "email": "clevesque@multi-prets.ca",
+        "phone": "514-242-0873",
+        "linkedin": "https://www.linkedin.com/in/cédric-lévesque-738424100/",
+        "profile_url": "https://levesquetcie.multi-prets.com/en/meet-our-team/cedric-levesque/"
+      },
+      "sourceUrl": "https://financementmultilogements.com/",
+      "notes": "Depuis 2019. BAA Sherbrooke. Spécialiste financement multilogement, RPA, coopératives. Adresse: 525 Viger O, Suite 502, Montréal."
+    },
+    {
+      "name": "Véronique Caron",
+      "firmName": "Multi-Prêts Hypothèques",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Longueuil",
+      "specialty": [
+        "multilogement",
+        "commercial"
+      ],
+      "title": "Chef d'équipe",
+      "typicalDealSize": {
+        "min": 500000,
+        "max": 30000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "email",
+      "publicContact": {
+        "email": "vcaron@multi-prets.ca",
+        "phone": "514-232-9784",
+        "linkedin": "https://www.linkedin.com/in/veroniquecaroncourtierhypothecaire/",
+        "profile_url": "https://www.equipecaron.com/"
+      },
+      "sourceUrl": "https://www.equipecaron.com/",
+      "notes": "Classée #1 Multi-Prêts 4 années consécutives. 15+ ans expérience. Rive-Sud et Montréal."
+    },
+    {
+      "name": "Mathieu Lebrun",
+      "firmName": "Multi-Prêts Hypothèques",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "multilogement",
+        "commercial",
+        "construction"
+      ],
+      "title": "Chef d'équipe",
+      "typicalDealSize": {
+        "min": 500000,
+        "max": 30000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "email",
+      "publicContact": {
+        "email": "mlebrun@multi-prets.ca",
+        "phone": "514-587-6556",
+        "linkedin": "https://www.linkedin.com/in/mathieu-lebrun-1b435719/",
+        "profile_url": "https://hypothequerapide.com/"
+      },
+      "sourceUrl": "https://hypothequerapide.com/",
+      "notes": "25+ ans expérience. Leader Multi-Prêts Montréal/Rive-Sud. 40+ courtiers, 3 bureaux."
+    },
+    {
+      "name": "Sylvain Vachon",
+      "firmName": "Multi-Prêts (Équipe Auria)",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Sherbrooke",
+      "specialty": [
+        "multilogement",
+        "commercial",
+        "construction"
+      ],
+      "title": "Courtier hypothécaire, MBA",
+      "typicalDealSize": {
+        "min": 1000000,
+        "max": 25000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "phone",
+      "publicContact": {
+        "email": "",
+        "phone": "819-348-9492",
+        "linkedin": "",
+        "profile_url": ""
+      },
+      "sourceUrl": "https://www.multi-prets.com/en/capitale-nationale/",
+      "notes": "Équipe Auria Multi-Prêts Estrie. MBA. Spécialiste Sherbrooke."
+    },
+    {
+      "name": "Steeve Harvey",
+      "firmName": "Multi-Prêts",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Gatineau",
+      "specialty": [
+        "multilogement",
+        "commercial",
+        "construction"
+      ],
+      "title": "Courtier hypothécaire",
+      "typicalDealSize": {
+        "min": 1000000,
+        "max": 25000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "linkedin",
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "profile_url": "https://www.multi-prets.com/fr/courtier-hypothecaire/steeve-harvey/"
+      },
+      "sourceUrl": "https://www.multi-prets.com/en/",
+      "notes": "Originaire Gatineau. Opère Outaouais et Québec."
+    },
+    {
+      "name": "Claude Fugère",
+      "firmName": "Planiprêt",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Saint-Eustache",
+      "specialty": [
+        "multilogement",
+        "commercial",
+        "industriel",
+        "construction"
+      ],
+      "title": "Courtier hypothécaire commercial",
+      "typicalDealSize": {
+        "min": 1000000,
+        "max": 30000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "email",
+      "publicContact": {
+        "email": "cfugere@planipret.com",
+        "phone": "514-712-1232",
+        "linkedin": "https://www.linkedin.com/in/claude-fugère-1457b05b/",
+        "profile_url": "https://www.planipret.com/fr/courtier/claude-fugere"
+      },
+      "sourceUrl": "https://www.planipret.com/fr/",
+      "notes": "Anciennement Multi-Prêts Commercial. Spécialiste multilogement et industriel."
+    },
+    {
+      "name": "François Létourneau-Cloutier",
+      "firmName": "Planiprêt - L'Unité Commerciale",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Québec",
+      "specialty": [
+        "multilogement",
+        "commercial",
+        "construction"
+      ],
+      "title": "Courtier hypothécaire commercial",
+      "typicalDealSize": {
+        "min": 1000000,
+        "max": 30000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "email",
+      "publicContact": {
+        "email": "flcloutier@planipret.com",
+        "phone": "418-682-0408",
+        "linkedin": "https://www.linkedin.com/in/francois-letourneau-cloutier/",
+        "profile_url": "https://www.planipret.com/fr/courtier/francois-letourneau-cloutier/"
+      },
+      "sourceUrl": "https://www.planipret.com/fr/",
+      "notes": "L'Unité Commerciale. Spécialiste multilogement. Adresse: 412-725 Boul Lebourgneuf, Québec."
+    },
+    {
+      "name": "Peter Tsagarelis",
+      "firmName": "Planiprêt Commercial",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Saint-Eustache",
+      "specialty": [
+        "multilogement",
+        "commercial",
+        "construction",
+        "industriel"
+      ],
+      "title": "Courtier hypothécaire commercial",
+      "typicalDealSize": {
+        "min": 1000000,
+        "max": 30000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "linkedin",
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "https://www.linkedin.com/in/petertsagarelis/",
+        "profile_url": "https://www.petertsagarelis.ca/"
+      },
+      "sourceUrl": "https://www.petertsagarelis.ca/",
+      "notes": "25+ ans CRE. Promoteur, gestionnaire, courtier. Multilogement 5+ unités. Adresse: 425 Avenue Mathers, Suite 102, St-Eustache."
+    },
+    {
+      "name": "Johnny Vorasane",
+      "firmName": "Planiprêt",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Laval",
+      "specialty": [
+        "multilogement",
+        "commercial",
+        "construction"
+      ],
+      "title": "Courtier hypothécaire",
+      "typicalDealSize": {
+        "min": 1000000,
+        "max": 30000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "email",
+      "publicContact": {
+        "email": "jvorasane@planipret.com",
+        "phone": "514-809-6787",
+        "linkedin": "",
+        "profile_url": "https://www.planipret.com/fr/courtier/johnny-e-vorasane/"
+      },
+      "sourceUrl": "https://www.planipret.com/fr/",
+      "notes": "Bilingue. 1545 Boul de l'Avenir, Suite 220, Laval."
+    },
+    {
+      "name": "Denis Gagné Nadeau",
+      "firmName": "Multilogements.ca",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Greenfield Park",
+      "specialty": [
+        "multilogement",
+        "commercial",
+        "construction"
+      ],
+      "title": "Courtier hypothécaire commercial multilogement, Fondateur",
+      "typicalDealSize": {
+        "min": 1000000,
+        "max": 30000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "email",
+      "publicContact": {
+        "email": "denis@multilogements.ca",
+        "phone": "1-800-780-3145",
+        "linkedin": "https://www.linkedin.com/in/denis-nadeau-288274138/",
+        "profile_url": "https://multilogements.ca/en/our-brokers/denis-gagne-nadeau/"
+      },
+      "sourceUrl": "https://multilogements.ca/en/",
+      "notes": "8+ ans construction. Spécialiste multilogement. 30+ institutions financières."
+    },
+    {
+      "name": "Jean-François Labrecque",
+      "firmName": "Multilogements.ca",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Québec",
+      "specialty": [
+        "multilogement",
+        "commercial",
+        "construction"
+      ],
+      "title": "Courtier hypothécaire commercial",
+      "typicalDealSize": {
+        "min": 1000000,
+        "max": 30000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "linkedin",
+      "publicContact": {
+        "email": "",
+        "phone": "1-800-780-3145",
+        "linkedin": "https://ca.linkedin.com/in/jean-fran%C3%A7ois-labrecque-23372216",
+        "profile_url": "https://multilogements.ca/en/our-brokers/jean-francois-labrecque/"
+      },
+      "sourceUrl": "https://multilogements.ca/en/",
+      "notes": "10 ans financement & services financiers. Référence en ingénierie financière immobilière. Multi-résidentiel/commercial neuf et existant."
+    },
+    {
+      "name": "Patrice Ménard",
+      "firmName": "PMML",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "multilogement",
+        "commercial",
+        "industriel",
+        "construction"
+      ],
+      "title": "Président & Fondateur, Courtier Commercial",
+      "typicalDealSize": {
+        "min": 1000000,
+        "max": 50000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "email",
+      "publicContact": {
+        "email": "info@pmml.ca",
+        "phone": "514-360-3603",
+        "linkedin": "https://www.linkedin.com/in/patricemenardpmml/",
+        "profile_url": "https://pmml.ca/en/home"
+      },
+      "sourceUrl": "https://pmml.ca/en/",
+      "notes": "Fondée 2008. 160+ pros, 100+ courtiers commerciaux/hypothécaires. 6B$+ transactions/an. 9 bureaux QC. Spécialité 5+ unités."
+    },
+    {
+      "name": "Jonathan Gagnon",
+      "firmName": "Orbis Commercial",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "multilogement",
+        "commercial",
+        "industriel",
+        "construction"
+      ],
+      "title": "Vice-Président, Commercial Lending",
+      "typicalDealSize": {
+        "min": 2000000,
+        "max": 30000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "email",
+      "publicContact": {
+        "email": "jonathan.gagnon@groupeorbis.com",
+        "phone": "514-951-0094",
+        "linkedin": "https://www.linkedin.com/in/jonathan-gagnon-b1290627/",
+        "profile_url": "https://groupeorbis.com/en/jonathan-gagnon/"
+      },
+      "sourceUrl": "https://groupeorbis.com/en/jonathan-gagnon/",
+      "notes": "VP Commercial Lending depuis 2018. Mortgage Awards of Excellence Commercial Broker of Year 2024. TD/BMO background. Équipe 20 courtiers Montréal."
+    },
+    {
+      "name": "Gregory Hernandez",
+      "firmName": "Orbis Mortgage Group",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "multilogement",
+        "commercial",
+        "construction",
+        "terrain",
+        "industriel"
+      ],
+      "title": "Courtier hypothécaire commercial",
+      "typicalDealSize": {
+        "min": 500000,
+        "max": 25000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "email",
+      "publicContact": {
+        "email": "gregory.hernandez@groupeorbis.com",
+        "phone": "514-515-4734",
+        "linkedin": "https://www.linkedin.com/in/gregory-hernandez-broker/",
+        "profile_url": "https://gregoryhernandez.ca/"
+      },
+      "sourceUrl": "https://gregoryhernandez.ca/",
+      "notes": "15+ ans. 1800+ projets. 540M$+ financements. Orbis President's Club 2023. CIBC top 5 MTL 2011."
+    },
+    {
+      "name": "Jason Zuckerman",
+      "firmName": "Orbis Mortgage Group",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "multilogement",
+        "commercial",
+        "résidentiel",
+        "industriel"
+      ],
+      "title": "Courtier hypothécaire commercial (double licence)",
+      "typicalDealSize": {
+        "min": 500000,
+        "max": 15000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "email",
+      "publicContact": {
+        "email": "jason.zuckerman@groupeorbis.com",
+        "phone": "514-771-1352",
+        "linkedin": "https://ca.linkedin.com/in/jason-zuckerman",
+        "profile_url": "https://mortgageratesmontreal.com/"
+      },
+      "sourceUrl": "https://mortgageratesmontreal.com/",
+      "notes": "15+ ans financement. Double licence (AMF + OACIQ). Spécialité résidentiel/commercial Montréal."
+    },
+    {
+      "name": "Alex Aube-Martin",
+      "firmName": "Orbis Mortgage Group",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "multilogement",
+        "commercial",
+        "construction"
+      ],
+      "title": "Courtier hypothécaire commercial, CFA",
+      "typicalDealSize": {
+        "min": 1000000,
+        "max": 20000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "linkedin",
+      "publicContact": {
+        "email": "",
+        "phone": "514-395-0330",
+        "linkedin": "https://www.linkedin.com/in/alex-aube-martin-cfa",
+        "profile_url": ""
+      },
+      "sourceUrl": "https://www.facebook.com/alexmartinfinancing/",
+      "notes": "CFA. 2B$+ CRE expérience. 100M$ closed 2024. CMHC, conventional, prêts privés. 285 Pl. d'Youville."
+    },
+    {
+      "name": "Karine Lavigne",
+      "firmName": "Orbis Mortgage Group",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "résidentiel"
+      ],
+      "title": "Compliance Supervisor",
+      "typicalDealSize": {
+        "min": 500000,
+        "max": 20000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "email",
+      "publicContact": {
+        "email": "karine.lavigne@groupeorbis.com",
+        "phone": "514-951-0094",
+        "linkedin": "",
+        "profile_url": "https://groupeorbis.com/en/karine-lavigne/"
+      },
+      "sourceUrl": "https://groupeorbis.com/en/karine-lavigne/",
+      "notes": "Industrie depuis 2005. GMAC-RFC underwriting. Orbis MTL compliance."
+    },
+    {
+      "name": "Michel Durand",
+      "firmName": "MCommercial",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Saint-Laurent (Montréal)",
+      "specialty": [
+        "multilogement",
+        "construction",
+        "commercial",
+        "industriel"
+      ],
+      "title": "Président & CEO, Courtier hypothécaire commercial",
+      "typicalDealSize": {
+        "min": 2000000,
+        "max": 100000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "email",
+      "publicContact": {
+        "email": "m.durand@mcommercial.ca",
+        "phone": "",
+        "linkedin": "https://www.linkedin.com/in/michel-durand-a2061a7/",
+        "profile_url": "https://www.mcommercial.ca/"
+      },
+      "sourceUrl": "https://www.mcommercial.ca/",
+      "notes": "20+ ans. Hall of Fame 2021. 8 nominations consécutives Best Commercial Broker. Deals 2M$ à 500M$."
+    },
+    {
+      "name": "Christianne Saab",
+      "firmName": "MCommercial",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Saint-Laurent (Montréal)",
+      "specialty": [
+        "multilogement",
+        "commercial",
+        "construction",
+        "condo development"
+      ],
+      "title": "VP Operations, Courtier hypothécaire commercial",
+      "typicalDealSize": {
+        "min": 2000000,
+        "max": 100000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "email",
+      "publicContact": {
+        "email": "csaab@mcommercial.ca",
+        "phone": "",
+        "linkedin": "https://www.linkedin.com/in/christianne-saab-0b40a6116/",
+        "profile_url": "https://www.mcommercial.ca/christianne-saab-2/"
+      },
+      "sourceUrl": "https://www.mcommercial.ca/",
+      "notes": "15+ ans immobilier, 21+ ans expérience. CRE financing, condo development. Business development."
+    },
+    {
+      "name": "Jeffrey Soliman",
+      "firmName": "VA Capital",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "multilogement",
+        "commercial",
+        "construction",
+        "bureau",
+        "retail",
+        "industriel",
+        "terrain",
+        "sante"
+      ],
+      "title": "Fondateur & Président, Courtier hypothécaire commercial",
+      "typicalDealSize": {
+        "min": 1000000,
+        "max": 30000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "email",
+      "publicContact": {
+        "email": "contact@vacapital.ca",
+        "phone": "",
+        "linkedin": "https://www.linkedin.com/in/jeffrey-soliman/",
+        "profile_url": "https://vacapital.ca/"
+      },
+      "sourceUrl": "https://vacapital.ca/",
+      "notes": "Première firme courtage hypothécaire commercial QC certifiée B Corp. Record 2024: 2.25B$ arrangés. 20+ ans CRE. 85 ans expérience cumulée équipe."
+    },
+    {
+      "name": "Charles-André Roy",
+      "firmName": "CBRE Capital",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "multilogement",
+        "commercial",
+        "bureau",
+        "retail",
+        "industriel",
+        "hotel"
+      ],
+      "title": "Senior VP, Co-Head Debt & Structured Finance",
+      "typicalDealSize": {
+        "min": 5000000,
+        "max": 100000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "linkedin",
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "https://www.linkedin.com/in/charles-andre-roy-cim-caia-6048a365/",
+        "profile_url": "https://www.cbre.ca/people/charles-andre-roy"
+      },
+      "sourceUrl": "https://www.cbre.ca/people/charles-andre-roy",
+      "notes": "Senior VP co-head MTL/Québec Debt & Structured Finance. CIM, CAIA. 2B$+ Eastern Canada deals."
+    },
+    {
+      "name": "Charles-Benoit Parent",
+      "firmName": "CBRE Capital",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "multilogement",
+        "commercial",
+        "bureau",
+        "retail",
+        "industriel"
+      ],
+      "title": "Senior VP, Debt & Structured Finance",
+      "typicalDealSize": {
+        "min": 5000000,
+        "max": 100000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "linkedin",
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "https://www.linkedin.com/in/charles-benoit-parent/",
+        "profile_url": "https://www.cbre.ca/fr-ca/people/charles-benoit-parent"
+      },
+      "sourceUrl": "https://www.cbre.ca/fr-ca/people/charles-benoit-parent",
+      "notes": "SVP. CAIA. Portfolio structuring, maturity risk, CFO extension. Quebec Apartment Investment Conf."
+    },
+    {
+      "name": "Simon Bolduc",
+      "firmName": "CBRE Capital",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Québec",
+      "specialty": [
+        "multilogement",
+        "commercial",
+        "bureau",
+        "retail",
+        "industriel"
+      ],
+      "title": "Debt & Structured Finance Specialist",
+      "typicalDealSize": {
+        "min": 3000000,
+        "max": 50000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "linkedin",
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "https://www.linkedin.com/in/simon-bolduc-06583442/",
+        "profile_url": "https://informaconnect.com/quebec-real-estate-forum/speakers/simon-bolduc/"
+      },
+      "sourceUrl": "https://informaconnect.com/quebec-real-estate-forum/",
+      "notes": "6B$+ financement. 10B$+ investissement. Spécialiste marché dette Québec."
+    },
+    {
+      "name": "Eduardo Davalos",
+      "firmName": "CBRE Capital",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Québec",
+      "specialty": [
+        "multilogement",
+        "commercial",
+        "industriel"
+      ],
+      "title": "AVP, Capital Markets Finance",
+      "typicalDealSize": {
+        "min": 2000000,
+        "max": 50000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "linkedin",
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "https://ca.linkedin.com/in/eduardo-davalos-15714b162",
+        "profile_url": ""
+      },
+      "sourceUrl": "https://www.cbre.ca/",
+      "notes": "AVP Finance Capital Markets. MBA Finance & RE Université Laval. CMLS Financial background. Debt advisory Québec."
+    },
+    {
+      "name": "Jacob Hayon",
+      "firmName": "JLL Capital Markets",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "multilogement",
+        "commercial",
+        "bureau",
+        "retail",
+        "industriel",
+        "terrain"
+      ],
+      "title": "Executive VP, Investment Properties",
+      "typicalDealSize": {
+        "min": 5000000,
+        "max": 100000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "linkedin",
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "https://www.linkedin.com/in/jacobhayon/",
+        "profile_url": "https://www.jll.ca/en/people/jacob-hayon"
+      },
+      "sourceUrl": "https://www.jll.ca/en/people/jacob-hayon",
+      "notes": "EVP JLL Capital Markets MTL. Joined Oct 2023 ex-CBRE Private Capital. CPA-CA. Big 4 background."
+    },
+    {
+      "name": "Bruno Brami",
+      "firmName": "JLL Capital Markets",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "multilogement",
+        "commercial",
+        "bureau",
+        "retail",
+        "industriel"
+      ],
+      "title": "Senior VP, Capital Markets",
+      "typicalDealSize": {
+        "min": 5000000,
+        "max": 100000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "linkedin",
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "https://www.linkedin.com/in/bruno-brami-79743710/",
+        "profile_url": "https://www.jll.com/en-us/people/bio-broker/bruno.brami"
+      },
+      "sourceUrl": "https://www.jll.ca/",
+      "notes": "SVP. 14+ ans CBRE. HEC Montréal. Sobeys & P&G background. Toutes classes d'actifs CRE."
+    },
+    {
+      "name": "Tatyana Mazzone",
+      "firmName": "JLL Capital Markets",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "multilogement",
+        "commercial",
+        "industriel"
+      ],
+      "title": "Senior Analyst, Debt Capital Markets",
+      "typicalDealSize": {
+        "min": 2000000,
+        "max": 50000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "linkedin",
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "https://www.linkedin.com/in/tatyana-mazzone-349219141/",
+        "profile_url": "https://www.jll.ca/"
+      },
+      "sourceUrl": "https://www.jll.ca/",
+      "notes": "Senior Analyst Capital Markets & Debt Capital Markets. McGill University."
+    },
+    {
+      "name": "Hendrik Zessel",
+      "firmName": "Cushman & Wakefield Canada",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Toronto/Montréal",
+      "specialty": [
+        "multilogement",
+        "commercial",
+        "bureau",
+        "retail",
+        "industriel",
+        "hotel"
+      ],
+      "title": "Vice Chairman, Equity, Debt & Structured Finance",
+      "typicalDealSize": {
+        "min": 5000000,
+        "max": 100000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "linkedin",
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "https://www.linkedin.com/in/hendrik-zessel/",
+        "profile_url": "https://www.cushmanwakefield.com/en/canada/people/hendrik-zessel"
+      },
+      "sourceUrl": "https://www.cushmanwakefield.com/en/canada/people/hendrik-zessel",
+      "notes": "Vice Chair Canada EDSF. 40+ ans CRE. UBC Urban Land Economics. Mandats nationaux."
+    },
+    {
+      "name": "Keaton Wolansky",
+      "firmName": "Cushman & Wakefield Canada",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Toronto/Montréal",
+      "specialty": [
+        "multilogement",
+        "commercial",
+        "industriel",
+        "bureau"
+      ],
+      "title": "Vice President, Equity, Debt & Structured Finance",
+      "typicalDealSize": {
+        "min": 3000000,
+        "max": 75000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "linkedin",
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "profile_url": "https://www.cushmanwakefield.com/en/canada/people/keaton-wolansky"
+      },
+      "sourceUrl": "https://www.cushmanwakefield.com/en/canada/people/keaton-wolansky",
+      "notes": "VP Debt & Structured Finance. MBA Haskayne. Debt finance, equity, loan sales. National Capital Markets."
+    },
+    {
+      "name": "Dominick Samson",
+      "firmName": "Intelligence Hypothécaire",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Magog",
+      "specialty": [
+        "multilogement",
+        "commercial",
+        "construction"
+      ],
+      "title": "Courtier hypothécaire",
+      "typicalDealSize": {
+        "min": 1000000,
+        "max": 25000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "email",
+      "publicContact": {
+        "email": "dominick.samson@groupeih.ca",
+        "phone": "",
+        "linkedin": "https://ca.linkedin.com/in/dominick-samson-3983a892",
+        "profile_url": "https://www.intelligencehypothecaire.ca/fr/courtier-hypothecaire/dominick-samson/"
+      },
+      "sourceUrl": "https://www.intelligencehypothecaire.ca/",
+      "notes": "Groupe IH. Financement commercial et résidentiel. 700+ consultants Canada."
+    },
+    {
+      "name": "Kareen Coulombe",
+      "firmName": "Intelligence Hypothécaire",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Magog",
+      "specialty": [
+        "multilogement",
+        "commercial"
+      ],
+      "title": "Courtier hypothécaire",
+      "typicalDealSize": {
+        "min": 1000000,
+        "max": 25000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "linkedin",
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "https://www.linkedin.com/in/kareen-coulombe-042b0139/",
+        "profile_url": "https://www.intelligencehypothecaire.ca/"
+      },
+      "sourceUrl": "https://www.intelligencehypothecaire.ca/",
+      "notes": "10 ans conseillère financière. 14 ans Desjardins. Partenaire Samson et Rioux."
+    },
+    {
+      "name": "Isabelle Barbeau",
+      "firmName": "Intelligence Hypothécaire",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "multilogement",
+        "commercial"
+      ],
+      "title": "VP régionale et Recruteur",
+      "typicalDealSize": {
+        "min": 1000000,
+        "max": 30000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "linkedin",
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "https://www.linkedin.com/in/barbeauisabelle/",
+        "profile_url": "https://intelligencehypothecaire.ca/ih/a-propos/equipe-de-direction/isabelle-barbeau/"
+      },
+      "sourceUrl": "https://www.intelligencehypothecaire.ca/",
+      "notes": "LL.B. UdeM. 10+ ans financement commercial. Ex-VP Expansion XCEED, GE Money."
+    },
+    {
+      "name": "Serge Lafrenière",
+      "firmName": "Performance Hypothécaire",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "multilogement",
+        "commercial",
+        "construction"
+      ],
+      "title": "Propriétaire & Courtier commercial",
+      "typicalDealSize": {
+        "min": 2000000,
+        "max": 30000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "linkedin",
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "https://www.linkedin.com/in/sergelafreniere/",
+        "profile_url": "https://performancehypothecaire.ca/serge-lafreniere/"
+      },
+      "sourceUrl": "https://performancehypothecaire.ca/",
+      "notes": "32+ ans. Ex-directeur crédit commercial 3 grandes banques 16 ans. RPA, coopératives, immeubles 5+ unités."
+    },
+    {
+      "name": "Kevin Ross",
+      "firmName": "Largo Capital",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "multilogement",
+        "commercial",
+        "retail",
+        "bureau",
+        "industriel"
+      ],
+      "title": "Managing Director, Canada Operations",
+      "typicalDealSize": {
+        "min": 3000000,
+        "max": 100000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "linkedin",
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "profile_url": "https://largocapital.com/team/kevin-ross/"
+      },
+      "sourceUrl": "https://largocapital.com/team/kevin-ross/",
+      "notes": "Joined 2012. MD Canada. 1B$+ originated. Récent: 16.8M$ shopping center MTL."
+    },
+    {
+      "name": "Kevin Heiss",
+      "firmName": "Largo Capital",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "multilogement",
+        "commercial",
+        "retail",
+        "industriel",
+        "self-storage"
+      ],
+      "title": "Managing Director",
+      "typicalDealSize": {
+        "min": 5000000,
+        "max": 100000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "linkedin",
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "profile_url": "https://largocapital.com/team/kevin-heiss/"
+      },
+      "sourceUrl": "https://largocapital.com/team/kevin-heiss/",
+      "notes": "Ex-MD Canada. Deals: 22.5M$ Depotium GMA, 83.25M$ retail. 35+ ans CRE."
+    },
+    {
+      "name": "(équipe Montréal)",
+      "firmName": "Canada ICI Capital Corporation",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "multilogement",
+        "commercial",
+        "construction",
+        "bureau",
+        "retail",
+        "industriel"
+      ],
+      "title": "Origination & Debt Advisory",
+      "typicalDealSize": {
+        "min": 1000000,
+        "max": 50000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "email",
+      "publicContact": {
+        "email": "info@canadaici.com",
+        "phone": "",
+        "linkedin": "https://ca.linkedin.com/company/canada-ici-capital-corporation",
+        "profile_url": "https://www.canadaici.com/"
+      },
+      "sourceUrl": "https://www.canadaici.com/",
+      "notes": "Établie 1993. 8B$+/an arrangés. 7 bureaux Canada incluant MTL. Boutique origination + Asset Management institutional."
+    },
+    {
+      "name": "(équipe Capital Markets)",
+      "firmName": "Colliers International — Capital Markets",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "multilogement",
+        "commercial",
+        "bureau",
+        "retail",
+        "industriel"
+      ],
+      "title": "Debt & Structured Finance Advisory",
+      "typicalDealSize": {
+        "min": 3000000,
+        "max": 100000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "email",
+      "publicContact": {
+        "email": "montreal@colliers.com",
+        "phone": "",
+        "linkedin": "https://ca.linkedin.com/showcase/collierscapitalmarkets/",
+        "profile_url": "https://www.colliers.com/en/services/capital-markets"
+      },
+      "sourceUrl": "https://www.colliers.com/en/services/capital-markets",
+      "notes": "Debt facility 2.25B$. Institutional/alternative lending, agency, structured finance. 2B$+ MTL CRE."
+    },
+    {
+      "name": "(équipe Capital Markets Debt)",
+      "firmName": "Avison Young Canada",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "multilogement",
+        "commercial",
+        "industriel",
+        "bureau"
+      ],
+      "title": "Capital Markets - Debt Financing",
+      "typicalDealSize": {
+        "min": 2000000,
+        "max": 75000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "email",
+      "publicContact": {
+        "email": "montreal@avisonyoung.ca",
+        "phone": "",
+        "linkedin": "https://ca.linkedin.com/company/avison-young",
+        "profile_url": "https://www.avisonyoung.ca/capital-markets"
+      },
+      "sourceUrl": "https://www.avisonyoung.ca/capital-markets",
+      "notes": "30+ ans capital. Acquisition/refinance/CMBS. Innovative debt financing."
+    },
+    {
+      "name": "(équipe Capital Markets)",
+      "firmName": "Newmark Canada",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "commercial",
+        "industriel",
+        "bureau"
+      ],
+      "title": "Capital Markets & Debt Advisory",
+      "typicalDealSize": {
+        "min": 3000000,
+        "max": 50000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "email",
+      "publicContact": {
+        "email": "montreal@newmark.com",
+        "phone": "",
+        "linkedin": "",
+        "profile_url": "https://www.nmrk.com/"
+      },
+      "sourceUrl": "https://www.nmrk.com/",
+      "notes": "Ex-Newmark Knight Frank. Canada depuis 2009. Capital markets/valuation/property mgmt."
+    },
+    {
+      "name": "Onorio Lucchese",
+      "firmName": "Marcus & Millichap Capital Corporation (MMCC)",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Toronto (couvre QC)",
+      "specialty": [
+        "multilogement",
+        "commercial",
+        "bureau",
+        "retail",
+        "industriel",
+        "hospitality"
+      ],
+      "title": "Senior Managing Director, Capital Markets",
+      "typicalDealSize": {
+        "min": 3000000,
+        "max": 100000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "linkedin",
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "https://www.linkedin.com/in/onorio-lucchese-3b0041156/",
+        "profile_url": "https://www.marcusmillichap.com/"
+      },
+      "sourceUrl": "https://www.marcusmillichap.com/",
+      "notes": "Hired 2025 cross-border capital. 20+ ans CRE finance. TD, BMO, Raymond James, Brookfield."
+    },
+    {
+      "name": "(équipe DLC Commercial Capital)",
+      "firmName": "Dominion Lending Centres Commercial Capital",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "multilogement",
+        "commercial",
+        "bureau",
+        "retail",
+        "industriel"
+      ],
+      "title": "Commercial Mortgage Specialists",
+      "typicalDealSize": {
+        "min": 500000,
+        "max": 30000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "email",
+      "publicContact": {
+        "email": "contact@dominioncommercialcapital.ca",
+        "phone": "514-266-7375",
+        "linkedin": "https://ca.linkedin.com/company/dominion-lending-centres",
+        "profile_url": "https://dominioncommercialcapital.ca/"
+      },
+      "sourceUrl": "https://dominioncommercialcapital.ca/",
+      "notes": "18+ ans CRE structuring. Plus grand réseau Canada (7856 brokers, 539 franchises). Multi-bureau QC."
+    },
+    {
+      "name": "(réseau IMERIS)",
+      "firmName": "IMERIS (Franchise DLC)",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Multi-villes QC",
+      "specialty": [
+        "multilogement",
+        "commercial",
+        "résidentiel"
+      ],
+      "title": "Réseau courtiers indépendants",
+      "typicalDealSize": {
+        "min": 500000,
+        "max": 25000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "email",
+      "publicContact": {
+        "email": "info@imeris.ca",
+        "phone": "",
+        "linkedin": "https://ca.linkedin.com/company/imeris-agence-hypoth%C3%A9caire-imeris-mortgage-agency",
+        "profile_url": "https://www.imeris.ca/"
+      },
+      "sourceUrl": "https://www.imeris.ca/",
+      "notes": "DLC franchise indépendante. Bureaux: MTL, Laval, Montérégie, Laurentides, Outaouais."
+    },
+    {
+      "name": "(équipe commerciale)",
+      "firmName": "True North Mortgage",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "multilogement",
+        "commercial"
+      ],
+      "title": "Courtiers hypothécaires commerciaux",
+      "typicalDealSize": {
+        "min": 1000000,
+        "max": 25000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "linkedin",
+      "publicContact": {
+        "email": "",
+        "phone": "514-876-4441",
+        "linkedin": "https://ca.linkedin.com/company/true-north-mortgage",
+        "profile_url": "https://www.truenorthmortgage.ca/"
+      },
+      "sourceUrl": "https://www.truenorthmortgage.ca/",
+      "notes": "Établie 1999. Courtiers salariés non-commission. 16 000+ avis 5 étoiles. W6-1253 av McGill College MTL."
+    },
+    {
+      "name": "(division commerciale)",
+      "firmName": "Nesto Group",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal & Québec",
+      "specialty": [
+        "multilogement",
+        "commercial",
+        "construction"
+      ],
+      "title": "CRE Mortgage Specialists",
+      "typicalDealSize": {
+        "min": 1000000,
+        "max": 25000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "email",
+      "publicContact": {
+        "email": "commercial@nesto.ca",
+        "phone": "",
+        "linkedin": "",
+        "profile_url": "https://gopineapple.com/commercial-lending/"
+      },
+      "sourceUrl": "https://nesto.ca/",
+      "notes": "Expansion CRE 2024. Ouverture bureau Québec. Renforcement présence MTL."
+    },
+    {
+      "name": "(équipe EG Conseils)",
+      "firmName": "EG Conseils",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Québec",
+      "specialty": [
+        "multilogement",
+        "commercial",
+        "construction"
+      ],
+      "title": "Courtiers hypothécaires commerciaux indépendants",
+      "typicalDealSize": {
+        "min": 500000,
+        "max": 20000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "email",
+      "publicContact": {
+        "email": "info@egconseils.com",
+        "phone": "",
+        "linkedin": "",
+        "profile_url": "https://egconseils.com/"
+      },
+      "sourceUrl": "https://egconseils.com/",
+      "notes": "Indépendant Québec. Cabinet sous Planiprêt. CRE pour entrepreneurs."
+    },
+    {
+      "name": "(équipe Best Mortgage)",
+      "firmName": "Best Mortgage Montreal / Professional Broker Service",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "multilogement",
+        "commercial",
+        "construction"
+      ],
+      "title": "Réseau courtage commercial",
+      "typicalDealSize": {
+        "min": 500000,
+        "max": 20000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "linkedin",
+      "publicContact": {
+        "email": "",
+        "phone": "",
+        "linkedin": "",
+        "profile_url": "https://professionalbrokerservice.ca/"
+      },
+      "sourceUrl": "https://professionalbrokerservice.ca/",
+      "notes": "Brokerage MTL. 3 bureaux. 35+ courtiers. Multi-unit & commercial. CMHC programs."
+    },
+    {
+      "name": "(équipe DLCG)",
+      "firmName": "DLC DLCG Mortgage Group",
+      "licenseNumber": "",
+      "region": "QC",
+      "city": "Montréal",
+      "specialty": [
+        "multilogement",
+        "commercial",
+        "résidentiel"
+      ],
+      "title": "Commercial & Residential Mortgage Brokerage",
+      "typicalDealSize": {
+        "min": 500000,
+        "max": 25000000
+      },
+      "relationshipStatus": "cold",
+      "dealsReceived": 0,
+      "dealsClosed": 0,
+      "preferredChannel": "email",
+      "publicContact": {
+        "email": "info@dlcg.ca",
+        "phone": "",
+        "linkedin": "",
+        "profile_url": "https://dlcg.ca/"
+      },
+      "sourceUrl": "https://dlcg.ca/",
+      "notes": "Filiale DLC. Présence multi-bureau QC. Volet commercial."
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  launchd plist pour macOS — Lance Béatrice toutes les 10 minutes sur yves@.
+
+  Béatrice = assistante exécutive d'Yves (USAGE INTERNE). Ghostwriter pur.
+  Tous drafts signés "Yves Barrette". Approbation dashboard avant envoi.
+
+  INSTALLATION (à faire 1 seule fois) :
+    cp scripts/com.capitalnorvex.beatrice.plist ~/Library/LaunchAgents/
+    launchctl load -w ~/Library/LaunchAgents/com.capitalnorvex.beatrice.plist
+
+  VÉRIFIER QUE ÇA TOURNE :
+    launchctl list | grep capitalnorvex
+
+  ARRÊTER :
+    launchctl unload -w ~/Library/LaunchAgents/com.capitalnorvex.beatrice.plist
+
+  Béatrice tourne SEULEMENT quand le Mac d'Yves est éveillé.
+-->
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.capitalnorvex.beatrice</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/Users/yvesbarrette/.capitalnorvex/scripts/beatrice_run.sh</string>
+    <string>--top</string>
+    <string>25</string>
+  </array>
+
+  <key>StartInterval</key>
+  <integer>600</integer><!-- 10 minutes -->
+
+  <key>RunAtLoad</key>
+  <true/>
+
+  <key>StandardOutPath</key>
+  <string>/Users/yvesbarrette/.capitalnorvex/beatrice_launchd.out.log</string>
+
+  <key>StandardErrorPath</key>
+  <string>/Users/yvesbarrette/.capitalnorvex/beatrice_launchd.err.log</string>
+
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin</string>
+  </dict>
+</dict>
+</plist>

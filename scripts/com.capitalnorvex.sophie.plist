@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  launchd plist pour macOS — Lance Sophie toutes les 10 minutes sur info@.
+
+  INSTALLATION (à faire 1 seule fois) :
+    cp scripts/com.capitalnorvex.sophie.plist ~/Library/LaunchAgents/
+    launchctl load -w ~/Library/LaunchAgents/com.capitalnorvex.sophie.plist
+
+  VÉRIFIER QUE ÇA TOURNE :
+    launchctl list | grep capitalnorvex
+
+  ARRÊTER :
+    launchctl unload -w ~/Library/LaunchAgents/com.capitalnorvex.sophie.plist
+
+  Sophie tourne SEULEMENT quand le Mac d'Yves est éveillé.
+  Pour un cron 24/7, déployer le pipeline Python sur Cloud Run / GitHub Actions.
+-->
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.capitalnorvex.sophie</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/Users/yvesbarrette/.capitalnorvex/scripts/sophie_run.sh</string>
+    <string>--top</string>
+    <string>25</string>
+  </array>
+
+  <key>StartInterval</key>
+  <integer>600</integer><!-- 10 minutes -->
+
+  <key>RunAtLoad</key>
+  <true/>
+
+  <key>StandardOutPath</key>
+  <string>/Users/yvesbarrette/.capitalnorvex/sophie_launchd.out.log</string>
+
+  <key>StandardErrorPath</key>
+  <string>/Users/yvesbarrette/.capitalnorvex/sophie_launchd.err.log</string>
+
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin</string>
+  </dict>
+</dict>
+</plist>
